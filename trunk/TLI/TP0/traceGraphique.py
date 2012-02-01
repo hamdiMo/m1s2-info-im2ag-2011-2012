@@ -12,8 +12,8 @@ def help():
 	sys.stdout.write("                                                                                \n")
 	sys.stdout.write("  [INTRODUCTION]                                                                \n")
 	sys.stdout.write("                                                                                \n")
-	sys.stdout.write("     Ce programme permet l'affichage d'un tableau de valeur d'une fonction de x \n")
-	sys.stdout.write("  passé en argument via la ligne de commande.                                   \n")
+	sys.stdout.write("     Ce programme permet l'affichage d'une courbe de la fonction de x passé en  \n")
+	sys.stdout.write("  argument via la ligne de commande.                                            \n")
 	sys.stdout.write("  Les points de la fonction sont calculées dans l'intervalle [0..1] avec un     \n")
 	sys.stdout.write("  ensemble de 10 valeurs.                                                       \n")
 	sys.stdout.write("                                                                                \n")
@@ -34,17 +34,34 @@ def help():
 
 
 def trace(function, xmin, xmax, nstep, output):
-	output.write("x, %s\n" % function)
-	function = eval("lambda x:" + function)
+        output.write("%!\n")
+        output.write("/cm { 28.3464567 mul } def\n")
+        output.write("/repere { /Arial findfont .5 cm scalefont setfont newpath 0 0 moveto 1 cm 0 lineto (x) show 0 0 moveto 0 1 cm lineto (y) show stroke } def\n")
+        output.write("repere\n")
+        # output.write("2 10 { == } for\n")
 
-	step = 1.*(xmax-xmin)/nstep
-	for i in range(nstep+1):
-		x = xmin + i*step
-		try:
-			y = function(x)
-		except:
-			continue
-		output.write("%s, %s\n" % (x, y))
+        output.write("newpath\n")
+        output.write("150 50 moveto\n")
+        output.write("150 0 rlineto\n")
+        output.write("0 50 rlineto\n")
+        output.write("-100 0 rlineto\n")
+        output.write("closepath\n")
+        output.write(".5 setgray\n")
+        output.write("fill\n")
+
+	# output.write("x, %s\n" % function)
+	# function = eval("lambda x:" + function)
+
+	# step = 1.*(xmax-xmin)/nstep
+	# for i in range(nstep+1):
+	# 	x = xmin + i*step
+	# 	try:
+	# 		y = function(x)
+	# 	except:
+	# 		continue
+	# 	output.write("%s, %s\n" % (x, y))
+
+        output.write("showpage\n")	
 		
 
 def main(argv=None):
@@ -93,10 +110,4 @@ if __name__ == "__main__":
 
 
 
-# output.write("%!")
-# output.write("/cm { 28.3464567 mul } def\n")
-# output.write("/repere { /Arial findfont .5 cm scalefont setfont newpath 0 0 moveto 1 cm 0 lineto (x) show 0 0 moveto 0 1 cm lineto (y) show stroke } def\n")
-# output.write("repere\n")
-# output.write("2 10 { == } for\n")
-# output.write("showpage")	
 
