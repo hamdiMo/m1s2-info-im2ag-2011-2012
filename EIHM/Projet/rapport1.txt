@@ -1,0 +1,70 @@
+UYAR Yasin
+CADOUR Ulysse
+JOUDRIER Hugo
+
+
+
+Partie I : Etude de l'existant et analyse critique de l'ergonomie du logiciel CTTE
+
+
+Premieres impressions :
+
+- 
+- Dans le menu Fichier : Save as JPG.. etc a remplacer par Export
+- Dans le menu Edition : Erreur de raccourcis (Ctrl-Z associé pour annuler et refaire)
+- Les actions n'ayant pas de signification dans le contexte courant de l'application ne sont pas rendu inaccessible
+      ex : Undo, Redo... non grisé
+
+- Les interactions pouvant etre mise en place entre deux noeud voisins sont automatiquement 
+  affectées entre le noeud le plus à droite de la selection et son voisin de droite.
+- Impossibilite de suppression des interactions entre les noeuds voisins
+- Lors de la suppression d'un noeud possédant un sous arbre de tache et deux voisins avec des interactions vers ceux-ci
+  l'interaction de gauche et redirigé vers le fils gauche du noeud supprimé, l'interaction de droite n'est pas conservé.
+  Ce comportement n'est pas intuitif
+
+- Apres une action Annuler, le logiciel ne revient pas exactement dans l'état avant la modification.
+
+- Selection de deux noeud voisins n'implique pas une création de lien entre ces deux noeuds
+
+
+
+- Guidage
+
+  - Incitation :
+      Pas d'aide a la prise en main
+        Lors du premier lancement, pas de tutoriel, de page d'aide
+      Presence d'info-bulles
+      Pas de titre sur la barre laterale gauche permettant l'identification rapide des groupes d'actions possible
+      Label pour les champs principaux     
+      Presence de listes des differents type d'attributs possible appreciable (LOW, MEDIUM, HIGH...)
+
+  - Groupement/Distinction entre items
+      Les menus sont assez complet et bien organisés (presence de séparateurs pertinents)
+      Le menu "Tool" ressemble plus a un amas de fonctionnalité sans lien direct ni hierarchie apparente
+      Les barres d'outils remplissent bien leur role, sont plutot bien organisé
+      La barre laterale gauche est trop hétéroclite 
+        mauvaise separation des taches et des interactions
+	melange de texte et d'icone
+	hierarchie pertinente des interactions mais mauvaise mise en oeuvre (peu de visibilite)
+         
+
+  - Feedback immediat
+      Bon feedback pour l'ajout et la suppression de taches ainsi que pour l'ajout d'interactions
+      Aucun feedback pour la modification des attributs et propriétés internes d'une tache
+      Parfois même une modification n'a aucune repercussion visible, même en cherchant, sur le reste de l'application
+
+  - Lisibilite
+
+
+- Charge de travail
+
+  - Brieveté :
+      Dans les proprietes d'une tache, pas de valeurs par défaut, pour les differents types d'attributs
+
+  - Densité infomationnelle :
+      Presence d'une toolbar de choix de poilce
+
+
+Partie II : Spécification du prototype
+
+Partie III : Réalisation du prototype
