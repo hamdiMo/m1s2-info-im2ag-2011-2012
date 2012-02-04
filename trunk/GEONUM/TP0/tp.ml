@@ -5,7 +5,7 @@
 (* Pour la compilation en executable : *)
 (* ocamlc graphics.cma tp.ml -o bezier *)
 
-#load "graphics.cma";;
+(* #load "graphics.cma";; *)
 open Graphics ;;
 
 type dot = float * float ;;
@@ -18,24 +18,16 @@ let run = fun () ->
 
   Graphics.open_graph " 512x512";
 
-  let curveInit =
-    let rec (waitDots : int -> dot list) = fun n ->
-      if (n > 0) 
-      then
-        let e = Graphics.wait_next_event [Graphics.Button_down] in 
-        let x = e.Graphics.mouse_x
-        and y = e.Graphics.mouse_y in
-        Graphics.plot x y;
-        ((float_of_int x), (float_of_int y))::(waitDots (n-1))
-      else []
-    in waitDots n
-  in 
+  let (drawDot : dot -> unit) = fun (x, y) ->
+    let intX = int_of_float x
+    and intY = int_of_float y in
+    Graphics.plot intX intY;
+    Graphics.draw_circle intX intY 5
+  in
 
   let rec (drawDots : dot list -> unit) = function
     | [] -> ()
-    | (x, y)::t -> 
-      Graphics.plot (int_of_float x) (int_of_float y);
-      drawDots t
+    | e::t -> drawDot e; drawDots t
   in
 
   let rec (drawCurve : dot list -> unit) = function
@@ -46,6 +38,19 @@ let run = fun () ->
       Graphics.lineto (int_of_float x1) (int_of_float y1);
       drawCurve ((x1,y1)::t)
   in 
+
+  let curveInit =
+    let rec (waitDots : int -> dot list) = fun n ->
+      if (n > 0) 
+      then
+        let e = Graphics.wait_next_event [Graphics.Button_down] in 
+        let dot = ((float_of_int e.Graphics.mouse_x), (float_of_int e.Graphics.mouse_y)) in
+        drawDot dot;
+        dot::(waitDots (n-1))
+      else []
+    in waitDots n
+  in 
+  
 
   let (controlDotFromSegment : float -> dot -> dot -> dot) = 
     fun k -> fun (aX, aY) -> fun (bX, bY) -> ((1.-.k)*.aX+.k*.bX, (1.-.k)*.aY+.k*.bY)
@@ -63,9 +68,10 @@ let run = fun () ->
       | [] -> failwith "controlDotFromCurve"
       | e::[] -> e
       | l -> 
-        Graphics.set_color (Graphics.rgb 0 0 255);
-        drawCurve l;
-        controlDotFromCurve k (controlDotListFromCurve k l)
+        Graphics.set_color (Graphics.rgb 0 0 255); drawCurve l;
+        let dot = controlDotFromCurve k (controlDotListFromCurve k l) in
+        Graphics.set_color (Graphics.rgb 255 0 0); drawDot dot;
+        dot
   in
 
   let (smoothingCurveFromCurve : int -> dot list -> dot list) = 
@@ -78,13 +84,17 @@ let run = fun () ->
                then (controlDotFromCurve ((float_of_int it)*.k) c)::(smoothingCurveFromCurveRec (it+1) c)
                else []
              in 
-             Graphics.set_color (Graphics.rgb 0 0 255);
-             drawCurve dots;
+             Graphics.set_color (Graphics.rgb 0 0 0); drawCurve curveInit;
+             Graphics.set_color (Graphics.rgb 255 0 0); drawCurve dots;
+
+             Graphics.synchronize ();
+             Graphics.clear_graph ();
              dots
          in smoothingCurveFromCurveRec 0
   in
 
   drawCurve curveInit;
+  Graphics.auto_synchronize false;
   Graphics.wait_next_event [Graphics.Button_down];
   let c1 = smoothingCurveFromCurve m curveInit in
   Graphics.set_color (Graphics.rgb 255 0 0);
