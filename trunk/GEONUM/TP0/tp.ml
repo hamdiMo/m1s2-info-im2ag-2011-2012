@@ -1,60 +1,95 @@
-(* open_graph "" ;; *)
-#open "Graphics";;
-(* #use "Graphics";; *)
+(* http://imagine.inrialpes.fr/people/Brouet.Remi/Teaching/teaching.html *)
+
+(* Programme de tracé de courbes de bézier *)
+
+(* Pour la compilation en executable : *)
+(* ocamlc graphics.cma tp.ml -o bezier *)
+
+#load "graphics.cma";;
+open Graphics ;;
 
 type dot = float * float ;;
-type vector = float * float ;;
-type segment = dot * dot ;;
-type courbe = segment list ;;
 
-let rec (createCourbeFrom : dot list -> courbe) = function 
-  | [] -> []
-  | e::[] -> []
-  | e1::e2::tail -> (e1, e2)::(createCourbeFrom (e2::tail))
+let (controlDotFromSegment : float -> dot -> dot -> dot) = 
+  fun k -> fun (aX, aY) -> fun (bX, bY) -> ((1.-.k)*.aX+.k*.bX, (1.-.k)*.aY+.k*.bY)
 ;;
 
-let rec (diviserSegment : segment -> segment list) = function 
-  (p1, p2) -> 
-    let (p1x, p1y) = p1 and (p2x, p2y) = p2 
-    in let pInter = ((p1x+.p2x)/.2., (p1y+.p2y)/.2.)
-       in [(p1, pInter); (pInter, p2)]
+let rec (controlDotListFromCurve : float -> dot list -> dot list) =
+  fun k -> function
+    | [] -> []
+    | h::[] -> []
+    | p1::p2::tail -> (controlDotFromSegment k p1 p2)::(controlDotListFromCurve k (p2::tail))
 ;;
 
-let rec (diviserCourbe : courbe -> courbe) = function
-  | [] -> []
-  | h::t -> (diviserSegment h)@(diviserCourbe t)
+let rec (controlDotFromCurve : float -> dot list -> dot) =
+  fun k -> function 
+    | [] -> failwith "controlDotFromCurve"
+    | e::[] -> e
+    | l -> controlDotFromCurve k (controlDotListFromCurve k l)
+;;
+    
+let (smoothingCurveFromCurve : int -> dot list -> dot list) = 
+  fun n -> 
+    let (k : float) = 1. /. (float_of_int (n))
+    in let rec (smoothingCurveFromCurveRec : int -> dot list -> dot list) =
+         fun it -> fun c -> 
+           if (it <= n)
+           then (controlDotFromCurve ((float_of_int it)*.k) c)::(smoothingCurveFromCurveRec (it+1) c)
+           else []
+       in smoothingCurveFromCurveRec 0
 ;;
 
-let (lisserCourbe : courbe -> courbe) = 
-  function c0 -> 
-    let c1 = diviserCourbe c0 
-    in let rec (lisserCourbeRec : courbe -> courbe) = function
-         | [] -> []
-         | e::[] -> [e]
-         | e1::e2::tail -> 
-            let (p1, _) = e1 and (_, p2) = e2
-            in (p1, p2)::(lisserCourbeRec tail)
-       in match c1 with
-          | [] -> []
-          | e::[] -> c1
-          | h1::t1 -> h1::(lisserCourbeRec t1)
+let run = fun () ->
+  let n = read_int (print_string "Combien de points possede la courbe ? ")
+  and m = read_int (print_string "Combien de points de control par segment ? ")
+  in
+
+  Graphics.open_graph " 512x512";
+
+  let curveInit =
+    let rec (waitDots : int -> dot list) = fun n ->
+      if (n > 0) 
+      then
+        let e = Graphics.wait_next_event [Graphics.Button_down] in 
+        let x = e.Graphics.mouse_x
+        and y = e.Graphics.mouse_y in
+        Graphics.plot x y;
+        ((float_of_int x), (float_of_int y))::(waitDots (n-1))
+      else []
+    in waitDots n
+  in 
+
+  let rec (drawDots : dot list -> unit) = function
+    | [] -> ()
+    | (x, y)::t -> 
+      Graphics.plot (int_of_float x) (int_of_float y);
+      drawDots t
+  in
+
+  let rec (drawCurve : dot list -> unit) = function
+    | [] -> ()
+    | (x, y)::[] -> Graphics.plot (int_of_float x) (int_of_float y)
+    | (x0, y0)::(x1, y1)::t -> 
+      Graphics.moveto (int_of_float x0) (int_of_float y0);
+      Graphics.lineto (int_of_float x1) (int_of_float y1);
+      drawCurve ((x1,y1)::t)
+  in 
+
+  drawCurve curveInit;
+  let e = Graphics.wait_next_event [Graphics.Button_down]
+  and c1 = smoothingCurveFromCurve m curveInit in
+  Graphics.set_color (Graphics.rgb 255 0 0);
+  drawCurve c1;
+  
+  let rec waitSpaceEvent = fun () ->
+    let e = Graphics.wait_next_event [Graphics.Key_pressed]
+    in 
+    if (e.Graphics.keypressed)
+    then ()
+    else waitSpaceEvent ()
+  in waitSpaceEvent ();
+  
+  Graphics.close_graph ()
 ;;
 
-let dotSet = 
-  let p1 = (0.0, 0.0)
-  and p2 = (1.0, 10.0)
-  and p3 = (2.0, -40.0)
-  and p4 = (6.0, 20.0)
-  in createCourbeFrom [p1;p2;p3;p4]
-;;
-
-let rec (lisserGlobal : courbe -> int -> courbe) = 
-  fun c -> fun k -> 
-    if (k > 0)
-    then lisserCourbe (lisserGlobal c (k-1))
-    else c
-;;
-
-dotSet;;
-
-open_graph "800x500+40-30";;
+run () ;;
