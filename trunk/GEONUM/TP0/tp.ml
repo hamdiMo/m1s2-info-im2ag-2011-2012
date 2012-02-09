@@ -43,10 +43,12 @@ let run = fun () ->
     let rec (waitDots : int -> dot list) = fun n ->
       if (n > 0) 
       then
+        let dots = (waitDots (n-1)) in
+        drawCurve dots;
         let e = Graphics.wait_next_event [Graphics.Button_down] in 
         let dot = ((float_of_int e.Graphics.mouse_x), (float_of_int e.Graphics.mouse_y)) in
         drawDot dot;
-        dot::(waitDots (n-1))
+        dot::dots
       else []
     in waitDots n
   in 
