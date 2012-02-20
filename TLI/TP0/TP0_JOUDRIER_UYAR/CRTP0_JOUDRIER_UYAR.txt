@@ -1,0 +1,12 @@
+Joudrier Hugo
+Uyar Yasin
+
+William.Delamare@imag.fr
+
+Compte rendu du TP0
+
+1- distance sémantique à l'execution: il faut savoir que le sinus par exemple est une une fonction utilisable, qu'il faut donner un string en paramètre représentant la fonction avec en paramètre de cette fonction la variable x.
+   distance sémantique à l'interprétation: comprendre que le résultat est sous forme de tableau avec la première colonne représentant les valeurs de x et en deuxieme colonne le resultat de l'operateur passé en paramètres appliqué à la valeur x correspondante.
+
+2- Il est possible d'ameliorer les distances en affichant des messages d'information d'erreur, d'entrees, de manuel d'aide...etc
+
