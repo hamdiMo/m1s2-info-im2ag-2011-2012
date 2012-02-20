@@ -63,7 +63,7 @@ def traceRepere(xmin, xmax, ymin, ymax, output):
 	#output.write("[] 0 setdash\n")
 
 
-def trace(function, xmin, xmax, nstep, output):
+def tracebis(function, xmin, xmax, nstep, output):
 	output.write("%!\n")
 
 	
@@ -101,6 +101,65 @@ def trace(function, xmin, xmax, nstep, output):
 
         output.write("showpage\n")
 		
+def trace(function, xmin, xmax, nstep, output):
+    function = eval("lambda x:" + function)
+    output.write('%!\n')
+
+    # definition du repere
+    output.write('/cm { 28.3464567 mul } def\n')
+    output.write('/repere {\n')
+    output.write('  /Arial findfont\n')
+    output.write('  .5 cm scalefont\n')
+    output.write('  setfont\n')
+    output.write('  newpath\n')
+    output.write('  0 0 moveto\n')
+    output.write('  %g 0 lineto\n' % (xmax*20))
+    output.write('  (x) show\n')
+    output.write('  0 0 moveto\n')
+    output.write('  %g 0 lineto\n' % (xmin*20))
+    output.write('  0 0 moveto\n')
+    output.write('  0 5 cm lineto\n')
+    output.write('  (y) show\n')
+    output.write('  0 0 moveto\n')
+    output.write('  0 -5 cm lineto\n')
+    output.write('  stroke\n')
+    output.write('} def\n')
+    output.write(' 10 cm 12 cm translate\n')
+    output.write('repere\n')
+    
+    step = 1.*(xmax-xmin)/nstep
+    
+    # definition du quadrillage
+    output.write('/quadrillage {\n')
+    output.write('  newpath\n')
+    output.write('  [5 5] 0 setdash \n')
+    output.write('  0 0 moveto\n')
+    for j in range((nstep)/10 + 1):
+        x = xmin + j*step*10 
+        output.write('  %g -5 cm moveto\n' % (x*20))
+        output.write('  %g 5 cm lineto\n' % (x*20))
+    output.write('  stroke\n')
+    output.write('  [] 0 setdash\n')
+    output.write('  0 0 moveto\n')
+    output.write('} def\n')
+    output.write('quadrillage\n')
+
+    output.write('newpath\n')
+    output.write('%g %g moveto\n' % (xmin*20,function(xmin)*40))
+
+    # calcul de la fonction et affichage de la ligne
+    for i in range(nstep+1):
+        x = xmin + i*step
+        try:
+            y = function(x)
+        except:
+            continue
+        output.write('%g %g lineto\n' % (x*20,40*y))
+    output.write('stroke\n')
+
+    output.write('showpage\n')
+    output.close
+
 
 def main(argv=None):
 	if argv is None:
@@ -119,8 +178,8 @@ def main(argv=None):
 
 	function = argv[0]
 	output = sys.stdout
-	xmin, xmax = 0., 1.
-	nstep = 10
+	xmin, xmax = -5., 5.
+	nstep = (int)(xmax-xmin) * 10
 
 	for option, value in options:
 		if option in ["-h", "--help"]:
