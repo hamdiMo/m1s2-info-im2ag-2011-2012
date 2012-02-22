@@ -5,7 +5,7 @@
 (* Pour la compilation en executable : *)
 (* ocamlc graphics.cma tp.ml -o bezier *)
 
-#load "graphics.cma";;
+(* load "graphics.cma";; *)
 open Graphics ;;
 
 type dot = float * float ;;
