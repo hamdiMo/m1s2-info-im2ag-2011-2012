@@ -1,31 +1,11 @@
 UYAR Yasin
 CADOUR Ulysse
 JOUDRIER Hugo
+MORIGAULT Thierry
 
 
 
 Partie I : Etude de l'existant et analyse critique de l'ergonomie du logiciel CTTE
-
-
-Premieres impressions :
-
-- 
-- Dans le menu Fichier : Save as JPG.. etc a remplacer par Export
-- Dans le menu Edition : Erreur de raccourcis (Ctrl-Z associé pour annuler et refaire)
-- Les actions n'ayant pas de signification dans le contexte courant de l'application ne sont pas rendu inaccessible
-      ex : Undo, Redo... non grisé
-
-- Les interactions pouvant etre mise en place entre deux noeud voisins sont automatiquement 
-  affectées entre le noeud le plus à droite de la selection et son voisin de droite.
-- Impossibilite de suppression des interactions entre les noeuds voisins
-- Lors de la suppression d'un noeud possédant un sous arbre de tache et deux voisins avec des interactions vers ceux-ci
-  l'interaction de gauche et redirigé vers le fils gauche du noeud supprimé, l'interaction de droite n'est pas conservé.
-  Ce comportement n'est pas intuitif
-
-- Apres une action Annuler, le logiciel ne revient pas exactement dans l'état avant la modification.
-
-- Selection de deux noeud voisins n'implique pas une création de lien entre ces deux noeuds
-
 
 
 - Guidage
@@ -38,7 +18,7 @@ Premieres impressions :
       Label pour les champs principaux     
       Presence de listes des differents type d'attributs possible appreciable (LOW, MEDIUM, HIGH...)
 
-  - Groupement/Distinction entre items
+  - Groupement/Distinction entre items :
       Les menus sont assez complet et bien organisés (presence de séparateurs pertinents)
       Le menu "Tool" ressemble plus a un amas de fonctionnalité sans lien direct ni hierarchie apparente
       Les barres d'outils remplissent bien leur role, sont plutot bien organisé
@@ -47,11 +27,12 @@ Premieres impressions :
 	melange de texte et d'icone
 	hierarchie pertinente des interactions mais mauvaise mise en oeuvre (peu de visibilite)
          
-
-  - Feedback immediat
+  - Feedback immediat :
       Bon feedback pour l'ajout et la suppression de taches ainsi que pour l'ajout d'interactions
       Aucun feedback pour la modification des attributs et propriétés internes d'une tache
       Parfois même une modification n'a aucune repercussion visible, même en cherchant, sur le reste de l'application
+      Apres une action Annuler, le logiciel ne revient pas exactement dans l'état avant la modification
+        ex : suppression puis recreation d'un noeud : il n'a pas le même identifiant
 
   - Lisibilite
 
@@ -62,9 +43,61 @@ Premieres impressions :
       Dans les proprietes d'une tache, pas de valeurs par défaut, pour les differents types d'attributs
 
   - Densité infomationnelle :
-      Presence d'une toolbar de choix de poilce
+      Presence d'une toolbar de choix de police
 
+  - Action minimale :
+      Pour la creation d'une interaction entre deux noeuds, il suffit de selectionner le noeud de gauche
+      Distance articulaire pour renommer un noeud trop longue (3 etapes + navigation dans l'interface)
+
+
+- Controle
+
+  - Controle utilisateur
+      Lors de la realisation d'une longue tache (parfois un redo suffit) l'interface se bloque.
+
+
+- Adaptabilite
+
+  - Prise en compte de l'experience :
+      Pas d'aide a la prise en main, l'application est concu pour un utilisateur experimenté.
+
+
+- Erreurs
+
+  - Correction des erreurs :
+      Impossibilite de suppression des interactions entre les noeuds voisins
+
+
+- Homogeneite
+
+  - Coherence :
+      Lors de la suppression d'un noeud possédant un sous arbre de tache et deux voisins avec des interactions vers ceux-ci
+        l'interaction de gauche et redirigé vers le fils gauche du noeud supprimé, l'interaction de droite n'est pas conservé.
+      Le bouton refaire n'est par defaut pas grisé, mais il se grise parfois.
+
+
+- Signifiance
+
+  Lors du deplacement d'un noeud. Le symbole des interactions qu'il entretient avec ses voisins se retrouve trop loin du lien.
+
+- Compatibilite 
+
+  - Bonne compatibilite des menus avec le reste du systeme hormis le menu "Info" qui devrait apparaitre le plus a droite.
+  - Dans le menu Fichier : Save as JPG.. etc a remplacer par Export
+  - Dans le menu Edition : Erreur de raccourcis (Ctrl-Z associé pour annuler et refaire)
+  - Les actions n'ayant pas de signification dans le contexte courant de l'application ne sont pas rendu inaccessible
+      ex : Undo, Redo... non grisé
+  - Les interactions pouvant etre mise en place entre deux noeud voisins sont automatiquement 
+      affectées entre le dernier noeud selectionné et son voisin de droite.
+      Ce qui est incompataible avec l'utilisateur qui veut introduire une interaction entre les deux noeuds selectionnés
+  - Le deplacement d'une tache via un drag'n drop a un comportement totalement imprevisible.
+
+
+- Bugs
+
+  - Le deplacement d'un noeud aprés une mise a l'echelle hors de l'intervale [93..103]% de la vue du modele n'a pas l'effet escompté.
 
 Partie II : Spécification du prototype
 
 Partie III : Réalisation du prototype
+

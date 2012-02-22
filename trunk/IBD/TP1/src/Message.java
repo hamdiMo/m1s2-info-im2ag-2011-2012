@@ -1,6 +1,4 @@
-package util;
-
-import java.util.Serializable;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,11 +14,13 @@ public class Message implements Serializable {
     Message(String nom, String message){
 	m_nom = nom;
 	m_message = message;
-	m_date = (new Calendar()).getDate();
+	m_date = Calendar.getInstance().getTime();
     }
 
     /** Methodes */
-    
+    public String toString(){
+	return m_date.toString()+" "+ m_nom + " : "+ m_message;
+    }
     
     /** Variables de classe */
     // private static final long serialVersionUID = 42L;
