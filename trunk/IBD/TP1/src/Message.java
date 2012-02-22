@@ -21,6 +21,7 @@ public class Message implements Serializable {
 
     /** Methodes */
     
+    
     /** Variables de classe */
     // private static final long serialVersionUID = 42L;
     
