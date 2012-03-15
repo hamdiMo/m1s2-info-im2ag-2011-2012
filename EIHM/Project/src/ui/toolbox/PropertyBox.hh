@@ -8,6 +8,7 @@
 #include <QRadioButton>
 #include <QSlider>
 
+#include <string>
 #include "TaskTree.hh";
 
 class UserInterface;
