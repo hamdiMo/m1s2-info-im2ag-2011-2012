@@ -1,9 +1,9 @@
 #include "TaskTreeViewer.hh"
-//#include "PictureModifier.hh"
+#include "TaskTreeModifier.hh"
 
 
-TaskTreeViewer::TaskTreeViewer() 
-  // m_pictureModifier(pictureModifier)
+TaskTreeViewer::TaskTreeViewer(TaskTreeModifier* tasktreemodifier) 
+m_taskTreeModifier(tasktreemodifier)
 { 
   // m_scale=1.0;
   // m_scaleFactor=0.25;
