@@ -1,8 +1,6 @@
 #include "UserInterface.hh"
 
-#include "TabWidget.hh"
-#include "Picture.hh"
-#include "PictureManager.hh"
+
 
 
 
@@ -10,13 +8,13 @@
 UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   m_QApplication(qapplication){ 
   m_clipboard = clipboard;
-  createActions();
-  m_pictureManager = new PictureManager(this);
-  m_viewTabWidget = createTabWidget();
-  createToolBoxDocks();
-  createMenuBar();
-  createToolBars();
-  setCentralWidget((QTabWidget*)m_viewTabWidget);
+  // createActions();
+  //  m_pictureManager = new PictureManager(this);
+  //m_viewTabWidget = createTabWidget();
+  // createToolBoxDocks();
+  // createMenuBar();
+  // createToolBars();
+  //  setCentralWidget((QTabWidget*)m_viewTabWidget);
   setWindowTitle(tr("MyPhotoShop"));
   resize(1024, 768);
   update();
@@ -25,30 +23,19 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
 }
     
 UserInterface::~UserInterface() {
-  delete m_pictureManager;
+ 
 }
-
-
-/** Methodes */
-void UserInterface::update() {
-  updateActions();
-  updateToolBoxDocks();
-}
-
-
-/** Methodes internes */
-TabWidget* UserInterface::createTabWidget() {
-  TabWidget* tabWidget = new TabWidget(this);
-  tabWidget->addTab((TabPanel*)m_pictureManager);
-  QObject::connect(tabWidget,SIGNAL(currentChanged(int)),this,SLOT(resetEditionTool(int)));
-  return tabWidget;
-}
+// TabWidget* tabWidget = new TabWidget(this);
+  // tabWidget->addTab((TabPanel*)m_pictureManager);
+  // QObject::connect(tabWidget,SIGNAL(currentChanged(int)),this,SLOT(resetEditionTool(int)));
+  // return tabWidget;
+// }
   
-QDockWidget* UserInterface::createDockWidget(QWidget* widget) {
-  QDockWidget* dockWidget = new QDockWidget(widget->accessibleName());
-  dockWidget->setWidget(widget);
-  return dockWidget;
-}
+// QDockWidget* UserInterface::createDockWidget(QWidget* widget) {
+//   // QDockWidget* dockWidget = new QDockWidget(widget->accessibleName());
+//   // dockWidget->setWidget(widget);
+//   // return dockWidget;
+// }
 
 
 

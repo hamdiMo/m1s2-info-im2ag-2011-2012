@@ -12,32 +12,32 @@ class PictureViewer : public QLabel{ Q_OBJECT
 
 public:
   /** Constructeurs et destructeurs */
-  PictureViewer(PictureModifier*);
+  PictureViewer();
   ~PictureViewer();
                
-  /** Methodes */
-  void scaleImage(double);
-  void refresh();
-  void refreshData();
-  QImage getImage();
-  void zoomIn();
-  double getScale();
-  double getWidthTranslation();
-  double getHeightTranslation();
-  double zoomOut();
-  double normalSize();
-  double fitToWindow(QSize);
-  PictureModifier*  getPictureModifier();
-private:
+//   /** Methodes */
+//   void scaleImage(double);
+//   void refresh();
+//   void refreshData();
+//   QImage getImage();
+//   void zoomIn();
+//   double getScale();
+//   double getWidthTranslation();
+//   double getHeightTranslation();
+//   double zoomOut();
+//   double normalSize();
+//   double fitToWindow(QSize);
+//   PictureModifier*  getPictureModifier();
+// private:
 
-  /** Methodes internes */
-  /** Attributs */
-  double m_width_translation;
-  double m_height_translation; 
-  double m_scaleFactor;
-  double m_scale;
-  PictureModifier* m_pictureModifier;
-  QImage m_qImage;
+//   /** Methodes internes */
+//   /** Attributs */
+//   double m_width_translation;
+//   double m_height_translation; 
+//   double m_scaleFactor;
+//   double m_scale;
+//   PictureModifier* m_pictureModifier;
+//   QImage m_qImage;
    
 };
 
