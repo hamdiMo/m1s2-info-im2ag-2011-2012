@@ -1,0 +1,3839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE COOPConcurTaskTrees PUBLIC "http://giove.cnuce.cnr.it/CoopCTTDTD.dtd" "CoopCTTDTD.dtd">
+
+<COOPConcurTaskTrees>
+<TaskModelCOOP NameTaskModelID="midas-example.xml">
+<TaskCOOP Identifier="Coop_new" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Stop" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingRight name="Proceed"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Send Stop" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="GND_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Stop"/>
+  <SiblingRight name="Send Stop "/>
+</TaskCONN>
+<TaskCONN Identifier="Send Stop" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Stop"/>
+  <SiblingLeft name="Send Stop "/>
+  <SiblingRight name="Receive stop"/>
+</TaskCONN>
+<TaskCONN Identifier="Receive stop" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Stop"/>
+  <SiblingLeft name="Send Stop "/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Proceed" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingLeft name="Stop"/>
+  <SiblingRight name="Taxi to"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Send Proceed" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="GND_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Proceed"/>
+  <SiblingRight name="Send Proceed "/>
+</TaskCONN>
+<TaskCONN Identifier="Send Proceed" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Proceed"/>
+  <SiblingLeft name="Send Proceed "/>
+  <SiblingRight name="Receive proceed "/>
+</TaskCONN>
+<TaskCONN Identifier="Receive proceed" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Proceed"/>
+  <SiblingLeft name="Send Proceed "/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Taxi to" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingLeft name="Proceed"/>
+  <SiblingRight name="Velocity"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Uplink path" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="GND_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Taxi to"/>
+  <SiblingRight name="Uplink path "/>
+</TaskCONN>
+<TaskCONN Identifier="Uplink path" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Uplink path "/>
+  <SiblingRight name="Receive taxi to"/>
+</TaskCONN>
+<TaskCONN Identifier="Receive taxi to" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Uplink path "/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Velocity" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingLeft name="Taxi to"/>
+  <SiblingRight name="Land "/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Take velocity" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="GND_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Velocity"/>
+  <SiblingRight name="Take velocity"/>
+</TaskCONN>
+<TaskCONN Identifier="Take velocity" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Velocity"/>
+  <SiblingLeft name="Take velocity"/>
+  <SiblingRight name="Receive velocity"/>
+</TaskCONN>
+<TaskCONN Identifier="Receive velocity" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Velocity"/>
+  <SiblingLeft name="Take velocity"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Land" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingLeft name="Velocity"/>
+  <SiblingRight name="GoHoldingPosition "/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="SendLand" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Land "/>
+  <SiblingRight name="ReceiveLand"/>
+</TaskCONN>
+<TaskCONN Identifier="ReceiveLand" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Land "/>
+  <SiblingLeft name="SendLand"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="GoHoldingPosition" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Coop_new"/>
+  <SiblingLeft name="Land "/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="SendHoldingPosition" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="TWR_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="GoHoldingPosition "/>
+  <SiblingRight name="ReceiveHoldingPosition"/>
+</TaskCONN>
+<TaskCONN Identifier="ReceiveHoldingPosition" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="PIL_new" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="GoHoldingPosition "/>
+  <SiblingLeft name="SendHoldingPosition"/>
+</TaskCONN>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+</TaskModelCOOP>
+<TaskModel NameTaskModelID="PIL_new">
+<Task Identifier="PIL_new" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Receive stop" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingRight name="Receive proceed "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Receive proceed" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingLeft name="Receive stop"/>
+  <SiblingRight name="Receive taxi to"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Receive taxi to" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingLeft name="Receive proceed "/>
+  <SiblingRight name="Receive velocity"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Receive velocity" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingLeft name="Receive taxi to"/>
+  <SiblingRight name="ReceiveHoldingPosition"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ReceiveHoldingPosition" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingLeft name="Receive velocity"/>
+  <SiblingRight name="ReceiveLand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ReceiveLand" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="PIL_new"/>
+  <SiblingLeft name="ReceiveHoldingPosition"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
+<TaskModel NameTaskModelID="GND_new">
+<Task Identifier="Ground-activities" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Locate spatial deviation" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Ground-activities"/>
+  <SiblingRight name="Handle flight communication"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Check deviation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingRight name="Check Path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Check Path" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingLeft name="Check deviation"/>
+  <SiblingRight name="Handle deviation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select flight label" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingRight name="ShowExtendedLabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ShowExtendedLabel" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="Select flight label"/>
+  <SiblingRight name="Visualise graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Visualise graphical path" Category="Abstraction Task" Iterative="false" Optional="true" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="ShowExtendedLabel "/>
+  <SiblingRight name="Check deviation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select path field" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Visualise graphical path"/>
+  <SiblingRight name="Show graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show graphical path" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Visualise graphical path"/>
+  <SiblingLeft name="Select path field"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Check deviation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="Visualise graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Handle deviation" Category="Abstraction Task" Iterative="false" Optional="true" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingLeft name="Check Path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Analyze deviation features" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle deviation"/>
+  <SiblingRight name="Decide strategy"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Decide strategy" Category="User Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle deviation"/>
+  <SiblingLeft name="Analyze deviation features "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Handle flight communication" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Ground-activities"/>
+  <SiblingLeft name="Locate spatial deviation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select flight label" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingRight name="ShowExtendedLabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ShowExtendedLabel" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="Select flight label"/>
+  <SiblingRight name="SendCommand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="SendCommand" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="ShowExtendedLabel "/>
+  <SiblingRight name="Preview"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Selectlabel" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="SendCommand"/>
+  <SiblingRight name="Send"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Send" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="SendCommand"/>
+  <SiblingLeft name="Selectlabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Send Stop" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingRight name="StartUPApproved"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="StartUPApproved" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Send Stop "/>
+  <SiblingRight name="ContactTower"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ContactTower" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="StartUPApproved"/>
+  <SiblingRight name="Take velocity"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Take velocity" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="ContactTower"/>
+  <SiblingRight name="Send Proceed "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Send Proceed" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Take velocity"/>
+  <SiblingRight name="Taxi to"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Taxi to" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Send Proceed "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select  taxi to" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingRight name="Build path with automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Build path with automatic suggestions" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Select  taxi to"/>
+  <SiblingRight name="Build path without automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="SelectAutomatic" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingRight name="Show suggested solutions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show suggested solutions" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingLeft name="SelectAutomatic"/>
+  <SiblingRight name="Select solution "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Select solution" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingLeft name="Show suggested solutions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Build path without automatic suggestions" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Build path with automatic suggestions"/>
+  <SiblingRight name="Close editing"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select manual" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingRight name="Building path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Building path" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingLeft name="Select manual"/>
+  <SiblingRight name="Terminate building"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Specify next node" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Building path"/>
+  <SiblingRight name="Show segment"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show segment" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Building path"/>
+  <SiblingLeft name="Specify next node"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Terminate building" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingLeft name="Building path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Close editing" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Build path without automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Uplink path" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Close editing"/>
+  <SiblingRight name="Select cancel"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Select cancel" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Close editing"/>
+  <SiblingLeft name="Uplink path "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Preview" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="SendCommand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select path field" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Preview"/>
+  <SiblingRight name="Show graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show graphical path" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Preview"/>
+  <SiblingLeft name="Select path field"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
+<TaskModel NameTaskModelID="TWR_new">
+<Task Identifier="Tower_activities" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Locate spatial deviation" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Tower_activities"/>
+  <SiblingRight name="Handle flight communication"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Check deviation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingRight name="Check Path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Check Path" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingLeft name="Check deviation"/>
+  <SiblingRight name="Handle deviation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select flight label" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingRight name="ShowExtendedLabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ShowExtendedLabel" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="Select flight label"/>
+  <SiblingRight name="Visualise graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Visualise graphical path" Category="Abstraction Task" Iterative="false" Optional="true" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="ShowExtendedLabel "/>
+  <SiblingRight name="Check deviation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select path field" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Visualise graphical path"/>
+  <SiblingRight name="Show graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show graphical path" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Visualise graphical path"/>
+  <SiblingLeft name="Select path field"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Check deviation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Check Path"/>
+  <SiblingLeft name="Visualise graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Handle deviation" Category="Abstraction Task" Iterative="false" Optional="true" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Locate spatial deviation"/>
+  <SiblingLeft name="Check Path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Analyze deviation features" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle deviation"/>
+  <SiblingRight name="Decide strategy"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Decide strategy" Category="User Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle deviation"/>
+  <SiblingLeft name="Analyze deviation features "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Handle flight communication" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Tower_activities"/>
+  <SiblingLeft name="Locate spatial deviation"/>
+  <SiblingRight name="SendLand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select flight label" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingRight name="ShowExtendedLabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ShowExtendedLabel" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="Select flight label"/>
+  <SiblingRight name="SendCommand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="SendCommand" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="ShowExtendedLabel "/>
+  <SiblingRight name="Preview"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Selectlabel" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="SendCommand"/>
+  <SiblingRight name="Send"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Send" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="SendCommand"/>
+  <SiblingLeft name="Selectlabel "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Send Stop" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingRight name="SendHoldingPosition"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="SendHoldingPosition" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Send Stop "/>
+  <SiblingRight name="ContactGround"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="ContactGround" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="SendHoldingPosition"/>
+  <SiblingRight name="Take velocity"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Take velocity" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="ContactGround"/>
+  <SiblingRight name="Send Proceed "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Send Proceed" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Take velocity"/>
+  <SiblingRight name="Taxi to"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Taxi to" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Send"/>
+  <SiblingLeft name="Send Proceed "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select  taxi to" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingRight name="Build path with automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Build path with automatic suggestions" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Select  taxi to"/>
+  <SiblingRight name="Build path without automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select predefined" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingRight name="Show suggested solution"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show suggested solution" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingLeft name="Select predefined "/>
+  <SiblingRight name="SelectSolution"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="SelectSolution" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path with automatic suggestions"/>
+  <SiblingLeft name="Show suggested solution"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Build path without automatic suggestions" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Build path with automatic suggestions"/>
+  <SiblingRight name="Close editing"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select manual" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingRight name="Building path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Building path" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingLeft name="Select manual"/>
+  <SiblingRight name="Terminate building"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Specify next node" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Building path"/>
+  <SiblingRight name="Show segment"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show segment" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Building path"/>
+  <SiblingLeft name="Specify next node"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Terminate building" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Build path without automatic suggestions"/>
+  <SiblingLeft name="Building path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Close editing" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Taxi to"/>
+  <SiblingLeft name="Build path without automatic suggestions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Uplink path" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Close editing"/>
+  <SiblingRight name="Select cancel"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Select cancel" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Close editing"/>
+  <SiblingLeft name="Uplink path "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Preview" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle flight communication"/>
+  <SiblingLeft name="SendCommand"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select path field" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Preview"/>
+  <SiblingRight name="Show graphical path"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show graphical path" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Preview"/>
+  <SiblingLeft name="Select path field"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="SendLand" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Tower_activities"/>
+  <SiblingLeft name="Handle flight communication"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
+</COOPConcurTaskTrees>
