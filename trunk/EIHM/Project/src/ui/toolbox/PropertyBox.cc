@@ -26,11 +26,11 @@ void PropertyBox::refresh() {}
 
 
 /** Slots */
-void setTaskTree(TaskTree* taskTree) {}
+void PropertyBox::setTaskTree(TaskTree* taskTree) {}
 
-void setName(std::string name) {}
+void PropertyBox::setName(std::string name) {}
 
-void setType(TaskTree::Type type) {}
+void PropertyBox::setType(TaskTree::Type type) {}
 
 
 /** Methodes internes */
