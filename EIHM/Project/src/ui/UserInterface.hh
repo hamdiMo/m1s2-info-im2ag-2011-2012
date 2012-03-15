@@ -65,30 +65,18 @@ public slots:
   // /** Slots */
   void open();
   void save();
-  // void close(QWidget*);
- 
   void exit();
-
-  // void undo();
-  // void redo();
+  void undo();
+  void redo();
+  void cut();
+  void copy();
+  void paste();
   
-  // void cut();
-  // void copy();
-  // void paste();
-  
-  // void crop();
-  // void select();
-  // void move();
-  // void resetEditionTool(int);
-  
-  // void zoomIn();
-  // void zoomOut();
-  // void normalSize();
-  // void fitToWindow();
-  // void updateToolBoxDocks();
-
-  // void changeGIMode();
-  // void about();
+  void zoomIn();
+  void zoomOut();
+  void normalSize();
+  void fitToWindow();
+  void about();
   void print(QString);
         
 private:
@@ -107,23 +95,18 @@ private:
   // QDockWidget* createDockWidget(QWidget* widget);
   
   void createFileAction();
-  // void createEditAction();
-  // void createViewAction();
-  // void createHelpAction();
-  // void createAffineTransformationOperationAction();
-  // void createColorConvertOperationAction();
-  // void createConvolveOperationAction();
-  // void createAlgebricOperationAction();
-  
+  void createEditAction();
+  void createViewAction();
+  void createHelpAction();
   QMenu* createFileMenu();
-  // QMenu* createEditMenu();
-  // QMenu* createViewMenu();
-  // QMenu* createHelpMenu();
+  QMenu* createEditMenu();
+  QMenu* createViewMenu();
+  QMenu* createHelpMenu();
   
-  // QToolBar* createFileToolBar();
-  // QToolBar* createEditToolBar();
-  // QToolBar* createViewToolBar();
-  // QToolBar* createHelpToolBar();
+  QToolBar* createFileToolBar();
+  QToolBar* createEditToolBar();
+  QToolBar* createViewToolBar();
+  QToolBar* createHelpToolBar();
 
   // QDockWidget* createPreviewerDock();
   // QDockWidget* createHistogramDock();
@@ -152,9 +135,9 @@ private:
   // ColorConvertOperationChooser* m_colorConvertOperationChooser;
 
   QMenu* m_fileMenu;
-  // QMenu* m_editMenu;
-  // QMenu* m_viewMenu;
-  // QMenu* m_helpMenu;
+  QMenu* m_editMenu;
+  QMenu* m_viewMenu;
+  QMenu* m_helpMenu;
   
   // QToolBar* m_fileToolBar;
   // QToolBar* m_editToolBar;
@@ -173,30 +156,24 @@ private:
   
   // bool m_actionIconMod;
   
-  // QAction* m_copy;
-  // QAction* m_cut;
-  // QAction* m_paste;
+  QAction* m_copy;
+  QAction* m_cut;
+  QAction* m_paste;
 
   QAction* m_openAct;
   QAction* m_saveAct;
   QAction* m_exitAct;
   
-  // QAction* m_closeTab;
+  QAction* m_undoAct;
+  QAction* m_redoAct;
 
-  // QAction* m_undoAct;
-  // QAction* m_redoAct;
-
-  // QAction* m_zoomInAct;
-  // QAction* m_zoomOutAct;
-  // QAction* m_normalSizeAct;
-  // QAction* m_fitToWindowAct;
-  // QAction* m_selection;
-  // QAction* m_move;
-  // QAction* m_crop;
-  
-  // QAction* m_guiMode;
-  // QAction* m_aboutAct;
-  // QAction* m_aboutQtAct;
+  QAction* m_zoomInAct;
+  QAction* m_zoomOutAct;
+  QAction* m_normalSizeAct;
+  QAction* m_fitToWindowAct;
+  QAction* m_selection;
+  QAction* m_aboutAct;
+  QAction* m_aboutQtAct;
 
 };
 
