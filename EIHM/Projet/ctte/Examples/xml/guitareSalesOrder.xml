@@ -1,0 +1,3448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE COOPConcurTaskTrees PUBLIC "http://giove.cnuce.cnr.it/CoopCTTDTD.dtd" "CoopCTTDTD.dtd">
+
+<COOPConcurTaskTrees>
+<TaskModelCOOP NameTaskModelID="guitareSalesOrder.xml">
+<TaskCOOP Identifier="Sales Order" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Manage Connection" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Sales Order"/>
+  <SiblingRight name="Manage Session"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Insert Data to Connect" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Connection"/>
+  <SiblingRight name="Receive notification about Customer conncetion"/>
+</TaskCONN>
+<TaskCONN Identifier="Receive notification about Customer conncetion" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Connection"/>
+  <SiblingLeft name="Insert Data to Connect"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Manage Session" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Sales Order"/>
+  <SiblingLeft name="Manage Connection"/>
+  <SiblingRight name="Close connection"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Share Draft with Customer" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Session"/>
+  <SiblingRight name="Manage Sold To BP"/>
+</TaskCONN>
+<TaskCOOP Identifier="Manage Sold To BP" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Session"/>
+  <SiblingLeft name="Share Draft with Customer"/>
+  <SiblingRight name="Saving Operations"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Handle New Draft" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Sold To BP"/>
+  <SiblingRight name="Handle operation"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Edit New Draft" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Handle New Draft"/>
+  <SiblingRight name="Conversion Operation"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Manage Edit Sold To BP" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Edit New Draft"/>
+  <SiblingRight name="Manage Draft lines"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Edit Data of Sold-To BP" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Edit Sold To BP"/>
+  <SiblingRight name="Edit Data of Sold-To BP"/>
+</TaskCONN>
+<TaskCONN Identifier="Edit Data of Sold-To BP" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Edit Sold To BP"/>
+  <SiblingLeft name="Edit Data of Sold-To BP"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Manage Draft lines" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Edit New Draft"/>
+  <SiblingLeft name="Manage Edit Sold To BP"/>
+  <SiblingRight name="Manage Draft Header"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Entering Draft Lines" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Draft lines"/>
+  <SiblingRight name="Edit Draft Line"/>
+</TaskCONN>
+<TaskCONN Identifier="Edit Draft Line" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Draft lines"/>
+  <SiblingLeft name="Entering Draft Lines"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Manage Draft Header" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Edit New Draft"/>
+  <SiblingLeft name="Manage Draft lines"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Editing a Draft Header" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Draft Header"/>
+  <SiblingRight name="Edit Data in Draft Header"/>
+</TaskCONN>
+<TaskCONN Identifier="Edit Data in Draft Header" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Draft Header"/>
+  <SiblingLeft name="Editing a Draft Header"/>
+</TaskCONN>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Conversion Operation" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Handle New Draft"/>
+  <SiblingLeft name="Edit New Draft"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Convert Order" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Conversion Operation"/>
+  <SiblingRight name="Convert Quotation"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Convert New Draft Into Order" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Convert Order"/>
+  <SiblingRight name="Convert New Draft into Order"/>
+</TaskCONN>
+<TaskCONN Identifier="Convert New Draft into Order" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Convert Order"/>
+  <SiblingLeft name="Request Convert New Draft Into Order"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Convert Quotation" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Conversion Operation"/>
+  <SiblingLeft name="Convert Order"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Convert New Draft Into Quotation" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Convert Quotation"/>
+  <SiblingRight name="Convert New Draft into Quotation"/>
+</TaskCONN>
+<TaskCONN Identifier="Convert New Draft into Quotation" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Convert Quotation"/>
+  <SiblingLeft name="Request Convert New Draft Into Quotation"/>
+</TaskCONN>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Handle operation" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Sold To BP"/>
+  <SiblingLeft name="Handle New Draft"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCOOP Identifier="Manage Existing Drafts" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Handle operation"/>
+  <SiblingRight name="Manage Existing Quotation"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Open Drafts" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingRight name="See Existing Drafts"/>
+</TaskCONN>
+<TaskCONN Identifier="See Existing Drafts" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="Open Drafts"/>
+  <SiblingRight name="Manage Convertion Drafts Into Orders"/>
+</TaskCONN>
+<TaskCOOP Identifier="Manage Convertion Drafts Into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="See Existing Drafts"/>
+  <SiblingRight name="Mnage Convertion Quotations Into Orders"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Convert Drafts into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Convertion Drafts Into Orders"/>
+  <SiblingRight name="Convert Draft into Orders"/>
+</TaskCONN>
+<TaskCONN Identifier="Convert Draft into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Convertion Drafts Into Orders"/>
+  <SiblingLeft name="Request Convert Drafts into Orders"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Mnage Convertion Quotations Into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="Manage Convertion Drafts Into Orders"/>
+  <SiblingRight name="Close Drafts"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Convert Drafts into Quotations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Mnage Convertion Quotations Into Orders"/>
+  <SiblingRight name="Convert Drafts into Quotations"/>
+</TaskCONN>
+<TaskCONN Identifier="Convert Drafts into Quotations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Mnage Convertion Quotations Into Orders"/>
+  <SiblingLeft name="Request Convert Drafts into Quotations"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCONN Identifier="Close Drafts" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="Mnage Convertion Quotations Into Orders"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Manage Existing Quotation" Category="null" Iterative="true" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Handle operation"/>
+  <SiblingLeft name="Manage Existing Drafts"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Open Quotations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Quotation"/>
+  <SiblingRight name="See Existing Quotations"/>
+</TaskCONN>
+<TaskCONN Identifier="See Existing Quotations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Quotation"/>
+  <SiblingLeft name="Open Quotations"/>
+  <SiblingRight name="Manage Convertion Quotaion Into Orders"/>
+</TaskCONN>
+<TaskCOOP Identifier="Manage Convertion Quotaion Into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Quotation"/>
+  <SiblingLeft name="See Existing Quotations"/>
+  <SiblingRight name="Close Quotations"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Convert Quotations into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Convertion Quotaion Into Orders"/>
+  <SiblingRight name="Convert Quotations into Orders"/>
+</TaskCONN>
+<TaskCONN Identifier="Convert Quotations into Orders" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Convertion Quotaion Into Orders"/>
+  <SiblingLeft name="Request Convert Quotations into Orders"/>
+</TaskCONN>
+  </SubTaskCOOP>
+<TaskCONN Identifier="Close Quotations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Existing Quotation"/>
+  <SiblingLeft name="Manage Convertion Quotaion Into Orders"/>
+</TaskCONN>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+<TaskCOOP Identifier="Saving Operations" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Cooperation> 
+   <Role name ="null"/>
+   <Cardinality> null </Cardinality>
+   <Comments> null </Comments>
+  </Cooperation> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Manage Session"/>
+  <SiblingLeft name="Manage Sold To BP"/>
+  </TaskCOOP>
+  <SubTaskCOOP>
+<TaskCONN Identifier="Request Save New Draft" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Customer" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Saving Operations"/>
+  <SiblingRight name="Save Current Draft"/>
+</TaskCONN>
+<TaskCONN Identifier="Save Current Draft" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Saving Operations"/>
+  <SiblingLeft name="Request Save New Draft"/>
+</TaskCONN>
+  </SubTaskCOOP>
+  </SubTaskCOOP>
+<TaskCONN Identifier="Close connection" Category="null" Iterative="false" Optional="false" Frequency="null">
+  <Name> null </Name>
+  <Connection> 
+   <Belong name="Sales Representative" instance="null"/>
+  </Connection> 
+  <Type> null </Type>
+  <Description> null </Description>
+  <Precondition> null </Precondition>
+  <TimePerformance> 
+   <Max> null </Max>
+   <Min> null </Min>
+   <Average> null </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  </Object>
+  <Parent name="Sales Order"/>
+  <SiblingLeft name="Manage Session"/>
+</TaskCONN>
+  </SubTaskCOOP>
+</TaskModelCOOP>
+<TaskModel NameTaskModelID="Customer">
+<Task Identifier="Customer" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Insert Data to Connect" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Customer"/>
+  <SiblingRight name="Editing Operation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Editing Operation" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Customer"/>
+  <SiblingLeft name="Insert Data to Connect"/>
+  <SiblingRight name="Closing Opertions"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Edit Data of Sold-To BP" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Editing Operation"/>
+  <SiblingRight name="Edit Draft Line"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Edit Draft Line" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Editing Operation"/>
+  <SiblingLeft name="Edit Data of Sold-To BP"/>
+  <SiblingRight name="Edit Data in Draft Header"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Edit Data in Draft Header" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Editing Operation"/>
+  <SiblingLeft name="Edit Draft Line"/>
+  <SiblingRight name="Manage other Draft Quotation Order"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Manage other Draft Quotation Order" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Editing Operation"/>
+  <SiblingLeft name="Edit Data in Draft Header"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Manage Existing Drafts" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage other Draft Quotation Order"/>
+  <SiblingRight name="Manage Existing Quotations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="See Existing Drafts" Category="User Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingRight name="Request Convert Drafts into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Request Convert Drafts into Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="See Existing Drafts"/>
+  <SiblingRight name="Request Convert Drafts into Quotations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Request Convert Drafts into Quotations" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Drafts"/>
+  <SiblingLeft name="Request Convert Drafts into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Manage Existing Quotations" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage other Draft Quotation Order"/>
+  <SiblingLeft name="Manage Existing Drafts"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="See Existing Quotations" Category="User Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Quotations"/>
+  <SiblingRight name="Request Convert Quotations into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Request Convert Quotations into Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Quotations"/>
+  <SiblingLeft name="See Existing Quotations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Closing Opertions" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Customer"/>
+  <SiblingLeft name="Editing Operation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Request Save New Draft" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Closing Opertions"/>
+  <SiblingRight name="Request Convert New Draft Into Quotation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Request Convert New Draft Into Quotation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Closing Opertions"/>
+  <SiblingLeft name="Request Save New Draft"/>
+  <SiblingRight name="Request Convert New Draft Into Order"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Request Convert New Draft Into Order" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Closing Opertions"/>
+  <SiblingLeft name="Request Convert New Draft Into Quotation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
+<TaskModel NameTaskModelID="Sales Representative">
+<Task Identifier="Sales representative" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Receive notification about Customer conncetion" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Sales representative"/>
+  <SiblingRight name="Manage Customer"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Manage Customer" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Sales representative"/>
+  <SiblingLeft name="Receive notification about Customer conncetion"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Identify Customer in (Sold-To BP)" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Customer"/>
+  <SiblingRight name="Manage Sold-To BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Manage Sold-To BP" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Customer"/>
+  <SiblingLeft name="Identify Customer in (Sold-To BP)"/>
+  <SiblingRight name="Close connection"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Manage Sold-To BP" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingRight name="Share Draft with Customer"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Manage Unclear Sold-To BP" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingRight name="Create New Empty Draft"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Create New Draft with unclear data" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Unclear Sold-To BP"/>
+  <SiblingRight name="Provide List of Possible Sold to BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Provide List of Possible Sold to BP" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Unclear Sold-To BP"/>
+  <SiblingLeft name="Create New Draft with unclear data"/>
+  <SiblingRight name="Choice Sold-To BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Choice Sold-To BP" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Unclear Sold-To BP"/>
+  <SiblingLeft name="Provide List of Possible Sold to BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Manage Query to BP" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Choice Sold-To BP"/>
+  <SiblingRight name="Terminate Query"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Edit Query to DB" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Query to BP"/>
+  <SiblingRight name="Submit Query"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Submit Query" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Query to BP"/>
+  <SiblingLeft name="Edit Query to DB"/>
+  <SiblingRight name="Provide query result"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Provide query result" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Query to BP"/>
+  <SiblingLeft name="Submit Query"/>
+  <SiblingRight name="Evaluate Query"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Evaluate Query" Category="User Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Query to BP"/>
+  <SiblingLeft name="Provide query result"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Terminate Query" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Choice Sold-To BP"/>
+  <SiblingLeft name="Manage Query to BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Create New Empty Draft" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingLeft name="Manage Unclear Sold-To BP"/>
+  <SiblingRight name="Create New NOT empty Draft"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Create New NOT empty Draft" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingLeft name="Create New Empty Draft"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Share Draft with Customer" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingLeft name="Manage Sold-To BP"/>
+  <SiblingRight name="Manage Current Draft"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Manage Current Draft" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Sold-To BP"/>
+  <SiblingLeft name="Share Draft with Customer"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Editing a Draft Header" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Current Draft"/>
+  <SiblingRight name="Entering Draft Lines"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Entering Draft Lines" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Current Draft"/>
+  <SiblingLeft name="Editing a Draft Header"/>
+  <SiblingRight name="Edit Data of Sold-To BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Edit Data of Sold-To BP" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Current Draft"/>
+  <SiblingLeft name="Entering Draft Lines"/>
+  <SiblingRight name="Opening Operations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Opening Operations" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Disabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Current Draft"/>
+  <SiblingLeft name="Edit Data of Sold-To BP"/>
+  <SiblingRight name="Saving Operation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Handle Existing Quotations" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Opening Operations"/>
+  <SiblingRight name="Handle Existing Drafts "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Open Quotations" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnablingInfo"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Quotations"/>
+  <SiblingRight name="Convert Quotations into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Convert Quotations into Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Quotations"/>
+  <SiblingLeft name="Open Quotations"/>
+  <SiblingRight name="Close Quotations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Close Quotations" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Quotations"/>
+  <SiblingLeft name="Convert Quotations into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Handle Existing Drafts" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Interleaving"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Opening Operations"/>
+  <SiblingLeft name="Handle Existing Quotations"/>
+  <SiblingRight name="Manage Existing Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Open Drafts" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Drafts "/>
+  <SiblingRight name="Convert Drafts"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Convert Drafts" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Drafts "/>
+  <SiblingLeft name="Open Drafts"/>
+  <SiblingRight name="Close Drafts"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Convert Drafts into Quotations" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Convert Drafts"/>
+  <SiblingRight name="Convert Draft into Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Convert Draft into Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Convert Drafts"/>
+  <SiblingLeft name="Convert Drafts into Quotations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Close Drafts" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Handle Existing Drafts "/>
+  <SiblingLeft name="Convert Drafts"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Manage Existing Orders" Category="Interaction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Opening Operations"/>
+  <SiblingLeft name="Handle Existing Drafts "/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Open Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="SequentialEnabling"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Orders"/>
+  <SiblingRight name="Close Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Close Orders" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Existing Orders"/>
+  <SiblingLeft name="Open Orders"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Saving Operation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Current Draft"/>
+  <SiblingLeft name="Opening Operations"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Save Current Draft" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Saving Operation"/>
+  <SiblingRight name="Convert"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Convert" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Saving Operation"/>
+  <SiblingLeft name="Save Current Draft"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Convert New Draft into Quotation" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Convert"/>
+  <SiblingRight name="Convert New Draft into Order"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Convert New Draft into Order" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Convert"/>
+  <SiblingLeft name="Convert New Draft into Quotation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Close connection" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="true" Frequency="null">
+  <Name> </Name>
+  <Type>null</Type>
+  <Description>null</Description>
+  <Precondition>null</Precondition>
+  <TimePerformance> 
+   <Max>null</Max>
+   <Min>null</Min>
+   <Average>null</Average>
+  </TimePerformance> 
+  <Parent name="Manage Customer"/>
+  <SiblingLeft name="Manage Sold-To BP"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
+</COOPConcurTaskTrees>

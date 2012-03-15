@@ -1,0 +1,4776 @@
+package rules.simulatore_src;
+/********************
+ *  COOPSIMULATORE  *
+ ********************/
+
+import gui.CTTEutility;
+import gui.panels.SimulatorPanelCTTE;
+
+import java.io.*;
+import java.util.Vector;
+import java.util.Hashtable;//Laila 16/2/2001
+import java.util.Enumeration;//GM 11/10/2004
+
+import rules.tree.CooperativeTree;
+import rules.tree.Task;
+import rules.tree.Tree;
+import rules.tree.iterator.BFSiterator;
+import rules.tree.iterator.TreeIterator;
+import rules.tree.properties.Priority;
+
+/**<P><B> E' la classe che contiene il "motore" del Simulatore.</B>
+*<P> La classe sfrutta le strutture instanziate nella classe <I>CoopDatiComuni</I>.
+* 
+*   @version 1.4.11 del 6/04/2001
+*   @author Giulio Ballardin - Giulio Mori
+*   </P>
+*   </P>
+*/
+public class CoopSimulatore{
+
+	Vector myArray3elem = new Vector();//GM 11/10/2004
+	public  TSConnStructure tsconn_supp;//GM 11/10/2004
+	public  Task binaryroot;//GM 11/10/2004
+	public  Task rootTree;//GM 11/10/2004
+
+	Vector v1;
+	public int dimKeyPrima=0;
+	public int dimKeyDopo=0;
+	int masi=0;//Giulio 14/12/2001 ricorsione
+	public int ricorsioneCorrente=0;//Giulio 14/12/2001	
+	//Il primo indice è del ciclo ricorsivo, il secondo è riferito al numero di ricorsione corrente;
+	//Il secondo indice per ora lo fisso ad una dimensione massima, poi vedremo!
+	//Il terzo indice è riferito al numero di percorsi per terminare la ricorsione 
+	public Vector [][][] TasksMemorizzati;//Giulio 12/12/2001 RICORSIONE
+	public Vector [][][] TasksRimasti;//Giulio 12/12/2001 RICORSIONE
+	public Vector [][] TasksRimastiDaEseguire;//Giulio 12/12/2001 RICORSIONE	
+
+	public Vector []taskChoiceLvl;
+	public Vector []taskChoiceLvlFigli;
+	private Vector[][] figliDestraSuspendEResume;//giulio 19/6/2001	
+
+	boolean segna=false;//giulio 11/5/2001
+	private boolean eseguitoIterativo; //Deve essere un vettore per i nodi iterativi?
+		
+	private boolean eseguitoRicorsivo; //Deve essere un vettore per i nodi ricorsivi?
+//Variables
+	//private CoopControllaPreconds[] cCP; //Remmato 25/9/2001
+	public CoopControllaPreconds[] cCP;//Modificato 25/9/2001
+	private int count_file=0;	
+	private Task[] taskd;
+	private String[] roleName;
+	private Vector[] stato;
+	private Vector[] taskEseguibile;//Serve per i Padri Eseguibili
+	///////PROSEGUO
+	private int massimo=0; //Aggiunta Giulio
+	private int massimo2=0; //Aggiunta Giulio
+
+	private int massimoRic=0; //Giulio 11/12/2001 Ricorsione
+	private int massimoRic2=0; //Giulio 11/12/2001 Ricorsione
+
+	private int iteratIniziali=0; //Aggiunta Giulio
+	private int ricorsIniziali=0; //Aggiunta Giulio
+			
+	private int qualeIterativo=-1; //Aggiunta Giulio
+	private int qualeRicorsivo=-1; //Giulio 11/12/2001 Ricorsione		
+
+	private int qualeAlberoIterativo=-1; //Aggiunta Giulio
+	private int qualeAlberoRicorsivo=-1; //Giulio 11/12/2001 Ricorsione
+
+	private boolean [] vettInizPadriIter; //Aggiunta Giulio	
+	private boolean setto=true;
+	private boolean settoRic=true; //Giulio 11/12/2001 Ricorsione 
+	
+	private int indiceKey=-1;
+	private int indiceNodoPadreDiFogliaIterativa=-1;
+	private int PadreDiFogliaIterativa=-1;
+	private boolean PadreDiFogliaIterativaEIterativa=false;
+
+	///FINE PROSEGUO
+//Variabili x la ricorsione
+	private Vector vBackwardsKey,vBackwardsRole;//Contiene tutte le chiavi/role che possono essere eseguite inBackwards
+	private Vector vForwardsKey,vForwardsRole;//Contiene le key e i role che possono essere eseguite in Forwards
+	private boolean bBackwards;//Indica se la ricorsione e' stata iniziata
+	
+	//Public Methods
+	protected Hashtable dhForRemusine=new Hashtable();//Laila 16/2/2001 
+	private Tree pDt;	
+
+	/**<P>Costruttore della classe per i modelli cooperativi.
+	 *</P>
+	 *
+	 * @param   roleCOOP  Indica la catena dei ruoli.
+	 */
+	public CoopSimulatore(CooperativeTree roleCOOP){
+	
+		java.lang.Runtime.getRuntime().gc();
+	
+	  for (CooperativeTree r=roleCOOP; r!=null; r=r.getNext())
+  	   //	if(CoopDatiComuni.s) System.out.println("COOPSIMULATORE : " + r.getNameOfRole() + " " + r.getTree().toString());
+	  	
+	  	/* EMANUELA 
+	  	cCP = new CoopControllaPreconds[count_file];
+		cCP[0]= new CoopControllaPreconds(taskd[0]);
+		cCP[0].role= null;
+		cCP[0].taskd=roleCOOP.getRoot();
+		cCP[0].CreaEspressioniVariabili();
+		 EMANUELA */
+		
+		//SECONDO COSTRUTTORE
+		if(roleCOOP!=null) DaRoleCoopSimulatore(roleCOOP);
+			else System.out.println("Mi hai passato un Role nullo!!\n");
+
+	}// fine secondo costruttore
+	
+	
+	/**<P>Costruttore della classe per i modelli singoli.
+	 *</P>
+	 *
+	 * @param   rootTaskd  Indica il task radice.
+	 */
+	public CoopSimulatore(Task rootTaskd){
+	
+		java.lang.Runtime.getRuntime().gc();
+
+		count_file=1;
+		taskd= new Task[count_file];
+		taskd[0]= rootTaskd;
+		cCP = new CoopControllaPreconds[count_file];
+		cCP[0]= new CoopControllaPreconds(taskd[0]);
+		cCP[0].role= null;
+		cCP[0].taskd=rootTaskd;
+		cCP[0].CreaEspressioniVariabili();
+		stato= new Vector[1];
+		stato[0]= new Vector();
+		taskEseguibile= new Vector[1];
+		taskEseguibile[0]= new Vector();
+		//Inizializzazione per il backwards
+		vBackwardsKey= new Vector();
+		vBackwardsRole= new Vector();
+		bBackwards=false;
+
+/**** STRUTTURE PER RICORSIONE *******/
+		if(cCP[0].num_nodi_ricorsivi>0)
+		{
+			for(int cc=0;cc<cCP[0].num_nodi_ricorsivi;cc++)
+				if(cCP[0].aSonsRicorsive2[cc].length>masi) masi=cCP[0].aSonsRicorsive2[cc].length;
+
+			//Per ora la seconda dimensione metto una costante massima;
+			//Occorre (!DrawTree.COOP) ?
+			TasksMemorizzati = new Vector[cCP[0].num_nodi_ricorsivi][10][masi];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						TasksMemorizzati[j][j2][j3]= new Vector();
+
+			TasksRimastiDaEseguire = new Vector[cCP[0].num_nodi_ricorsivi][10];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					TasksRimastiDaEseguire[j][j2] = new Vector();
+
+
+
+			TasksRimasti = new Vector[cCP[0].num_nodi_ricorsivi][10][masi];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						TasksRimasti[j][j2][j3]= new Vector();
+
+
+			for(int i=0;i<cCP[0].num_nodi_ricorsivi;i++)
+				for(int lvl=0;lvl<10;lvl++)
+					for(int i2=0;i2<cCP[0].aSonsRicorsive2[i].length;i2++)
+						for(int i3=0;i3<cCP[0].aSonsRicorsive2[i][i2].length;i3++)
+						{
+							TasksRimasti[0][lvl][i2].addElement(cCP[0].aSonsRicorsive2[i][i2][i3]);
+						}
+		} 
+/**** FINE STRUTTURE PER RICORSIONE *******/
+
+	}
+/***************** NUOVO COSTRUTTORE: GIULIO 10/12/2002 ****************/
+	public CoopSimulatore(Task rootTaskd, Tree dt){
+	
+		java.lang.Runtime.getRuntime().gc();
+
+ 		v1 = new Vector();
+		pDt=dt;
+
+		count_file=1;
+		taskd= new Task[count_file];
+		taskd[0]= rootTaskd;
+		cCP = new CoopControllaPreconds[count_file];
+		cCP[0]= new CoopControllaPreconds(taskd[0]);
+		cCP[0].role= null;
+		cCP[0].taskd=rootTaskd;
+		cCP[0].CreaEspressioniVariabili();
+		stato= new Vector[1];
+		stato[0]= new Vector();
+		taskEseguibile= new Vector[1];
+		taskEseguibile[0]= new Vector();
+		//Inizializzazione per il backwards
+		vBackwardsKey= new Vector();
+		vBackwardsRole= new Vector();
+		bBackwards=false;
+
+/**** STRUTTURE PER RICORSIONE *******/
+		if(cCP[0].num_nodi_ricorsivi>0)
+		{	
+			for(int cc=0;cc<cCP[0].num_nodi_ricorsivi;cc++)
+				if(cCP[0].aSonsRicorsive2[cc].length>masi) masi=cCP[0].aSonsRicorsive2[cc].length;
+
+			//Per ora la seconda dimensione metto una costante massima;
+			//Occorre (!DrawTree.COOP) ?
+			TasksMemorizzati = new Vector[cCP[0].num_nodi_ricorsivi][10][masi];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						TasksMemorizzati[j][j2][j3]= new Vector();
+
+			TasksRimastiDaEseguire = new Vector[cCP[0].num_nodi_ricorsivi][10];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					TasksRimastiDaEseguire[j][j2] = new Vector();
+
+
+
+			TasksRimasti = new Vector[cCP[0].num_nodi_ricorsivi][10][masi];
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						TasksRimasti[j][j2][j3]= new Vector();
+
+
+			for(int i=0;i<cCP[0].num_nodi_ricorsivi;i++)
+				for(int lvl=0;lvl<10;lvl++)
+					for(int i2=0;i2<cCP[0].aSonsRicorsive2[i].length;i2++)
+						for(int i3=0;i3<cCP[0].aSonsRicorsive2[i][i2].length;i3++)
+						{
+							TasksRimasti[0][lvl][i2].addElement(cCP[0].aSonsRicorsive2[i][i2][i3]);
+						}
+		} 
+/**** FINE STRUTTURE PER RICORSIONE *******/
+
+	}
+/************ FINE NUOVO COSTRUTTORE: GIULIO 10/12/2002 ****************/	
+	private void DaRoleCoopSimulatore(CooperativeTree roleCOOP){
+	
+
+		//if(CoopDatiComuni.s) System.out.println("DaRoleCoopSimulatore");
+		Task aPP_taskdCOOP=(Task)roleCOOP.getRoot();
+
+		count_file=Count_Alberi(roleCOOP);
+		roleName= new String[count_file];
+		roleName[0]=roleCOOP.getTitle();
+		
+		stato= new Vector[count_file];
+		taskEseguibile= new Vector[count_file];
+		for(int i=0;i<count_file;i++){
+			stato[i]= new Vector();
+			taskEseguibile[i]= new Vector();
+			}
+		//Caricamento del resto degli alberi
+		//System.out.println("EMANUELA:CoopSimulatore DaRoleCoopSimulatore() count_file="+count_file);
+		taskd= new Task[count_file];
+		CooperativeTree role=roleCOOP;
+		int app_count=0;
+    for (CooperativeTree r = role; r!=null; r=r.getNext())
+		 {     
+    	taskd[app_count]=r.getRoot();
+			roleName[app_count]=r.getTitle();
+			app_count++;
+		 }
+    
+		//if(CoopDatiComuni.s) System.out.println("count_file="+count_file);
+		cCP= new CoopControllaPreconds[count_file];
+		CooperativeTree r = roleCOOP;
+		for(int i=0;i<count_file;i++){
+			cCP[i]= new CoopControllaPreconds(taskd[i]);
+			cCP[i].role=roleName[i];
+			if(r != null)
+			{
+				cCP[i].taskd=r.getRoot();//roleCOOP.getRoot();
+				r = r.getNext();
+			}
+			//System.out.println("DEBUG:EMANUELA:"+roleName[i]+" in pos "+i);
+			cCP[i].CreaEspressioniVariabili();
+			}
+		/*
+		//AggiornaKeyAlberoCOOP();
+		for(int i=0;i<count_file;i++)
+			cCP[i].CreaEspressioniVariabili();
+	*/
+		//Inizializzazione per il backwards
+		vBackwardsKey= new Vector();
+		vBackwardsRole= new Vector();
+		bBackwards=false;
+		
+		/*for(int i=0;i<count_file;i++)
+		
+			if(CoopDatiComuni.s) {
+				System.out.println("\n\n"+i+"- Stampa di aFoglie");
+				cCP[i].aFoglie.print();
+				System.out.println(i+"Stampa di aFather");
+				cCP[i].aFather.print();
+				System.out.println(i+"Stampa di aEVC");
+				cCP[i].aEVC.print();
+				System.out.println(i+"Stampa di aEVO");//giulio 9/5/2001
+				cCP[i].aEVO.print();//giulio 9/5/2001
+				System.out.println(i+"Stampa di aEVI");
+				cCP[i].aEVI.print();
+				System.out.println(i+"Stampa di aEVD");
+				cCP[i].aEVD.print();
+				System.out.println(i+"Stampa di aEVS");
+				cCP[i].aEVS.print();
+				System.out.println(i+"Stampa di aEVE");
+				cCP[i].aEVE.print();
+				}
+		*/
+	
+	}// fine DaRoleCoopSimulatore
+	
+	
+	
+	private void AggiornaKeyAlberoCOOP(){
+		
+		//if(CoopDatiComuni.s) System.out.println(">>> AggiornaKeyAlberoCOOP");
+		//if(CoopDatiComuni.s) System.out.println("  cCP[0].num_foglie = "+cCP[0].num_foglie);
+		boolean trovato=false;
+		for(int k=0;k<cCP[0].num_nodi;k++) //Scorro tutte i nodi dell'albero CO-Operativo
+			if(cCP[0].IsFogliaName(cCP[0].nodi[k].get_name())){
+				//Sicuramente e' una foglia
+				String nomeFogliaCoop=cCP[0].nodi[k].get_name();//e' un nome di task
+				//if(CoopDatiComuni.s) System.out.println(nomeFogliaCoop);
+				int j=1,i=0;
+				trovato=false;
+				for(j=1;j<count_file;j++) //Scorro tutti gli alberi singoli
+					for(i=0;i<cCP[j].num_nodi;i++)//Scorro tutti i suoi nodi
+						if(cCP[j].nodi[i].get_name().equals(nomeFogliaCoop)){ 
+							cCP[0].nodi[k].set_key(cCP[j].nodi[i].get_key());
+							//if(CoopDatiComuni.s) System.out.println("-----Trovato!!!");
+							trovato=true;
+							}//if 
+				if(!trovato)System.out.println("***Errore CoopSimulatore::AggiornaKeyAlbero");
+				}//if
+	//	if(CoopDatiComuni.s) System.out.println("<<< AggiornaKeyAlberoCOOP");
+	}// fine AggiornaKeyAlberoCOOP()
+	
+
+		/**
+		*Funzione che deve essere chiamata una volta deciso di far partire 
+		*il simulatore.
+		*<P>Restituisce l'array dei task che possono essere 
+		*eseguiti fin da subito. Restiruisce <I>null</I> nel caso che nessun task sia
+		*eseguibile
+		*</P>
+		*/
+	
+	public C_Taskd_NomeRole[] Start(){	
+	
+		//System.out.println("CS num_padri_iteration="+cCP[0].num_padri_iteration);
+		SimulatorPanelCTTE.reinizio_ciclo= new int[cCP[0].num_padri_iteration];//giulio 7/2/2001  	
+ 	  for(int z=0;z<cCP[0].num_padri_iteration;z++)//giulio 7/2/2001
+ 			SimulatorPanelCTTE.reinizio_ciclo[z]=0;//giulio 7/2/2001
+////////////////CASO SINGOLO///////////////////////
+		if(!CTTEutility.isCooperative()) //giulio 19/6/2001
+		{
+			figliDestraSuspendEResume = new Vector[1][cCP[0].num_varS];//giulio 19/6/2001
+			for(int gh1=0;gh1<cCP[0].num_varS;gh1++)
+				figliDestraSuspendEResume[0][gh1]= new Vector();
+		}/////////////FINE CASO SINGOLO///////////////////////	
+		else
+		{/////////////CASO COOPERATIVO////////////////////////
+			
+			int numSusp=0;	
+			for(int f=0;f<count_file;f++)
+				if(cCP[f].num_varS>numSusp) numSusp=cCP[f].num_varS;
+					figliDestraSuspendEResume = new Vector[count_file][numSusp];//giulio 19/6/2001
+			for(int f=0;f<count_file;f++)
+				for(int gh1=0;gh1<cCP[f].num_varS;gh1++)
+					figliDestraSuspendEResume[f][gh1]= new Vector();
+		}
+/////////////FINE CASO COOPERATIVO///////////////////////		
+		/////PROSEGUO
+		if(cCP[0].num_padri_iteration>0)
+		{	
+			if(!CTTEutility.isCooperative()) //GIULIO 5/3/2001
+			{
+				inizCopia_corrente_foglieIterationInitEseg();
+				//if(!DrawTree.COOP) //GIULIO 29/9/2000
+				esisteTrenoVuoto_num_vuoti_inizialmente_copia_aSonsIterationNoOpz();
+			}
+		}
+		/////FINE PROSEGUO
+		
+/************* GIULIO 6/12/2001 **************************/
+		if(cCP[0].num_nodi_ricorsivi>0)
+		{	
+			if(!CTTEutility.isCooperative()) //GIULIO 5/3/2001
+			{
+				inizCopia_corrente_foglieRecursiveInitEseg();
+				//if(!DrawTree.COOP) //GIULIO 29/9/2000
+				esisteTrenoVuoto_num_vuoti_inizialmente_copia_aSonsRicorsiveNoOpz();
+			}
+		} 
+/****************** END *********************/		
+
+		if(!CTTEutility.isCooperative())
+			TaskEseguibiliIterativi(); //Giulio
+
+/****************** GIULIO 11/12/2001 RICORSIONE ********************/
+		if(!CTTEutility.isCooperative())
+			TaskEseguibiliRicorsivi(); //Giulio
+/**************************** END ***********************************/
+		/***** SERVE SAPERE TASKS del vettore  "copia_corrente_foglieIterationInitEseg"? *******/
+		if(qualeIterativo>=0) //fondamentale questo controllo!
+	//		copiaCopia_corrente_foglieIterationInitEseg(qualeIterativo);//BOH?
+			if(!CTTEutility.isCooperative())//29/9/2000 *			
+			{
+				copiaCopia_corrente_foglieIterationInitEseg();
+			//if(!DrawTree.COOP)//29/9/2000			
+				//stampaFoglieIterationInitEseg_corrente();//BOH?
+			}
+		/****************************************/
+/*********** GIULIO 11/12/2001 RICORSIONE *******************/
+		if(qualeRicorsivo>=0) //fondamentale questo controllo!			
+			if(!CTTEutility.isCooperative())//29/9/2000 *			
+			{
+				copiaCopia_corrente_foglieRecursiveInitEseg();
+				//stampaFoglieRecursiveInitEseg(); //?
+			}
+/************************ END *******************************/
+
+		//////////////////////
+		//if(CoopDatiComuni.s) System.out.println("START di CoopSimulatore::Start()\n");
+		String s[][];
+		int i=0,conta=0,index=0;
+ 		s=null;
+		if(cCP[0].role!=null){
+			//CASO DI AMBIENTE COOPERATIVO
+			if(true) System.out.println("CASO DI AMBIENTE COOPERATIVO");
+			for(int j=1;j<count_file;j++){
+ 				i=0;
+ 				
+				while(i<cCP[j].num_foglie){
+ 	 				if(BottomUp(cCP[j].aFoglie.get_name(i),j)){
+ 	 					conta++;
+ 	 					if(cCP[j].IsMultiUser(cCP[j].aFoglie.get_name(i))) conta++;
+ 	 					}// fine if
+    			i++;
+   				}// fine while
+				}// fine for
+		
+			//Inizializzo il vettore
+ 			s= new String[conta][2];
+			if(conta>0)
+				for(int j=1;j<count_file;j++){	
+					i=0;
+ 					while(i<cCP[j].num_foglie){
+ 						if(BottomUp(cCP[j].aFoglie.get_name(i),j)){
+ 							s[index][1]= cCP[j].aFoglie.get_name(i);
+ 							s[index++][0]= cCP[j].role;
+ 							if(cCP[j].IsMultiUser(cCP[j].aFoglie.get_name(i))){
+ 								s[index][1]=getKeyCOOP(cCP[j].aFoglie.get_name(i),j);
+ 								s[index++][0]=cCP[0].role;
+ 								}
+ 							}// fine if
+ 	  				i++;
+ 	 					}// fine while
+					}// fine for
+		}
+		else{
+			//CASO ALBERO SINGOLO
+		  //if(CoopDatiComuni.s) System.out.println("CASO DI ALBERO SINGOLO");
+			i=0;
+			
+			while(i<cCP[0].num_foglie){
+				
+				if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)) conta++;
+				
+				i++;
+				}
+			index=0;
+			if(conta>0){
+					//MEMORIZZAZIONE TASK LIBERATI
+					//DELL'ALBERO COOPERATIVO
+					s= new String[conta][2];
+					i=0;
+					while(i<cCP[0].num_foglie){
+						if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+							s[index][1]=cCP[0].aFoglie.get_name(i);
+ 							s[index++][0]= cCP[0].role;	
+							}// fine if
+						i++;
+						}// fine while
+					}// fine if(conta>0)
+						
+		}//fine else
+ 		//if(CoopDatiComuni.s) System.out.println("END di CoopSimulatore::Start()\n");
+ 		//System.out.println("CoopSimulatore s= "+s);
+		CaricaTaskEseguibili(s);
+		//System.out.println("CoopSimulatore dopo CaricaTaskEseguibili(s); s= "+s);
+		return StringTOC_Taskd_NomeRole(s);
+		
+		}// fine Start()
+	
+	public C_Taskd_NomeRole[] IsEseguibile(String role, String key){ 
+	
+		/**
+		funzione che deve essere invocata quando si vuol sapere se un task 
+		può essere eseguito o meno. Nel primo caso viene riporta la lista completa 
+		dei task e dell'albero di appartenenza, nel secondo caso viene restituito "null".
+		N.B: Nel caso che si sia chimato il costruttore con un taskd (quindi CTTE non
+		e' in ambiente COOPerativo) questa funzione deve essere chiamata con role=null
+		*/
+		
+		/***************************/
+		/********* Giulio **********/
+		eseguitoIterativo=false;
+		eseguitoRicorsivo=false;//Ce ne vuole più di uno? Giulio RICORSIONE 18/12/2001					
+		/**** End codice Giulio ****/
+		/***************************/
+		
+		int index=0; //Contiene l'indice di role
+		String s[][]=null;
+		
+		bBackwards=false;//Spengo il Backwards
+		
+		if(role!=null){			
+			
+			//CASO DI ALBERI COOPERATIVI
+			index=getIndexRole(role);
+			if(index==-1) return null;//Non ha trovato il role relativo
+			if(index==0) {
+				index=getIndexBelong(key);
+				if(index==-1) return null;//Non ha trovato il role relativo
+				key=getKeyNoCOOP(key);
+				}
+			
+			if(!BottomUp(key,index)){
+				
+			//	System.out.println("IsEseguibile->null");
+				return null;//index>0 SEMPRE
+				}
+			
+			//Per la gestione del backwards
+			vBackwardsKey.addElement(key);
+			vBackwardsRole.addElement(roleName[index]);
+			
+			//Esegui(key,index);//Il task e' eseguibile: lo eseguo!
+			return EseguiFree(key,index);
+			}// fine role!=null			
+		
+		else{// role=null
+				//System.out.println("CoopSimulatore else{// role=null");
+			//CASO DI ALBERO SINGOLO
+			//Giulio
+		//PROSEGUO
+		if(cCP[0].num_nodi_ricorsivi>0)
+		{
+			String chiave = new String();
+			chiave = estraiKeyFogliaRicorsiva(key);
+			
+			/********** IMPORTANTE **********/
+			/********** SOLO RICORSIONE **********/
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				//for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						for(int j4=0;j4<TasksRimasti[j][ricorsioneCorrente][j3].size();j4++)
+							if((TasksRimasti[j][ricorsioneCorrente][j3].elementAt(j4)).equals(key)) TasksRimasti[j][ricorsioneCorrente][j3].setElementAt("",j4);
+
+/*			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						System.out.println("TasksRimasti j="+j+" j2="+j2+" j3="+j3+" "+TasksRimasti[j][j2][j3]);
+*/
+
+			//PER ora considero UN solo padre ricorsivo (primo indice di TaskMemorizzati ed aSonsRicorsive2)
+			for(int i=0;i<cCP[0].num_nodi_ricorsivi;i++)
+				for(int i2=0;i2<cCP[0].aSonsRicorsive2[i].length;i2++)
+					for(int i3=0;i3<cCP[0].aSonsRicorsive2[i][i2].length;i3++)
+						if(cCP[0].aSonsRicorsive2[i][i2][i3].equals(key)) { TasksMemorizzati[0][ricorsioneCorrente][i2].addElement(cCP[0].aSonsRicorsive2[i][i2][i3]);}
+					/********** IMPORTANTE: CONTROLLA indice i2 (anzichè i3) nella riga sopra in TasksMemorizzati********/
+					//if(cCP[0].aSonsRicorsive2[0][ricorsioneCorrente][i2].equals(key)) {System.out.println("^^^^^^^^^^^^i="+i+" ric="+ricorsioneCorrente+" i2="+i2);}
+
+		/*	for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				for(int j2=0;j2<10;j2++)
+					for(int j3=0;j3<masi;j3++)
+						System.out.println("TasksMemorizzati j="+j+" j2="+j2+" j3="+j3+" "+TasksMemorizzati[j][j2][j3]);*/
+
+/*			for(int i=0;i<cCP[0].num_nodi_ricorsivi;i++)
+				for(int i2=0;i2<cCP[0].aSonsRicorsive2[i].length;i2++)
+					for(int i3=0;i3<cCP[0].aSonsRicorsive2[i][i2].length;i3++)
+						System.out.println("copia_aSonsRicorsive2 i="+i+" i2="+i2+" i3="+i3+" "+cCP[0].copia_aSonsRicorsive2[i][i2][i3]);
+*/
+
+	//for(int f=0;f<count_file;f++)
+		//for(int i=cCP[f].aFatherRecursive.get_count()-1;i>=0;i--)
+			
+		
+			if (!chiave.equals("")){ ricorsioneCorrente++; }
+			else {eseguitoRicorsivo=true;}
+		}
+			/******** FINE SOLO RICORSIONE **********/
+			
+		qualeIterativo=qualeIterativoIniz(key); qualeAlberoIterativo=qualeAlberoIterativo(key); 
+		qualeRicorsivo=qualeRicorsivoIniz(key); qualeAlberoRicorsivo=qualeAlberoRicorsivo(key);//GIULIO 11/12/2001 RICORSIONE
+//if(qualeIterativo==4) qualeIterativo--;//giulio 28/2/2001		
+		for(int salp=cCP[0].num_padri_iteration-1;salp>=0;salp--)//giulio 28/2/2001
+		{//giulio 28/2/2001
+			if((qualeIterativo>=0) /*&& (salp!=qualeIterativo)*/)//giulio 28/2/2001
+			{//giulio 28/2/2001
+				for(int lk_2=0;lk_2<cCP[0].copia_foglieIterationInitEseg[0][salp].length;lk_2++)//giulio 28/2/2001
+				{//giulio 28/2/2001
+					//System.out.println("UEILA IN11 key=" + key + "foglieIterationInitEseg=" +  cCP[0].foglieIterationInitEseg[0][salp][lk_2] + " salp=" + salp + " lk_2=" + lk_2);
+						if(key.equals(cCP[0].copia_foglieIterationInitEseg[0][salp][lk_2])) qualeIterativo=salp;//giulio 28/2/2001
+						{//giulio 28/2/2001
+						//System.out.println("salp=" + salp + " " + lk_2 + " UEILA IN qualeIterativo=" + qualeIterativo + " " + SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]);
+								if((qualeIterativo>=0) && (SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]>0))
+								{
+									for(int lk=0;lk<cCP[0].allSons[qualeIterativo].length;lk++)
+										stato[0].removeElement(cCP[0].allSons[qualeIterativo][lk]);
+									
+									ricopiaTasksTreni2(qualeIterativo);//giulio 23/2/2001
+									ricopia_copia_aSonsIterationNoOpz2(qualeIterativo);//23/2/2001
+
+							  	////////////////GIULIO 23/2/2001//////////////
+							  	/*for(int f_1=0;f_1<count_file;f_1++)
+										for(int salp=cCP[f_1].aFatherIteration.get_count()-1;salp>=0;salp--)
+							 			{
+							 				int stopIterativo=0;	
+							  			for(int j=0;j<cCP[f_1].allSons[salp].length;j++)
+						  				//if(salp!=i)
+												if(figliIterativiInQualiIterativi(cCP[f_1].allSons[salp][j], qualeAlberoIterativo))//giulio 23/2/2001
+						 						{
+							 						if(stopIterativo==0)
+							 						{ System.out.println("OGGG1=" + salp);
+						 	  						//OCCHIO: VA BENE ANCHE PER IL COOPERATIVO?	23/2/2001 (OCCHIO ANCHE AGLI ALTRI)
+							 	  					ricopiaTasksTreni(salp);//GENERALIZZO?
+							 	  					ricopia_copia_aSonsIterationNoOpz(salp);//GENERALIZZO?
+							 	  					stopIterativo++;	
+							 						}
+						 						}
+						 				}*/
+									////////////////FINE GIULIO 23/2/2001///////////////////
+				
+									SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]=0;
+								}//giulio 7/2/2001
+						}//giulio 28/2/2001
+				}//giulio 28/2/2001
+			}//giulio 28/2/2001
+		} //giulio 28/2/2001
+
+		//if((qualeIterativo>=0) && (SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]>1)) {System.out.println("Passa ora2"); for(int lk=0;lk<cCP[0].allSons[qualeIterativo].length;lk++) stato[0].removeElement(cCP[0].allSons[qualeIterativo][lk]/*key*/);ricopiaTasksTreni();ricopia_copia_aSonsIterationNoOpz();SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]=0;}//giulio 7/2/2001
+			//Fine Giulio
+
+			if(!BottomUp_S(key,0)) return null;
+				//Per la gestione del backwards
+			vBackwardsKey.addElement(key);
+			vBackwardsRole.addElement(role);
+			
+			return EseguiFree(key,0); 
+			}//fine else index==0
+		
+	}// fine IsEseguibile
+
+	private String[][] FreeTask(){
+	
+		String s[][]=null;
+		Vector Role,Key;
+		Role= new Vector();
+		Key= new Vector();
+		int count=0;
+		
+		if(count_file>1){	//CASO DI ALBERI COOPERATIVI
+			for(int j=1;j<count_file;j++)
+			 for(int i=0;i<cCP[j].num_foglie;i++)
+			  if(BottomUp_S(cCP[j].aFoglie.get_name(i),j)){
+			  	Role.addElement(cCP[j].role);
+			  	Key.addElement(cCP[j].aFoglie.get_name(i));
+			  	if(cCP[j].IsMultiUser(cCP[j].aFoglie.get_name(i))){
+			  		String keyC=getKeyCOOP(cCP[j].aFoglie.get_name(i),j);
+			  		if(cCP[0].aFoglie.in_list(keyC)){
+			  			Role.addElement(cCP[0].role);
+			  			Key.addElement(keyC);
+			  			}
+			  		}//if(cCP[j].IsMultiUser
+			  	}//if(BottomUp_S(....
+				
+			}// fine if(count_file>0)
+			else // CASO DI ALBERO SINGOLO
+				for(int i=0;i<cCP[0].num_foglie;i++)
+					if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+						Role.addElement(null);
+						Key.addElement(cCP[0].aFoglie.get_name(i));				
+						}//if
+
+		count=Key.size();
+		if(count>0) s=new String[count][2];
+		for(int i=0;i<count;i++){
+			s[i][0]=(String)Role.elementAt(i);
+			s[i][1]=(String)Key.elementAt(i);
+			}
+		return s;
+		}//Function FreeTask
+	
+	private void CaricaTaskEseguibili(String[][] s){
+	
+		for(int j=0;j<count_file;j++)
+			taskEseguibile[j].removeAllElements();
+		
+		if(s==null) return;
+		
+		int count=s.length,j=-1;
+		
+		for(int i=0;i<count;i++){
+			 if(s[i][0]!=null)j=getIndexRole(s[i][0]);
+					else j=0;
+			 taskEseguibile[j].addElement(s[i][1]);
+		}
+	//System.out.println("CoopSimulatre CaricaTaskEseguibili()");
+	
+	}//CaricaTaskEseguibili
+	
+	
+	private void ControllaRecursive(String key, int jj)
+	{
+		if(!CTTEutility.isCooperative())
+		{
+			for(int f=0;f<count_file;f++)
+				for(int i=cCP[0].aFatherRecursive.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+				{
+					if(!eseguitoRicorsivo)
+					{
+						eseguitoRicorsivo=false;	
+				 		for(int j=0;j<cCP[0].allSonsRecursive[i].length;j++)
+				  		stato[f].removeElement(cCP[0].allSonsRecursive[i][j]);
+					}
+				}
+		}
+
+	}
+	
+	private void ControllaIteration(String key, int jj){
+			
+				/*		Vector RoleTemp,KeyTemp;
+						RoleTemp= new Vector();
+						KeyTemp= new Vector();
+						int count=0;
+
+						for(int i=0;i<cCP[0].num_foglie;i++)
+							if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+								RoleTemp.addElement(null);
+								KeyTemp.addElement(cCP[0].aFoglie.get_name(i));					
+							}//if
+						
+						System.out.println("TASK ABILITATI:");		
+						for(int ll=0;ll<KeyTemp.size();ll++)		
+							System.out.print(KeyTemp.elementAt(ll)+" ");
+						System.out.println("FINE TASK ABILITATI:"); */
+  	/*G			if(!DrawTree.COOP)
+					{
+  		*/			/** Gestione Choice tra Iterativi*/
+  		/*G			Vector taskChoice = new Vector();//vettori dei task (padri o figli) che sono nelle espressioni choice.
+						int ita=0;
+  					while (ita<cCP[0].num_varC)
+  					{
+  						if(cCP[0].IsFogliaKey(cCP[0].aEVC.item(ita).get_var1()) || cCP[0].IsPadreKey(cCP[0].aEVC.item(ita).get_var1())) {taskChoice.addElement(cCP[0].aEVC.item(ita).get_var1());System.out.println("FOGLIA="+cCP[0].aEVC.item(ita).get_var1());}
+  						if(cCP[0].IsFogliaKey(cCP[0].aEVC.item(ita).get_var2()) || cCP[0].IsPadreKey(cCP[0].aEVC.item(ita).get_var2())) {taskChoice.addElement(cCP[0].aEVC.item(ita).get_var2());System.out.println("FOGLIA="+cCP[0].aEVC.item(ita).get_var2());}
+						   ita++;
+  					}
+
+						//Vector []taskChoiceLvl = new Vector[cCP[0].num_padri];
+						taskChoiceLvl = new Vector[cCP[0].num_padri];
+						for(int y1=0;y1<cCP[0].num_padri;y1++)
+							taskChoiceLvl[y1]= new Vector();
+
+						int lvl=0;
+						int ita3=0;
+System.out.println("taskChoice="+taskChoice);
+							while(ita3<taskChoice.size())
+							{	
+								int is=0; int ins=0;
+								while(is<cCP[0].num_nodi)
+								{
+									if((taskChoice.elementAt(ita3).equals(cCP[0].nodi[is].get_key()))) {taskChoiceLvl[lvl].addElement(taskChoice.elementAt(ita3)); ins=is;ita3++;break;}
+									else is++;
+								}
+								boolean fine=true;
+								qui:
+								while(fine)
+								{
+									if(fine==false)	break qui;
+									//System.out.println("BROTHER="+cCP[0].nodi[is].get_keyRightBrother());
+									int fratelloDx=-1;
+									for(int conta=0;conta<cCP[0].num_nodi;conta++)
+										//GGif(cCP[0].nodi[conta].get_key().equals(cCP[0].nodi[is].get_keyRightBrother())) {fratelloDx=conta;}
+										if(cCP[0].nodi[conta].get_key().equals(cCP[0].nodi[is].get_keyRightBrother()) && (cCP[0].nodi[is].get_operator().equals("[]"))) {fratelloDx=conta;}
+
+									System.out.println("FRATELLODX="+fratelloDx+" ita3="+ita3+" lvl="+lvl+" is="+is + " OP="+cCP[0].nodi[is].get_operator());
+										if((fratelloDx>-1) && (taskChoice.elementAt(ita3).toString().equals(cCP[0].nodi[fratelloDx].get_key()))) {taskChoiceLvl[lvl].addElement(taskChoice.elementAt(ita3));is=fratelloDx;ita3++;}
+										else fine=false;									
+								}
+
+									lvl++;
+							}
+
+						//Vector []taskChoiceLvlFigli = new Vector[cCP[0].num_padri];
+						taskChoiceLvlFigli = new Vector[cCP[0].num_padri];
+						for(int y2=0;y2<cCP[0].num_padri;y2++)
+							taskChoiceLvlFigli[y2]= new Vector();	
+
+						for(int is2=0;is2<cCP[0].num_padri;is2++)
+							for(int z1=0;z1<taskChoiceLvl[is2].size();z1++)
+							{
+								if(!taskChoiceLvl[is2].elementAt(z1).toString().equals(""))
+									PreparaTaskChoiceLvlFigli(taskChoiceLvl[is2].elementAt(z1).toString(), is2);
+							}
+
+						for(int is2=0;is2<cCP[0].num_padri;is2++)
+							for(int z1=0;z1<taskChoiceLvlFigli[is2].size();z1++)
+								System.out.println("ATTENZIONE "+is2+") taskChoiceLvlFigli="+taskChoiceLvlFigli[is2].elementAt(z1).toString());
+					/////////////Da riprendere///////////////////
+
+						for(int is2=0;is2<cCP[0].num_padri;is2++)
+						{
+							for(int z1=0;z1<taskChoiceLvl[is2].size();z1++)
+							{	
+								System.out.println(is2+") LVL		"+taskChoiceLvl[is2].elementAt(z1) + " Iterative=" + IsIterative(taskChoiceLvl[is2].elementAt(z1).toString(), 0));
+							}
+						}
+
+							for(int cont=0;cont<cCP[0].num_nodi;cont++)
+							{
+								System.out.println("FLAG="+cCP[0].nodi[cont].get_key() + " " + cCP[0].nodi[cont].get_padreChoiceEseguito());
+							}
+					}//fine if(!COOP)
+*/
+
+
+		///////////////LAILA//////////////////
+		for(int f=0;f<count_file;f++)
+			for(int i=0;i<cCP[f].aFather.get_count();i++)
+				dhForRemusine.put(cCP[f].aFather.get_name(i), new Boolean(DownHard(cCP[f].aFather.get_name(i),f)));
+		//////////FINE LAILA////////////////
+
+////////////////////Giulio 19/6/2001/////////////////////////////////									
+							if(!CTTEutility.isCooperative()) //caso singolo
+							{		
+								for(int sp=0;sp<cCP[0].num_varS;sp++)									
+									if(!DownHard(cCP[0].aEVS.item(sp).get_var1(),0))
+										if(DownHard(cCP[0].aEVS.item(sp).get_var2(),0))
+ 										{
+ 											trovaFoglieParteDestraSuspendEResume(cCP[0].aEVS.item(sp).get_var2(),0,sp);
+ 											for(int gh=0;gh<figliDestraSuspendEResume[0][sp].size();gh++)
+ 											{
+ 												stato[0].removeElement(figliDestraSuspendEResume[0][sp].elementAt(gh));
+ 											}
+ 											figliDestraSuspendEResume[0][sp].removeAllElements();
+ 										}
+							}
+ 							else //caso cooperativo
+							{
+								for(int f=0;f<count_file;f++)
+									for(int sp=0;sp<cCP[f].num_varS;sp++)									
+										if(!DownHard(cCP[f].aEVS.item(sp).get_var1(),f))
+											if(DownHard(cCP[f].aEVS.item(sp).get_var2(),f))
+	 										{ 
+	 											trovaFoglieParteDestraSuspendEResume(cCP[f].aEVS.item(sp).get_var2(),f,sp);
+	 											for(int gh=0;gh<figliDestraSuspendEResume[f][sp].size();gh++)
+	 											{
+	 												stato[f].removeElement(figliDestraSuspendEResume[f][sp].elementAt(gh));
+	 											}
+	 											figliDestraSuspendEResume[f][sp].removeAllElements();
+	 										}
+							}
+ 											
+/////////////////////////fine giulio 19/6/2001///////////////////////////////// 										
+		/////////AGGIUNTA 4/10/2000
+			int numero_padri=0;
+		//	int indiceKey=0;
+	
+	
+			//OCCHIO SOLO IN UN CTT ( DA METTERE DA ALTRA PARTE CON VAR "f"
+			for(int f=0;f<count_file;f++)
+			{
+				if(cCP[f].aFatherIteration.get_count()>numero_padri) numero_padri=cCP[f].aFatherIteration.get_count();//giulio 27/3/2001
+				//if(cCP[f].num_padri_iteration>numero_padri) numero_padri=cCP[f].num_padri_iteration;//giulio 27/3/2001
+			}	
+			
+			int [][] foglieIterative=new int[count_file][numero_padri];// da rivedere
+			int [][] padriIterativiEseguiti=new int[count_file][numero_padri];// da rivedere
+			int indiceKeyFogliaIterativa=-1; //6/10/2000 Da inserire anche il ruolo? Solo se si trova un esempio con problemi nel COOPERATIVO!
+
+		 	
+			for(int f=0;f<count_file;f++) 						 
+ 				//for(int salp=0;salp<cCP[f].num_padri_iteration;salp++)//giulio 27/3/2001
+ 				for(int salp=0;salp<cCP[f].aFatherIteration.get_count();salp++)//giulio 27/3/2001
+				{
+ 					foglieIterative[f][salp]=0;
+ 					padriIterativiEseguiti[f][salp]=0;
+				}
+
+//CICLO INSERITO PER TROVARE SUBITO LE FOGLIE ITERATIVE IL 16/10/2000		
+			for(int f=0;f<count_file;f++)
+				//for(int i=0;i<cCP[f].aFatherIteration.get_count();i++)//giulio prova 21/2/2001
+				for(int i=cCP[f].aFatherIteration.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+					if(cCP[f].allSons[i].length==1)	
+						foglieIterative[f][i]=1;
+
+//Ciclo sotto da levare?
+			for(int f=0;f<count_file;f++)
+				//for(int i=0;i<cCP[f].aFatherIteration.get_count();i++)//giulio prova 21/2/2001
+				for(int i=cCP[f].aFatherIteration.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+					if(DownHard(cCP[f].aFatherIteration.get_name(i),f))
+					{
+						padriIterativiEseguiti[f][i]=1;
+						if(cCP[f].allSons[i].length==1)			
+							foglieIterative[f][i]=1;
+					}
+
+	if(!CTTEutility.isCooperative()) //Per 1.4.7
+	{
+			for(int f=0;f<count_file;f++)
+				//for(int i=0;i<cCP[f].aFatherIteration.get_count();i++)//giulio prova 21/2/2001
+				for(int i=cCP[f].aFatherIteration.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+				{
+					if(foglieIterative[f][i]==1)
+					{
+						for(int j=0;j<cCP[f].num_nodi;j++)
+							if(cCP[f].nodi[j].get_key().equals(cCP[f].aFatherIteration.get_name(i)))
+							{
+								indiceKey=j;
+							}
+						for(int j=0;j<cCP[f].num_nodi;j++)
+							if(cCP[f].nodi[j].get_key().equals(cCP[f].nodi[indiceKey].get_keyParent())) {indiceNodoPadreDiFogliaIterativa=j;}
+					}						
+					if(foglieIterative[f][i]==1)
+						if(padriIterativiEseguiti[f][i]==1)
+							for(int j=0;j<cCP[f].allSons[i].length;j++)
+							{
+								if(key.equals(cCP[f].aFatherIteration.get_name(i))) {indiceKeyFogliaIterativa=i;}
+							}
+				}
+				
+			if(indiceNodoPadreDiFogliaIterativa>=0)
+			{
+				for(int f=0;f<count_file;f++)
+				{
+				//for(int i=0;i<cCP[f].aFatherIteration.get_count();i++)//giulio prova 21/2/2001
+				for(int i=cCP[f].aFatherIteration.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+					{
+						if(cCP[f].nodi[indiceNodoPadreDiFogliaIterativa].get_key().equals(cCP[f].aFatherIteration.get_name(i)))
+						{
+							PadreDiFogliaIterativa=i;
+						}
+					}
+				}		
+			}
+
+		if(indiceNodoPadreDiFogliaIterativa>=0)				
+			for(int f=0;f<count_file;f++)
+				if(cCP[f].aFatherIteration.in_list(cCP[f].nodi[indiceNodoPadreDiFogliaIterativa].get_key())) PadreDiFogliaIterativaEIterativa=true;
+	}			
+
+		for(int f=0;f<count_file;f++)
+			//for(int i=0;i<cCP[f].aFatherIteration.get_count();i++)//giulio prova 21/2/2001
+			for(int i=cCP[f].aFatherIteration.get_count()-1;i>=0;i--)//giulio prova 21/2/2001
+			{
+
+			//if((DownHard(cCP[f].aFatherIteration.get_name(i),f))&&(stato[f].contains(CoopDatiComuni.aSonsIteration[f][i][0])))
+				if(DownHard(cCP[f].aFatherIteration.get_name(i),f))
+				{
+/////////////////GIULIO 13/7/2001/////////////////
+//for(int zip=0;zip<cCP[f].num_nodi;zip++)
+	//cCP[f].nodi[zip].set_padreChoiceEseguito(true);
+/////////////FINE GIULIO 13/7/2001///////////////////					
+					 
+					if(!CTTEutility.isCooperative())
+	 				{	
+						if(esisteTrenoVuoto(i))
+						{
+							 //Ci va il ">=0" o solo il ">0"?
+							 //16/10/2000 if(indiceKeyFogliaIterativa>=0) {stato[f].removeElement(cCP[f].allSons[indiceKeyFogliaIterativa][0]);indiceKeyFogliaIterativa=-1;}//4/10/2000
+							 if(indiceKeyFogliaIterativa>=0) {stato[f].removeElement(cCP[f].allSons[indiceKeyFogliaIterativa][0]);indiceKeyFogliaIterativa=-1;}//4/10/2000
+  					   else if((indiceNodoPadreDiFogliaIterativa>=0) && DownHard(cCP[f].nodi[indiceNodoPadreDiFogliaIterativa].get_key(),f) && PadreDiFogliaIterativaEIterativa) //Con la && valuto solo la prima condizione (se false) dell'espressione booleana dell'if. 
+							 {
+							  	for(int j=0;j<cCP[f].allSons[PadreDiFogliaIterativa].length;j++)
+							 	  	stato[f].removeElement(cCP[f].allSons[PadreDiFogliaIterativa][j]);
+							 	  PadreDiFogliaIterativaEIterativa=false;	
+							 } 
+							 else	//4/10/2000	
+							 {
+															 
+							  	for(int j=0;j<cCP[f].allSons[i].length;j++)
+							 	  	stato[f].removeElement(cCP[f].allSons[i][j]);
+		
+									//ricopiaTasksTreni2(qualeAlberoIterativo);//giulio 23/2/2001
+									//ricopia_copia_aSonsIterationNoOpz2(qualeAlberoIterativo);//23/2/2001
+									ricopiaTasksTreni2(i);//giulio 23/2/2001
+									ricopia_copia_aSonsIterationNoOpz2(i);//23/2/2001
+
+
+							  	////////////////GIULIO 23/2/2001///////////////////
+							  	/*for(int f_1=0;f_1<count_file;f_1++)
+										for(int salp=cCP[f_1].aFatherIteration.get_count()-1;salp>=0;salp--)
+							 			{
+							 				int stopIterativo=0;	
+							  			for(int j=0;j<cCP[f_1].allSons[salp].length;j++)
+							  				//if(salp!=i)
+													if(figliIterativiInQualiIterativi(cCP[f_1].allSons[salp][j], i))//giulio 23/2/2001
+							 						{
+								 						if(stopIterativo==0)
+								 						{ System.out.println("OGGG2=" + salp);
+							 	  						//OCCHIO: VA BENE ANCHE PER IL COOPERATIVO?	23/2/2001 (OCCHIO ANCHE AGLI ALTRI)
+								 	  					ricopiaTasksTreni(salp);//GENERALIZZO?
+								 	  					ricopia_copia_aSonsIterationNoOpz(salp);//GENERALIZZO?
+								 	  					stopIterativo++;	
+								 						}
+								 					}
+							 			}*/
+							 		////////////FINE GIULIO 23/2/2001/////////////	
+							 	  eseguitoIterativo=true;//GENERALIZZO?
+							 }
+						}
+ 						//OCCHIO	PER N°>1 Iterativi: if(stato[f].contains(cCP[f].allSons[i][j])) stato[f].removeElement(cCP[f].allSons[i][j]);
+					}
+					else //caso cooperativo //AGGIUNTA PER 1.4.6 */
+					{
+						for(int j=0;j<cCP[f].allSons[i].length;j++)
+							if(stato[f].contains(cCP[f].allSons[i][j])) stato[f].removeElement(cCP[f].allSons[i][j]);
+					}
+			 }
+			}//*G
+	}
+	
+	
+	private void Esegui(String key, int j){
+	
+		//Questa funzione deve essere chimata solo x un albero singolo
+		//j>0 nel caso di ambiente cooperativo;
+		//j=0 solo nel caso di ambiente con un solo albero
+
+		if(!stato[j].contains(key)) stato[j].addElement(key);
+		//Adesso controllo le foglie dell'albero Co-operativo
+		if(cCP[j].IsMultiUser(key)){ 
+			String keyC=getKeyCOOP(key,j);
+			if(cCP[0].aFoglie.in_list(keyC))
+				if(!stato[0].contains(keyC)) stato[0].addElement(keyC);
+			EseguiFogliaCooperativa(key,j);
+			} 
+		//ControllaIteration();//Gestisce i padri iterativi*
+	}
+	
+	
+	private void EseguiFogliaCooperativa(String key, int j){
+		
+		for(int i=0;i<cCP[0].num_foglie;i++)
+			if(getIndexBelong(cCP[0].aFoglie.get_name(i))==j){
+				String keyNC=getKeyNoCOOP(cCP[0].aFoglie.get_name(i));
+				if(cCP[j].IsPadreKey(keyNC)){
+					//if(CoopDatiComuni.s) System.out.println("----- E' padre:"+cCP[0].aFoglie.get_name(i));
+					if(DownHard(keyNC,j)){//Se questo padre e' stato eseguito
+						//if(CoopDatiComuni.s) System.out.println("Padre Eseguito "+cCP[0].aFoglie.get_name(i));
+						if(!stato[0].contains((String)cCP[0].aFoglie.get_name(i)))//Se la foglia non e' gia' stata eseguita
+							stato[0].addElement(cCP[0].aFoglie.get_name(i));
+						}//if	DownHard
+					}//if getIndexBelong
+				}//if cCP[j].IsPadreName
+				
+		//if(CoopDatiComuni.s) System.out.println("<<< EseguiFogliaCooperativa");
+	}
+	
+	
+	private C_Taskd_NomeRole[] EseguiFree(String key, int jj){
+	
+
+		//Esegui1
+		Esegui(key,jj);
+		if(!CTTEutility.isCooperative())	
+		{
+			togliTaskTreni(key); //Giulio
+			togliTask_copia_aSonsIterationNoOpz(key);			
+		}
+	//////////////////////////////////////////
+	/*		System.out.println("****************************************************");
+			System.out.println("KEY="+key);
+			for(int cont=0;cont<cCP[0].aFatherIteration.get_count();cont++)
+				System.out.println(cont+"ITER PRECEDENTE=" +DownHard(cCP[0].aFatherIteration.get_name(cont), 0));
+			for(int cont=0;cont<cCP[0].num_varD;cont++)
+				System.out.println(cont+"DIS PRECEDENTE=" +DownHard(cCP[0].aEVD.item(cont).get_var2(), 0));
+			System.out.println("****************************************************");
+*/
+/********************* RICORSIONE GIULIO 19/12/2001 **********************/
+		Vector RoleCopia,KeyCopia;
+		RoleCopia= new Vector();
+		KeyCopia= new Vector();
+
+		if(!CTTEutility.isCooperative())//CASO CTT
+		{
+			for(int i=0;i<cCP[0].num_foglie;i++)
+				if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+					RoleCopia.addElement(null);
+					KeyCopia.addElement(cCP[0].aFoglie.get_name(i));  			
+					}//if
+		}
+		if(!eseguitoRicorsivo)
+			for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+				TasksRimastiDaEseguire[j][ricorsioneCorrente-1]=KeyCopia;
+
+/*		for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+			for(int j2=0;j2<=ricorsioneCorrente;j2++)
+				System.out.println("ECC="+TasksRimastiDaEseguire[j][j2]);*/
+
+
+
+/*************************** END ********************************/
+////////////////////////////////////////////////////
+		if(cCP[0].num_nodi_ricorsivi>0)
+			ControllaRecursive(key, jj);//Gestisce i padri ricorsivi. GIULIO RICORSIONE 18/12/2001	
+		ControllaIteration(key, jj);//Gestisce i padri iterativi*
+		
+	/*	System.out.println("cCP[0].role="+cCP[0].role);
+		System.out.println(" GKC Ruolo0 nodo 1="+getKeyCOOP(cCP[1].nodi[1].get_key(), 1));
+		System.out.println(cCP[0].nodi[1].get_key()+" Ruolo0 nodo 1="+cCP[0].IsMultiUser(cCP[0].nodi[1].get_key()));
+		System.out.println(cCP[1].nodi[1].get_key()+" Ruolo1 nodo 1="+cCP[1].IsMultiUser(cCP[1].nodi[1].get_key()));
+		System.out.println(cCP[2].nodi[2].get_key()+" Ruolo2 nodo 2="+cCP[2].IsMultiUser(cCP[2].nodi[2].get_key()));
+		*/
+		String s[][]=null;
+		Vector Role,Key;
+		Role= new Vector();
+		Key= new Vector();
+		int count=0;
+		
+		//Calcolo le foglie liberate sull'albero cooperativo
+		
+	if(count_file>1){	//CASO DI ALBERI COOPERATIVI
+			for(int j=1;j<count_file;j++)
+			 for(int i=0;i<cCP[j].num_foglie;i++)
+			  if(BottomUp_S(cCP[j].aFoglie.get_name(i),j)){
+			  	Role.addElement(cCP[j].role);
+			  	Key.addElement(cCP[j].aFoglie.get_name(i));
+			  	if(cCP[j].IsMultiUser(cCP[j].aFoglie.get_name(i))){
+			  		String keyC=getKeyCOOP(cCP[j].aFoglie.get_name(i),j);
+			  		if(cCP[0].aFoglie.in_list(keyC))
+			  			if(!stato[0].contains(keyC)){
+			  				Role.addElement(cCP[0].role);
+			  				Key.addElement(keyC);
+			  				}
+			  				else{
+			  					int h=Role.size();
+			  					Role.removeElementAt(h-1);
+			  					Key.removeElementAt(h-1);
+			  					}	
+			  			}//if(cCP[j].IsMultiUser
+			  		}//if(BottomUp_S(....
+				
+				}// fine if(count_file>0)
+				else // CASO DI ALBERO SINGOLO
+				{
+					for(int i=0;i<cCP[0].num_foglie;i++)
+						if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+							Role.addElement(null);
+							Key.addElement(cCP[0].aFoglie.get_name(i));  			
+							}//if
+				}
+//////////////////CONTROLLO ITERATIVI PARTE DESTRA DISABLING ///////////////////
+	/*G	if(!CTTEutility.isCooperative())
+		{
+			System.out.println("****************************************************");
+			System.out.println("KEY="+key);
+			for(int cont=0;cont<cCP[0].aFatherIteration.get_count();cont++)
+				System.out.println(cont+"ITER=" +DownHard(cCP[0].aFatherIteration.get_name(cont), 0));
+			for(int cont=0;cont<cCP[0].num_varD;cont++)
+				System.out.println(cont+"DIS=" +DownHard(cCP[0].aEVD.item(cont).get_var2(), 0));
+			System.out.println("****************************************************");
+
+				
+			for(int cont=cCP[0].aFatherIteration.get_count()-1;cont>=0;cont--)//giulio prova 21/2/2001
+				if(DownSoft(cCP[0].aFatherIteration.get_name(cont),0))//iterativi padri
+				{
+					int trovato=-1;
+					
+					eschilo4:	
+					for(int x1=0;x1<cCP[0].num_nodi;x1++)
+						if(cCP[0].nodi[x1].get_key().equals(cCP[0].aFatherIteration.get_name(cont))) {trovato=x1; break eschilo4;}
+
+					if(trovato>-1)
+						for(int numD=0;numD<cCP[0].num_varD;numD++)
+							if((trovato>=cCP[0].aSonsIterationRangeDisablingDx[numD][0]) && (trovato<=cCP[0].aSonsIterationRangeDisablingDx[numD][1]))
+							{
+								for(int x2=cCP[0].aSonsIterationRangeDisablingSx[numD][0];x2<=cCP[0].aSonsIterationRangeDisablingSx[numD][1];x2++)
+									cCP[0].nodi[x2].set_padreChoiceEseguito(false);
+							}
+						
+				}
+				else if(key.equals(cCP[0].aFatherIteration.get_name(cont))) //È per forza una foglia iterativa?!
+				{
+					int trovato2=-1;
+					
+					eschilo5:	
+					for(int x1=0;x1<cCP[0].num_nodi;x1++)
+						if(cCP[0].nodi[x1].get_key().equals(cCP[0].aFatherIteration.get_name(cont))) {trovato2=x1; break eschilo5;}
+
+					if(trovato2>-1)
+						for(int numD=0;numD<cCP[0].num_varD;numD++)
+							if((trovato2>=cCP[0].aSonsIterationRangeDisablingDx[numD][0]) && (trovato2<=cCP[0].aSonsIterationRangeDisablingDx[numD][1]))
+							{
+								for(int x2=cCP[0].aSonsIterationRangeDisablingSx[numD][0];x2<=cCP[0].aSonsIterationRangeDisablingSx[numD][1];x2++)
+									cCP[0].nodi[x2].set_padreChoiceEseguito(false);
+							}
+
+				}
+
+			for(int x1=0;x1<cCP[0].num_nodi;x1++)
+				if(cCP[0].nodi[x1].get_padreChoiceEseguito()==false) Key.removeElement(cCP[0].nodi[x1].get_key());	
+		}//fine if(!COOP)	
+		*/
+///////////////FINE CONTROLLO ITERATIVI PARTE DESTRA DISABLING ///////////////////
+								
+//////////////////CONTROLLO SETTAGGIO FLAG CHOICE ITERATIVI///////////////////////
+		/*G			if(!CTTEutility.isCooperative())	
+					{
+						System.out.println("key="+key);
+						for(int is2=0;is2<cCP[0].num_padri;is2++)
+						{
+							for(int z1=0;z1<taskChoiceLvl[is2].size();z1++)
+							{
+								System.out.println(is2+") HERE********LVL		"+taskChoiceLvl[is2].elementAt(z1).toString() + " DS="+DownSoft(taskChoiceLvl[is2].elementAt(z1).toString(),0)+" DH="+DownHard(taskChoiceLvl[is2].elementAt(z1).toString(),0)+" Iterative=" + IsIterative(taskChoiceLvl[is2].elementAt(z1).toString(), 0));
+								if(DownSoft(taskChoiceLvl[is2].elementAt(z1).toString(),0) && IsIterative(taskChoiceLvl[is2].elementAt(z1).toString(), 0))
+								{
+									AnalizzoSettoFlag(taskChoiceLvl[is2].elementAt(z1).toString(), 0, is2, Role, Key);
+									System.out.println("Ramo 1");
+									//cCP[0].nodi[cont].set_padreChoiceEseguito(false);	
+								//System.out.println(is2+") ********LVL		"+taskChoiceLvl[is2].elementAt(z1) + " DS="+DownSoft(taskChoiceLvl[is2].elementAt(z1).toString(),0)+" DH="+DownHard(taskChoiceLvl[is2].elementAt(z1).toString(),0)+" Iterative=" + IsIterative(taskChoiceLvl[is2].elementAt(z1).toString(), 0));
+								}
+								else if(key.equals(taskChoiceLvl[is2].elementAt(z1).toString()) && IsIterative(taskChoiceLvl[is2].elementAt(z1).toString(), 0))
+								{
+									AnalizzoSettoFlag(taskChoiceLvl[is2].elementAt(z1).toString(), 0, is2, Role, Key);
+									System.out.println("O che l'è?");
+								}
+								else
+								{
+									System.out.println("O qui?");
+								}
+							}
+						}	
+
+							for(int cont=0;cont<cCP[0].num_nodi;cont++)
+							{
+								//cCP[0].nodi[cont].set_padreChoiceEseguito(false);
+								System.out.println("FLAG DEF="+cCP[0].nodi[cont].get_key() + " " + cCP[0].nodi[cont].get_padreChoiceEseguito());
+							}
+
+*/
+						/**** ATTENZIONE NOTA *****/
+						/**** NEL METODO SOTTO "AnalizzoSettoFlag()" MANCA REGOLE SOTTOALBERO***/
+						/***CONTROLLA PRIMA DI RIMUOVERE TASK DA KEY (Vector) ***/
+						/***CONTROLLA ES. FOGLIO***/
+						//TOLGO LE FOGLIE ITERATIVE SULLA CHOICE< MA DOVREI TOGLIERE ANCHE I FIGLI DEI
+						//SOTTOALBERI AVENTI TALI RADICI
+
+	/*G					for(int is2=0;is2<cCP[0].num_padri;is2++)
+						{
+							for(int z2=0;z2<Key.size();z2++)
+							{	
+								for(int z1=0;z1<taskChoiceLvlFigli[is2].size();z1++)
+								{
+											if(Key.elementAt(z2).toString().equals(taskChoiceLvlFigli[is2].elementAt(z1).toString())) 
+											{
+												int trovato=-1;
+												
+												usco:
+												for(int x1=0;x1<cCP[0].num_nodi;x1++)
+													if(cCP[0].nodi[x1].get_key().equals(taskChoiceLvlFigli[is2].elementAt(z1).toString())) {trovato=x1;break usco;}
+												
+												System.out.println("trovato P="+trovato);
+													
+												if((trovato>-1) && cCP[0].nodi[trovato].get_padreChoiceEseguito()==false)
+												{System.out.println("trovato D="+trovato);Key.removeElement(taskChoiceLvlFigli[is2].elementAt(z1).toString()); z2=0;}
+											}
+								}
+							}
+						}
+					}//fine if(!COOP)	
+					*/
+///////////////////////FINE CONTROLLO SETTAGGIO FLAG CHOICE ITERATIVI/////////////
+	
+	//Giulio
+	/////////PROSEGUO
+	if(!CTTEutility.isCooperative())
+	{
+		if(cCP[0].num_padri_iteration>0) //Controlla se vi e` almeno un padre iterativo
+		{
+				if(Key.size()>0)
+				{	
+					for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+					{
+
+						int lk3=0;
+
+						if(cCP[0].num_foglieIterationInitEseg[salp]==0)
+						{
+							/////////////////////////////
+							for(int lk=0;lk<cCP[0].allSons[salp].length;lk++)
+								for(int lk2=0;lk2<Key.size();lk2++)
+									if(cCP[0].allSons[salp][lk].equals(Key.elementAt(lk2).toString()))
+										cCP[0].num_foglieIterationInitEseg[salp]++;
+
+							if(cCP[0].num_foglieIterationInitEseg[salp]>massimo) massimo=cCP[0].num_foglieIterationInitEseg[salp];
+						}
+					}
+						if(massimo2>massimo) massimo=massimo2;
+
+////////////////////Aggiunta
+				//if((massimo2==0) && setto) //5/10/2000 remmata
+			/*	if((massimo2==0) && setto && massimo>0) //5/10/2000 sostituita la remmata: eventulamente da rivedere l'aggiunta di "massimo>0"
+				{System.out.println("massimo2="+massimo2+ " massimo="+massimo);
+					cCP[0].copia_foglieIterationInitEseg=null;
+					cCP[0].copia_foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massimo];
+						
+					for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+						for(int lk=0;lk<massimo;lk++)
+							cCP[0].copia_foglieIterationInitEseg[0][salp][lk]="";
+					setto=false;
+				}*/
+////////////////////
+
+		///E` servito per calcolare il valore di "massimo"
+		
+						cCP[0].copia_attuale_foglieIterationInitEseg=null;
+						cCP[0].copia_attuale_foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massimo];
+
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+							for(int lk=0;lk<massimo;lk++)
+								cCP[0].copia_attuale_foglieIterationInitEseg[0][salp][lk]="";
+
+						int lk3temporanea=0;//giulio 18/5/2001
+						boolean entrolk3=false;
+						
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+						{
+							int lk3=0;
+									
+							if(cCP[0].num_attuali_foglieIterationInitEseg[salp]==0)
+							{
+								for(int lk=0;lk<cCP[0].allSons[salp].length;lk++)
+									for(int lk2=0;lk2<Key.size();lk2++)
+										if(cCP[0].allSons[salp][lk].equals(Key.elementAt(lk2).toString()))
+										{
+											cCP[0].copia_attuale_foglieIterationInitEseg[0][salp][lk3]=Key.elementAt(lk2).toString();
+											cCP[0].num_attuali_foglieIterationInitEseg[salp]++;
+											lk3++;
+										}
+							}
+						}
+
+				//if(entrolk3) {massimo= lk3temporanea; setto=true;entrolk3=false;}
+				setto=true;
+/////////giulio 18/5/2001//////////////////
+				if((massimo2==0) && setto && massimo>0) //5/10/2000 sostituita la remmata: eventulamente da rivedere l'aggiunta di "massimo>0"
+				{
+					cCP[0].copia_foglieIterationInitEseg=null;
+					cCP[0].copia_foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massimo];
+						
+					for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+						for(int lk=0;lk<massimo;lk++)
+							cCP[0].copia_foglieIterationInitEseg[0][salp][lk]="";
+					setto=false;
+				}
+
+/////////fine giulio 18/5/2001//////////////////
+
+
+
+//L'arcano e` qui: se copia_attuale e` vuota,cancella il vettore
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+						{
+							int lk3=0;
+
+							for(int lk=0;lk<cCP[0].copia_attuale_foglieIterationInitEseg[0][salp].length;lk++)
+							{	
+								if(!cCP[0].copia_attuale_foglieIterationInitEseg[0][salp][lk].equals("")) //aggiunta alle ore 20.30
+								{	
+									cCP[0].copia_foglieIterationInitEseg[0][salp][lk3]=cCP[0].copia_attuale_foglieIterationInitEseg[0][salp][lk];
+									lk3++;
+								}
+							}
+						} 
+								
+		///E` servito per copiare i tasks in copia_attuale
+					if(massimo2>0)
+					{		
+						for(int salp=0;salp<iteratIniziali;salp++) //va bene iteratIniziali?
+						{
+							if(cCP[0].num_foglieIterationInitEseg[salp]>0 && cCP[0].foglieIterationInitEseg!=null)
+							{
+								for(int lk4=0;lk4<cCP[0].foglieIterationInitEseg[0][salp].length;lk4++)
+								{
+									cCP[0].copia_foglieIterationInitEseg[0][salp][lk4]=cCP[0].foglieIterationInitEseg[0][salp][lk4];
+								}
+							}
+						}
+					}	
+				}
+		}
+
+		//stampaFoglieIterationInitEseg();//Giulio 19/3/2001
+	}
+	/***************************/
+
+	/////////FINE PROSEGUO
+	/*****************************/
+	if(qualeIterativo>=0) //fondamentale questo controllo!
+			//copiaCopia_corrente_foglieIterationInitEseg(qualeIterativo);//BOH?
+		if(!CTTEutility.isCooperative())//29/9/2000
+			copiaCopia_corrente_foglieIterationInitEseg();
+	////////AGGIUNTA 20/9/2000
+	if(qualeIterativo>=0)
+		if(!CTTEutility.isCooperative())//29/9/2000
+			togliFoglieIterationInitEseg(key, qualeIterativo);
+	////////FINE AGGIUNTA 20/9/2000
+//	if(!CTTEutility.isCooperative())//29/9/2000
+	//	stampaFoglieIterationInitEseg_corrente();//BOH? 
+
+/******************** GIULIO 11/12/2001 RICORSIONE OGGI *********************/
+
+	if(!CTTEutility.isCooperative())
+	{
+		if(cCP[0].num_nodi_ricorsivi>0) //Controlla se vi e` almeno un padre iterativo
+		{
+				if(Key.size()>0)
+				{	
+					for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+					{
+
+						int lk3=0;
+
+						if(cCP[0].num_foglieRecursiveInitEseg[salp]==0)
+						{
+							/////////////////////////////
+							for(int lk=0;lk<cCP[0].allSonsRecursive[salp].length;lk++)
+								for(int lk2=0;lk2<Key.size();lk2++)
+									if(cCP[0].allSonsRecursive[salp][lk].equals(Key.elementAt(lk2).toString()))
+										cCP[0].num_foglieRecursiveInitEseg[salp]++;
+
+							if(cCP[0].num_foglieRecursiveInitEseg[salp]>massimoRic) massimoRic=cCP[0].num_foglieRecursiveInitEseg[salp];
+						}
+					}
+						if(massimoRic2>massimoRic) massimoRic=massimoRic2;
+
+		///E` servito per calcolare il valore di "massimo"
+		
+						cCP[0].copia_attuale_foglieRecursiveInitEseg=null;
+						cCP[0].copia_attuale_foglieRecursiveInitEseg=new String[1][cCP[0].num_nodi_ricorsivi][massimoRic];
+
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+							for(int lk=0;lk<massimoRic;lk++)
+								cCP[0].copia_attuale_foglieRecursiveInitEseg[0][salp][lk]="";
+
+						int lk3temporanea=0;//giulio 18/5/2001
+						boolean entrolk3=false;
+						
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+						{
+							int lk3=0;
+									
+							if(cCP[0].num_attuali_foglieRecursiveInitEseg[salp]==0)
+							{
+								for(int lk=0;lk<cCP[0].allSonsRecursive[salp].length;lk++)
+									for(int lk2=0;lk2<Key.size();lk2++)
+										if(cCP[0].allSonsRecursive[salp][lk].equals(Key.elementAt(lk2).toString()))
+										{
+											cCP[0].copia_attuale_foglieRecursiveInitEseg[0][salp][lk3]=Key.elementAt(lk2).toString();
+											cCP[0].num_attuali_foglieRecursiveInitEseg[salp]++;
+											lk3++;
+										}
+							}
+						}
+
+				//if(entrolk3) {massimo= lk3temporanea; setto=true;entrolk3=false;}
+				settoRic=true;
+
+				if((massimoRic2==0) && settoRic && massimoRic>0) //5/10/2000 sostituita la remmata: eventulamente da rivedere l'aggiunta di "massimo>0"
+				{
+					cCP[0].copia_foglieRecursiveInitEseg=null;
+					cCP[0].copia_foglieRecursiveInitEseg=new String[1][cCP[0].num_nodi_ricorsivi][massimoRic];
+						
+					for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+						for(int lk=0;lk<massimoRic;lk++)
+							cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk]="";
+					settoRic=false;
+				}
+
+
+
+//L'arcano e` qui: se copia_attuale e` vuota,cancella il vettore
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+						{
+							int lk3=0;
+
+							for(int lk=0;lk<cCP[0].copia_attuale_foglieRecursiveInitEseg[0][salp].length;lk++)
+							{	
+								if(!cCP[0].copia_attuale_foglieRecursiveInitEseg[0][salp][lk].equals("")) //aggiunta alle ore 20.30
+								{	
+									cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk3]=cCP[0].copia_attuale_foglieRecursiveInitEseg[0][salp][lk];
+									lk3++;
+								}
+							}
+						} 
+								
+		///E` servito per copiare i tasks in copia_attuale
+					if(massimoRic2>0)
+					{		
+						for(int salp=0;salp<ricorsIniziali;salp++) //va bene ricorsIniziali?
+						{
+							if(cCP[0].num_foglieRecursiveInitEseg[salp]>0 && cCP[0].foglieRecursiveInitEseg!=null)
+							{
+								for(int lk4=0;lk4<cCP[0].foglieRecursiveInitEseg[0][salp].length;lk4++)
+								{
+									cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk4]=cCP[0].foglieRecursiveInitEseg[0][salp][lk4];
+								}
+							}
+						}
+					}	
+				}
+		}
+
+	//	stampaFoglieRecursiveInitEseg();//Giulio 19/3/2001
+	}
+	if(qualeRicorsivo>=0) //fondamentale questo controllo!
+			//copiaCopia_corrente_foglieIterationInitEseg(qualeIterativo);//BOH?
+		if(!CTTEutility.isCooperative())//29/9/2000
+			copiaCopia_corrente_foglieRecursiveInitEseg();
+	////////AGGIUNTA 20/9/2000
+	if(qualeRicorsivo>=0)
+		if(!CTTEutility.isCooperative())//29/9/2000
+			togliFoglieRecursiveInitEseg(key, qualeRicorsivo);
+
+/****************************** END ************************************/
+
+
+	/*****************************/
+	if(!CTTEutility.isCooperative())
+	{
+		if(!notTreniOpzOdAvoOpz()) //NOTA IMP: va generalizzato a piu` iterativi magari dando il parametro di ingresso di quale padre iterativo!?
+		{
+		//if(cCP[0].num_padri_iteration>0)//DA METTERE giulio 6/3/2001
+			int temp[] = new int[cCP[0].num_padri_iteration];//6/3/2001
+			
+			for(int iterat1=0;iterat1<cCP[0].num_padri_iteration;iterat1++)//6/3/2001
+				temp[iterat1]=0;//giulio 6/3/2001
+			
+			for(int iterat=0;iterat<cCP[0].num_padri_iteration;iterat++)
+				for(int o1=0;o1<cCP[0].aSonsIteration[iterat].length;o1++)
+					for(int o2=0;o2<cCP[0].aSonsIteration[iterat][o1].length;o2++)
+					{
+						if(Key.contains(cCP[0].aSonsIteration[iterat][o1][o2]) && temp[iterat]==0) temp[iterat]=1;
+					}
+			for(int iterat=0;iterat<cCP[0].num_padri_iteration;iterat++)
+			{
+				if(temp[iterat]==0)
+					for(int o1=0;o1<cCP[0].aSonsIterationNoOpz[iterat].length;o1++)
+						for(int o2=0;o2<cCP[0].aSonsIterationNoOpz[iterat][o1].length;o2++)
+						{
+							if(Key.contains(cCP[0].aSonsIterationNoOpz[iterat][o1][o2]) && temp[iterat]==0) temp[iterat]=1;
+						}
+			}
+	
+				//System.out.println("LISTA TASK ESEGUIBILI=" + Key + " SIZE=" + Key.size() + " " + Key.contains(cCP[0].aSonsIteration[1][0][0]));
+				
+			/*if(controlloAccesiTaskIniziali(Key, key))
+			{
+				System.out.println("AGGIUNTA ORA!!!");//messo dentro
+		 	  ricopiaTasksTreni(qualeAlberoIterativo);//GENERALIZZO? 22/2/2001//messo dentro
+		 	  ricopia_copia_aSonsIterationNoOpz2(qualeAlberoIterativo);//GENERALIZZO? //22/2/2001//messo dentro
+			}*/
+
+			//if(controlloAccesiTaskIniziali(Key, key))//giulio 5/3/2001
+		for(int sx=cCP[0].num_padri_iteration-1;sx>=0;sx--)
+			if(controlloAccesiTaskIniziali(Key, sx))//giulio 5/3/2001
+			{ 	
+/*				if(qualeIterativo>=0)//giulio 7/2/2001
+					SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]++;//giulio 7/2/2001
+				else if(qualeAlberoIterativo>=0)//giulio 7/2/2001
+					SimulatorPanelCTTE.reinizio_ciclo[qualeAlberoIterativo]++;//giulio 7/2/2001
+	*/
+				
+			////PROSEGUO
+				for(int salp=cCP[0].num_padri_iteration-1;salp>=0;salp--)//giulio 27/2/2001 al posto di quella sotto
+				//for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)//Aggiunta 12/10/2000 per rendere visibile la var. "salp"
+					//for(int lk=0;lk<cCP[0].num_foglieIterationInitEseg[0];lk++)//12/10/2000
+					for(int lk=0;lk<cCP[0].num_foglieIterationInitEseg[salp];lk++)//12/10/2000 al posto della riga precedente
+					{
+						if(DownHard(cCP[0].aFatherIteration.get_name(salp),0))//giulio 12/2/2001
+					//	if(qualeIterativo>=0)
+						{
+							/*******************GIULIO MESSO DENTRO il 5/3/2001******************/
+							if((qualeIterativo>=0) && DownHard(cCP[0].aFatherIteration.get_name(qualeIterativo),0))//giulio 5/3/2001
+								SimulatorPanelCTTE.reinizio_ciclo[qualeIterativo]++;//giulio 5/3/2001
+							else if((qualeAlberoIterativo>=0) && DownHard(cCP[0].aFatherIteration.get_name(qualeAlberoIterativo),0))//giulio 5/3/2001
+								SimulatorPanelCTTE.reinizio_ciclo[qualeAlberoIterativo]++;//giulio 5/3/2001
+							/*******************FINE MESSO DENTRO il 5/3/2001******************/
+							//if(qualeAlberoIterativo>=0)	
+							
+							if(temp[salp]==1)
+							//if((!esisteTrenoVuoto_IterativoSpecifico(salp)))
+							//if(controlloAccesiTaskIniziali(Key, salp))
+							{
+								Role.addElement(null);
+								//Key.addElement(cCP[0].copia_foglieIterationInitEseg[0][0][lk]);//DA AGGIUNGERCI IL CONTROLLO SUI VARI ALBERI; 12/10/2000
+								Key.addElement(cCP[0].copia_foglieIterationInitEseg[0][salp][lk]);//DA AGGIUNGERCI IL CONTROLLO SUI VARI ALBERI; 12/10/2000 Remmata la posto della riga precedente
+								//Al posto di salp serve quale iterativo (nella riga precedente)?
+							 	  //ricopiaTasksTreni2(qualeAlberoIterativo);//GENERALIZZO? 22/2/2001//messo dentro
+							 	  //ricopia_copia_aSonsIterationNoOpz2(qualeAlberoIterativo);//GENERALIZZO? //22/2/2001//messo dentro
+							}
+						}
+					}
+		
+					for(int iterat2=0;iterat2<cCP[0].num_padri_iteration;iterat2++)//6/3/2001
+						temp[iterat2]=0;//giulio 6/3/2001
+
+									//System.out.println("RICOPIA2");
+							 	  //ricopiaTasksTreni(qualeAlberoIterativo);//GENERALIZZO? 22/2/2001
+							 	  //ricopia_copia_aSonsIterationNoOpz(qualeAlberoIterativo);//GENERALIZZO? //22/2/2001
+						  ///////////////GIULIO 23/2/2001////////////////
+						  /*	for(int f_1=0;f_1<count_file;f_1++)
+									for(int salp=cCP[f_1].aFatherIteration.get_count()-1;salp>=0;salp--)
+						 			{
+						 				int stopIterativo=0;	
+						  			for(int j=0;j<cCP[f_1].allSons[salp].length;j++)
+						  				//if(salp!=i)
+											if(figliIterativiInQualiIterativi(cCP[f_1].allSons[salp][j], qualeAlberoIterativo))//giulio 23/2/2001
+					 						{
+						 						if(stopIterativo==0)
+						 						{ System.out.println("OGGG3=" + salp);
+					 	  						//OCCHIO: VA BENE ANCHE PER IL COOPERATIVO?	23/2/2001 (OCCHIO ANCHE AGLI ALTRI)
+						 	  					ricopiaTasksTreni(salp);//GENERALIZZO?
+						 	  					ricopia_copia_aSonsIterationNoOpz(salp);//GENERALIZZO?
+						 	  					stopIterativo++;	
+						 						}
+						 					}
+						 			}*/
+							/////////////////FINE GIULIO 23/2/2001////////////////
+
+			////FINE PROSEGUO		
+			} 
+		}
+	}
+//29/9/2000*System.out.println("Eseguinno=" + Key.clone());	
+	dimKeyPrima=0;
+	if(!CTTEutility.isCooperative())//29/9/2000*
+		Key=viSonoTasksDoppioni(Key);
+		//Key=viSonoTasksDoppioni(Key);
+		//Fine Giulio
+		dimKeyPrima=Key.size();
+/******************* RICORSIONE GIULIO 19/12/2001 *************************/
+		dimKeyDopo=0;
+					if(cCP[0].num_nodi_ricorsivi>0)
+					{
+						if(!eseguitoRicorsivo);
+						{
+							for(int i1=0;i1<cCP[0].num_nodi_ricorsivi;i1++)
+								for(int i2=0;i2<ricorsioneCorrente;i2++)	
+									for(int i3=0;i3<TasksRimastiDaEseguire[i1][i2].size();i3++)
+									{
+										/*qua:
+										for(int y=0;y<cCP[0].allSonsRecursive[i1].length;y++)
+											if(TasksRimastiDaEseguire[i1][i2].elementAt(i3).equals(cCP[0].allSonsRecursive[i1][y].toString()))//G CANCEL
+											{System.out.println("OOOOOOOOHHHHHHHHHHHHH "+TasksRimastiDaEseguire[i1][i2].elementAt(i3)+" "+cCP[0].allSonsRecursive[i1][y].toString());*/
+												Role.addElement(null);
+												Key.addElement(TasksRimastiDaEseguire[i1][i2].elementAt(i3));
+												/*break qua;
+											}*/
+									}
+						}
+					}
+		dimKeyDopo=Key.size();			
+/******************************** END **************************************/					
+		
+
+		count=Key.size();
+
+		if(count>0) 
+			s=new String[count][2];
+		for(int i=0;i<count;i++){
+			s[i][0]=(String)Role.elementAt(i);
+			s[i][1]=(String)Key.elementAt(i);
+			}
+		
+		CaricaTaskEseguibili(s);
+		return StringTOC_Taskd_NomeRole(s);
+	}
+	
+	private boolean BottomUp_S(String name, int j){
+
+		//In fase di simulazione
+		if(stato[j].contains((String)name)) return false;
+		return BottomUp(name,j);
+	}
+	
+	
+	private boolean BottomUp(String key, int j){
+//System.out.println("CoopSimulatore BottomUp() key="+key);
+		if(count_file==1) return BottomUpNoCOOP(key,j);
+		if(!BottomUpNoCOOP(key,j)) return false;
+		if(j>0)if(cCP[j].IsMultiUser(key)) return BottomUpNoCOOP(getKeyCOOP(key,j),0);
+		if(j==0)if(cCP[0].IsFogliaKey(key)) return BottomUpNoCOOP(getKeyNoCOOP(key),getIndexBelong(key));
+		return true;
+	}
+	
+	private boolean BottomUpNoCOOP(String key, int j){
+  	//GGGSystem.out.println("KEY="+key);
+  	/** A questa funzione deve essere chiamata da StartIsEsegubile */
+  			//Caso della radice:
+  			if(cCP[j].nodi[0].get_key().equals(key)) {/*System.out.println("ROOT");*/return true;}
+  				else { 
+  					//System.out.println(" NON ROOT");
+  					/** Gestione del caso di non Padre */
+  					int i;
+  					/** Gestione Choice */
+						i=0;
+						//System.out.println("/** Gestione Choice */");
+						//System.out.println(cCP);
+						
+  					while (i<cCP[j].num_varC){//System.out.println("var1="+cCP[j].aEVC.item(i).get_var1()+" var2="+cCP[j].aEVC.item(i).get_var2());
+  					if(cCP[j].aEVC.item(i).get_var1() == null) i++;
+					 else if(cCP[j].aEVC.item(i).get_var1().equals(key)) {return BottomUp(cCP[j].aEVC.item(i).get_name(),j)&&!DownSoft(cCP[j].aEVC.item(i).get_var2(),j);}
+						  else if(cCP[j].aEVC.item(i).get_var2().equals(key)) {return BottomUp(cCP[j].aEVC.item(i).get_name(),j)&&!DownSoft(cCP[j].aEVC.item(i).get_var1(),j);}
+						   else i++;
+  						}
+//////////////////////giulio 9/5/2001////////////////////////  						
+						/** Gestione Order Independency */
+	/*BUONA				System.out.println("DownHard(cCP[j].aEVO.item(i).get_var2(),j)="+DownHard(cCP[j].nodi[1].get_key(),j));
+ 	*/		i=0;
+ 	//System.out.println("/** Gestione Order Independency */");
+						while (i<cCP[j].num_varO)
+  					{
+							if(cCP[j].aEVO.item(i).get_var1() == null) i++;
+							 else if(cCP[j].aEVO.item(i).get_var1().equals(key)) {/*System.out.println("1*********OR="+i);*/return BottomUp(cCP[j].aEVO.item(i).get_name(),j)&& (DownHard(cCP[j].aEVO.item(i).get_var2(),j) || DownSoftHard(cCP[j].aEVO.item(i).get_var2(),j) || !DownSoft(cCP[j].aEVO.item(i).get_var2(),j));}
+						 		else if(cCP[j].aEVO.item(i).get_var2().equals(key)) {/*System.out.println("2*********OR="+i);*/return BottomUp(cCP[j].aEVO.item(i).get_name(),j)&&(DownHard(cCP[j].aEVO.item(i).get_var1(),j) || DownSoftHard(cCP[j].aEVO.item(i).get_var1(),j) || !DownSoft(cCP[j].aEVO.item(i).get_var1(),j));}
+						  else i++;
+  					} 
+/**/
+ /*			i=0;
+			while (i<cCP[j].num_varO)
+			{
+			 	if(cCP[j].aEVO.item(i).get_var1().equals(key)) {System.out.println("1*********OR="+i);return BottomUp(cCP[j].aEVO.item(i).get_name(),j)&&( (!DownSoft(cCP[j].aEVO.item(i).get_var2(),j) ^ DownHard(cCP[j].aEVO.item(i).get_var2(),j)) || (!DownSoft(cCP[j].aEVO.item(i).get_var2(),j) || DownHard(cCP[j].aEVO.item(i).get_var2(),j)));}
+			 		else if(cCP[j].aEVO.item(i).get_var2().equals(key)) {System.out.println("2*********OR="+i);return BottomUp(cCP[j].aEVO.item(i).get_name(),j)&&( (!DownSoft(cCP[j].aEVO.item(i).get_var1(),j) ^ DownHard(cCP[j].aEVO.item(i).get_var1(),j)) || (!DownSoft(cCP[j].aEVO.item(i).get_var1(),j) || DownHard(cCP[j].aEVO.item(i).get_var1(),j)));}
+					  else i++;
+			} 
+*/
+//////////////////fine giulio 9/5/2001///////////////////////  						
+						/** Gestione Interliving */
+  					i=0;
+  					//System.out.println("/** Gestione Interliving */");
+						while (i<cCP[j].num_varI)
+  					{
+							if(cCP[j].aEVI.item(i).get_var1() == null) i++;
+							 else if(cCP[j].aEVI.item(i).get_var1().equals(key)||cCP[j].aEVI.item(i).get_var2().equals(key)) {/*System.out.println("1*********IN="+i);*/return BottomUp(cCP[j].aEVI.item(i).get_name(),j);}
+						  else i++;  					
+  					}
+  					/** Gestione Disabling */
+						i=0;
+						//System.out.println("/** Gestione Disabling */");
+						while (i<cCP[j].num_varD)
+  					{
+							if(cCP[j].aEVD.item(i).get_var1() == null) i++;
+							 else if(cCP[j].aEVD.item(i).get_var1().equals(key)) {return BottomUp(cCP[j].aEVD.item(i).get_name(),j)&&!DownSoft(cCP[j].aEVD.item(i).get_var2(),j);}//GM 13/10/2004
+						 else if(cCP[j].aEVD.item(i).get_var2().equals(key)) {return BottomUp(cCP[j].aEVD.item(i).get_name(),j);}//GM 13/10/2004
+						 else i++;
+  					}
+  					// Gestione Start/Stop */
+  					i=0;
+  					//System.out.println("// Gestione Start/Stop */");
+  					while (i<cCP[j].num_varS)
+  					{
+  						if(cCP[j].aEVS.item(i).get_var1() == null) i++;
+						 else if(cCP[j].aEVS.item(i).get_var1().equals(key)) {/*System.out.println("1*********ST="+i);*/return BottomUp(cCP[j].aEVS.item(i).get_name(),j)&&(!DownSoft(cCP[j].aEVS.item(i).get_var2(),j)||DownHard(cCP[j].aEVS.item(i).get_var2(),j));}
+  						else if(cCP[j].aEVS.item(i).get_var2().equals(key)) {/*System.out.println("2*********ST="+i);*/return BottomUp(cCP[j].aEVS.item(i).get_name(),j)&&!DownHard(cCP[j].aEVS.item(i).get_var1(),j);}
+  						else i++;
+  					}
+/**Gestione Start/Stop */
+						//System.out.println("/**Gestione Start/Stop */");
+						i=0;
+						while (i<cCP[j].num_varE){
+							
+							if(cCP[j].aEVE.item(i).get_var1() == null) i++;
+						 else if(cCP[j].aEVE.item(i).get_var1().equals(key)) {/*System.out.println("1*********EN="+i);*/return BottomUp(cCP[j].aEVE.item(i).get_name(),j)&&!DownSoft(cCP[j].aEVE.item(i).get_var2(),j);}
+						 else if(cCP[j].aEVE.item(i).get_var2().equals(key)) {/*System.out.println("2*********EN="+i);*/return BottomUp(cCP[j].aEVE.item(i).get_name(),j)&&DownHard(cCP[j].aEVE.item(i).get_var1(),j);}
+						  else i++;
+						}
+						/** Gestione Lista Padri */
+						i=0; 
+						//System.out.println("/** Gestione Lista Padri */");
+						while(i<cCP[j].num_padri)
+  					{
+							if(cCP[j].lEP[i].get_espressione().equals(key)) {/*System.out.println("*******PA="+i);*//*System.out.println("EspName P="+cCP[j].lEP[i].get_name()+" espressione="+cCP[j].lEP[i].get_espressione());*/return BottomUp(cCP[j].lEP[i].get_name(),j);}
+								else i++;  					
+  					}
+  					
+  					}// fine else /**/
+  					/** Gestione Fallimento */
+  			System.out.println("/** Gestione Fallimento */");
+  			if(roleName != null)
+  				//System.out.println("CoopSimulatore if(roleName == null)");
+  					System.out.println("*** ERRORE CoopSimulatore::BottomUpNoCOOP ->"+roleName[j]+"->"+key);
+  					return false;
+  					
+  } // fine BottomUp	
+  
+  //private boolean DownHard(String key, int j){//remmata per colpa di Laila
+  protected boolean DownHard(String key, int j){
+  	int i2;
+
+  	/* Aggiunta Giulio Mori gestione Opzionale al posto riga orig. */
+  	if(cCP[j].IsOptional(key))
+  	{//System.out.println("Opzional=" + key);//giulio 12/2/2001
+  		if(DownSoft(key, j))
+  		{//System.out.println("Opzional2=" + key);//giulio 12/2/2001
+////////////////////giulio 9/5/2001/////////////////////////////
+				/** Gestione Order Independency */
+				i2=0;
+				while (i2<cCP[j].num_varO)
+				 if(cCP[j].aEVO.item(i2).get_name().equals(key)) return DownHard(cCP[j].aEVO.item(i2).get_var1(),j)&&DownHard(cCP[j].aEVO.item(i2).get_var2(),j);//||DownHard(cCP[j].aEVO.item(i2).get_var2(),j)&&DownHard(cCP[j].aEVO.item(i2).get_var1(),j);
+						else i2++;  					
+						
+////////////////fine giulio 9/5/2001/////////////////////////////
+				/** Gestione Interliving */
+				i2=0;
+				while (i2<cCP[j].num_varI)
+					if(cCP[j].aEVI.item(i2).get_name().equals(key)) return DownHard(cCP[j].aEVI.item(i2).get_var1(),j)&&DownHard(cCP[j].aEVI.item(i2).get_var2(),j);
+						else i2++;  					
+				/** Gestione Enabling */
+				i2=0;
+				while (i2<cCP[j].num_varE)
+					 if(cCP[j].aEVE.item(i2).get_name().equals(key)) return DownHard(cCP[j].aEVE.item(i2).get_var1(),j)&&DownHard(cCP[j].aEVE.item(i2).get_var2(),j);
+						else i2++;
+			  /** Gestione Lista Padri */
+				i2=0;
+				while(i2<cCP[j].num_padri)
+				 if(cCP[j].lEP[i2].get_name().equals(key)) return DownHard(cCP[j].lEP[i2].get_espressione(),j);
+					else i2++; 
+  		}
+  		else {//System.out.println("Opzional3=" + key);/*giulio 12/2/2001*/
+
+  							return true;
+  					}
+  	} //return true;
+		/* Fine aggiunta Giulio Mori gestione Opzionale al posto riga orig. */
+		
+//  		if(cCP[j].IsFogliaKey(key)) 
+//  				else return BottomUp(key,j);
+  	//giulio 20/12/00 if(cCP[j].IsAbstract(key)&&cCP[j].IsFogliaKey(key)) return true;
+  	//giulio 20/12/00 else
+  		if(cCP[j].IsFogliaKey(key)) 
+  	{   
+				if(stato[j].contains(key)) return true;
+					else return false; 	
+  	}
+			else {
+				/** Non e' una foglia */
+				//if(CoopDatiComuni.s) System.out.println("DownHard: non e' una foglia");
+				int i;
+  			/** Gestione Choice */
+				i=0;
+				while (i<cCP[j].num_varC)
+					if(cCP[j].aEVC.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVC.item(i).get_name().equals(key)) return DownHard(cCP[j].aEVC.item(i).get_var1(),j)&&!DownSoft(cCP[j].aEVC.item(i).get_var2(),j)||DownHard(cCP[j].aEVC.item(i).get_var2(),j)&&!DownSoft(cCP[j].aEVC.item(i).get_var1(),j);
+						  else i++;
+			
+////////////////////giulio 9/5/2001/////////////////////////////
+				/** Gestione Order Independency */
+				i=0;
+				while (i<cCP[j].num_varO)
+					if(cCP[j].aEVO.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVO.item(i).get_name().equals(key)) return DownHard(cCP[j].aEVO.item(i).get_var1(),j)&&DownHard(cCP[j].aEVO.item(i).get_var2(),j);
+						else i++;
+
+////////////////fine giulio 9/5/2001/////////////////////////////
+
+				/** Gestione Interliving */
+				i=0;
+				while (i<cCP[j].num_varI)
+					if(cCP[j].aEVI.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVI.item(i).get_name().equals(key)) return DownHard(cCP[j].aEVI.item(i).get_var1(),j)&&DownHard(cCP[j].aEVI.item(i).get_var2(),j);
+						else i++;  					
+  			/** Gestione Disabling */
+				i=0;
+				while (i<cCP[j].num_varD)
+				{
+					if(cCP[j].aEVD.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVD.item(i).get_name().equals(key))	return DownHard(cCP[j].aEVD.item(i).get_var2(),j);//GM 13/11/2004
+				 		else i++;
+				}
+				/** Gestione Stop/Resume **/
+				i=0;
+				while (i<cCP[j].num_varS)
+					if(cCP[j].aEVS.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVS.item(i).get_name().equals(key)) return DownHard(cCP[j].aEVS.item(i).get_var1(),j);
+					else i++;
+				/** Gestione Enabling */
+				i=0;
+				while (i<cCP[j].num_varE)	
+					if(cCP[j].aEVE.item(i).get_name() == null) i++;
+					 else if(cCP[j].aEVE.item(i).get_name().equals(key)) {return DownHard(cCP[j].aEVE.item(i).get_var1(),j)&&DownHard(cCP[j].aEVE.item(i).get_var2(),j);}
+					else i++;
+				/** Gestione Lista Padri */
+				i=0;
+				while(i<cCP[j].num_padri)
+				 if(cCP[j].lEP[i].get_name().equals(key)) {/*System.out.println( "cCP[j].lEP[i].get_name()="+cCP[j].lEP[i].get_name()+" cCP[j].lEP[i].get_espressione()="+cCP[j].lEP[i].get_espressione());*/return DownHard(cCP[j].lEP[i].get_espressione(),j);}
+					else i++;
+			/** Gestione Fallimento */
+  			System.out.println("DownHard: Errore nella ricerca di un task");
+				return false;
+  					
+  		}// fine else
+
+ }// fine DownHard	
+ 
+ 
+	private boolean DownSoft(String key, int j){
+		
+		//if(CoopDatiComuni.s) System.out.println("    DownSoft("+name+")");
+		if(cCP[j].aFoglie.in_list(key)) 
+			if(stato[j].contains(key)) return true;
+				else return false; 	
+			else {
+				/** Non e' una foglia */
+				//if(CoopDatiComuni.s) System.out.println("DownSoft: non e' una foglia");
+
+				int i;
+  			/** Gestione Choice */
+				i=0;
+				while (i<cCP[j].num_varC)
+				{
+					//System.out.println("cCP["+j+"].aEVC.item("+i+").get_name()="+cCP[j].aEVC.item(i).get_name());
+					if(cCP[j].aEVC.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVC.item(i).get_var1(),j)||DownSoft(cCP[j].aEVC.item(i).get_var2(),j);
+				  else i++;
+				}
+//////////////////giulio 9/5/2001//////////////////////////
+  			/** Gestione Order Independency */
+				/*i=0;
+				while (i<cCP[j].num_varO)
+				 if(cCP[j].aEVO.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVO.item(i).get_var1(),j)&&!DownSoft(cCP[j].aEVO.item(i).get_var2(),j)||!DownSoft(cCP[j].aEVO.item(i).get_var1(),j)&&DownSoft(cCP[j].aEVO.item(i).get_var2(),j);
+				  else i++;
+				*/  
+				i=0;
+				while (i<cCP[j].num_varO)
+				{
+					//System.out.println("cCP["+j+"].aEVO.item("+i+").get_name()="+cCP[j].aEVO.item(i).get_name());
+					if(cCP[j].aEVO.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVO.item(i).get_var1(),j) || DownSoft(cCP[j].aEVO.item(i).get_var2(),j);
+				  else i++;
+				}
+			
+/////////////fine giulio 9/5/2001//////////////////////////
+				/** Gestione Interliving */
+				i=0;
+				while (i<cCP[j].num_varI)
+				{
+					//System.out.println("cCP["+j+"].aEVI.item("+i+").get_name()="+cCP[j].aEVI.item(i).get_name());
+					if(cCP[j].aEVI.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVI.item(i).get_var1(),j)||DownSoft(cCP[j].aEVI.item(i).get_var2(),j);
+				  else i++;
+				}
+				/** Gestione Disabling */
+				i=0;
+				while (i<cCP[j].num_varD)
+				{
+					//System.out.println("cCP["+j+"].aEVD.item("+i+").get_name()="+cCP[j].aEVD.item(i).get_name());
+					if(cCP[j].aEVD.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVD.item(i).get_var1(),j)||DownSoft(cCP[j].aEVD.item(i).get_var2(),j);
+				  else i++;
+				}
+				/** Gestione Stop/Resume */
+				i=0;
+				while (i<cCP[j].num_varS)
+				{
+					//System.out.println("cCP["+j+"].aEVS.item("+i+").get_name()="+cCP[j].aEVS.item(i).get_name());
+					if(cCP[j].aEVS.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVS.item(i).get_var1(),j)||DownSoft(cCP[j].aEVS.item(i).get_var2(),j);
+				  else i++;
+				}
+				/** Gestione Enabling */
+				i=0;
+				while (i<cCP[j].num_varE)
+				{
+					//System.out.println("cCP["+j+"].aEVE.item("+i+").get_name()="+cCP[j].aEVE.item(i).get_name());
+					if(cCP[j].aEVE.item(i).get_name().equals(key)) return DownSoft(cCP[j].aEVE.item(i).get_var1(),j)||DownSoft(cCP[j].aEVE.item(i).get_var2(),j);
+				  else i++;
+				}
+				/** Gestione Lista Padri */
+				i=0;
+				while(i<cCP[j].num_padri)
+				{
+					//System.out.println("cCP["+j+"].lEP["+i+"].get_name()="+cCP[j].lEP[i].get_name());
+					if(cCP[j].lEP[i].get_name().equals(key)) return DownSoft(cCP[j].lEP[i].get_espressione(),j);
+				   else i++;
+				}
+				/** Gestione Fallimento */
+				System.out.println("DownSoft: Errore nella ricerca di un task");
+				return false;
+  					
+			}// fine else
+	
+	} // fine DownSoft
+
+	
+	//Private Methods
+
+	public int[] NumeroPassiExe(String nomePadre){
+	
+		/**
+		Questa funzione puo' essere chiamata solo per gli alberi singoli
+		*/
+		return cCP[0].PassiExe(nomePadre);
+	
+	}	
+	
+	
+	//PADRI ESEGUIBILI
+	
+	// Le prossime due funzioni servono per sapere quali padri possono essere eseguiti
+	// a run-time. Infatti la funzione Start e la funzione IsEseguibile restituiscono
+	// x ogni albero, sia i singoli che il co-operativo, le sole foglie eseguibili.
+	// La funzione PadriEseguibili invece restituisce, una volta chiamata la funzuione
+	// Start o la funzione isEseguibile, per ogni albero, sia esso singolo o co-operativo
+	// i soli padri che possono essere eseguiti: cioe' essi sono abilitati e non hanno nessun
+	// figlio eseguito.
+	
+	
+	public C_Taskd_NomeRole[] PadriEseguibili(){
+			
+		//if(CoopDatiComuni.s) System.out.println(">>>Padri Eseguibili");
+		
+		//if(bBackwards) return cS.PadriEseguibili();
+		
+		String[][] s;
+		int conta=0;
+		for(int j=0;j<count_file;j++)
+			for(int i=0;i<cCP[j].num_padri;i++)
+			  if(!DownSoft(cCP[j].aFather.get_name(i),j))
+			  	if(ThereIsFiglioEseguibile(cCP[j].aFather.get_name(i),j)) conta++;
+		s=null;
+		if(conta>0){
+		  int index=0; 
+			s= new String[conta][2];
+			for(int j=0;j<count_file;j++)
+				for(int i=0;i<cCP[j].num_padri;i++)
+			  	if(!DownSoft(cCP[j].aFather.get_name(i),j))
+			  		if(ThereIsFiglioEseguibile(cCP[j].aFather.get_name(i),j)){
+			  			s[index][1]=cCP[j].aFather.get_name(i);
+ 							s[index++][0]=cCP[j].role;
+			  			}//if
+			}//conta
+
+		return StringTOC_Taskd_NomeRole(s);
+		}//PadriEseguibili	
+	
+	private boolean ThereIsFiglioEseguibile(String nomePadre, int j){
+		
+	
+	//Questa funzione viene invocata per sapere se un padre ha almeno
+	//un figlio eseguibile. Per far ciò controlla se almeno un figlio
+	//e' eseguibile. 
+
+	
+		
+	if(cCP[j].aFather.in_list(nomePadre)){
+			//Se e' il nome di un padre
+	
+			for(int i=0;i<cCP[j].num_padri;i++)
+				if(cCP[j].lEP[i].get_name().equals(nomePadre)) return ThereIsFiglioEseguibile(cCP[j].lEP[i].get_espressione(),j);
+			System.out.println("***CoopDatiComuni::ThereIsFiglioEseguibile Errore 1");
+			return false;
+			}
+		else if(cCP[j].aFoglie.in_list(nomePadre)){
+			//Se e' una foglia
+		
+			return taskEseguibile[j].contains(nomePadre);
+			}
+		//Se e' il nome di una espressione
+		
+			for(int i=0;i<cCP[j].num_varC;i++)
+				if(cCP[j].aEVC.item(i).get_name().equals(nomePadre))		
+					return ThereIsFiglioEseguibile(cCP[j].aEVC.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVC.item(i).get_var2(),j);
+////////////////////giulio 9/5/2001//////////////////////////////
+			for(int i=0;i<cCP[j].num_varO;i++)
+				if(cCP[j].aEVO.item(i).get_name().equals(nomePadre))		
+					return ThereIsFiglioEseguibile(cCP[j].aEVO.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVO.item(i).get_var2(),j);
+//////////////////fine giulio 9/5/2001///////////////////////////
+				
+			for(int i=0;i<cCP[j].num_varI;i++)
+				if(cCP[j].aEVI.item(i).get_name().equals(nomePadre))
+					return ThereIsFiglioEseguibile(cCP[j].aEVI.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVI.item(i).get_var2(),j);
+					
+			for(int i=0;i<cCP[j].num_varD;i++)
+				if(cCP[j].aEVD.item(i).get_name().equals(nomePadre))
+					return ThereIsFiglioEseguibile(cCP[j].aEVD.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVD.item(i).get_var2(),j);
+					
+			for(int i=0;i<cCP[j].num_varS;i++)
+				if(cCP[j].aEVS.item(i).get_name().equals(nomePadre))
+					return ThereIsFiglioEseguibile(cCP[j].aEVS.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVS.item(i).get_var2(),j);
+
+		
+			for(int i=0;i<cCP[j].num_varE;i++)
+				if(cCP[j].aEVE.item(i).get_name().equals(nomePadre))
+					return ThereIsFiglioEseguibile(cCP[j].aEVE.item(i).get_var1(),j)||ThereIsFiglioEseguibile(cCP[j].aEVE.item(i).get_var2(),j);
+			System.out.println("***CoopDatiComuni::ThereIsFiglioEseguibile Errore 2");
+			return false;		
+	
+	}// fine IsPadreEseguibile
+
+	//FINE PADRI ESEGUIBILI	
+	
+		
+	
+	//GESTIONE BACKWARDS
+	
+	
+	public void AzzeraAll(){
+	
+		for(int i=0;i<count_file;i++){
+			stato[i].removeAllElements();
+			taskEseguibile[i].removeAllElements();
+			}
+		}//AzzeraAll
+
+	
+	public synchronized C_Taskd_NomeRole[] Backwards(){ //ric "synchronized"
+	
+		if(vBackwardsKey.size()>0){
+			
+			Object r=null,k=null;
+			int app;
+			if(!bBackwards) {
+					vForwardsKey= new Vector();
+					vForwardsRole= new Vector();
+					bBackwards=true;
+				}//!bBackwards
+			
+			AzzeraAll();
+			app= vBackwardsKey.size()-2;
+			for(int i=0;i<app;i++)
+				IsEseguibile_((String)vBackwardsRole.elementAt(i),(String)vBackwardsKey.elementAt(i));
+			k=vBackwardsKey.lastElement();//Memorizzo l'ultimo elemento del vettore
+			r=vBackwardsRole.lastElement();//    ''          ''
+			vForwardsKey.addElement(k);//Lo aggiungo a quelli eseguibile con Forwards
+			vForwardsRole.addElement(r);//    ''          ''
+			vBackwardsKey.removeElementAt(vBackwardsKey.size()-1);//Lo tolgo da quelli eseguibile in Backwards
+			vBackwardsRole.removeElementAt(vBackwardsRole.size()-1);//    ''          ''
+			/*
+			CoopDatiComuni.s=true;
+			if(CoopDatiComuni.s)StampaVettoreBackwards();
+			if(CoopDatiComuni.s)StampaVettoreForwards();
+						CoopDatiComuni.s=false;
+						*/
+			if(app>-1) return IsEseguibile_((String)vBackwardsRole.lastElement(),(String)vBackwardsKey.lastElement());
+			return  Start();//cS.sicuramente = -1
+			}
+		System.out.println("*** Errore nella CoopSimulatore.Backwards: Si cerca di andare troppo indietro");
+		return null;
+	} 
+	
+	private C_Taskd_NomeRole[] IsEseguibile_(String rr,String kk){
+	
+		//Questa funzione e' nata nella gestione di Backwards
+		//Poiche' la IsEseguibile aggiunge nel vettore vBackwards.... l'elemento,
+		//questa funzione ha il compito di eliminarlo
+		C_Taskd_NomeRole[] cTBR=IsEseguibile(rr,kk);
+		//for(int x=0;x<cTBR.length;x++)
+			//System.out.println(x+") CTBR"+cTBR[x].taskd);
+		vBackwardsKey.removeElementAt(vBackwardsKey.size()-1);
+		vBackwardsRole.removeElementAt(vBackwardsRole.size()-1);
+		bBackwards=true;
+		return cTBR;
+
+		
+		}
+	
+	public synchronized C_Taskd_NomeRole[] Forwards(){ //ric "synchronized"
+	
+		
+		if(vForwardsKey.size()>0){//ric mod 10/18
+			Object r,k;
+			k=vForwardsKey.lastElement();
+			r=vForwardsRole.lastElement();
+			vForwardsKey.removeElementAt(vForwardsKey.size()-1);
+			vForwardsRole.removeElementAt(vForwardsRole.size()-1);
+			/*
+			CoopDatiComuni.s=true;
+			if(CoopDatiComuni.s)StampaVettoreBackwards();
+			if(CoopDatiComuni.s)StampaVettoreForwards();
+						CoopDatiComuni.s=false;
+						*/
+			return  IsEseguibile((String)r,(String)k);//cS.
+			}
+		System.out.println("*** Errore nella CoopSimulatore.Forwards: Si cerca di andare troppo avanti");
+		return null;
+	}
+	
+	private void StampaVettoreBackwards(){
+		
+		//System.out.println("STAMPA DEL VETTORE BACKWARDS");
+		//for(int i=0;i<vBackwardsKey.size();i++)
+			//System.out.println(i+") Task="+getTaskName((String)vBackwardsKey.elementAt(i), 0));
+			//GIULIO System.out.println(i+") Task="+getTaskName((String)vBackwardsKey.elementAt(i),getIndexRole((String)vBackwardsRole.elementAt(i)))+"  Role="+vBackwardsRole.elementAt(i));
+		
+	}
+	
+	private void StampaVettoreForwards(){
+	
+	//System.out.println("STAMPA DEL VETTORE FORWARDS");
+		//for(int i=0;i<vForwardsKey.size();i++)
+			//System.out.println(i+") Task="+getTaskName((String)vForwardsKey.elementAt(i), 0));
+		//GIULIO	System.out.println(i+") Task="+getTaskName((String)vForwardsKey.elementAt(i),getIndexRole((String)vForwardsRole.elementAt(i)))+"  Role="+vForwardsRole.elementAt(i));
+	}
+	
+	public boolean ActivatedBackwards(){ return(vBackwardsKey.size()>0); }//ric mod 10/18
+	
+	public boolean ActivetedForwards(){ return(vForwardsKey.size()>0);} //=ric ">=" al posto di ">"
+	
+	//FINE GESTINE BACKARDS
+	
+	private int getIndexBelong(String key){
+	
+		if(!cCP[0].IsFogliaKey(key)) {
+			System.out.println("*** key= "+key);
+			System.out.println("*** Errore nella CoopSimulatore::getIndexBelong");
+			return -1;
+			}
+		String b=cCP[0].getBelong(key);
+		return	getIndexRole(b);
+	}//getIndexBelong
+	
+	
+	
+	private int getIndexRole(String nomeRole){
+	
+		for(int i=0;i<count_file;i++)
+			if(nomeRole.equals(roleName[i])) return i;
+		System.out.println("*** Errore nella CoopSimulatore::getIndexRole");
+		return -1;
+	}//getIndexRole
+	
+	private int Count_Alberi(CooperativeTree role){
+	
+		int countApp=0;
+		while(role!=null){
+			role=role.getNext();
+			countApp++;
+			}
+		return countApp;
+	}//Count_Alberi
+	
+	
+	private String getKeyCOOP(String key_, int j){
+	
+		//Cerca tra i nodi dell'albero Cooperativo la key che corrisponde
+		//al nome del nodo dell'albero singolo con chiave = key_
+		//QUESTA FUNZIONE DEVE ESSERE CHIAMATA SOLO DOPO CHE SI E' CERTI CHE 
+		//UN TALE NODO ESISTA NELL'ALBERO COOPERATIVO
+		//if(CoopDatiComuni.s) System.out.println("getKeyCOOP "+j+" "+key_);
+		int index=-1;	
+		String name="";
+		for(int i=0;i<cCP[j].num_nodi;i++)
+			if(cCP[j].nodi[i].get_key().equals(key_)) name=cCP[j].nodi[i].get_name();
+		if(name.equals("")){
+			System.out.println("***Errore1 CoopSimulatore::getIndexCOOP");
+			return null;
+			}
+		for(int i=0;i<cCP[0].num_nodi;i++)
+			if(cCP[0].nodi[i].get_name().equals(name)) return cCP[0].nodi[i].get_key();
+		if(index==-1) System.out.println("***Errore2 CoopSimulatore::getIndexCOOP");
+		return null;
+	
+	}
+	
+	
+	private String getKeyNoCOOP(String key){
+	
+	//Questa f. cerca prima il nome del task dell'labero cooperativo con chiave key,
+	//poi con la getIndexBelong trova il role relativo che contiene quel nome
+	//dopo di che va  a cercare su quell'albero, sfogliando tutti i nodi, il key
+	// relativo a quel nome
+	//if(CoopDatiComuni.s) System.out.println("getKeyNoCOOP 0 "+key);
+	String name="";
+	for(int i=0;i<cCP[0].num_nodi;i++)
+		if(cCP[0].nodi[i].get_key().equals(key)) name=cCP[0].nodi[i].get_name();
+	if(name.equals("")){
+		System.out.println("***Errore nella CoopSimulatore 1::getKeyNoCOOP");
+		return null;
+		}
+	int j=getIndexBelong(key);
+	for(int i=0;i<cCP[j].num_nodi;i++)
+		if(cCP[j].nodi[i].get_name().equals(name)) return cCP[j].nodi[i].get_key();
+	
+	System.out.println("***Errore nella CoopSimulatore 2::getKeyNoCOOP");
+	return null;
+
+	}
+	
+
+	private C_Taskd_NomeRole[] StringTOC_Taskd_NomeRole(String s[][]){
+	for(int i = 0; i < s.length; i++)
+		for(int j = 0; j < s[i].length; j++)
+			System.out.println("EMANUELA:DEBUG: CoopSimulatore StringTOC_Taskd_NomeRole s["+i+"]["+j+"] = "+s[i][j]);
+		int count;
+		if(s==null) return null;
+		count=s.length;
+	//	for(int i = 0; i < s.length; i++)
+		//	for(int j = 0; j< s[i].length; j++)
+			//	System.out.println("StringTOC_Taskd_NomeRole s["+i+"]["+j+"] = "+s[i][j]);
+		C_Taskd_NomeRole cTdNR[];
+		cTdNR= new C_Taskd_NomeRole[count];
+		for(int i=0;i<count;i++){
+			cTdNR[i]= new C_Taskd_NomeRole();
+			cTdNR[i].nomeRole=s[i][0];
+			int j;
+			if(s[i][0]!= null) j=getIndexRole(s[i][0]);
+				else j=0;
+			//System.out.println("DEBUG:EMANUELA:CoopSimulatore "+s[i][0]+" j="+j+" role"+taskd[j]);
+			int k;
+			boolean trovato=false;
+			for(k=0;k<cCP[j].num_nodi;k++)
+				if(s[i][1].equals(cCP[j].nodi[k].get_key())){
+					
+					cTdNR[i].taskd=getTaskd(taskd[j],s[i][1]);
+					trovato=true;
+					break;
+					}
+			if(!trovato) System.out.println("***Errore bella CoopSimulatore::StringTOC_Taskd_NomeRole");
+			
+			}// fine for
+		/*
+		for(int i = 0; i < cTdNR.length; i++)
+			System.out.println("CS STTNR tasklist["+i+"] = "+cTdNR[i].taskd.getProperties().getGeneralInfo().getIde());
+			*/
+		return cTdNR;
+	
+	}
+	
+	
+	private Task getTaskd(Task task, String key){
+	
+		if(task.toString().equals(key)) return task;
+		if(!task.isLeaf())
+		{
+			for (int i=0; i<task.getNode().numberOfChildren(); i++)
+		 		if(getTaskd( (Task) task.getNode().getChild()[i],key)!=null) return getTaskd( (Task) task.getNode().getChild()[i],key);
+		}
+		
+		return null;
+	}
+	
+	private String getTaskName(String key, int j){
+	
+		Task task=getTaskd(taskd[j],key);
+		if(task==null) return "*null*";
+		return task.getProperties().getGeneralInfo().getIde();
+	}
+	
+   // Classi aggiunte da Giulio utili per vedere
+   // i figli eseguibili di un padre iterativo
+	
+
+	/**<P>Metodo aggiunto da Giulio utile per vedere i figli eseguibili di un padre iterativo.
+	 *</P>
+	 *
+	 * @param   role  Ruolo del task da eseguire.
+	 * @param   key  Chiave del task da eseguire.
+	 * @return     Ritorna l'array dei tasks eseguibili.
+	 */
+		public C_Taskd_NomeRole[] IsEseguibile_init(String role, String key){ 
+	
+		/**
+		funzione che deve essere invocata quando si vuol sapere se un task 
+		può essere eseguito o meno. Nel primo caso viene riporta la lista completa 
+		dei task e dell'albero di appartenenza, nel secondo caso viene restituito "null".
+		N.B: Nel caso che si sia chimato il costruttore con un taskd (quindi CTTE non
+		e' in ambiente COOPerativo) questa funzione deve essere chiamata con role=null
+		*/
+			System.out.println("____________________________________________________");
+			System.out.println("		CoopSimulatore IsEseguibile_init() ");
+			System.out.println("\n"+key+"\n");
+		int index=0; //Contiene l'indice di role
+		String s[][]=null;
+		
+		bBackwards=false;//Spengo il Backwards
+		
+		if(role!=null){			
+			
+			//CASO DI ALBERI COOPERATIVI
+			index=getIndexRole(role);
+			if(index==-1) return null;//Non ha trovato il role relativo
+			if(index==0) {
+				index=getIndexBelong(key);
+				if(index==-1) return null;//Non ha trovato il role relativo
+				key=getKeyNoCOOP(key);
+				}
+			
+			if(!BottomUp(key,index)){
+				
+	//			System.out.println("IsEseguibile->null");
+				return null;//index>0 SEMPRE
+				}
+			
+			//Per la gestione del backwards
+			vBackwardsKey.addElement(key);
+			vBackwardsRole.addElement(roleName[index]);
+			
+			//Esegui(key,index);//Il task e' eseguibile: lo eseguo!
+			return EseguiFree_init(key,index);
+			}// fine role!=null			
+		
+		else{// role=null
+				
+			//CASO DI ALBERO SINGOLO
+
+			if(!BottomUp_S(key,0)) return null;
+				//Per la gestione del backwards
+			vBackwardsKey.addElement(key);
+			vBackwardsRole.addElement(role);
+
+			//Esegui(key,0);//Il task e' eseguibile: lo eseguo!
+			return EseguiFree_init(key,0); 
+			}//fine else index==0
+		
+//		s=FreeTask();
+//		CaricaTaskEseguibili(s);
+//		return StringTOC_Taskd_NomeRole(s);
+	}// fine IsEseguibile
+
+		private C_Taskd_NomeRole[] EseguiFree_init(String key, int jj){
+	
+		//Esegui1
+		//Esegui(key,jj);
+	
+		//ControllaIteration();//Gestisce i padri iterativi*
+		
+		String s[][]=null;
+		Vector Role,Key;
+		Role= new Vector();
+		Key= new Vector();
+		int count=0;
+		
+		//Calcolo le foglie liberate sull'albero cooperativo
+		
+	if(count_file>1){	//CASO DI ALBERI COOPERATIVI
+			for(int j=1;j<count_file;j++)
+			 for(int i=0;i<cCP[j].num_foglie;i++)
+			  if(BottomUp_S(cCP[j].aFoglie.get_name(i),j)){
+			  	Role.addElement(cCP[j].role);
+			  	Key.addElement(cCP[j].aFoglie.get_name(i));
+			  	if(cCP[j].IsMultiUser(cCP[j].aFoglie.get_name(i))){
+			  		String keyC=getKeyCOOP(cCP[j].aFoglie.get_name(i),j);
+			  		if(cCP[0].aFoglie.in_list(keyC))
+			  			if(!stato[0].contains(keyC)){
+			  				Role.addElement(cCP[0].role);
+			  				Key.addElement(keyC);
+			  				}
+			  				else{
+			  					int h=Role.size();
+			  					Role.removeElementAt(h-1);
+			  					Key.removeElementAt(h-1);
+			  					}	
+			  			}//if(cCP[j].IsMultiUser
+			  		}//if(BottomUp_S(....
+				
+				}// fine if(count_file>0)
+				else // CASO DI ALBERO SINGOLO
+					for(int i=0;i<cCP[0].num_foglie;i++)
+					{
+		//				System.out.println("cCp[0].aFoglie.get_name("+i+")="+cCP[0].aFoglie.get_name(i));
+						if(BottomUp_S(cCP[0].aFoglie.get_name(i),0)){
+							Role.addElement(null);
+							Key.addElement(cCP[0].aFoglie.get_name(i));	
+			//				System.out.println("EseguiFree_init key-"+cCP[0].aFoglie.get_name(i));
+							}//if
+					}
+	
+		count=Key.size();
+		if(count>0) s=new String[count][2];
+		for(int i=0;i<count;i++){
+			s[i][0]=(String)Role.elementAt(i);
+			s[i][1]=(String)Key.elementAt(i);
+			}
+		//for(int i = 0; i < s.length; i++)
+			//for(int j = 0; j < s[i].length; j++)
+				//System.out.println("EseguiFree_init "+s[i][j]);
+		CaricaTaskEseguibili(s);
+		return StringTOC_Taskd_NomeRole(s);
+	}
+
+	private void TaskEseguibiliIterativi()	
+	{
+		/********* Giulio **********/
+		/********* per CTT *********/
+    		C_Taskd_NomeRole [] lista;
+				
+				if(cCP[0].num_padri_iteration>0) //Controlla se vi e` almeno un padre iterativo
+				{
+					lista=IsEseguibile_init(null, cCP[0].aFatherIteration.get_name(0)); //INDICALA COME ROOT!!!
+	
+					
+					cCP[0].num_foglieIterationInitEseg=null;
+					cCP[0].num_foglieIterationInitEseg=new int[cCP[0].num_padri_iteration];
+
+					cCP[0].num_attuali_foglieIterationInitEseg=null;
+					cCP[0].num_attuali_foglieIterationInitEseg=new int[cCP[0].num_padri_iteration];
+
+					cCP[0].num_attuali_riaggiornate_foglieIterationInitEseg=null;
+					cCP[0].num_attuali_riaggiornate_foglieIterationInitEseg=new int[cCP[0].num_padri_iteration];
+
+
+					for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+					{
+						cCP[0].num_foglieIterationInitEseg[salp]=0;
+						cCP[0].num_attuali_foglieIterationInitEseg[salp]=0;
+						cCP[0].num_attuali_riaggiornate_foglieIterationInitEseg[salp]=0;
+					}
+
+					if(lista!=null)
+					{
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+							for(int lk=0;lk<cCP[0].allSons[salp].length;lk++)
+								for(int lk2=0;lk2<lista.length;lk2++)
+									if(cCP[0].allSons[salp][lk].equals(lista[lk2].taskd.toString()))
+									{
+										cCP[0].num_foglieIterationInitEseg[salp]++;//System.out.println(salp+ " NUM FOGLIE=" + cCP[0].num_foglieIterationInitEseg[salp]);
+										////PROSEGUO
+										cCP[0].num_attuali_foglieIterationInitEseg[salp]++;
+										
+										if(cCP[0].num_foglieIterationInitEseg[salp]==1)
+											iteratIniziali++;
+										////FINE PROSEGUO
+									}
+								
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+							if(cCP[0].allSons[salp].length>massimo2) massimo2=cCP[0].allSons[salp].length;//11/10/2000
+
+						cCP[0].foglieIterationInitEseg=null;
+						////PROSEGUO
+						cCP[0].foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massimo2];
+						
+						///Aggiunta 25/9/2000
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+							for(int lk=0;lk<massimo2;lk++)
+								cCP[0].foglieIterationInitEseg[0][salp][lk]="";
+						///Fine aggiunta 25/9/2000
+						
+						cCP[0].copia_foglieIterationInitEseg=null;
+						cCP[0].copia_foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massimo2];
+
+						/////FINE PROSEGUO
+						
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+							for(int lk=0;lk<massimo2;lk++)
+								cCP[0].copia_foglieIterationInitEseg[0][salp][lk]="";
+						
+												
+						for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+						{
+							int lk3=0;
+							for(int lk=0;lk<cCP[0].allSons[salp].length;lk++)
+								for(int lk2=0;lk2<lista.length;lk2++)
+									if(cCP[0].allSons[salp][lk].equals(lista[lk2].taskd.toString()))
+									{
+										cCP[0].foglieIterationInitEseg[0][salp][lk3]=cCP[0].allSons[salp][lk];
+										////PROSEGUO
+										cCP[0].copia_foglieIterationInitEseg[0][salp][lk3]=cCP[0].foglieIterationInitEseg[0][salp][lk3];
+										////FINE PROSEGUO
+										lk3++;
+									}
+						}
+					}
+				}
+	}
+
+/*******************GIULIO 11/12/2001 RICORSIONE *************************/
+	private void TaskEseguibiliRicorsivi()	
+	{
+		/********* Giulio **********/
+		/********* per CTT *********/
+    		C_Taskd_NomeRole [] lista;
+				
+				if(cCP[0].num_nodi_ricorsivi>0) //Controlla se vi e` almeno un padre iterativo
+				{
+					lista=IsEseguibile_init(null, cCP[0].aFatherRecursive.get_name(0)); //INDICALA COME ROOT!!!
+	
+					
+					cCP[0].num_foglieRecursiveInitEseg=null;
+					cCP[0].num_foglieRecursiveInitEseg=new int[cCP[0].num_nodi_ricorsivi];
+
+					cCP[0].num_attuali_foglieRecursiveInitEseg=null;
+					cCP[0].num_attuali_foglieRecursiveInitEseg=new int[cCP[0].num_nodi_ricorsivi];
+
+					cCP[0].num_attuali_riaggiornate_foglieRecursiveInitEseg=null;
+					cCP[0].num_attuali_riaggiornate_foglieRecursiveInitEseg=new int[cCP[0].num_nodi_ricorsivi];
+
+
+					for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+					{
+						cCP[0].num_foglieRecursiveInitEseg[salp]=0;
+						cCP[0].num_attuali_foglieRecursiveInitEseg[salp]=0;
+						cCP[0].num_attuali_riaggiornate_foglieRecursiveInitEseg[salp]=0;
+					}
+
+					if(lista!=null)
+					{
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+							for(int lk=0;lk<cCP[0].allSonsRecursive[salp].length;lk++)
+								for(int lk2=0;lk2<lista.length;lk2++)
+									if(cCP[0].allSonsRecursive[salp][lk].equals(lista[lk2].taskd.toString()))
+									{
+										cCP[0].num_foglieRecursiveInitEseg[salp]++;//System.out.println(salp+ " NUM FOGLIE=" + cCP[0].num_foglieIterationInitEseg[salp]);
+										////PROSEGUO
+										cCP[0].num_attuali_foglieRecursiveInitEseg[salp]++;
+										
+										if(cCP[0].num_foglieRecursiveInitEseg[salp]==1)
+											ricorsIniziali++;
+										////FINE PROSEGUO
+									}
+								
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+							if(cCP[0].allSonsRecursive[salp].length>massimoRic2) massimoRic2=cCP[0].allSonsRecursive[salp].length;//11/10/2000
+
+						cCP[0].foglieRecursiveInitEseg=null;
+						////PROSEGUO
+						cCP[0].foglieRecursiveInitEseg=new String[1][cCP[0].num_nodi_ricorsivi][massimoRic2];
+						
+						///Aggiunta 25/9/2000
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+							for(int lk=0;lk<massimoRic2;lk++)
+								cCP[0].foglieRecursiveInitEseg[0][salp][lk]="";
+						///Fine aggiunta 25/9/2000
+						
+						cCP[0].copia_foglieRecursiveInitEseg=null;
+						cCP[0].copia_foglieRecursiveInitEseg=new String[1][cCP[0].num_nodi_ricorsivi][massimoRic2];
+
+						/////FINE PROSEGUO
+						
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+							for(int lk=0;lk<massimoRic2;lk++)
+								cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk]="";
+						
+												
+						for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+						{
+							int lk3=0;
+							for(int lk=0;lk<cCP[0].allSonsRecursive[salp].length;lk++)
+								for(int lk2=0;lk2<lista.length;lk2++)
+									if(cCP[0].allSonsRecursive[salp][lk].equals(lista[lk2].taskd.toString()))
+									{
+										cCP[0].foglieRecursiveInitEseg[0][salp][lk3]=cCP[0].allSonsRecursive[salp][lk];
+										////PROSEGUO
+										cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk3]=cCP[0].foglieRecursiveInitEseg[0][salp][lk3];
+										////FINE PROSEGUO
+										lk3++;
+									}
+						}
+					}
+				}
+	}
+
+/****************************** END **************************************/
+	
+	private void stampaFoglieIterationInitEseg()
+	{
+		if(massimo2>0)//giulio 19/3/2001
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+		{
+				System.out.println("Treno INITFOGLIEITERATIVE=" + salp + " massimo2=" + massimo2 + " massimo=" + massimo);
+			for(int lk=0;lk<cCP[0].copia_foglieIterationInitEseg[0][salp].length;lk++)
+			{
+				System.out.print(cCP[0].copia_foglieIterationInitEseg[0][salp][lk] + " ");
+					if(lk==cCP[0].num_foglieIterationInitEseg[salp]-1) System.out.print("\n");
+			}
+		} 
+	}
+
+/************************ GIULIO 11/12/2001 RICORSIONE **********************/
+	private void stampaFoglieRecursiveInitEseg()
+	{
+System.out.println("massimoRic2="+massimoRic2);
+	if(massimoRic2>0)//giulio 19/3/2001
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+		{
+				System.out.println("Treno INITFOGLIERICORSIVE=" + salp + " massimoRic2=" + massimoRic2 + " massimoRic=" + massimoRic);
+			for(int lk=0;lk<cCP[0].copia_foglieRecursiveInitEseg[0][salp].length;lk++)
+			{
+				System.out.print(cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk] + " ");
+					if(lk==cCP[0].num_foglieRecursiveInitEseg[salp]-1) System.out.print("\n");
+			}
+		} 
+	}
+/************************************* END **********************************/
+	
+	///// Giulio //////
+	//private boolean controlloAccesiTaskIniziali(Vector v, String key)//serve il parametro key?
+	private boolean controlloAccesiTaskIniziali(Vector v, int j)//5/3/2001
+	{
+		int nessunTaskEsegApp=0;
+		boolean risultato=false; //OCCHIO: Puo` dare problemi per altri nodi non dell'albero con radice iterativa?
+		boolean[] attiviEseg;
+		boolean NoOpz=false;
+		boolean percorsoNoOpz=false;
+		attiviEseg = new boolean[v.size()];
+
+		for(int i0=0;i0<v.size();i0++)
+			attiviEseg[i0] =	false;		
+		
+		out2:
+		for(int i=0;i<v.size();i++)
+		{
+			//Guardo per ogni task eseguibile se appartiene ai treni
+			for(int f=0;f<count_file;f++)//ARG
+				//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+					for(int k=0;k<cCP[0].aSonsIteration[j].length;k++)
+						for(int l=0;l<cCP[0].aSonsIteration[j][k].length;l++)
+							if(v.elementAt(i).equals(cCP[0].aSonsIteration[j][k][l]))
+							{		
+								nessunTaskEsegApp++;
+								//for(int k2=0;k2<CoopDatiComuni.allSons_settati[j].length;k2++)
+								//ARGfor(int k2=0;k2<CoopDatiComuni.allSons[j].length;k2++) //Aggiunta al posto di quella remmata
+								for(int k2=0;k2<cCP[f].allSons[j].length;k2++) //Aggiunta al posto di quella remmata
+									if(v.elementAt(i).equals(cCP[0].allSons_settati[j][k2].nome))
+									{ 
+										//La radice iterativa puo` essere opzionale?
+										//OCCHIO: 2° parametro DownHard() per cooperativo!
+										if(cCP[0].IsOptional(cCP[0].allSons_settati[j][k2].avoOpzionale) && DownHard(cCP[0].allSons_settati[j][k2].avoOpzionale, 0))
+										{//GIULIO 1.4.6		System.out.println("QUA3");
+											attiviEseg[i]=true;
+											NoOpz=true;
+										}
+										else if(cCP[0].IsOptional(cCP[0].allSons_settati[j][k2].nome))
+										{//GIULIO 1.4.6		System.out.println("QUA4");
+											attiviEseg[i]=true;
+											NoOpz=true;
+										}
+									}
+								if(!attiviEseg[i])
+								{
+									percorsoNoOpz=true;
+									risultato=false;
+									break out2;
+								}		
+								else {risultato = true;}
+							}
+			}	
+
+			if((NoOpz) && (!percorsoNoOpz))
+			{
+				if(treniNoOpzional_settati(j)) risultato=true;
+				else risultato=false;
+			}
+
+	out3:	
+		if((nessunTaskEsegApp==0) && !esisteTrenoVuoto(j) && !NoOpz && !percorsoNoOpz)
+		{
+					if((eseguitoIterativo==false) && treniNoOpzional_settati(j)) risultato=true;  //DA SISTEMARE :
+				//	else if((eseguitoIterativo==false) && !BottomUp_S(cCP[0].aFoglie.get_name(0), 0) && (!key.equals(cCP[0].aFoglie.get_name(0)) && (!stato[0].contains(cCP[0].aFoglie.get_name(0)))) ) risultato=true;
+					else risultato=false;
+				//	if(esisteTrenoVuoto_copia_aSonsIterationNoOpz()) risultato=true;
+			//		else risultato=false;
+		}
+		return risultato;
+	}
+
+	/**<P>Elimina dall'array <I>copia_aSonsIteration</I>, la chiave task passata come parametro,
+	 *in ogni sua occorrenza.
+	 *</P>
+	 *
+	 * @param   key  Chiave del task da eliminare
+	 */
+	public void togliTaskTreni(String key)
+	{
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].aSonsIteration[j].length;k++)
+				for(int l=0;l<cCP[0].aSonsIteration[j][k].length;l++)
+					if(cCP[0].copia_aSonsIteration[j][k][l].equals(key)) cCP[0].copia_aSonsIteration[j][k][l]="";
+/*
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<CoopDatiComuni.aSonsIteration[j].length;k++)
+			{	System.out.println("\nTreno TOGLI TASKTRENI=" + k);					
+				for(int l=0;l<CoopDatiComuni.aSonsIteration[j][k].length;l++)
+					System.out.print( getTaskName(CoopDatiComuni.copia_aSonsIteration[j][k][l],0) + " ");					
+						if(k==(CoopDatiComuni.aSonsIteration[j].length)) System.out.println("\n");
+			}
+		System.out.println("\n");
+*/
+	}
+
+//Remmata: ora c'è la ricopiaTasksTreni2(int j) //giulio 6/04/2001
+/*	public void ricopiaTasksTreni(int j)
+	{
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<CoopDatiComuni.aSonsIteration[j].length;k++)
+				for(int l=0;l<CoopDatiComuni.aSonsIteration[j][k].length;l++)
+					CoopDatiComuni.copia_aSonsIteration[j][k][l]=CoopDatiComuni.aSonsIteration[j][k][l];
+	}
+*/
+
+	/**<P>Guarda se esiste una sequenza (in cui vi era almeno un task all'avvio del
+	 *simulatore) dell'array <I>copia_aSonsIteration</I>, vuota.
+	 *</P>
+	 *
+	 * @param   j  Cerca la sequenza per il padre iterativo <I>j</I>.
+	 * @return  Ritorna se esiste la sequenza vuota (true) o non esiste (false).   
+	 */
+	public boolean esisteTrenoVuoto(int j)
+	{ 
+		boolean risultato=false;
+		int conta=0;
+		
+		esci:
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)//giulio 8/3/2001
+			for(int k=0;k<cCP[0].copia_aSonsIteration[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsIteration[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsIteration[j][k][l].equals(""))
+					{
+						conta++;
+						if(conta==cCP[0].copia_aSonsIteration[j][k].length)//manca condiz. in cui le sequenze non erano già vuote//27/2/2001
+						{
+							risultato=true;
+							break esci;
+						}
+					}
+					else
+					{
+						conta=0;
+						risultato=false;
+					}
+				}
+			}
+			return risultato;
+	}
+	
+
+	/**Controlla se vi è almeno una sequenza di <I>aSonsIteration</I> in cui <U>non</U> vi sono
+	 *task opzionali e/o in cui i tasks <U>non</U> hanno un avo opzionale.
+	 *
+	 *
+	 * @return   Ritorna <B>true</B> se esiste la sequenza; ritorna <B>false</B>, altrimenti.  
+	 */
+	public boolean notTreniOpzOdAvoOpz()
+	{
+		boolean [][][] treniNoOpz;
+		boolean risultato=false;
+		int max1=0;
+		int max=0;
+
+
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			if(cCP[0].aSonsIteration[j].length>max1)
+				max1=cCP[0].aSonsIteration[j].length;
+
+
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k1=0;k1<cCP[0].aSonsIteration[j].length;k1++)
+				if(cCP[0].aSonsIteration[j][k1].length>max)
+					max=cCP[0].aSonsIteration[j][k1].length;
+
+		treniNoOpz=new boolean[cCP[0].num_padri_iteration][max1][max];
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k1=0;k1<cCP[0].aSonsIteration[j].length;k1++)
+				for(int k2=0;k2<cCP[0].aSonsIteration[j][k1].length;k2++)
+					treniNoOpz[j][k1][k2]=false;		
+
+				//out:
+				for(int f=0;f<count_file;f++)//ARG
+			for(int j=0;j<cCP[0].num_padri_iteration;j++)
+				for(int k1=0;k1<cCP[0].aSonsIteration[j].length;k1++)
+					for(int k2=0;k2<cCP[0].aSonsIteration[j][k1].length;k2++)
+					{
+						//La radice iterativa puo` essere opzionale?
+						//OCCHIO: 2° parametro DownHard() per cooperativo!
+						//for(int k3=0;k3<CoopDatiComuni.allSons_settati[j].length;k3++)
+						for(int k3=0;k3<cCP[f].allSons[j].length;k3++) //Sostituita a quella remmata
+						//ARGfor(int k3=0;k3<CoopDatiCOmuni.allSons[j].length;k3++) //Sostituita a quella remmata
+							{
+								if(cCP[0].aSonsIteration[j][k1][k2].equals(cCP[0].allSons_settati[j][k3].nome))
+								{ 
+									if(!cCP[0].IsOptional(cCP[0].allSons_settati[j][k3].avoOpzionale) && !cCP[0].IsOptional(cCP[0].allSons_settati[j][k3].nome))
+									{
+										treniNoOpz[j][k1][k2]=true;
+									}
+								}
+							}
+					}
+		
+		risultato=true;
+		out3:
+			for(int j=0;j<cCP[0].num_padri_iteration;j++)
+				for(int k1=0;k1<cCP[0].aSonsIteration[j].length;k1++)
+					for(int k2=0;k2<cCP[0].aSonsIteration[j][k1].length;k2++)
+						if(!treniNoOpz[j][k1][k2])
+						{
+							risultato=false;
+							break out3;
+						}		
+
+		return risultato;
+	}
+	
+	//Remmata: ora c'è la ricopia_copia_aSonsIterationNoOpz2(int j) //giulio 6/04/2001
+	/*public void ricopia_copia_aSonsIterationNoOpz(int j)
+	{
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<CoopDatiComuni.aSonsIterationNoOpz[j].length;k++)
+				for(int l=0;l<CoopDatiComuni.aSonsIterationNoOpz[j][k].length;l++)
+					CoopDatiComuni.copia_aSonsIterationNoOpz[j][k][l]=CoopDatiComuni.aSonsIterationNoOpz[j][k][l];
+	}*/
+
+	/**<P>Elimina dall'array <I>copia_aSonsIterationNoOpz</I>, la chiave task passata come parametro,
+	 *in ogni sua occorrenza.
+	 *</P>
+	 *
+	 * @param   key  Chiave del task da eliminare
+	 */
+	public void togliTask_copia_aSonsIterationNoOpz(String key)
+	{
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].aSonsIterationNoOpz[j].length;k++)
+				for(int l=0;l<cCP[0].aSonsIterationNoOpz[j][k].length;l++)
+					if(cCP[0].copia_aSonsIterationNoOpz[j][k][l].equals(key)) cCP[0].copia_aSonsIterationNoOpz[j][k][l]="";
+/*	
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<CoopDatiComuni.copia_aSonsIterationNoOpz[j].length;k++)
+			{	System.out.println("\nTreno=" + k);					
+				for(int l=0;l<CoopDatiComuni.copia_aSonsIterationNoOpz[j][k].length;l++)
+					System.out.print( getTaskName(CoopDatiComuni.copia_aSonsIterationNoOpz[j][k][l], 0) + " ");					
+						if(k==(CoopDatiComuni.copia_aSonsIterationNoOpz[j].length)) System.out.println("\n");
+			}
+		System.out.println("\n");
+*/	 
+	}
+	
+	/**<P>Guarda se esiste una sequenza (in cui vi era almeno un task all'avvio del
+	 *simulatore) dell'array <I>copia_aSonsIterationNoOpz</I>, vuota.
+	 *</P>
+	 *
+	 * @param   j  Cerca la sequenza per il padre iterativo <I>j</I>.
+	 * @return  Ritorna se esiste la sequenza vuota (true) o non esiste (false).   
+	 */
+	public boolean esisteTrenoVuoto_copia_aSonsIterationNoOpz(int j)
+	{ 
+		boolean risult=false;
+		int conta=0;
+		
+		esci_ora:
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)//giulio 8/3/2001
+			for(int k=0;k<cCP[0].copia_aSonsIterationNoOpz[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsIterationNoOpz[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsIterationNoOpz[j][k][l].equals(""))
+					{
+						conta++;
+
+						if((conta==cCP[0].copia_aSonsIterationNoOpz[j][k].length) && (cCP[0].num_vuoti_inizialmente_copia_aSonsIterationNoOpz[j][k]==0))//Sostituisce la riga remmata subito prima
+						{
+
+							risult=true;
+							break esci_ora;
+						}
+					}
+					else
+					{
+						conta=0;
+						risult=false;
+					}
+				}
+			}
+			return risult;
+	}
+
+
+	/**<P>È uno dei metodi responsabili per sapere quando abilitare i task iniziali di un
+	 *ciclo iterativo.
+	 *Guarda se vi è una sequenza di <I>copia_aSonsIterationNoOpz</I> che ha un avo foglia
+	 *opzionale (in cui non è stato ancora eseguito un figlio) od un task foglia opzionale
+	 *o se vi è una sequenza (che inizialmente conteneva almeno un task, vuota.
+	 *</P>
+	 *
+	 * @param   x  Indica il numero del padre iterativo.
+	 * @return  Ritorna un booleano:
+	 * <P><UL>
+	 *<LI><B>true</B> - se esiste una tale sequenza.
+	 *<LI><B>false</B> - altrimeni.
+	 *</UL></P>   
+	 */
+	public boolean treniNoOpzional_settati(int x)
+	{
+		boolean risultati[][][];
+		boolean risulta=false;
+		int max=0;
+		int max2=0;
+
+		//for(int x=0;x<cCP[0].num_padri_iteration;x++)//giulio 8/3/2001
+			for(int y=0;y<cCP[0].copia_aSonsIterationNoOpz[x].length;y++)
+				if(cCP[0].copia_aSonsIterationNoOpz[x].length>max) max=cCP[0].copia_aSonsIterationNoOpz[x].length;
+
+		//for(int x=0;x<cCP[0].num_padri_iteration;x++)//giulio 8/3/2001
+			for(int y=0;y<cCP[0].copia_aSonsIterationNoOpz[x].length;y++)
+				for(int j=0;j<cCP[0].copia_aSonsIterationNoOpz[x][y].length;j++)
+					if(cCP[0].copia_aSonsIterationNoOpz[x][y].length>max2) max2=cCP[0].copia_aSonsIterationNoOpz[x][y].length;
+		
+		risultati=null;
+		risultati=new boolean[cCP[0].num_padri_iteration][max][max2];
+
+
+		//for(int x=0;x<cCP[0].num_padri_iteration;x++)//giulio 8/3/2001
+			for(int y=0;y<risultati[x].length;y++)
+				for(int j=0;j<risultati[x][y].length;j++)
+				{
+					risultati[x][y][j]=false;
+					if(cCP[0].copia_aSonsIterationNoOpz[x][y][j].equals("")) {risultati[x][y][j]=true; }
+				}
+
+		for(int f=0;f<count_file;f++)//ARG
+		//for(int x=0;x<cCP[0].num_padri_iteration;x++)//giulio 8/3/2001
+			for(int y=0;y<cCP[0].aSonsIteration2[x].length;y++)
+			{
+				for(int j=0;j<cCP[0].aSonsIteration2[x][y].length;j++)
+				{
+					//for(int k=0;k<CoopDatiComuni.allSons_settati[x].length;k++)
+					//ARGfor(int k=0;k<CoopDatiComuni.allSons[x].length;k++) //Sostituita al posto di quella remmata
+					for(int k=0;k<cCP[f].allSons[x].length;k++) //Sostituita al posto di quella remmata
+					{
+						if(cCP[0].copia_aSonsIterationNoOpz[x][y][j].equals(cCP[0].allSons_settati[x][k].nome))
+						{
+							if(cCP[0].IsOptional(cCP[0].allSons_settati[x][k].avoOpzionale) && !DownSoft(cCP[0].allSons_settati[x][k].avoOpzionale, 0))
+							{ 
+								risultati[x][y][j]=true; 
+							}
+							else if(cCP[0].IsOptional(cCP[0].allSons_settati[x][k].nome))
+							{
+								risultati[x][y][j]=true;
+							}
+						}
+					}
+				}
+			} 
+
+	/*	for(int x=0;x<cCP[0].num_padri_iteration;x++)
+			for(int y=0;y<risultati[x].length;y++)
+				for(int j=0;j<risultati[x][y].length;j++)
+					System.out.println("risultati x=" + x + " y=" + y + " j=" + j + " " + risultati[x][y][j]);
+*/
+	
+		int conta1=0;
+
+		esci1:		
+		//for(int x=0;x<cCP[0].num_padri_iteration;x++)//giulio 8/3/2001
+			for(int y=0;y<risultati[x].length;y++)
+			{
+				conta1=0;//corretta o da togliere?
+				for(int j=0;j<risultati[x][y].length;j++)
+				{
+					if(risultati[x][y][j]==true)		
+					{
+						conta1++;
+						//if(conta1==risultati[x][y].length)//remmata giulio 12/2/2001
+						if((conta1==risultati[x][y].length) && cCP[0].num_vuoti_inizialmente_copia_aSonsIterationNoOpz[x][y]==0)//giulio 12/2/2001
+						//if((conta1==risultati[x][y].length) && CoopDatiComuni.num_vuoti_inizialmente_copia_aSonsIterationNoOpz[x][y]==0 && (x==qualeAlberoIterativo))//giulio 5/3/2001
+						{
+							risulta=true;
+							break esci1;
+						}
+					}
+					else
+					{
+						conta1=0;
+						risulta=false;
+					}
+				}
+			}
+		if(esisteTrenoVuoto_copia_aSonsIterationNoOpz(x))
+		{
+			risulta=true;
+		}
+		return risulta;
+	}
+
+//////PROSEGUO
+
+	/**Ritorna l'ultimo indice del padre iterativo trovato, a cui appartiene il task
+	 *(appartenente all'array <I>copia_foglieIterationInitEseg</I>) identificato dalla
+	 *chiave <I>key</I> e passato come parametro.
+	 *
+	 *
+	 * @param   key  Indica la chiave del task.
+	 * @return  Ritorna l'ultimo indice del padre iterativo trovato, a cui appartiene il task <I>key</I>.
+	 */
+	public int qualeIterativoIniz(String key)
+	{
+		int ultimo=-1;
+		if(cCP[0].num_foglieIterationInitEseg == null)
+			System.out.println("cs:cCP[0]nulls");
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+		{
+			for(int lk=0;lk<cCP[0].num_foglieIterationInitEseg[salp];lk++)
+				//if(cCP[0].copia_foglieIterationInitEseg[0][salp][lk].equals(key)) return salp;//giulio 13/2/2001
+				if(cCP[0].copia_foglieIterationInitEseg[0][salp][lk].equals(key)) ultimo=salp;
+		}		
+		return ultimo;
+
+		//return -1;//giulio 13/2/2001
+	}
+
+/****************** GIULIO 11/12/2001 RICORSIONE **********************/
+	/**Ritorna l'ultimo indice del padre ricorsivo trovato, a cui appartiene il task
+	 *(appartenente all'array <I>copia_foglieRecursiveInitEseg</I>) identificato dalla
+	 *chiave <I>key</I> e passato come parametro.
+	 *
+	 *
+	 * @param   key  Indica la chiave del task.
+	 * @return  Ritorna l'ultimo indice del padre ricorsivo trovato, a cui appartiene il task <I>key</I>.
+	 */
+	public int qualeRicorsivoIniz(String key)
+	{
+		int ultimo=-1;
+		
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+			for(int lk=0;lk<cCP[0].num_foglieRecursiveInitEseg[salp];lk++)
+				//if(cCP[0].copia_foglieIterationInitEseg[0][salp][lk].equals(key)) return salp;//giulio 13/2/2001
+				if(cCP[0].copia_foglieRecursiveInitEseg[0][salp][lk].equals(key)) ultimo=salp;
+				
+		return ultimo;
+
+		//return -1;//giulio 13/2/2001
+	}
+
+/***************************** END ************************************/
+	
+	public void ricopiaFoglieIterationInitEseg()
+	{
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+		{
+			if(cCP[0].num_foglieIterationInitEseg[j]>0)
+			for(int l=0;l<cCP[0].copia_foglieIterationInitEseg[0][j].length;l++)
+				cCP[0].copia_corrente_foglieIterationInitEseg[0][j][l]=cCP[0].copia_foglieIterationInitEseg[0][j][l];
+		}
+
+	}
+	
+
+	/**<P>Toglie dal vettore <I>copia_corrente_foglieIterationInitEseg</I> la chiave del task
+	 *eseguito.
+	 *</P>
+	 *
+	 * @param   key  Chiave del task eseguito da eliminare.
+	 * @param   qualeIterativo  Numero di iterativo a cui appartiene il task da eliminare.
+	 */
+	public void togliFoglieIterationInitEseg(String key, int qualeIterativo)
+	{		
+		//Il controllo lo faccio fuori
+			for(int k=0;k<cCP[0].copia_corrente_foglieIterationInitEseg[0][qualeIterativo].length;k++)
+				if(cCP[0].copia_corrente_foglieIterationInitEseg[0][qualeIterativo][k].equals(key)) cCP[0].copia_corrente_foglieIterationInitEseg[0][qualeIterativo][k]="";
+			
+			cCP[0].num_attuali_riaggiornate_foglieIterationInitEseg[qualeIterativo]++;
+	}
+
+/******************************* GIULIO 11/12/2001 RICORSIONE **********************/
+	/**<P>Toglie dal vettore <I>copia_corrente_foglieRecursiveInitEseg</I> la chiave del task
+	 *eseguito.
+	 *</P>
+	 *
+	 * @param   key  Chiave del task eseguito da eliminare.
+	 * @param   qualeRicorsivo  Numero di iterativo a cui appartiene il task da eliminare.
+	 */
+	public void togliFoglieRecursiveInitEseg(String key, int qualeRicorsivo)
+	{		
+		//Il controllo lo faccio fuori
+			for(int k=0;k<cCP[0].copia_corrente_foglieRecursiveInitEseg[0][qualeRicorsivo].length;k++)
+				if(cCP[0].copia_corrente_foglieRecursiveInitEseg[0][qualeRicorsivo][k].equals(key)) cCP[0].copia_corrente_foglieRecursiveInitEseg[0][qualeRicorsivo][k]="";
+			
+			cCP[0].num_attuali_riaggiornate_foglieRecursiveInitEseg[qualeRicorsivo]++;
+	}
+
+/*************************************** END ***************************************/
+
+	
+	public boolean esisteTrenoVuotoCopiaCorrenteFoglieIterationInitEseg(int qualeIterativo)
+	{
+		boolean risu=false;
+		int contator=0;
+		
+		eschilo:
+		for(int l=0;l<cCP[0].copia_corrente_foglieIterationInitEseg[0][qualeIterativo].length;l++)
+		{
+			if(cCP[0].copia_corrente_foglieIterationInitEseg[0][qualeIterativo][l].equals(""))
+			{
+				contator++;
+				if(contator==cCP[0].copia_foglieIterationInitEseg[0][qualeIterativo].length)
+				{
+					risu=true;
+					break eschilo;
+				}
+			}
+			else
+			{
+				contator=0;
+				risu=false;
+			}
+		}
+			
+		return risu;
+
+	}
+
+
+	/**Inizializza a stringhe vuote, ciascun elemento del vettore <I>copia_corrente_foglieIterationInitEseg</I>.
+	 */
+	public void inizCopia_corrente_foglieIterationInitEseg()
+	{
+		int massim=0;
+		cCP[0].copia_corrente_foglieIterationInitEseg=null;
+		
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+		{
+			if(cCP[0].allSons[salp].length>massim) massim=cCP[0].allSons[salp].length;
+		}
+		
+		cCP[0].copia_corrente_foglieIterationInitEseg=new String[1][cCP[0].num_padri_iteration][massim];
+
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+			for(int l=0;l<massim;l++)
+				cCP[0].copia_corrente_foglieIterationInitEseg[0][salp][l]=""; //13/9/2000 GIULIO
+			
+	}
+/************************ GIULIO 7/12/2001 RICORSIVO ***************************/
+	/**Inizializza a stringhe vuote, ciascun elemento del vettore <I>copia_corrente_foglieRecursiveInitEseg</I>.
+	 */
+	public void inizCopia_corrente_foglieRecursiveInitEseg()
+	{
+		int massimRecursive=0;
+		cCP[0].copia_corrente_foglieRecursiveInitEseg=null;
+		
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+		{
+			if(cCP[0].allSonsRecursive[salp].length>massimRecursive) massimRecursive=cCP[0].allSonsRecursive[salp].length;
+		}
+		
+		cCP[0].copia_corrente_foglieRecursiveInitEseg=new String[1][cCP[0].num_nodi_ricorsivi][massimRecursive];
+
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+			for(int l=0;l<massimRecursive;l++)
+				cCP[0].copia_corrente_foglieRecursiveInitEseg[0][salp][l]=""; //13/9/2000 GIULIO
+			
+	}
+
+/************************** END *************************/
+	
+	//public void copiaCopia_corrente_foglieIterationInitEseg(int qualeIterativo)
+	public void copiaCopia_corrente_foglieIterationInitEseg()
+	{
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+			if(cCP[0].num_foglieIterationInitEseg[salp]>0)
+				for(int l=0;l<cCP[0].copia_foglieIterationInitEseg[0][salp].length;l++)
+				{
+			 		if(cCP[0].num_attuali_riaggiornate_foglieIterationInitEseg[salp]==0)
+			 			cCP[0].copia_corrente_foglieIterationInitEseg[0][salp][l]=cCP[0].copia_foglieIterationInitEseg[0][salp][l];
+				}
+	}
+
+//////FINE PROSEGUO	
+
+
+/***************** GIULIO 11/12/2001 RICORSIONE *******************/
+
+	public void copiaCopia_corrente_foglieRecursiveInitEseg()
+	{
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+			if(cCP[0].num_foglieRecursiveInitEseg[salp]>0)
+				for(int l=0;l<cCP[0].copia_foglieRecursiveInitEseg[0][salp].length;l++)
+				{
+			 		if(cCP[0].num_attuali_riaggiornate_foglieRecursiveInitEseg[salp]==0)
+			 			cCP[0].copia_corrente_foglieRecursiveInitEseg[0][salp][l]=cCP[0].copia_foglieRecursiveInitEseg[0][salp][l];
+				}
+	}
+
+/****************************** END *******************************/
+//////////////////////////////////
+	private void stampaFoglieIterationInitEseg_corrente()
+	{
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+		{
+			System.out.println("*Treno corrente*=" + salp);
+			for(int lk=0;lk<cCP[0].num_foglieIterationInitEseg[salp];lk++)
+			{
+				System.out.print(cCP[0].copia_corrente_foglieIterationInitEseg[0][salp][lk] + " ");
+				if(lk==cCP[0].num_foglieIterationInitEseg[salp]-1) System.out.print("\n");
+			}
+				
+		} 
+	}
+//////////////////////////////////
+
+///AGGIUNTA 22/9/2000
+	public void esisteTrenoVuoto_num_vuoti_inizialmente_copia_aSonsIterationNoOpz()
+	{ 
+		int conta=0;
+		
+		esci_ora2:
+		for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].copia_aSonsIterationNoOpz[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsIterationNoOpz[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsIterationNoOpz[j][k][l].equals(""))
+					{
+						conta++;
+
+						if(conta==cCP[0].copia_aSonsIterationNoOpz[j][k].length)
+						{
+							cCP[0].num_vuoti_inizialmente_copia_aSonsIterationNoOpz[j][k]=1;	
+						//	break esci_ora2;//giulio 12/2/2001
+						}
+					}
+					else
+					{
+						conta=0;
+					}
+				}
+			}
+	}
+
+/********************** GIULIO 7/12/2001 RICORSIVO **********************/
+	public void esisteTrenoVuoto_num_vuoti_inizialmente_copia_aSonsRicorsiveNoOpz()
+	{ 
+		int conta=0;
+		
+	
+		esci_ora2Ric:
+		for(int j=0;j<cCP[0].num_nodi_ricorsivi;j++)
+			for(int k=0;k<cCP[0].copia_aSonsRicorsiveNoOpz[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsRicorsiveNoOpz[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsRicorsiveNoOpz[j][k][l].equals(""))
+					{
+						conta++;
+
+						if(conta==cCP[0].copia_aSonsRicorsiveNoOpz[j][k].length)
+						{
+							cCP[0].num_vuoti_inizialmente_copia_aSonsRicorsiveNoOpz[j][k]=1;	
+						//	break esci_ora2Ric;//giulio 12/2/2001
+						}
+					}
+					else
+					{
+						conta=0;
+					}
+				}
+			}
+	}
+/***************************** END ********************************/
+
+
+	/**Ritorna l'ultimo indice del padre iterativo trovato, a cui appartiene il task
+	 *identificato dalla chiave <I>key</I> e passato come parametro.
+	 *
+	 *
+	 * @param   key  Indica la chiave del task.
+	 * @return  Ritorna l'ultimo indice del padre iterativo trovato, a cui appartiene il task <I>key</I>.
+	 */
+	public int qualeAlberoIterativo(String key)
+	{
+		int ultimo=-1;
+		for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+			for(int lk=0;lk<cCP[0].allSons[salp].length;lk++)
+				//if(cCP[0].allSons[salp][lk].equals(key))  return salp;//giulio 13/2/2001
+				if(cCP[0].allSons[salp][lk].equals(key))  ultimo=salp;
+		
+		return ultimo;
+
+		//return -1;orig
+	}
+
+/*******************	GIULIO 11/12/2001 RICORSIONE *********************/
+
+	/**Ritorna l'ultimo indice del padre ricorsivo trovato, a cui appartiene il task
+	 *identificato dalla chiave <I>key</I> e passato come parametro.
+	 *
+	 *
+	 * @param   key  Indica la chiave del task.
+	 * @return  Ritorna l'ultimo indice del padre ricorsivo trovato, a cui appartiene il task <I>key</I>.
+	 */
+	public int qualeAlberoRicorsivo(String key)
+	{
+		int ultimo=-1;
+		for(int salp=0;salp<cCP[0].num_nodi_ricorsivi;salp++)
+			for(int lk=0;lk<cCP[0].allSonsRecursive[salp].length;lk++)
+				//if(cCP[0].allSons[salp][lk].equals(key))  return salp;//giulio 13/2/2001
+				if(cCP[0].allSonsRecursive[salp][lk].equals(key))  ultimo=salp;
+		
+		return ultimo;
+
+		//return -1;orig
+	}
+
+/******************************* END *********************************/
+	
+
+	/** Metodo che guarda se nel vettore <I>Key</I> vi sono doppioni del task eseguibile,
+	 *	passato come parametro.
+	 *
+	 *
+	 * @param   Key  Chiave del task passato.
+	 * @return  Ritorna il vettore contenente le chiavi dei task eseguibili.   
+	 */
+	public Vector viSonoTasksDoppioni(Vector Key)
+	{
+		int indice1=0, indice2=0, cont=0;
+		String[] s;
+		s=new String[1];
+		
+		for(int i=0;i<Key.size();i++)
+		{
+			s[0]=(String)Key.elementAt(cont);
+			
+			if(Key.contains(Key.elementAt(cont)))
+			{
+				if(cont!=Key.size())
+				{
+					for(int j=cont+1;j<Key.size();j++)
+						if(s[0].equals(Key.elementAt(j)))
+						 {
+						 		Key.remove(j);
+						 }
+				}
+			}
+			cont++;
+		}
+		return Key;
+	}
+
+  //Al momento non viene usata. //giulio 6/04/2001
+	/*public boolean figliIterativiInQualiIterativi(String key, int salp)
+  {
+	  	for(int j=0;j<cCP[0].allSons[salp].length;j++)
+	  		if(cCP[0].allSons[salp][j].equals(key)) return true;
+	  	
+	  	return false;	
+  }*/
+
+	/**<P>Quando si ha una sequenza di Tasks vuota nell'array <I>copia_aSonsIteration</I>,
+	 *il metodo ricopia rispettivamente i tasks relativi a quella sequenza, memorizzati
+	 *nell'array <I>aSonsIteration</I>, nelle posizioni dell'array da cui sono stati
+	 *eliminati i tasks stessi durante l'esecuzione: il risultato sarà il riempimento
+	 *sia della sequenza vuota, sia delle zone dell'array copia_aSonsIteration dove i
+	 *tasks erano stati eliminati (in ogni loro occorrenza).
+	 *</P>
+	 *
+	 * @param   j  Cerca la sequenza per il padre iterativo <I>j</I>.
+	 * @return  Ritorna se esiste la sequenza vuota (true) o non esiste (false).   
+	 */
+	public void ricopiaTasksTreni2(int j)
+	{
+		int conta=0;
+		int alberoIterativo=-1;
+		int sequenzaAlberoIterativo=-1;
+				
+		esci_ora:
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].copia_aSonsIteration[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsIteration[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsIteration[j][k][l].equals(""))
+					{
+						conta++;
+
+						if((conta==cCP[0].copia_aSonsIteration[j][k].length) /*&& (CoopDatiComuni.num_vuoti_inizialmente_copia_aSonsIterationNoOpz[j][k]==0)*/ )//Sostituisce la riga remmata subito prima
+						{
+								alberoIterativo=j;
+								sequenzaAlberoIterativo=k;
+								break esci_ora;
+						}
+					}
+					else
+					{
+						conta=0;
+					}
+				}
+			}
+////////////////////////////FINE VEDO QUALE TRENO è VUOTO/////////////////
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].aSonsIteration[j].length;k++)
+				for(int l=0;l<cCP[0].aSonsIteration[j][k].length;l++)
+					cCP[0].copia_aSonsIteration[j][k][l]=cCP[0].aSonsIteration[j][k][l];
+		if(sequenzaAlberoIterativo>=0)
+		{
+			//for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+			for(int salp=cCP[0].num_padri_iteration-1;salp>=0;salp--)
+				for(int k=0;k<cCP[0].aSonsIteration[salp].length;k++)
+				{
+					//int l2=0;
+					//for(int l=0;l<CoopDatiComuni.aSonsIteration[salp][k].length;l++)//giulio 6/3/2001
+					//MODIFICATOfor(int l=0;l<CoopDatiComuni.aSonsIteration[salp][k].length;l++)//giulio6/3/2001
+					for(int l=0;l<cCP[0].aSonsIteration[j][sequenzaAlberoIterativo].length;l++)//giulio7/3/2001
+						for(int l2=0;l2<cCP[0].aSonsIteration[salp][k].length;l2++)
+							if(j!=salp)
+							{
+								if(cCP[0].aSonsIteration[j][sequenzaAlberoIterativo][l].equals(cCP[0].aSonsIteration[salp][k][l2]))
+								{ //System.out.println("MAZZAMAURO=" + "L=" + l + " L2=" + l2 + " " + salp + " " + k + " " + l2);
+									cCP[0].copia_aSonsIteration[salp][k][l2]=cCP[0].aSonsIteration[salp][k][l2];
+								}
+								//l2++;
+							}
+				}
+		}
+					
+	}
+
+	/**<P>Quando si ha una sequenza di Tasks vuota nell'array <I>copia_aSonsIterationNoOpz</I>,
+	 *il metodo ricopia rispettivamente i tasks relativi a quella sequenza, memorizzati
+	 *nell'array <I>aSonsIterationNoOpz</I>, nelle posizioni dell'array da cui sono stati
+	 *eliminati i tasks stessi durante l'esecuzione: il risultato sarà il riempimento
+	 *sia della sequenza vuota, sia delle zone dell'array copia_aSonsIteration dove i
+	 *tasks erano stati eliminati (in ogni loro occorrenza).
+	 *</P>
+	 *
+	 * @param   j  Cerca la sequenza per il padre iterativo <I>j</I>.
+	 * @return  Ritorna se esiste la sequenza vuota (true) o non esiste (false).   
+	 */
+	public void ricopia_copia_aSonsIterationNoOpz2(int j)
+	{		
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+/*			for(int k=0;k<CoopDatiComuni.aSonsIterationNoOpz[j].length;k++)
+				for(int l=0;l<CoopDatiComuni.aSonsIterationNoOpz[j][k].length;l++)
+					CoopDatiComuni.copia_aSonsIterationNoOpz[j][k][l]=CoopDatiComuni.aSonsIterationNoOpz[j][k][l];
+*/
+////////////////////////////VEDO QUALE TRENO è VUOTO//////////////////////
+		int conta=0;
+		int alberoIterativo=-1;
+		int sequenzaAlberoIterativo=-1;
+				
+		esci_ora:
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].copia_aSonsIterationNoOpz[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<cCP[0].copia_aSonsIterationNoOpz[j][k].length;l++)
+				{	
+					if(cCP[0].copia_aSonsIterationNoOpz[j][k][l].equals(""))
+					{
+						conta++;
+
+						if((conta==cCP[0].copia_aSonsIterationNoOpz[j][k].length) && (cCP[0].num_vuoti_inizialmente_copia_aSonsIterationNoOpz[j][k]==0))//Sostituisce la riga remmata subito prima
+						{
+								alberoIterativo=j;
+								sequenzaAlberoIterativo=k;
+								break esci_ora;
+						}
+					}
+					else
+					{
+						conta=0;
+					}
+				}
+			}
+////////////////////////////FINE VEDO QUALE TRENO è VUOTO/////////////////
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<cCP[0].aSonsIterationNoOpz[j].length;k++)
+				for(int l=0;l<cCP[0].aSonsIterationNoOpz[j][k].length;l++)
+					cCP[0].copia_aSonsIterationNoOpz[j][k][l]=cCP[0].aSonsIterationNoOpz[j][k][l];
+		if(sequenzaAlberoIterativo>=0)
+		{
+			for(int salp=0;salp<cCP[0].num_padri_iteration;salp++)
+				for(int k=0;k<cCP[0].aSonsIterationNoOpz[salp].length;k++)
+				{
+					//int l2=0;
+					//MODIFICATOfor(int l=0;l<CoopDatiComuni.aSonsIterationNoOpz[salp][k].length;l++)//giulio 7/3/2001
+					for(int l=0;l<cCP[0].aSonsIterationNoOpz[j][sequenzaAlberoIterativo].length;l++)//giulio 7/3/2001					
+						for(int l2=0;l2<cCP[0].aSonsIterationNoOpz[salp][k].length;l2++)
+							if(j!=salp)
+							{
+								if(cCP[0].aSonsIterationNoOpz[j][sequenzaAlberoIterativo][l].equals(cCP[0].aSonsIterationNoOpz[salp][k][l2]))
+								{ //System.out.println("MAZZAMAURO=" + "L=" + l + " L2=" + l2 + " " + salp + " " + k + " " + l2);
+									cCP[0].copia_aSonsIterationNoOpz[salp][k][l2]=cCP[0].aSonsIterationNoOpz[salp][k][l2];
+								}
+								//l2++;
+							}
+				}
+		}
+
+	}
+	public void controllaInFoglieIterationInitEseg(String key, int j)
+  {
+		for(int salp=cCP[0].num_padri_iteration-1;salp>=0;salp--)
+		{
+			if(salp!=j)
+			{
+				for(int lk=0;lk<cCP[0].foglieIterationInitEseg[0][salp].length;lk++)
+				{
+						if(key.equals(cCP[0].foglieIterationInitEseg[0][salp][lk])) System.out.print("\n");
+				}
+			}
+		} 
+  }
+	
+	//Al momento non viene usata. //giulio 6/04/2001
+	/*public boolean esisteTrenoVuoto_IterativoSpecifico(int j)
+	{ 
+		boolean risultato=false;
+		int conta=0;
+		
+		esci:
+		//for(int j=0;j<cCP[0].num_padri_iteration;j++)
+			for(int k=0;k<CoopDatiComuni.copia_aSonsIteration[j].length;k++)
+			{
+				conta=0;//corretta o da togliere?
+
+				for(int l=0;l<CoopDatiComuni.copia_aSonsIteration[j][k].length;l++)
+				{	
+					if(CoopDatiComuni.copia_aSonsIteration[j][k][l].equals(""))
+					{
+						conta++;
+						if(conta==CoopDatiComuni.copia_aSonsIteration[j][k].length)//manca condiz. in cui le sequenze non erano già vuote//27/2/2001
+						{
+							risultato=true;
+							break esci;
+						}
+					}
+					else
+					{
+						conta=0;
+						risultato=false;
+					}
+				}
+			}
+			return risultato;
+	}*/
+	
+
+	private boolean DownSoftHard(String key, int j){
+		
+		//if(cCP[j].aFoglie.in_list(key)) 
+		if(cCP[j].IsFogliaKey(key))
+			if(stato[j].contains(key)) return true;
+				else return false; 	
+			else {
+				/** Non e' una foglia */
+				int i;
+  			/** Gestione Order Independency */
+				i=0;
+				while (i<cCP[j].num_varO)
+				 if(cCP[j].aEVO.item(i).get_name().equals(key)) return (DownHard(cCP[j].aEVO.item(i).get_var1(),j) && !DownSoft(cCP[j].aEVO.item(i).get_var2(),j)) || (DownHard(cCP[j].aEVO.item(i).get_var2(),j) && !DownSoft(cCP[j].aEVO.item(i).get_var1(),j));
+				  else i++;
+			i=0;
+				while(i<cCP[j].num_padri)
+					if(cCP[j].lEP[i].get_name().equals(key)) return DownSoftHard(cCP[j].lEP[i].get_espressione(),j);
+				   else i++;
+				
+			return !DownSoft(key,j);
+			
+			/** Gestione Fallimento */
+			//GSystem.out.println("DownSoft: Errore nella ricerca di un task");
+			//Greturn false;
+  					
+			}// fine else
+	
+	} // fine DownSoftHard
+	
+	private void trovaFoglieParteDestraSuspendEResume(String key, int j, int qualeSuspend) //giulio 19/6/2001
+  {
+  	int pas=0;
+ 		if(cCP[j].IsFogliaKey(key)) 
+  	{   //System.out.println("FOGLIA="+key);
+  		if(!CTTEutility.isCooperative())
+  		{
+  			figliDestraSuspendEResume[0][qualeSuspend].addElement(key);
+  		}
+  		else
+  		{
+  			figliDestraSuspendEResume[j][qualeSuspend].addElement(key);
+  		}	
+  	}
+		else
+		{
+				/** Non e' una foglia */
+				int i;
+  			/** Gestione Choice */
+				i=0;
+				while (i<cCP[j].num_varC)
+					if(cCP[j].aEVC.item(i).get_name().equals(key)) {trovaFoglieParteDestraSuspendEResume(cCP[j].aEVC.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVC.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+					else i++;
+				/** Gestione Order Independency */
+				i=0;
+				while (i<cCP[j].num_varO)
+				 if(cCP[j].aEVO.item(i).get_name().equals(key)) {trovaFoglieParteDestraSuspendEResume(cCP[j].aEVO.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVO.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+				 else i++;
+				/** Gestione Interliving */
+				i=0;
+				while (i<cCP[j].num_varI)
+					if(cCP[j].aEVI.item(i).get_name().equals(key)) {trovaFoglieParteDestraSuspendEResume(cCP[j].aEVI.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVI.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+					else i++;  					
+  			/** Gestione Disabling */
+				i=0;
+				while (i<cCP[j].num_varD)
+				{
+				 if(cCP[j].aEVD.item(i).get_name().equals(key))	{trovaFoglieParteDestraSuspendEResume(cCP[j].aEVD.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVD.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+  		 	 else i++;
+				}
+				/** Gestione Stop/Resume **/
+				i=0;
+				while (i<cCP[j].num_varS)
+					if(cCP[j].aEVS.item(i).get_name().equals(key)) {trovaFoglieParteDestraSuspendEResume(cCP[j].aEVS.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVS.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+					else i++;
+				/** Gestione Enabling */
+				i=0;
+				while (i<cCP[j].num_varE)
+				 if(cCP[j].aEVE.item(i).get_name().equals(key)) {trovaFoglieParteDestraSuspendEResume(cCP[j].aEVE.item(i).get_var1(),j, qualeSuspend);trovaFoglieParteDestraSuspendEResume(cCP[j].aEVE.item(i).get_var2(),j, qualeSuspend);i++;pas=1;}
+				 else i++;
+				/** Gestione Lista Padri */
+				i=0;
+				while(i<cCP[j].num_padri)
+				 if(cCP[j].lEP[i].get_name().equals(key)&&pas==0) {trovaFoglieParteDestraSuspendEResume(cCP[j].lEP[i].get_espressione(),j, qualeSuspend);i++;}
+				 else i++;
+			/** Gestione Fallimento */
+  			//System.out.println("DownHardSoft: Errore nella ricerca di un task");
+  	}// fine else
+
+  }
+
+	public boolean IsIterative(String key, int indexRole)
+	{
+		int individuato=-1;
+		for(int cont=0;cont<cCP[indexRole].num_nodi;cont++)
+			if(key.equals(cCP[indexRole].nodi[cont].get_key())) {individuato=cont;break;}
+		
+		if(individuato>-1)
+			if(cCP[indexRole].nodi[individuato].get_recursive()) return true;
+		
+		return false;	
+	}
+	
+	public void AnalizzoSettoFlag(String key, int indexRole, int lvl, Vector Role, Vector Key)
+	{
+		int individuatoNodo=-1;
+		int individuatoLvl=-1;
+		
+		for(int cont=0;cont<cCP[indexRole].num_nodi;cont++)
+			if(key.equals(cCP[indexRole].nodi[cont].get_key())) {individuatoNodo=cont;break;}
+
+		eschino:
+			if(individuatoNodo>-1)
+				for(int is2=0;is2<cCP[0].num_padri;is2++)
+				{
+					for(int z1=0;z1<taskChoiceLvl[is2].size();z1++)
+					{
+						if((cCP[0].nodi[individuatoNodo].get_key()).equals(taskChoiceLvl[is2].elementAt(z1).toString())){individuatoLvl=is2;break eschino;}
+					}
+				}
+					
+
+System.out.println("individuatoLvl="+individuatoLvl+" individuatoNodo="+individuatoNodo);
+					for(int z2=0;z2<taskChoiceLvl[individuatoLvl].size();z2++)
+					{
+						
+						for(int cont=0;cont<cCP[indexRole].num_nodi;cont++)
+						{
+							if(individuatoNodo!=cont)
+								if(taskChoiceLvl[individuatoLvl].elementAt(z2).toString().equals(cCP[indexRole].nodi[cont].get_key())) {cCP[0].nodi[cont].set_padreChoiceEseguito(false);SettaFlagFigliChoiceIter(cCP[indexRole].nodi[cont].get_key(), individuatoLvl);}
+								//Gif(taskChoiceLvl[individuatoLvl].elementAt(z2).toString().equals(cCP[indexRole].nodi[cont].get_key())) {cCP[0].nodi[cont].set_padreChoiceEseguito(false);SettaFlagFigliChoiceIter(cCP[indexRole].nodi[cont].get_key());}
+						}
+	
+					}
+	}
+	
+	//Gpublic void SettaFlagFigliChoiceIter(String t)
+  public void SettaFlagFigliChoiceIter(String t, int LvlF)
+  {
+  	System.out.println("T="+t);
+  	int NodoRadix=-1;
+  	int NodoRadixTemp=-1;
+  	int EstremoDxAlbero=-1;
+  	
+  		uscio1:
+  		for(int cont=0;cont<cCP[0].num_nodi;cont++)
+  			if(t.equals(cCP[0].nodi[cont].get_key())) {NodoRadix=cont;NodoRadixTemp=NodoRadix;break uscio1;}
+  		
+  			//System.out.println("NodoRadix="+NodoRadixTemp+ "BROTHER="+cCP[0].nodi[NodoRadix].get_keyRightBrother()+" taskCLVl=" +taskChoiceLvl[LvlF].contains(cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother()) +" LVLIND="+LvlF);
+  		
+  		if(cCP[0].IsFogliaKey(t)) //6/7/2001 IMPORTANTE PER GESTIRE LE FOGLIE NELLE CHOICE
+  		{
+  			EstremoDxAlbero=NodoRadix;
+  		}
+  		else //PER GESTIRE I PADRI dei TASK NELLE CHOICE
+  		{
+	  		//GGwhile(!cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother().equals("-") /*&& (LvlF>-1)&&(taskChoiceLvl[LvlF].contains(cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother()))*/ )	
+	  		while(!cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother().equals("-"))	
+	  		{System.out.println("ENTRO ORA!!! NodoRadixTemp="+NodoRadixTemp+" NodoRadixTemp+1="+(NodoRadixTemp+1));
+	  			
+	  			uscio3:
+	  			for(int cont=NodoRadixTemp+1;cont<cCP[0].num_nodi;cont++)
+	  			{
+	  				System.out.println("KEY="+cCP[0].nodi[cont].get_key()+" BROTHER="+cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother());
+	  				if(cCP[0].nodi[cont].get_key().equals(cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother()))	{System.out.println("OK cont="+cont);NodoRadixTemp=cont-1;EstremoDxAlbero=cont;break uscio3;}
+	  			}
+					//System.out.println("NodoRadixTemp+1="+(NodoRadixTemp+1) + " Bool="+cCP[0].IsFogliaKey(cCP[0].nodi[NodoRadixTemp+1].get_key()));
+					if(!cCP[0].IsFogliaKey(cCP[0].nodi[NodoRadixTemp+1].get_key()) && cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother().equals("-")) {NodoRadixTemp++;System.out.println("GIACCA="+NodoRadixTemp);}
+	  		}
+	  		
+	  		//GSystem.out.println("DOPO NodoRadix="+(NodoRadix+1) + " EstremoDxAlbero="+EstremoDxAlbero);
+  		}
+  		
+  		for(int cont=NodoRadix;cont<=EstremoDxAlbero;cont++)
+  			if(cCP[0].IsFogliaKey(cCP[0].nodi[cont].get_key()))	cCP[0].nodi[cont].set_padreChoiceEseguito(false);
+  }
+
+	
+  public void PreparaTaskChoiceLvlFigli(String t, int lvl)
+  {
+  	int NodoRadix=-1;
+  	int NodoRadixTemp=-1;
+  	int EstremoDxAlbero=-1;
+
+  		uscio1:
+  		for(int cont=0;cont<cCP[0].num_nodi;cont++)
+  			if(t.equals(cCP[0].nodi[cont].get_key())) {NodoRadix=cont;NodoRadixTemp=NodoRadix;break uscio1;}
+  	
+ 			if(cCP[0].IsFogliaKey(t))
+ 			{
+ 				EstremoDxAlbero=NodoRadix;
+ 				System.out.println("PTCLF DOPO NodoRadix="+NodoRadix + " EstremoDxAlbero="+EstremoDxAlbero);
+ 			} //Per la gestione delle foglie
+ 			else //Per la gestione delle non foglie (padri)
+  		{				
+	  		while(!cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother().equals("-"))	
+	  		{
+	  			uscio3:
+	  			for(int cont=NodoRadixTemp+1;cont<cCP[0].num_nodi;cont++)
+	  			{
+	  				//System.out.println("KEY="+cCP[0].nodi[cont].get_key()+" BROTHER="+cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother());
+	  				if(cCP[0].nodi[cont].get_key().equals(cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother()))	{System.out.println("OK cont="+cont);NodoRadixTemp=cont-1;EstremoDxAlbero=cont;break uscio3;}
+	  			}
+					//System.out.println("NodoRadixTemp+1="+(NodoRadixTemp+1) + " Bool="+cCP[0].IsFogliaKey(cCP[0].nodi[NodoRadixTemp+1].get_key()));
+					if(!cCP[0].IsFogliaKey(cCP[0].nodi[NodoRadixTemp+1].get_key()) && cCP[0].nodi[NodoRadixTemp+1].get_keyRightBrother().equals("-")) {NodoRadixTemp++;System.out.println("GIACCA="+NodoRadixTemp);}
+	  		}
+	  		System.out.println("PTCLF DOPO NodoRadix="+(NodoRadix+1) + " EstremoDxAlbero="+EstremoDxAlbero);
+  		}
+  		
+  		for(int cont=NodoRadix;cont<=EstremoDxAlbero;cont++)
+  			if(cCP[0].IsFogliaKey(cCP[0].nodi[cont].get_key()))	taskChoiceLvlFigli[lvl].addElement(cCP[0].nodi[cont].get_key());
+  
+  }
+///////////////////////////GESTIONE FOGLIE ITERATIVE NELLE CHOICE/////////////////////
+
+
+//////////////////////FINE GESTIONE FOGLIE ITERATIVE NELLE CHOICE/////////////////////
+	/** Si deve fare in modo di estrarre la chiave della foglia ricorsiva
+	*/
+	public String estraiKeyFogliaRicorsiva(String key) //LAILA
+  {
+  	Task root = taskd[0]; 
+    boolean ok = searchFogliaRicorsiva(root,key);
+    if(ok) return key; 
+    return "";
+  }
+  
+  private boolean searchFogliaRicorsiva(Task task, String key) //LAILA
+  {
+    if(task.toString().equals(key) && task.getProperties().getGeneralInfo().isIterative())return true;//EMANUELA: task.ricorsivo) return true;
+    if(!task.isLeaf())
+    {
+    	for(int i=0; i<task.getNode().numberOfChildren(); i++)
+        { 
+          boolean t = searchFogliaRicorsiva(task.getNode().getChild()[i],key);
+          if(t) return t;
+        }
+    }
+    
+    return false;
+  }
+
+
+/* Metodi utili per l'analisi dell'albero binario */
+/* in forma di	espressioni.													*/
+
+	public int get_num_varC(int j)
+  {
+  	return cCP[j].num_varC;
+  }
+
+	public int get_num_varO(int j)
+  {
+  	return cCP[j].num_varO;
+  }
+
+	public int get_num_varI(int j)
+  {
+  	return cCP[j].num_varI;
+  }
+
+	public int get_num_varD(int j)
+  {
+  	return cCP[j].num_varD;
+  }
+
+	public int get_num_varS(int j)
+  {
+  	return cCP[j].num_varS;
+  }
+
+	public int get_num_varE(int j)
+  {
+  	return cCP[j].num_varE;
+  }
+
+	public int get_num_padri_iteration(int j)
+  {
+  	return cCP[j].num_padri_iteration;
+  }
+
+	public int get_num_padri(int j)
+  {
+  	return cCP[j].num_padri;
+  }
+
+	public String get_prova(int j, int i)
+  {
+  	System.out.println("XXXXXXXPADRI="+cCP[j].lEP[i].get_name()+" ESPRX="+cCP[j].lEP[i].get_espressione());
+  	return cCP[j].lEP[i].get_name();
+  }
+
+	public String get_aEVC(int j, int i)
+  {
+  	return cCP[j].aEVC.item(i).get_name();
+  }
+
+	public String get_aEVC_left(int j, int i)
+  {
+  	return cCP[j].aEVC.item(i).get_var1();
+  }
+
+	public String get_aEVC_right(int j, int i)
+  {
+  	return cCP[j].aEVC.item(i).get_var2();
+  }
+
+	public String get_aEVO(int j, int i)
+  {
+  	return cCP[j].aEVO.item(i).get_name();
+  }
+
+	public String get_aEVO_left(int j, int i)
+  {
+  	return cCP[j].aEVO.item(i).get_var1();
+  }
+
+	public String get_aEVO_right(int j, int i)
+  {
+  	return cCP[j].aEVO.item(i).get_var2();
+  }
+
+	public String get_aEVI(int j, int i)
+  {
+  	return cCP[j].aEVI.item(i).get_name();
+  }
+
+	public String get_aEVI_left(int j, int i)
+  {
+  	return cCP[j].aEVI.item(i).get_var1();
+  }
+
+	public String get_aEVI_right(int j, int i)
+  {
+  	return cCP[j].aEVI.item(i).get_var2();
+  }
+
+	public String get_aEVD(int j, int i)
+  {
+  	return cCP[j].aEVD.item(i).get_name();
+  }
+
+	public String get_aEVD_left(int j, int i)
+  {
+  	return cCP[j].aEVD.item(i).get_var1();
+  }
+
+	public String get_aEVD_right(int j, int i)
+  {
+  	return cCP[j].aEVD.item(i).get_var2();
+  }
+
+	public String get_aEVS(int j, int i)
+  {
+  	return cCP[j].aEVS.item(i).get_name();
+  }
+
+	public String get_aEVS_left(int j, int i)
+  {
+  	return cCP[j].aEVS.item(i).get_var1();
+  }
+
+	public String get_aEVS_right(int j, int i)
+  {
+  	return cCP[j].aEVS.item(i).get_var2();
+  }
+
+	public String get_aEVE(int j, int i)
+  {
+  	return cCP[j].aEVE.item(i).get_name();
+  }
+
+	public String get_aEVE_left(int j, int i)
+  {
+  	return cCP[j].aEVE.item(i).get_var1();
+  }
+
+	public String get_aEVE_right(int j, int i)
+  {
+  	return cCP[j].aEVE.item(i).get_var2();
+  }
+
+	public Vector get_TEnabl(int j)
+  {
+  	Vector v = new Vector();
+//System.out.println("NUM VAR ENABLE="+cCP[j].num_varE+"EN6="+cCP[j].aEVE.item(6).get_name()+"="+cCP[j].aEVE.item(6).get_var1()+" >> "+cCP[j].aEVE.item(6).get_var2());
+  	for(int en=0;en<cCP[j].num_varE; en++)
+  	{
+  		v = esplora_EnExpr(cCP[j].aEVE.item(en).get_name(), 0);
+  	}
+  	return v;
+  }
+
+
+	public Vector esplora_EnExpr(String l, int c)
+  {
+  	int index=-1;
+
+  	if(c==0)
+  	{	
+  		for(int cx2=0;cx2<cCP[0].num_varE;cx2++)
+  		{
+  			if(cCP[0].aEVE.item(cx2).get_name().equals(l))
+  			{
+  				//System.out.println("c="+c+" E"+cx2);
+  				boolean task=false;
+  				
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+						if(cCP[0].nodi[j].get_key().equals(cCP[0].aEVE.item(cx2).get_var1()))
+  					{//if(cx2==6) System.out.println("j="+j);
+  						task=true;
+							index=-1;
+							BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+							Task t = (Task)bfs.next();
+							while(bfs.hasNext() && (++index != j))
+								t = (Task)bfs.next();
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{//if(index==24) System.out.println("ESPRESSIONE="+cCP[0].lEP[z].get_espressione());
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+  						
+  					}
+					
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVE.item(cx2).get_var1(), c);
+					}
+  				
+  			} 
+  		}
+  	}
+  	else if(c>0)
+  	{
+  		
+  		for(int cx2=0;cx2<cCP[0].num_varC;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVC.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVC.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVC.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVC.item(cx2).get_var2()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVC.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+
+  		for(int cx2=0;cx2<cCP[0].num_varO;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVO.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVO.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVO.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVO.item(cx2).get_var2()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVO.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+
+  		for(int cx2=0;cx2<cCP[0].num_varI;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVI.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVI.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVI.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+			  	
+						if(t.toString().equals(cCP[0].aEVI.item(cx2).get_var2()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVI.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+
+  		for(int cx2=0;cx2<cCP[0].num_varD;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVD.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVD.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVD.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVD.item(cx2).get_var2()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVD.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+
+  		for(int cx2=0;cx2<cCP[0].num_varS;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVS.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVS.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVS.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVS.item(cx2).get_var2()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVS.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+
+  		for(int cx2=0;cx2<cCP[0].num_varE;cx2++)
+  		{
+  			boolean task=false;
+  			
+  			if(cCP[0].aEVE.item(cx2).get_name().equals(l))
+  			{
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVE.item(cx2).get_var1()))
+						{
+  						task=true;
+							index=j;
+
+							if(t.isLeaf()) 
+							{
+								if(!v1.contains(t))
+									v1.add(t);//caso foglia
+							}
+							else//caso task padre
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)//caso espressione
+					{
+						c++;
+						esplora_EnExpr(cCP[0].aEVE.item(cx2).get_var1(), c);
+					}
+
+task=false;//Variabile fondamentale per considerare anche la parte destra di ogni operatore
+
+			  	for(int j=0;j<cCP[0].num_nodi;j++)
+			  	{
+			  		BFSiterator bfs = new TreeIterator().bfs(pDt.getRoot());
+					Task t = (Task)bfs.next();
+					while(bfs.hasNext() && (++index != j))
+						t = (Task)bfs.next();
+						if(t.toString().equals(cCP[0].aEVE.item(cx2).get_var2()))
+						{
+							//if(cx2==7) System.out.println(cx2+"1 ESPRES DESTRA="+cCP[0].aEVE.item(cx2).get_var2());
+  						task=true;
+							index=j;
+
+							if(t.isLeaf())
+							{
+								if(!v1.contains(t))
+									v1.add(t);
+							}
+							else
+							{
+								for(int z=0;z<cCP[0].num_padri; z++)
+								{
+									if(t.toString().equals(cCP[0].lEP[z].get_name()))
+									{
+										c++;
+										esplora_EnExpr(cCP[0].lEP[z].get_espressione(), c);	
+									}
+								}
+							}
+						}
+			  	}
+					if(task==false)
+					{
+						c++;//if(cx2==7) System.out.println(cx2+"2 ESPRES DESTRA="+cCP[0].aEVE.item(cx2).get_var2());
+						esplora_EnExpr(cCP[0].aEVE.item(cx2).get_var2(), c);
+					}
+
+  			}
+  		}
+			
+  	}	
+  	
+  	return v1;
+  	
+  }
+
+	public Vector get_final_task_iter(int j)
+  {
+  	Vector v2 =  new Vector();
+  	
+			for(int iterat=0;iterat<cCP[j].num_padri_iteration;iterat++)
+				for(int o1=0;o1<cCP[0].aSonsIteration[iterat].length;o1++)
+					for(int o2=0;o2<cCP[0].aSonsIteration[iterat][o1].length;o2++)
+					{ //Le parti commentate sono le parti che escludo le foglie iterative. 
+						//boolean includo=true;
+						//if((cCP[j].aSonsIteration[iterat].length==1) && (cCP[j].aSonsIteration[iterat][o1].length==1)) {includo=false;}//System.out.println(iterat+") "+o1+") BUBI!!!!!!!!!!="+cCP[j].aSonsIteration[iterat][o1][o2]);
+						if(/*(includo==true) &&*/ !v2.contains(cCP[0].aSonsIteration[iterat][o1][o2])) v2.add(cCP[0].aSonsIteration[iterat][o1][o2]);
+					}
+  	
+  	return v2;
+  }
+  
+
+  // trasforma una hashtabel con elementi Taskd in una Hashtable con elementi String
+  public Hashtable translateHashtable (Hashtable table) {  //CARMEN METODO CONNESSONI 1     11/10/2004
+   Hashtable htNames = new Hashtable();
+   
+      for (Enumeration e = table.keys() ; e.hasMoreElements() ;) 
+       {
+ 
+         Integer hInteger = (Integer)e.nextElement();
+         
+         Vector HObject  = (Vector)table.get(hInteger);
+         Vector HObjectNew  = new Vector();
+         
+         for (int g=0; g<HObject.size(); g++) {
+           
+           Vector HelemObject = (Vector)HObject.elementAt(g);
+           Vector HelemObjectNew = new Vector();
+           
+           Vector hTasks = (Vector)HelemObject.elementAt(0);
+           Vector hTasksNew = new Vector ();
+ 
+           for (int g1=0; g1<hTasks.size(); g1++) {
+                hTasksNew.addElement(((Task) hTasks.elementAt(g1)).getProperties().getGeneralInfo().getIde());
+                }
+              
+           Integer HInteger = (Integer)HelemObject.elementAt(1);
+           Integer HIntegerNew = (Integer)HelemObject.elementAt(1);
+ 
+           
+           HelemObjectNew.addElement(hTasksNew);
+           HelemObjectNew.addElement(HIntegerNew);
+           HObjectNew.addElement(HelemObjectNew);
+           
+           htNames.put(hInteger, HObjectNew);
+           
+           }    
+       }
+   return htNames;
+  }
+
+public void generateConnConstrain(Hashtable table) {  //CARMEN METODO CONNESSONI 1     11/10/2004
+
+     for (Enumeration e = table.keys() ; e.hasMoreElements() ;) 
+      {
+
+        Integer hInteger = (Integer)e.nextElement();
+
+        Vector HObject  = (Vector)table.get(hInteger);
+
+        for (int g=0; g<HObject.size(); g++)
+		{
+          
+          Vector HelemObject = (Vector)HObject.elementAt(g);
+          Vector hTasks = (Vector)HelemObject.elementAt(0);
+
+          Integer HInteger = (Integer)HelemObject.elementAt(1);
+
+          genConnConstraints(hTasks, hInteger, HInteger);        
+        }    
+      }
+  
+ }
+
+
+ public void genConnConstraints(Vector taskConn, Integer key, Integer arrivo) {// CARMEN METODO CONN 2  11/10/2004
+
+  Tree root = new Tree(taskd[0]);
+  Prior tb =new Prior();                      
+  binaryroot = tb.Prior( (Task) taskd[0].clone() );
+  tsconn_supp = new TSConnStructure();//CARMEN CLASSE DA IMPORTARE
+  rootTree = root.getRoot();                   
+  // prende l'oggetto di tipo Taskd (binarizzato) binaryroot 
+  // e lo traduce in una struttura ad albero di tipo TSConnStructure tsconn_supp
+  riempiStructure (binaryroot, tsconn_supp);// CARMEN METODO CONN 3
+  
+  
+
+
+  tsconn_supp.taskBelongsToSubTree(taskConn);
+
+
+  boolean ok= tsconn_supp.isThereSomethingNotReduced();
+  while (ok) 
+    {
+     tsconn_supp.reduceBooleanTree(); 
+     tsconn_supp.eliminateEmptyLeaves();
+     ok= tsconn_supp.isThereSomethingNotReduced();
+    }
+
+
+  
+  // a questo punto ho un albero che non ha + foglie non significative
+  // cioè elementi di tipo TSConnStructure con 1 o zero elementi
+  // ora devo vedere se c'è qualche elemento di tipo P o U per ridurlo ulteriormente
+  
+ 
+
+  boolean ok_up = tsconn_supp.isThereSomething_PU_GreaterThanOne();
+  //System.out.println("primo OK_UP = " + ok_up);
+  while (ok_up) 
+    {
+
+     tsconn_supp.eliminate_PU_operators();
+
+     ok_up= tsconn_supp.isThereSomething_PU_GreaterThanOne();
+    }
+
+   
+ boolean ok1= tsconn_supp.isThereSomethingNotReduced();
+  while (ok1) 
+    {
+     tsconn_supp.reduceBooleanTree(); 
+     tsconn_supp.eliminateEmptyLeaves();
+     ok1= tsconn_supp.isThereSomethingNotReduced();
+    }
+
+
+ //ora dovrebbe essere un albero significativo in cui compaiono solo foglie, A o O
+
+  
+  Vector temp1 = new Vector();
+  temp1.addElement(key);
+  temp1.addElement(tsconn_supp);
+  temp1.addElement(arrivo); 
+  myArray3elem.addElement(temp1);// CARMEN variabile globale
+ 
+
+}
+
+/*  
+ * Prende un albero di tipo Taskd e riempie la struttura ad albero relativa di tipo TSConnStructure
+ */
+  public void riempiStructure (Task tree, TSConnStructure boolTree) {//GM 11/10/2004
+  if (tree.isLeaf()) {
+      boolTree.operator = "/"; 
+      boolTree.taskdElements = new Vector();
+      boolTree.taskdElements.addElement(tree);
+     }
+  else {
+     if (Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).trim().equals(">>") || Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).trim().equals("[]>>"))boolTree.operator = "U";
+     else if (Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).equals("|>")) boolTree.operator = "P";
+     else if (Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).equals("|||") || Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).trim().equals("|[]|"))boolTree.operator = "A";
+     else if (Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).equals("[]")|| Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).trim().equals("|=|"))boolTree.operator = "O";
+     else if (Priority.getStringPriority(tree.getNode().getChild()[0].getPriority()).equals("[>")) boolTree.operator = "O";
+     boolTree.taskdElements= new Vector();
+     for (int k=0; k<tree.getNode().numberOfChildren(); k++)    
+       { 
+        TSConnStructure tempBoolTree = new TSConnStructure();
+        riempiStructure (tree.getNode().getChild()[k], tempBoolTree);
+        boolTree.taskdElements.addElement(tempBoolTree);
+        tempBoolTree.setFather((TSConnStructure)boolTree.taskdElements.elementAt(k));
+        tempBoolTree.setGrandFather(boolTree);
+       }
+    }
+  }
+
+
+  
+/* Fine metodi utili per l'analisi dell'albero binario */
+/* in forma di	espressioni.															 */
+
+
+}// fine class 

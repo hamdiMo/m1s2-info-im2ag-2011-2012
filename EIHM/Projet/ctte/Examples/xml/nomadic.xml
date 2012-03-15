@@ -1,0 +1,1745 @@
+<?xml version= '1.0'?>
+<!DOCTYPE TaskModel PUBLIC "http://giove.cnuce.cnr.it/CTTDTD.dtd" "">
+
+<TaskModel NameTaskModelID="C:\Documents and Settings\ari\Documenti\NetBeansProjects\ctte\Examples\xml\nomadic.xml">
+<Task Identifier="Visiting_museum" Category="Abstraction Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Show_intro" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Visiting_museum"/>
+  <SiblingRight name="Access_general_info"/>
+  <Object name="intro" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="picture" class="image" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Access_general_info" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Visiting_museum"/>
+  <SiblingLeft name="Show_intro"/>
+  <SiblingRight name="Access_to_museum_artworks"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_access_to_gen_info" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="Medium">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_general_info"/>
+  <SiblingRight name="Show_museum_info"/>
+  <Object name="info" class="" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show_museum_info" Category="Application Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="CTT Disabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_general_info"/>
+  <SiblingLeft name="Select_access_to_gen_info"/>
+  <SiblingRight name="Exit"/>
+  <Object name="overview" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="timetable" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Exit" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_general_info"/>
+  <SiblingLeft name="Show_museum_info"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Access_to_museum_artworks" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Visiting_museum"/>
+  <SiblingLeft name="Access_general_info"/>
+  <SiblingRight name="Access_to_ticket_reservation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_access_to_artworks" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="High">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_museum_artworks"/>
+  <SiblingRight name="Accessing_works"/>
+  <Object name="art_acc" class="" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Accessing_works" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_museum_artworks"/>
+  <SiblingLeft name="Select_access_to_artworks"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Show_info_on_sections" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent with info exchange"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_works"/>
+  <SiblingRight name="Back_to_home"/>
+  <Object name="sectsInfo" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="title" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Back_to_home" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_works"/>
+  <SiblingLeft name="Show_info_on_sections"/>
+  <SiblingRight name="Accessing_artwork"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Accessing_artwork" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_works"/>
+  <SiblingLeft name="Back_to_home"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_section" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Selection/Single_Choice </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling with info exchange"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_artwork"/>
+  <SiblingRight name="Show_section_artworks"/>
+  <Object name="section" class="text" type="Perceivable" access_mode="" cardinality="Low">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show_section_artworks" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Overview </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_artwork"/>
+  <SiblingLeft name="Select_section"/>
+  <SiblingRight name="Back_to_start"/>
+  <Object name="sectWorks" class="text" type="Perceivable" access_mode="Access" cardinality="Medium">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Back_to_start" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_artwork"/>
+  <SiblingLeft name="Show_section_artworks"/>
+  <SiblingRight name="showing_artwork_info"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="showing_artwork_info" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Accessing_artwork"/>
+  <SiblingLeft name="Back_to_start"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_artwork" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Selection/Single_Choice </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling with info exchange"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="showing_artwork_info"/>
+  <SiblingRight name="Show_artwork_info"/>
+  <Object name="s_artwork" class="text" type="Perceivable" access_mode="Access" cardinality="Medium">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show_artwork_info" Category="Application Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="CTT Disabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="showing_artwork_info"/>
+  <SiblingLeft name="Select_artwork"/>
+  <SiblingRight name="Close_info"/>
+  <Object name="title" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="author" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="picture" class="image" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="description" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Close_info" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="showing_artwork_info"/>
+  <SiblingLeft name="Show_artwork_info"/>
+  <SiblingRight name="Reading_review"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Reading_review" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="showing_artwork_info"/>
+  <SiblingLeft name="Close_info"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_access_to_review" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling with info exchange"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Reading_review"/>
+  <SiblingRight name="Show_review"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Show_review" Category="Application Task" Iterative="true" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="CTT Disabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Reading_review"/>
+  <SiblingLeft name="Select_access_to_review"/>
+  <SiblingRight name="Close"/>
+  <Object name="title" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="review" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Close" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Reading_review"/>
+  <SiblingLeft name="Show_review"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Access_to_ticket_reservation" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Visiting_museum"/>
+  <SiblingLeft name="Access_to_museum_artworks"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Access_to_museum" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_ticket_reservation"/>
+  <SiblingRight name="Send_request_for_reservation"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Select_access_ticket_booking" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="Low">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_museum"/>
+  <SiblingRight name="Enter_info_desktop"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Enter_info_desktop" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_museum"/>
+  <SiblingLeft name="Select_access_ticket_booking"/>
+  <SiblingRight name="Enter_info_cellphone"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="EnterName" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_desktop"/>
+  <SiblingRight name="EnterSurname"/>
+  <Object name="name" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="EnterSurname" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_desktop"/>
+  <SiblingLeft name="EnterName"/>
+  <SiblingRight name="EnterDayOfVisit"/>
+  <Object name="surname" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="EnterDayOfVisit" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_desktop"/>
+  <SiblingLeft name="EnterSurname"/>
+  <SiblingRight name="EnterCreditCardNumber"/>
+  <Object name="day" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="EnterCreditCardNumber" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_desktop"/>
+  <SiblingLeft name="EnterDayOfVisit"/>
+  <SiblingRight name="SelectUseOfGuide"/>
+  <Object name="ccnumber" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="SelectUseOfGuide" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Selection/Single_Choice </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_desktop"/>
+  <SiblingLeft name="EnterCreditCardNumber"/>
+  <Object name="guide" class="text" type="Perceivable" access_mode="Access" cardinality="Low">
+  <Platform> Desktop </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Enter_info_cellphone" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_museum"/>
+  <SiblingLeft name="Enter_info_desktop"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Enter_personal_data" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_cellphone"/>
+  <SiblingRight name="Next"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Enter_name" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_personal_data"/>
+  <SiblingRight name="Enter_surname"/>
+  <Object name="name" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Enter_surname" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_personal_data"/>
+  <SiblingLeft name="Enter_name"/>
+  <Object name="surname" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Next" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_cellphone"/>
+  <SiblingLeft name="Enter_personal_data"/>
+  <SiblingRight name="Enter_credit_card_number"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Enter_credit_card_number" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_cellphone"/>
+  <SiblingLeft name="Next"/>
+  <SiblingRight name="Add_details"/>
+  <Object name="ccnumber" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Add_details" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_cellphone"/>
+  <SiblingLeft name="Enter_credit_card_number"/>
+  <SiblingRight name="Enter_visit_details"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Enter_visit_details" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type>  </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_info_cellphone"/>
+  <SiblingLeft name="Add_details"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Enter_day_of_visit" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Edit </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Concurrent"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_visit_details"/>
+  <SiblingRight name="Select_use_of_guide"/>
+  <Object name="day" class="text" type="Perceivable" access_mode="Modification" cardinality="">
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Select_use_of_guide" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Selection/Single_Choice </Type>
+  <Description>  </Description>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Enter_visit_details"/>
+  <SiblingLeft name="Enter_day_of_visit"/>
+  <Object name="guide_use" class="" type="Perceivable" access_mode="Access" cardinality="Low">
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+<Task Identifier="Send_request_for_reservation" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Access_to_ticket_reservation"/>
+  <SiblingLeft name="Access_to_museum"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Cancel" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Choice"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Send_request_for_reservation"/>
+  <SiblingRight name="Sending_request"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Sending_request" Category="Abstraction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> null </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Send_request_for_reservation"/>
+  <SiblingLeft name="Cancel"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <SubTask>
+<Task Identifier="Submit" Category="Interaction Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Control </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TemporalOperator name="Enabling"/>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Sending_request"/>
+  <SiblingRight name="Receive_code"/>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+<Task Identifier="Receive_code" Category="Application Task" Iterative="false" Optional="false" PartOfCooperation="false" Frequency="null">
+  <Name>  </Name>
+  <Type> Visualise </Type>
+  <Description>  </Description>
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <Precondition>  </Precondition>
+  <TimePerformance> 
+   <Max>  </Max>
+   <Min>  </Min>
+   <Average>  </Average>
+  </TimePerformance> 
+  <Parent name="Sending_request"/>
+  <SiblingLeft name="Submit"/>
+  <Object name="code" class="text" type="Perceivable" access_mode="Access" cardinality="">
+  <Platform> Desktop </Platform>
+  <Platform> Mobile </Platform>
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  <Object name="" class="" type="" access_mode="" cardinality="">
+  <InputAction Description="null" From="null"/>
+  <OutputAction Description="null" To="null"/>
+  </Object>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+  </SubTask>
+  </Task>
+</TaskModel>
