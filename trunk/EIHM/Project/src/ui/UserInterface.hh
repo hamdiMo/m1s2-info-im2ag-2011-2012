@@ -63,11 +63,11 @@ public:
 public slots:
 
   // /** Slots */
-  // void open();
-  // void save();
+  void open();
+  void save();
   // void close(QWidget*);
  
-  // void exit();
+  void exit();
 
   // void undo();
   // void redo();
@@ -97,16 +97,16 @@ private:
   // void colorConvertOperation(Matrix<double>*);
   // void convolveOperation(Matrix<double>*);
 
-  // void createActions();
+  void createActions();
   // void updateActions();
-  // void createMenuBar();
+  void createMenuBar();
   // void createToolBars();
   // void createToolBoxDocks();
   // TabWidget* createTabWidget();
   
   // QDockWidget* createDockWidget(QWidget* widget);
   
-  // void createFileAction();
+  void createFileAction();
   // void createEditAction();
   // void createViewAction();
   // void createHelpAction();
@@ -115,7 +115,7 @@ private:
   // void createConvolveOperationAction();
   // void createAlgebricOperationAction();
   
-  // QMenu* createFileMenu();
+  QMenu* createFileMenu();
   // QMenu* createEditMenu();
   // QMenu* createViewMenu();
   // QMenu* createHelpMenu();
@@ -151,7 +151,7 @@ private:
   // AlgebricOperationChooser* m_algebricOperationChooser;
   // ColorConvertOperationChooser* m_colorConvertOperationChooser;
 
-  // QMenu* m_fileMenu;
+  QMenu* m_fileMenu;
   // QMenu* m_editMenu;
   // QMenu* m_viewMenu;
   // QMenu* m_helpMenu;
@@ -177,9 +177,9 @@ private:
   // QAction* m_cut;
   // QAction* m_paste;
 
-  // QAction* m_openAct;
-  // QAction* m_saveAct;
-  // QAction* m_exitAct;
+  QAction* m_openAct;
+  QAction* m_saveAct;
+  QAction* m_exitAct;
   
   // QAction* m_closeTab;
 

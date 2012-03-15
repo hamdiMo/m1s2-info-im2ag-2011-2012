@@ -8,48 +8,44 @@
 
 
 // /** Slots */
-// void UserInterface::open() {
-//   QFileDialog *t_fileDialog = new QFileDialog(this, windowFlags());
-//   t_fileDialog->setViewMode(QFileDialog::List);
-//   t_fileDialog->setNameFilter(tr("Images Files(*.jpg *.jpeg *.bmp *.png *.ppm *.tiff* .xbm *.xpm);; All Files (*)"));
-//   t_fileDialog->setFileMode(QFileDialog::ExistingFiles);
+void UserInterface::open() {
+  QFileDialog *t_fileDialog = new QFileDialog(this, windowFlags());
+  t_fileDialog->setViewMode(QFileDialog::List);
+  t_fileDialog->setNameFilter(tr("Fichiers TaskTree(*.tt);; Tous les Fichiers(*)"));
+  t_fileDialog->setFileMode(QFileDialog::ExistingFiles);
 
-//   QStringList fileNames;
-//   if (t_fileDialog->exec()) fileNames = t_fileDialog->selectedFiles();
-//   t_fileDialog->setNameFilterDetailsVisible(true);
+  QStringList fileNames;
+  if (t_fileDialog->exec()) fileNames = t_fileDialog->selectedFiles();
+  t_fileDialog->setNameFilterDetailsVisible(true);
 
-//   QListIterator <QString> t_listIterator (fileNames);
-//   while (t_listIterator.hasNext()){
-//     PictureModifier* modifier = new PictureModifier(new Picture(t_listIterator.next()), this);
-//     m_pictureManager->addPictureModifier(modifier);
-//     m_viewTabWidget->addTab((TabPanel*)modifier);
-//   }
-// }
+  QListIterator <QString> t_listIterator (fileNames);
+  while (t_listIterator.hasNext()){
 
-// void UserInterface::save() {
-//   if(m_viewTabWidget->getTabPanel() != NULL){
-//   Picture* picture = m_viewTabWidget->getTabPanel()->getSelectedPicture();
-//   std::cout << m_viewTabWidget->getTabPanel()->getTabName().toStdString()<< std::endl;
-//   if(picture != 0){
-//     QString path = QFileDialog::getSaveFileName(this, 
-// 						"Enregistrer le fichier", 
-// 						picture->getPath() , 
-// 						"All files *.* ;; Images () ;;Images *.bmp (*.bmp);; Images *.jpg(*.jpg);; Images *.jpeg(*.jpeg);; Images *.png(*.png);; Images *.ppm(*.ppm);; Images *.tiff(*.tiff);; Images *.xbm(*.xbm);; Images *.xpm(*.xpm)" );
+    /******************************* OUVERTURE***********************/
+  }
+}
 
-//     Matrix<unsigned int>* pictureData = picture->getData();
-//     QImage *m_image = new QImage(pictureData->getWidth(), pictureData->getHeight(), QImage::Format_ARGB32);
-//     for (int i = 0; i < pictureData->getWidth(); i++)
-//       for (int j = 0; j < pictureData->getHeight(); j++)
-// 	m_image->setPixel(i, j, (uint)pictureData->getValue(i, j));
-//     picture->saveQImage(path, *m_image);
-//   }
-//   } 
-// }
+void UserInterface::save() {
+    
+    /******************************GET CURRENT TREE ********************/
+  //permet de definir le bon path 
+  QString path = QFileDialog::getSaveFileName(this, 
+					      "Enregistrer le fichier", 
+					      NULL , 
+						"All files *.* ;; TaskTree() ;;TaskTree *.tt" );
 
+  // sauvegarde réelle 
+   
+  // tasktreeTool->saveTree(path,*m_tasktree);
+    
+    
+}
 // void UserInterface::close(QWidget* q) {
 //   m_pictureManager->removePictureModifier((PictureModifier*) q);
 // }
-// void UserInterface::exit() {}
+void UserInterface::exit() {
+  
+}
 
 // void UserInterface::undo() {}
 // void UserInterface::redo() {}
@@ -188,26 +184,26 @@
 //   m_aboutQtAct->setEnabled(true);
 // }
 
-// void UserInterface::createActions() {
-//   createFileAction();
-//   createEditAction();
-//   createViewAction();
-//   createHelpAction();
-// }
+void UserInterface::createActions() {
+  createFileAction();
+  // createEditAction();
+  // createViewAction();
+  // createHelpAction();
+}
 
-// void UserInterface::createFileAction() {
-//   m_openAct = new QAction(tr("&Open..."), this);
-//   m_openAct->setShortcut(tr("Ctrl+O"));
-//   connect(m_openAct, SIGNAL(triggered()), this, SLOT(open()));
+void UserInterface::createFileAction() {
+  m_openAct = new QAction(tr("&Open..."), this);
+  m_openAct->setShortcut(tr("Ctrl+O"));
+  connect(m_openAct, SIGNAL(triggered()), this, SLOT(open()));
   
-//   m_saveAct = new QAction(tr("&Save..."), this);
-//   m_saveAct->setShortcut(tr("Ctrl+S"));
-//   connect(m_saveAct, SIGNAL(triggered()), this, SLOT(save()));
+  m_saveAct = new QAction(tr("&Save..."), this);
+  m_saveAct->setShortcut(tr("Ctrl+S"));
+  connect(m_saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
-//   m_exitAct = new QAction(tr("E&xit"), this);
-//   m_exitAct->setShortcut(tr("Ctrl+Q"));
-//   connect(m_exitAct, SIGNAL(triggered()), this, SLOT(exit()));
-// }
+  m_exitAct = new QAction(tr("E&xit"), this);
+  m_exitAct->setShortcut(tr("Ctrl+Q"));
+  connect(m_exitAct, SIGNAL(triggered()), this, SLOT(exit()));
+}
 
 // void UserInterface::createEditAction() {
 //   m_undoAct = new QAction(tr("&Undo"), this);
