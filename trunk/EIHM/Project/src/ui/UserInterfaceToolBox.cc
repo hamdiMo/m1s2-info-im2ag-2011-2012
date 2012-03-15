@@ -26,8 +26,8 @@
 
 
 // /** Methodes internes */
-// void UserInterface::createToolBoxDocks() {
-//   addDockWidget(Qt::LeftDockWidgetArea, m_affineOperationChooserDock = createAffineOperationChooserDock());
+void UserInterface::createToolBoxDocks() {
+  //   addDockWidget(Qt::LeftDockWidgetArea, m_affineOperationChooserDock = createAffineOperationChooserDock());
 //   addDockWidget(Qt::LeftDockWidgetArea, m_convolveOperationChooserDock = createConvolveOperationChooserDock());
 //   addDockWidget(Qt::LeftDockWidgetArea, m_algebricOperationChooserDock = createAlgebricOperationChooserDock());
 //   addDockWidget(Qt::LeftDockWidgetArea, m_colorConvertOperationChooserDock = createColorConvertOperationChooserDock());
@@ -45,7 +45,7 @@
 
 //   tabifyDockWidget(m_histogramDock, m_tracingManagerDock);
 //   tabifyDockWidget(m_histogramDock, m_previewerDock);
-// }
+}
 
 // void UserInterface::updateToolBoxDocks() {
 //   m_colorChooserDock->hide();

@@ -64,25 +64,25 @@ QMessageBox::about(this, tr("About TaskTree"), tr("Morigault Thierry,Yasin  Uyar
 
 
 /** Methodes internes */
-// void UserInterface::updateActions() {
-//   m_openAct->setEnabled(true);
-//   m_saveAct->setEnabled(true);
-//   m_exitAct->setEnabled(false);
+void UserInterface::updateActions() {
+  m_openAct->setEnabled(false);
+  m_saveAct->setEnabled(false);
+  m_exitAct->setEnabled(false);
   
-//   m_undoAct->setEnabled(false);
-//   m_redoAct->setEnabled(false);
-//   m_copy->setEnabled(true);
-//   m_cut->setEnabled(true);
-//   m_paste->setEnabled(true);
- 
-//   m_zoomInAct->setEnabled(true);
-//   m_zoomOutAct->setEnabled(true);
-//   m_normalSizeAct->setEnabled(true);
-//   m_fitToWindowAct->setEnabled(true);
-
-//   m_aboutAct->setEnabled(false);
-//   m_aboutQtAct->setEnabled(true);
-// }
+  m_undoAct->setEnabled(false);
+  m_redoAct->setEnabled(false);
+  m_copy->setEnabled(false);
+  m_cut->setEnabled(false);
+  m_paste->setEnabled(false);
+  
+  m_zoomInAct->setEnabled(false);
+  m_zoomOutAct->setEnabled(false);
+  m_normalSizeAct->setEnabled(false);
+  m_fitToWindowAct->setEnabled(false);
+  
+  m_aboutAct->setEnabled(true);
+  m_aboutQtAct->setEnabled(true);
+}
 
 void UserInterface::createActions() {
   createFileAction();

@@ -8,7 +8,6 @@
 // class PictureViewer;
 // class UserInterface;
 // class PictureArea;
-
 class TaskTreeModifier{ 
 public :
   /** Constructeurs et destructeur */

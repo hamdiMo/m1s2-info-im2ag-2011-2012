@@ -25,7 +25,8 @@
 // class TracingManager;
 // class PictureManager;
 // class TabWidget;
-
+class TaskTreeModifier;
+class TaskTreeViewer;
 
 class UserInterface : public QMainWindow { Q_OBJECT
 
@@ -86,10 +87,10 @@ private:
   // void convolveOperation(Matrix<double>*);
 
   void createActions();
-  // void updateActions();
+  void updateActions();
   void createMenuBar();
   // void createToolBars();
-  // void createToolBoxDocks();
+  void createToolBoxDocks();
   // TabWidget* createTabWidget();
   
   // QDockWidget* createDockWidget(QWidget* widget);

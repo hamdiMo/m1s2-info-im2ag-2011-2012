@@ -6,13 +6,13 @@
 #include <QPixmap>
 #include <QSize>
 #include <iostream>
-class PictureModifier;
+class TaskTreeModifier;
 
 class TaskTreeViewer : public QLabel{ Q_OBJECT
 
 public:
   /** Constructeurs et destructeurs */
-  TaskTreeViewer();
+  TaskTreeViewer(TaskTreeModifier*);
   ~TaskTreeViewer();
                
 //   /** Methodes */
@@ -36,7 +36,7 @@ public:
 //   double m_height_translation; 
 //   double m_scaleFactor;
 //   double m_scale;
-//   PictureModifier* m_pictureModifier;
+  TaskTreeModifier* m_taskTreeModifier;
 //   QImage m_qImage;
    
 };
