@@ -2,7 +2,7 @@
 #include "TaskTreeModifier.hh"
 
 
-TaskTreeViewer::TaskTreeViewer(TaskTreeModifier* tasktreemodifier) 
+TaskTreeViewer::TaskTreeViewer(TaskTreeModifier* tasktreemodifier) :
 m_taskTreeModifier(tasktreemodifier)
 { 
   // m_scale=1.0;
