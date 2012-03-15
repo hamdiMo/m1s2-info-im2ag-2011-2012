@@ -8,11 +8,11 @@
 UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   m_QApplication(qapplication){ 
   m_clipboard = clipboard;
-  // createActions();
-  //  m_pictureManager = new PictureManager(this);
+  createActions();
+  // m_pictureManager = new PictureManager(this);
   //m_viewTabWidget = createTabWidget();
   // createToolBoxDocks();
-  // createMenuBar();
+  createMenuBar();
   // createToolBars();
   //  setCentralWidget((QTabWidget*)m_viewTabWidget);
   setWindowTitle(tr("MyPhotoShop"));

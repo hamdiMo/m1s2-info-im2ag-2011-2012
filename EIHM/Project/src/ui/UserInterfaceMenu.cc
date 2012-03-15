@@ -5,21 +5,21 @@
 
 
 // /** Methodes internes */
-// void UserInterface::createMenuBar() {
-//   menuBar()->addMenu(createFileMenu());
-//   menuBar()->addMenu(createEditMenu());
+void UserInterface::createMenuBar() {
+  menuBar()->addMenu(createFileMenu());
+ //  menuBar()->addMenu(createEditMenu());
 //   menuBar()->addMenu(createViewMenu());
 //   menuBar()->addMenu(createHelpMenu());
-// }
+}
 
-// QMenu* UserInterface::createFileMenu() {
-//   m_fileMenu = new QMenu(tr("&File"), this);
-//   m_fileMenu->addAction(m_openAct);
-//   m_fileMenu->addAction(m_saveAct);
-//   m_fileMenu->addSeparator();
-//   m_fileMenu->addAction(m_exitAct);
-//   return m_fileMenu;
-// }
+QMenu* UserInterface::createFileMenu() {
+  m_fileMenu = new QMenu(tr("&File"), this);
+  m_fileMenu->addAction(m_openAct);
+  m_fileMenu->addAction(m_saveAct);
+  m_fileMenu->addSeparator();
+  m_fileMenu->addAction(m_exitAct);
+  return m_fileMenu;
+}
 
 // QMenu* UserInterface::createEditMenu() {
 //   m_editMenu = new QMenu(tr("&Edit"), this);
