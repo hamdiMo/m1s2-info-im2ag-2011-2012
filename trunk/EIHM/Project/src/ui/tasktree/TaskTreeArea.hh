@@ -1,5 +1,5 @@
-#ifndef _PICTURE_AREA_HH
-#define _PICTURE_AREA_HH
+#ifndef _TASKTREE_AREA_HH
+#define _TASKTREE_AREA_HH
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
@@ -9,10 +9,10 @@
 class UserInterface;
 
 
-class PictureArea: public QGraphicsView { Q_OBJECT
+class TaskTreeArea: public QGraphicsView { Q_OBJECT
 public: 
-  PictureArea(UserInterface*);
-  ~PictureArea();
+  TaskTreeArea(UserInterface*);
+  ~TaskTreeArea();
   // void refresh();
   // /**getters**/
   // PictureViewer* getPictureViewer();

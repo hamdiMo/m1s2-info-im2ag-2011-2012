@@ -1,5 +1,5 @@
-#ifndef _PICTURE_VIEWER_HH_
-#define _PICTURE_VIEWER_HH_
+#ifndef _TASKTREE_VIEWER_HH_
+#define _TASKTREE_VIEWER_HH_
 
 #include <QLabel>
 #include <QImage>
@@ -8,12 +8,12 @@
 #include <iostream>
 class PictureModifier;
 
-class PictureViewer : public QLabel{ Q_OBJECT
+class TaskTreeViewer : public QLabel{ Q_OBJECT
 
 public:
   /** Constructeurs et destructeurs */
-  PictureViewer();
-  ~PictureViewer();
+  TaskTreeViewer();
+  ~TaskTreeViewer();
                
 //   /** Methodes */
 //   void scaleImage(double);

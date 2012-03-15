@@ -1,8 +1,8 @@
-#include "PictureViewer.hh"
+#include "TaskTreeViewer.hh"
 //#include "PictureModifier.hh"
 
 
-PictureViewer::PictureViewer() 
+TaskTreeViewer::TaskTreeViewer() 
   // m_pictureModifier(pictureModifier)
 { 
   // m_scale=1.0;
@@ -13,25 +13,25 @@ PictureViewer::PictureViewer()
   // refresh();
 } 
 
-PictureViewer::~PictureViewer() {}
+TaskTreeViewer::~TaskTreeViewer() {}
 
 // /** Methodes */
-// void PictureViewer::scaleImage(double scale){
+// void TaskTreeViewer::scaleImage(double scale){
 //   m_qImage=m_qImage.scaled((int)m_qImage.width()*scale,(int)m_qImage.height()*scale);
 //   resize(m_qImage.width(), m_qImage.height());
 //   setPixmap(QPixmap::fromImage((const QImage&)(m_qImage)));
     
 // }
 
-// QImage PictureViewer::getImage(){
+// QImage TaskTreeViewer::getImage(){
 //   return m_qImage;
 // }
 
 
-// double PictureViewer::getScale(){
+// double TaskTreeViewer::getScale(){
 //   return m_scale;
 // }
-// void PictureViewer::zoomIn() { 
+// void TaskTreeViewer::zoomIn() { 
 //   double scale=m_scale+m_scaleFactor;
 //   if((m_qImage.width()*m_scaleFactor)<100000
 //      &&(m_qImage.height()*m_scaleFactor)<10000)
@@ -40,15 +40,15 @@ PictureViewer::~PictureViewer() {}
 //   m_height_translation=m_pictureModifier->getImage()->height()*m_scale;
 // } 
 
-// double PictureViewer::getWidthTranslation(){
+// double TaskTreeViewer::getWidthTranslation(){
 //   return m_width_translation;
 // }
 
-// double PictureViewer::getHeightTranslation(){
+// double TaskTreeViewer::getHeightTranslation(){
 //   return m_height_translation;
 // }
 
-// double PictureViewer::zoomOut() { 
+// double TaskTreeViewer::zoomOut() { 
 //   double scale=m_scale-m_scaleFactor;
 //   if((m_qImage.width()*m_scaleFactor)>10 && 
 //      (m_qImage.height()*m_scaleFactor)>10)
@@ -56,12 +56,12 @@ PictureViewer::~PictureViewer() {}
 //   return m_scale;
 // }
 
-// double PictureViewer::normalSize(){
+// double TaskTreeViewer::normalSize(){
 //   double t_scale=m_scale;
 //   m_scale=1.0;
 //   return 1.0/t_scale;
 // }
-// double PictureViewer::fitToWindow(QSize size){
+// double TaskTreeViewer::fitToWindow(QSize size){
 //   float scaleW=(float)((float)m_pictureModifier->getImage()->width()/((float)size.width()));
 //   float scaleH=(float)((float)m_pictureModifier->getImage()->height()/((float)size.height())); 
 //   if(scaleH>scaleW)
@@ -72,14 +72,14 @@ PictureViewer::~PictureViewer() {}
 // }
 
 
-// void PictureViewer::refresh() {
+// void TaskTreeViewer::refresh() {
 //   refreshData();
 //   scaleImage(m_scale);
 
 // }
 
 
-// void PictureViewer::refreshData(){
+// void TaskTreeViewer::refreshData(){
 //   m_qImage=m_pictureModifier->getImage()->scaled(m_pictureModifier->getImage()->width(),m_pictureModifier->getImage()->height());
 //   resize(m_pictureModifier->getImage()->width(),m_pictureModifier->getImage()->height());
 // }

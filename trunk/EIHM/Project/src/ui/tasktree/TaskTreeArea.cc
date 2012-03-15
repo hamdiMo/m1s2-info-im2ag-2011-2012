@@ -1,6 +1,6 @@
-#include "PictureArea.hh"
+#include "TaskTreeArea.hh"
 
-PictureArea::PictureArea(UserInterface* userinterface){
+TaskTreeArea::TaskTreeArea(UserInterface* userinterface){
   // m_userInterface = userinterface;
   // m_pictureModifier=p;
   // m_Scene=new QGraphicsScene(this);
@@ -23,11 +23,11 @@ PictureArea::PictureArea(UserInterface* userinterface){
   // show();
 }
 
-PictureArea::~PictureArea(){}
+TaskTreeArea::~TaskTreeArea(){}
 
 /** Puclic Methodes**/
 
-// void PictureArea::refresh(){
+// void TaskTreeArea::refresh(){
 //   m_pictureViewer->refresh();
 //   this->repaint();
 //   setSceneRect ( (qreal) 0, (qreal) 0, (qreal) m_pictureViewer->width(), (qreal) m_pictureViewer->height() );
@@ -35,44 +35,44 @@ PictureArea::~PictureArea(){}
 // } 
 
 // /** getters **/
-// PictureViewer* PictureArea::getPictureViewer(){
+// PictureViewer* TaskTreeArea::getPictureViewer(){
 //   return m_pictureViewer;
 // }
 
 // /** Setter**/
 
-// void PictureArea::enableSelection(){
+// void TaskTreeArea::enableSelection(){
 //   m_selectionTool->show();
 //   m_indSelect=true;
 // }
 
-// void PictureArea::disableSelection(){
+// void TaskTreeArea::disableSelection(){
 //   m_selectionTool->hide();
 //   m_indSelect=false;
 // }
 
-// void PictureArea::enableMove(){
+// void TaskTreeArea::enableMove(){
 //   setCursor(Qt::SizeAllCursor);
 //   m_indMove=true;
 // }
 
-// void PictureArea::disableMove(){
+// void TaskTreeArea::disableMove(){
 //   setCursor(Qt::ArrowCursor);
 //   m_indMove=false;
 // }
 
-// void PictureArea::fitToWindow(){
+// void TaskTreeArea::fitToWindow(){
 //   if (!m_fit){
 //     refreshCoordinate(m_pictureViewer->fitToWindow(parentWidget()->size()));
 //     m_fit=true;
 //   }
 // }
-// void PictureArea::normalSize(){
+// void TaskTreeArea::normalSize(){
 //   m_fit=false;
 //   refreshCoordinate(m_pictureViewer->normalSize());
 // }
 
-// void PictureArea::zoomIn(){
+// void TaskTreeArea::zoomIn(){
 //   m_fit=false;
 //   down->setX(down->x()/m_pictureViewer->getScale());
 //   down->setY(down->y()/m_pictureViewer->getScale());
@@ -86,7 +86,7 @@ PictureArea::~PictureArea(){}
 //   setSelection();
 //   refresh();
 // }
-// void PictureArea::zoomOut(){
+// void TaskTreeArea::zoomOut(){
 //   m_fit=false;
   
 //   down->setX(down->x()/m_pictureViewer->getScale());
@@ -104,7 +104,7 @@ PictureArea::~PictureArea(){}
 
 // }
 
-// void PictureArea::copy(){
+// void TaskTreeArea::copy(){
 //   CopyOperation* copy=new CopyOperation();
 //   QImage image;
 //   std::cout<<m_pictureViewer->getScale()<<std::endl;
@@ -119,12 +119,12 @@ PictureArea::~PictureArea(){}
   
 // }
 
-// void PictureArea::paste(){
+// void TaskTreeArea::paste(){
 //   m_userInterface->getTracingManager()->paste();
 
 // }
 // #include <iostream>
-// void PictureArea::cut(){
+// void TaskTreeArea::cut(){
 //   CutOperation* cut =new CutOperation();
 //   QImage image;
 //   if(up->x()<down->x()&&up->y()<down->y())
@@ -141,7 +141,7 @@ PictureArea::~PictureArea(){}
 
 
 
-// void PictureArea::crop(){
+// void TaskTreeArea::crop(){
 //   CropOperation* crop =new CropOperation;
 //   QImage image;
 //   if(up->x()<down->x()&&up->y()<down->y())
@@ -167,7 +167,7 @@ PictureArea::~PictureArea(){}
 
 
 // /** Private Methodes **/
-// void PictureArea::setDownCoordinate(QMouseEvent* event){
+// void TaskTreeArea::setDownCoordinate(QMouseEvent* event){
 //   down->setX(event->x());
 //   down->setY(event->y());
 //   if(down->x()>m_pictureViewer->width())
@@ -180,7 +180,7 @@ PictureArea::~PictureArea(){}
 //     down->setY(0);
 // }
 
-// void PictureArea::setDownCoordinate(double x , double y){
+// void TaskTreeArea::setDownCoordinate(double x , double y){
 //   down->setX(x);
 //   down->setY(y);
 //   if(double(down->x())>m_pictureViewer->width())
@@ -193,7 +193,7 @@ PictureArea::~PictureArea(){}
 //     down->setY(0);
 // }
 
-// void PictureArea::setUpCoordinate(double x , double y){
+// void TaskTreeArea::setUpCoordinate(double x , double y){
 //   up->setX(x);
 //   up->setY(y);
 //   if(up->x()>m_pictureViewer->width())
@@ -208,7 +208,7 @@ PictureArea::~PictureArea(){}
 // }
 
 
-// void PictureArea::setSelection(){
+// void TaskTreeArea::setSelection(){
 //   if(down->x()<up->x()&&down->y()<up->y())
 //     m_selectionTool->setRect(down->x(),down->y(),(up->x()-down->x()),(up->y()-down->y()));
 //   else if(down->x()<up->x())
@@ -220,7 +220,7 @@ PictureArea::~PictureArea(){}
   
 // }
 
-// void PictureArea::refreshCoordinate(double resize){
+// void TaskTreeArea::refreshCoordinate(double resize){
 //   refresh();
 //   this->resize(m_pictureViewer->width(),m_pictureViewer->height());
 //   setDownCoordinate(int(double(down->x())*resize),int(double(down->y())*resize));
@@ -234,21 +234,21 @@ PictureArea::~PictureArea(){}
 
 
 
-// void PictureArea::keyPressEvent ( QKeyEvent * event ){
+// void TaskTreeArea::keyPressEvent ( QKeyEvent * event ){
 //   if (event->modifiers()==Qt::ControlModifier)
 //     ctrl= true;
 // }
 
-// void PictureArea::keyReleaseEvent ( QKeyEvent * event ) {
+// void TaskTreeArea::keyReleaseEvent ( QKeyEvent * event ) {
 //   ctrl= false;
 // }
 
 
-// void PictureArea::mouseDoubleClickEvent ( QMouseEvent * event ){
+// void TaskTreeArea::mouseDoubleClickEvent ( QMouseEvent * event ){
 //   m_selectionTool->hide();
 // }
 
-// void PictureArea::mouseMoveEvent ( QMouseEvent * event ){
+// void TaskTreeArea::mouseMoveEvent ( QMouseEvent * event ){
   
 //   if(event->x()<m_pictureViewer->width()&&event->y()<m_pictureViewer->height()){
 //     /** print the pixel info**/
@@ -293,7 +293,7 @@ PictureArea::~PictureArea(){}
  
 // }
 
-// void PictureArea::mousePressEvent ( QMouseEvent * event ){
+// void TaskTreeArea::mousePressEvent ( QMouseEvent * event ){
 //   down->setY(event->y());
 //   down->setX(event->x());
   
@@ -309,7 +309,7 @@ PictureArea::~PictureArea(){}
 //     cliked=true;
 //   }
 // }
-// void PictureArea::mouseReleaseEvent ( QMouseEvent * event ){
+// void TaskTreeArea::mouseReleaseEvent ( QMouseEvent * event ){
 //   if(m_indSelect){
 //     setCursor(Qt::ArrowCursor);
 //     cliked=false;
@@ -318,7 +318,7 @@ PictureArea::~PictureArea(){}
 //     m_userInterface->getTracingManager()->move(down->x()-up->x(),down->y()-up->y());
 // }
 
-// void PictureArea::wheelEvent ( QWheelEvent * event ) {
+// void TaskTreeArea::wheelEvent ( QWheelEvent * event ) {
 //   QGraphicsView::wheelEvent(event); 
 //   int numDegrees = event->delta() / 8;
 //   if(ctrl==true){  
