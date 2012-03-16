@@ -12,7 +12,7 @@ abstract class SubdivisionAlgo {
     protected boolean m_ouvert;
 
     public SubdivisionAlgo(boolean ouvert) {
-	m_ouvert = ouvert;
+        m_ouvert = ouvert;
     }
 
     public abstract Point calcul_2i_0(int i, Point[] pts);
@@ -20,24 +20,24 @@ abstract class SubdivisionAlgo {
     public abstract boolean peutCalculer(int i, Point[] pts);
 
     public Point[] iteration(int n, Point[] pts) {
-	if (n > 0) {
-	    Point[] tmp = iteration(n-1, pts);
-	    Point[] result = new Point[tmp.length * 2];
-	    for (int i = 0; i < tmp.length; i++) {
-		if (peutCalculer(i, tmp)) {
-		    result[2*i] = calcul_2i_0(i, tmp);
-		    result[2*i+1] = calcul_2i_1(i, tmp);
-		}
-		else result[2*i] = result[2*i+1] = null;
-	    }
-	    return result;
-	}
-	return pts;
+        if (n > 0) {
+            Point[] tmp = iteration(n-1, pts);
+            Point[] result = new Point[tmp.length * 2];
+            for (int i = 0; i < tmp.length; i++) {
+                if (peutCalculer(i, tmp)) {
+                    result[2*i] = calcul_2i_0(i, tmp);
+                    result[2*i+1] = calcul_2i_1(i, tmp);
+                }
+                else result[2*i] = result[2*i+1] = null;
+            }
+            return result;
+        }
+        return pts;
     }
     
     public Point combBar(Point p0, Point p1, double coef) {
-        return new Point((int)(p0.getX() * coef + p1.getX() * (1. - coef)), 
-                         (int)(p0.getY() * coef + p1.getY() * (1. - coef)));
+        return new Point((int)(p0.getX() * coef + p1.getX() * (1. - coef) + 0.5), 
+                         (int)(p0.getY() * coef + p1.getY() * (1. - coef) + 0.5));
     }
 }
 
@@ -46,30 +46,32 @@ class CornerCutting extends SubdivisionAlgo {
     private double m_a, m_b;
 
     public CornerCutting(boolean ouvert) {
-	super(ouvert);
-	Scanner m_scanner = new Scanner(System.in);
+        super(ouvert);
+        Scanner m_scanner = new Scanner(System.in);
         System.out.print("alpha ? "); 
-	m_a = m_scanner.nextDouble();
+        m_a = m_scanner.nextDouble();
         System.out.print("beta ? "); 
-	m_b = m_scanner.nextDouble();
+        m_b = m_scanner.nextDouble();
     }
 
     public CornerCutting(boolean ouvert, double a, double b) {
-	super(ouvert);
-	m_a = a;
-	m_b = b;
+        super(ouvert);
+        m_a = a;
+        m_b = b;
     }
 
     public boolean peutCalculer(int i, Point[] pts) {
-	return (!m_ouvert || (i+1 < pts.length)); 
+        return ((!m_ouvert) || (i+1 < pts.length))
+            && pts[i] != null
+            && pts[(i+1)%pts.length] != null;
     }
 
     public Point calcul_2i_0(int i, Point[] pts) {
-	return combBar(pts[(i+1)%pts.length], pts[i], m_a);
+        return combBar(pts[(i+1)%pts.length], pts[i], m_a);
     }
 
     public Point calcul_2i_1(int i, Point[] pts) {
-	return combBar(pts[(i+1)%pts.length], pts[i], m_b);
+        return combBar(pts[(i+1)%pts.length], pts[i], m_b);
     }
 }
 
@@ -84,29 +86,33 @@ class FourPointScheme extends SubdivisionAlgo {
     private double m_eps;
 
     public FourPointScheme(boolean ouvert) {
-	super(ouvert);
-	Scanner m_scanner = new Scanner(System.in);
+        super(ouvert);
+        Scanner m_scanner = new Scanner(System.in);
         System.out.print("epsilon ? "); 
-	m_eps = m_scanner.nextDouble();
+        m_eps = m_scanner.nextDouble();
     }
 
     public FourPointScheme(boolean ouvert, double eps) {
-	super(ouvert);
-	m_eps = eps;
+        super(ouvert);
+        m_eps = eps;
     }
 
     public boolean peutCalculer(int i, Point[] pts) {
-	return (!m_ouvert) || ((i-1 >= 0) && (i+2 < pts.length)); 
+        return ((!m_ouvert) || ((i-1 >= 0) && (i+2 < pts.length))) 
+            && pts[(i-1+pts.length)%pts.length] != null
+            && pts[i] != null
+            && pts[(i+1)%pts.length] != null
+            && pts[(i+2)%pts.length] != null;
     }
 
     public Point calcul_2i_0(int i, Point[] pts) {
-	return pts[i];
+        return pts[i];
     }
 
     public Point calcul_2i_1(int i, Point[] pts) {
-	Point pA = combBar(pts[(i-1+pts.length)%pts.length], pts[(i+2)%pts.length], 0.5);
-	Point pB = combBar(pts[i], pts[(i+1)%pts.length], 0.5);
-	return combBar(pA, pB, -m_eps);
+        Point pA = combBar(pts[(i-1+pts.length)%pts.length], pts[(i+2)%pts.length], 0.5);
+        Point pB = combBar(pts[i], pts[(i+1)%pts.length], 0.5);
+        return combBar(pA, pB, -m_eps);
     }
 
 }
@@ -122,56 +128,63 @@ class Subdivision extends JFrame {
 
     public Subdivision() {
         super("Subdivision");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(512, 512));
-        getContentPane().add(panel, BorderLayout.CENTER);
         
         Scanner m_scanner = new Scanner(System.in);
-	int rep = 0;
-        System.out.print("Nombre de point du polygone ? "); m_nbPoints = m_scanner.nextInt();
+        int rep = 0;
+        System.out.print("Nombre de point du polygone ? ");
+        m_nbPoints = m_scanner.nextInt();
 
-	System.out.print("Polygone ouvert ? [1 = Non ; 2 = Oui]"); rep = m_scanner.nextInt();
-	if (rep == 1) m_ouvert = false;
-	else if (rep == 2) m_ouvert = true;
-	else System.out.println("Choix Inexistant");
+        System.out.print("Polygone ouvert [1 = Non ; 2 = Oui] ? ");
+        rep = m_scanner.nextInt();
+        if (rep == 1) m_ouvert = false;
+        else if (rep == 2) m_ouvert = true;
+        else System.out.println("Choix Inexistant");
 
-	System.out.print("Methode ? [1 = Chaikin ; 2 = CornerCutting ; 3 = FourPointScheme]");
-	rep = m_scanner.nextInt();
-	if (rep == 1) m_algo = new Chaikin(m_ouvert);
-	else if (rep == 2) m_algo = new CornerCutting(m_ouvert);
-	else if (rep == 3) m_algo = new FourPointScheme(m_ouvert);
-	else System.out.println("Algo Inexistant");
+        System.out.print("Methode [1 = Chaikin ; 2 = CornerCutting ; 3 = FourPointScheme] ? ");
+        rep = m_scanner.nextInt();
+        if (rep == 1) m_algo = new Chaikin(m_ouvert);
+        else if (rep == 2) m_algo = new CornerCutting(m_ouvert);
+        else if (rep == 3) m_algo = new FourPointScheme(m_ouvert);
+        else System.out.println("Algo Inexistant");
 
-	m_iteration = 0;
-	m_pointCourant = 0;
-	m_points = new Point[m_nbPoints];
+        m_iteration = 0;
+        m_pointCourant = 0;
+        m_points = new Point[m_nbPoints];
         	
+        JPanel panel = new JPanel();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.print("Largeur de la fenetre ? ");
+        int w = m_scanner.nextInt();
+        System.out.print("Hauteur de la fenetre ? ");
+        int h = m_scanner.nextInt();
+        panel.setPreferredSize(new Dimension(w, h));
         panel.addMouseListener(new MouseAdapter() { public void mouseClicked(MouseEvent e) { click(e.getPoint()); } });
+        getContentPane().add(panel, BorderLayout.CENTER);
         pack();
         setVisible(true);
         m_graphics = panel.getGraphics();
     }
 
     public void click(Point p) {
-	if (m_pointCourant < m_nbPoints) {
+        if (m_pointCourant < m_nbPoints) {
             m_points[m_pointCourant] = p;
             m_pointCourant++;
             afficherPoints(p);
         }
-	else {
-	    m_iteration++;
-	    tracerPolygone();
-	}
+        else {
+            m_iteration++;
+            System.out.print("Calcul de l'iteration n°" + m_iteration + " ... ");
+            tracerPolygone();
+            System.out.println("OK");
+        }
     }
     
     public void tracerPolygone() {
-	Point[] polygone = m_algo.iteration(m_iteration, m_points);
-	for (int pts = 0; pts < polygone.length; pts++)
-	    if (m_ouvert && pts+1 < polygone.length && polygone[pts] != null && polygone[pts+1] != null)
-		drawLine(polygone[pts], polygone[pts+1], new Color(255,0,0));
-	    else
-		drawLine(polygone[pts], polygone[(pts+1)%polygone.length], new Color(255,0,0));
+        Point[] polygone = m_algo.iteration(m_iteration, m_points);
+        for (int pts = 0; pts < polygone.length; pts++)
+            if (!m_ouvert) drawLine(polygone[pts], polygone[(pts+1)%polygone.length], new Color(255,0,0));
+            else if (pts+1 < polygone.length && polygone[pts] != null && polygone[pts+1] != null)
+                drawLine(polygone[pts], polygone[pts+1], new Color(255,0,0));
     }
 	
     private void afficherPoints(Point p) {
