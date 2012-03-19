@@ -13,8 +13,8 @@ public class DrawingArea extends JPanel {
     private enum State { ADD };
 
     /** Attributs */
+    private int m_index;
     private ArrayList<Point> m_points;
-    private 
 
     /** Constructeurs */
     public DrawingArea() {
@@ -29,7 +29,9 @@ public class DrawingArea extends JPanel {
 
     public void newLine() {}
 
-    public void clickOn(Point p) {}
+    public void clickOn(Point p) {
+	m_curves[m_index].addPoint();
+    }
 
     public void paintComponent(Graphics g) {
 	drawPoint(m_points[0], g);
