@@ -55,7 +55,10 @@ public class ProgrammeServlet extends HttpServlet {
 	    out.println("<p>");
 	    out.println("Spectacles : <br/>");
 	    for(int i=0; i<saison.getSpectacles().size(); i++) {
-		out.println(saison.getSpectacles().get(i) + "<br/>");
+		Spectacle s = saison.getSpectacles().get(i);
+		out.println("<a href=\"RepresentationServlet?numS="+s.getNumS()+"\">");
+		out.println(s.toString());
+		out.println("</a>" + "<br>");
 	    }
 	    out.println("</p>");
 	}
