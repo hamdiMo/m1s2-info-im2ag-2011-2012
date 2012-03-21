@@ -19,8 +19,18 @@
 </servlet>
 
 - <servlet> 
+<servlet-name>RepresentationServlet</servlet-name> 
+<servlet-class>RepresentationServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
 <servlet-name>NouvelleRepresentationServlet</servlet-name> 
 <servlet-class>NouvelleRepresentationServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
+<servlet-name>PlacesDisponiblesServlet</servlet-name> 
+<servlet-class>PlacesDisponiblesServlet</servlet-class> 
 </servlet>
 
 
@@ -34,6 +44,16 @@
 - <servlet-mapping> 
 <servlet-name>NouvelleRepresentationServlet</servlet-name> 
 <url-pattern>/servlet/NouvelleRepresentationServlet</url-pattern> 
+</servlet-mapping>
+
+- <servlet-mapping> 
+<servlet-name>RepresentationServlet</servlet-name> 
+<url-pattern>/servlet/RepresentationServlet</url-pattern> 
+</servlet-mapping>
+
+- <servlet-mapping> 
+<servlet-name>PlacesDisponiblesServlet</servlet-name> 
+<url-pattern>/servlet/PlacesDisponiblesServlet</url-pattern> 
 </servlet-mapping>
 
 
