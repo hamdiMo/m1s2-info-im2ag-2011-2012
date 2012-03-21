@@ -1,0 +1,609 @@
+14 mars 2012 14:21:50 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 14:21:50 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-8080
+14 mars 2012 14:21:50 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 879 ms
+14 mars 2012 14:21:50 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 14:21:50 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 14:21:51 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-8080
+14 mars 2012 14:21:51 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 14:21:51 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/69  config=null
+14 mars 2012 14:21:51 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 668 ms
+14 mars 2012 14:23:46 org.apache.catalina.core.StandardServer await
+ATTENTION: StandardServer.await: Invalid command 'GET / HTTP/1.1' received
+14 mars 2012 14:23:48 org.apache.catalina.core.StandardServer await
+ATTENTION: StandardServer.await: Invalid command 'GET / HTTP/1.1' received
+14 mars 2012 14:23:50 org.apache.catalina.core.StandardServer await
+ATTENTION: StandardServer.await: Invalid command 'GET / HTTP/1.1' received
+14 mars 2012 14:24:00 org.apache.catalina.core.StandardServer await
+ATTENTION: StandardServer.await: Invalid command 'GET / HTTP/1.1' received
+14 mars 2012 14:24:08 org.apache.catalina.core.StandardServer await
+ATTENTION: StandardServer.await: Invalid command 'GET / HTTP/1.1' received
+14 mars 2012 14:26:00 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-8080
+14 mars 2012 14:26:01 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 14:26:02 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-8080
+14 mars 2012 14:26:11 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 14:26:11 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 14:26:11 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 408 ms
+14 mars 2012 14:26:11 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 14:26:11 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 14:26:11 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 14:26:11 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 14:26:11 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/19  config=null
+14 mars 2012 14:26:11 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 393 ms
+14 mars 2012 14:50:52 org.apache.catalina.startup.HostConfig checkResources
+INFO: Repli (undeploy) de l'application web ayant pour chemin de contexte 
+14 mars 2012 14:50:52 org.apache.catalina.session.StandardManager doUnload
+GRAVE: "IOException" lors de la sauvegarde de sessions persistantes: java.io.FileNotFoundException: /home/j/joudrieh/Documents/Cours/M1/S2/IBD/Project/apache-tomcat-6.0.14/work/Catalina/localhost/_/SESSIONS.ser (No such file or directory)
+java.io.FileNotFoundException: /home/j/joudrieh/Documents/Cours/M1/S2/IBD/Project/apache-tomcat-6.0.14/work/Catalina/localhost/_/SESSIONS.ser (No such file or directory)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:194)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:84)
+	at org.apache.catalina.session.StandardManager.doUnload(StandardManager.java:489)
+	at org.apache.catalina.session.StandardManager.unload(StandardManager.java:463)
+	at org.apache.catalina.session.StandardManager.stop(StandardManager.java:667)
+	at org.apache.catalina.core.StandardContext.stop(StandardContext.java:4499)
+	at org.apache.catalina.core.ContainerBase.removeChild(ContainerBase.java:924)
+	at org.apache.catalina.startup.HostConfig.checkResources(HostConfig.java:1035)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1203)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:293)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1337)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1601)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1610)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1590)
+	at java.lang.Thread.run(Thread.java:662)
+14 mars 2012 14:50:52 org.apache.catalina.session.StandardManager stop
+GRAVE: Exception au déchargement des sessions vers le stockage persistant (persistent storage)
+java.io.FileNotFoundException: /home/j/joudrieh/Documents/Cours/M1/S2/IBD/Project/apache-tomcat-6.0.14/work/Catalina/localhost/_/SESSIONS.ser (No such file or directory)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:194)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:84)
+	at org.apache.catalina.session.StandardManager.doUnload(StandardManager.java:489)
+	at org.apache.catalina.session.StandardManager.unload(StandardManager.java:463)
+	at org.apache.catalina.session.StandardManager.stop(StandardManager.java:667)
+	at org.apache.catalina.core.StandardContext.stop(StandardContext.java:4499)
+	at org.apache.catalina.core.ContainerBase.removeChild(ContainerBase.java:924)
+	at org.apache.catalina.startup.HostConfig.checkResources(HostConfig.java:1035)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1203)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:293)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1337)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1601)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1610)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1590)
+	at java.lang.Thread.run(Thread.java:662)
+14 mars 2012 15:00:12 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:00:13 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 15:00:13 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:00:45 org.apache.catalina.startup.Catalina stopServer
+GRAVE: Catalina.stop: 
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:351)
+	at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:213)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:200)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:366)
+	at java.net.Socket.connect(Socket.java:529)
+	at java.net.Socket.connect(Socket.java:478)
+	at java.net.Socket.<init>(Socket.java:375)
+	at java.net.Socket.<init>(Socket.java:189)
+	at org.apache.catalina.startup.Catalina.stopServer(Catalina.java:409)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.stopServer(Bootstrap.java:337)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:415)
+14 mars 2012 15:00:57 org.apache.catalina.startup.Catalina stopServer
+GRAVE: Catalina.stop: 
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:351)
+	at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:213)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:200)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:366)
+	at java.net.Socket.connect(Socket.java:529)
+	at java.net.Socket.connect(Socket.java:478)
+	at java.net.Socket.<init>(Socket.java:375)
+	at java.net.Socket.<init>(Socket.java:189)
+	at org.apache.catalina.startup.Catalina.stopServer(Catalina.java:409)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.stopServer(Bootstrap.java:337)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:415)
+14 mars 2012 15:05:29 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 15:05:29 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:05:29 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 490 ms
+14 mars 2012 15:05:29 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 15:05:29 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 15:05:29 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:05:29 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 15:05:29 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/85  config=null
+14 mars 2012 15:05:29 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 485 ms
+14 mars 2012 15:05:42 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:05:43 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 15:05:43 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:06:17 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 15:06:17 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:06:17 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 407 ms
+14 mars 2012 15:06:17 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 15:06:17 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 15:06:18 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:06:18 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 15:06:18 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/19  config=null
+14 mars 2012 15:06:18 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 383 ms
+14 mars 2012 15:06:24 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:06:25 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 15:06:25 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:26 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 15:07:26 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:26 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 419 ms
+14 mars 2012 15:07:27 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 15:07:27 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 15:07:27 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:27 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 15:07:27 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=1/78  config=null
+14 mars 2012 15:07:27 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 470 ms
+14 mars 2012 15:07:34 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:35 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 15:07:35 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:42 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 15:07:42 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:42 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 408 ms
+14 mars 2012 15:07:42 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 15:07:42 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 15:07:42 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 15:07:43 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 15:07:43 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/19  config=null
+14 mars 2012 15:07:43 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 371 ms
+14 mars 2012 16:18:01 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:18:02 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 16:18:02 org.apache.coyote.http11.Http11Protocol init
+GRAVE: Erreur à l'initialisation du point de contact
+java.net.BindException: Address already in use:9083
+	at org.apache.tomcat.util.net.JIoEndpoint.init(JIoEndpoint.java:501)
+	at org.apache.coyote.http11.Http11Protocol.init(Http11Protocol.java:177)
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1059)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 16:18:02 org.apache.catalina.startup.Catalina load
+GRAVE: Catalina.start
+LifecycleException:  L'initialisation du gestionnaire de protocole a échoué: java.net.BindException: Address already in use:9083
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1061)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 16:18:02 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 469 ms
+14 mars 2012 16:18:02 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 16:18:02 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 16:18:02 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 16:18:02 org.apache.coyote.http11.Http11Protocol start
+GRAVE: Erreur au démarrage du point de contact
+java.net.BindException: Address already in use:9083
+	at org.apache.tomcat.util.net.JIoEndpoint.init(JIoEndpoint.java:501)
+	at org.apache.tomcat.util.net.JIoEndpoint.start(JIoEndpoint.java:515)
+	at org.apache.coyote.http11.Http11Protocol.start(Http11Protocol.java:204)
+	at org.apache.catalina.connector.Connector.start(Connector.java:1132)
+	at org.apache.catalina.core.StandardService.start(StandardService.java:531)
+	at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:566)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 16:18:02 org.apache.catalina.startup.Catalina start
+GRAVE: Catalina.start: 
+LifecycleException:  service.getName(): "Catalina";  Le démarrage du gestionnaire de protocole a échoué: java.net.BindException: Address already in use:9083
+	at org.apache.catalina.connector.Connector.start(Connector.java:1139)
+	at org.apache.catalina.core.StandardService.start(StandardService.java:531)
+	at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:566)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 16:18:02 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:18:02 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 351 ms
+14 mars 2012 16:44:24 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 16:44:24 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:44:24 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 447 ms
+14 mars 2012 16:44:25 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 16:44:25 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 16:44:25 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:44:25 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 16:44:25 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/19  config=null
+14 mars 2012 16:44:25 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 416 ms
+14 mars 2012 16:44:25 org.apache.catalina.core.StandardServer await
+GRAVE: StandardServer.await: create[8005]: 
+java.net.BindException: Address already in use
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:383)
+	at java.net.ServerSocket.bind(ServerSocket.java:328)
+	at java.net.ServerSocket.<init>(ServerSocket.java:194)
+	at org.apache.catalina.core.StandardServer.await(StandardServer.java:373)
+	at org.apache.catalina.startup.Catalina.await(Catalina.java:630)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:590)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 16:44:25 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:44:26 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 16:44:26 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:48:51 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:48:51 org.apache.catalina.connector.Connector pause
+GRAVE: La suspension du gestionnaire de protocole a échouée
+java.lang.NullPointerException
+	at org.apache.jk.server.JkMain.pause(JkMain.java:679)
+	at org.apache.jk.server.JkCoyoteHandler.pause(JkCoyoteHandler.java:153)
+	at org.apache.catalina.connector.Connector.pause(Connector.java:1074)
+	at org.apache.catalina.core.StandardService.stop(StandardService.java:563)
+	at org.apache.catalina.core.StandardServer.stop(StandardServer.java:744)
+	at org.apache.catalina.startup.Catalina.stop(Catalina.java:616)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:591)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 16:48:52 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 16:48:52 org.apache.catalina.connector.MapperListener destroy
+ATTENTION: Error unregistering MBeanServerDelegate
+java.lang.NullPointerException
+	at org.apache.catalina.connector.MapperListener.destroy(MapperListener.java:162)
+	at org.apache.catalina.connector.Connector.stop(Connector.java:1180)
+	at org.apache.catalina.core.StandardService.stop(StandardService.java:593)
+	at org.apache.catalina.core.StandardServer.stop(StandardServer.java:744)
+	at org.apache.catalina.startup.Catalina.stop(Catalina.java:616)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:591)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 16:48:52 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:48:52 org.apache.catalina.connector.Connector stop
+GRAVE: Le connecteur Coyote n'a pas été démarré
+14 mars 2012 16:49:10 org.apache.catalina.startup.Catalina stopServer
+GRAVE: Catalina.stop: 
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:351)
+	at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:213)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:200)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:366)
+	at java.net.Socket.connect(Socket.java:529)
+	at java.net.Socket.connect(Socket.java:478)
+	at java.net.Socket.<init>(Socket.java:375)
+	at java.net.Socket.<init>(Socket.java:189)
+	at org.apache.catalina.startup.Catalina.stopServer(Catalina.java:409)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.stopServer(Bootstrap.java:337)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:415)
+14 mars 2012 16:49:11 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 16:49:11 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:49:11 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 406 ms
+14 mars 2012 16:49:11 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 16:49:11 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 16:49:11 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 16:49:12 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 16:49:12 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/47  config=null
+14 mars 2012 16:49:12 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 467 ms
+14 mars 2012 17:50:55 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:50:56 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 17:50:56 org.apache.coyote.http11.Http11Protocol init
+GRAVE: Erreur à l'initialisation du point de contact
+java.net.BindException: Address already in use:9083
+	at org.apache.tomcat.util.net.JIoEndpoint.init(JIoEndpoint.java:501)
+	at org.apache.coyote.http11.Http11Protocol.init(Http11Protocol.java:177)
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1059)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 17:50:56 org.apache.catalina.startup.Catalina load
+GRAVE: Catalina.start
+LifecycleException:  L'initialisation du gestionnaire de protocole a échoué: java.net.BindException: Address already in use:9083
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1061)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 17:50:56 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 509 ms
+14 mars 2012 17:50:56 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 17:50:56 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 17:50:56 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 17:50:56 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:50:56 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:50:57 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 17:50:57 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/80  config=null
+14 mars 2012 17:50:57 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 491 ms
+14 mars 2012 17:51:12 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:13 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 17:51:13 org.apache.coyote.http11.Http11Protocol init
+GRAVE: Erreur à l'initialisation du point de contact
+java.net.BindException: Address already in use:9083
+	at org.apache.tomcat.util.net.JIoEndpoint.init(JIoEndpoint.java:501)
+	at org.apache.coyote.http11.Http11Protocol.init(Http11Protocol.java:177)
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1059)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 17:51:13 org.apache.catalina.startup.Catalina load
+GRAVE: Catalina.start
+LifecycleException:  L'initialisation du gestionnaire de protocole a échoué: java.net.BindException: Address already in use:9083
+	at org.apache.catalina.connector.Connector.initialize(Connector.java:1061)
+	at org.apache.catalina.core.StandardService.initialize(StandardService.java:677)
+	at org.apache.catalina.core.StandardServer.initialize(StandardServer.java:792)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:538)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:260)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:412)
+14 mars 2012 17:51:13 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 438 ms
+14 mars 2012 17:51:13 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 17:51:13 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 17:51:13 org.apache.coyote.http11.Http11Protocol start
+GRAVE: Erreur au démarrage du point de contact
+java.net.BindException: Address already in use:9083
+	at org.apache.tomcat.util.net.JIoEndpoint.init(JIoEndpoint.java:501)
+	at org.apache.tomcat.util.net.JIoEndpoint.start(JIoEndpoint.java:515)
+	at org.apache.coyote.http11.Http11Protocol.start(Http11Protocol.java:204)
+	at org.apache.catalina.connector.Connector.start(Connector.java:1132)
+	at org.apache.catalina.core.StandardService.start(StandardService.java:531)
+	at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:566)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 17:51:13 org.apache.catalina.startup.Catalina start
+GRAVE: Catalina.start: 
+LifecycleException:  service.getName(): "Catalina";  Le démarrage du gestionnaire de protocole a échoué: java.net.BindException: Address already in use:9083
+	at org.apache.catalina.connector.Connector.start(Connector.java:1139)
+	at org.apache.catalina.core.StandardService.start(StandardService.java:531)
+	at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:566)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 17:51:13 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 279 ms
+14 mars 2012 17:51:14 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 17:51:14 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:24 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:24 org.apache.catalina.connector.Connector pause
+GRAVE: La suspension du gestionnaire de protocole a échouée
+java.lang.NullPointerException
+	at org.apache.jk.server.JkMain.pause(JkMain.java:679)
+	at org.apache.jk.server.JkCoyoteHandler.pause(JkCoyoteHandler.java:153)
+	at org.apache.catalina.connector.Connector.pause(Connector.java:1074)
+	at org.apache.catalina.core.StandardService.stop(StandardService.java:563)
+	at org.apache.catalina.core.StandardServer.stop(StandardServer.java:744)
+	at org.apache.catalina.startup.Catalina.stop(Catalina.java:616)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:591)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 17:51:25 org.apache.catalina.core.AprLifecycleListener init
+INFO: The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+14 mars 2012 17:51:25 org.apache.coyote.http11.Http11Protocol init
+INFO: Initialisation de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:25 org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 471 ms
+14 mars 2012 17:51:25 org.apache.catalina.core.StandardService start
+INFO: Démarrage du service Catalina
+14 mars 2012 17:51:25 org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
+14 mars 2012 17:51:25 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 17:51:25 org.apache.coyote.http11.Http11Protocol start
+INFO: Démarrage de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:25 org.apache.catalina.connector.MapperListener destroy
+ATTENTION: Error unregistering MBeanServerDelegate
+java.lang.NullPointerException
+	at org.apache.catalina.connector.MapperListener.destroy(MapperListener.java:162)
+	at org.apache.catalina.connector.Connector.stop(Connector.java:1180)
+	at org.apache.catalina.core.StandardService.stop(StandardService.java:593)
+	at org.apache.catalina.core.StandardServer.stop(StandardServer.java:744)
+	at org.apache.catalina.startup.Catalina.stop(Catalina.java:616)
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:591)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)
+14 mars 2012 17:51:25 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 17:51:25 org.apache.catalina.connector.Connector stop
+GRAVE: Le connecteur Coyote n'a pas été démarré
+14 mars 2012 17:51:25 org.apache.jk.common.ChannelSocket init
+INFO: JK: ajp13 listening on /0.0.0.0:8009
+14 mars 2012 17:51:25 org.apache.jk.server.JkMain start
+INFO: Jk running ID=0 time=0/77  config=null
+14 mars 2012 17:51:25 org.apache.catalina.startup.Catalina start
+INFO: Server startup in 492 ms
+14 mars 2012 19:30:16 org.apache.coyote.http11.Http11Protocol pause
+INFO: Suspension de Coyote HTTP/1.1 sur http-9083
+14 mars 2012 19:30:17 org.apache.catalina.core.StandardService stop
+INFO: Arrêt du service Catalina
+14 mars 2012 19:30:17 org.apache.coyote.http11.Http11Protocol destroy
+INFO: Arrêt de Coyote HTTP/1.1 sur http-9083
