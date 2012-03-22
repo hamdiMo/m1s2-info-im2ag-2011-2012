@@ -47,7 +47,7 @@
   
   
   
-  void setIndex(int index){ m_index = index; }
+  void TaskTree::setIndex(int index){ m_index = index; }
   
   void TaskTree::setType(TaskTree::Type type){ m_type = type; }
   
@@ -56,14 +56,15 @@
   //return -1 en cas d'erreurs
   int TaskTree::setTransitionIn(Transition::Type){
     if (m_parent != 0){
-      m_parent.
+      //m_parent.
+      return 0;
     } else return -1;
   }
   
    //return -1 en cas d'erreurs
   int TaskTree::setTransitionOut(Transition::Type){}
   
-  void setParent(TaskTree* parent){ m_parent = parent; }
+  void TaskTree::setParent(TaskTree* parent){ m_parent = parent; }
   
   
   
@@ -71,7 +72,7 @@
   
   void TaskTree::addSubtree(TaskTree* son){
     son->setParent(this);
-    son->setIndex(m_subtrees.getSize());
+    son->setIndex(m_subtrees.size());
     m_subtrees.push_back(son);
   }
   
