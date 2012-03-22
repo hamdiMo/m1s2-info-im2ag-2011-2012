@@ -6,7 +6,18 @@ TaskTreeViewer::TaskTreeViewer()
 {
 } 
 
-TaskTreeViewer::~TaskTreeViewer() {}
+TaskTreeViewer::~TaskTreeViewer() {
+  /* m_Scene=new QGraphicsScene(this);
+  m_Scene->setBackgroundBrush(QColor(128, 128, 128, 0));
+  m_Scene->setForegroundBrush(QColor(255, 255, 255, 0));
+  setScene(m_Scene);
+  m_pictureViewer = new PictureViewer(p) ;
+  m_proxy = m_Scene->addWidget(m_pictureViewer);
+  m_selectionTool = new SelectionTool(m_proxy);
+
+  */
+
+}
 
 
 

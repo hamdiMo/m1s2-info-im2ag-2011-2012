@@ -11,6 +11,52 @@ m_taskTreeViewer(tasktreeviewer)
 TaskTreeModifier::~TaskTreeModifier() {}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // /** Accesseurs */
 // QImage* TaskTreeModifier::getImage() { return m_image; }
 

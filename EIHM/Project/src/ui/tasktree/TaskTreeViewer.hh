@@ -10,8 +10,12 @@ public:
   /** Constructeurs et destructeurs */
   TaskTreeViewer();
   ~TaskTreeViewer();
-   
+private:
+  QGraphicsScene* m_Scene; 
 public slots:
+  /** Attributes **/
+  
+  
 
   /** SLOTS**/
   void  keyPressEvent ( QKeyEvent * event );
