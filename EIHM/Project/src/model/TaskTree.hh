@@ -49,9 +49,15 @@ public:
   //return -1 en cas d'erreurs
   int setTransitionIn(Transition::Type);
   
-   //return -1 en cas d'erreurs
+  //return -1 en cas d'erreurs
+  void setTransitionIn(Transition*);
+  
+  //return -1 en cas d'erreurs
   int setTransitionOut(Transition::Type);
   
+  //return -1 en cas d'erreurs
+  int setTransitionOut(Transition*);
+    
   void setParent(TaskTree*);
   
   /** Methodes */
