@@ -22,9 +22,13 @@ public:
 
 
   /** Accesseurs */
+  int getIndex();
+  
   int getSize();
   
   Type getType();
+  
+  std::string getName();
 
   TaskTree* getSubTree(int); // rechercher le sous arbre sinon renvoit 0
 
@@ -34,10 +38,13 @@ public:
   
   TaskTree* getParent();
   
+  
+  
+  void setIndex(int);
+  
   void setType(Type);
   
-  void setName(std::string s);
-  
+  void setName(std::string);
   
   //return -1 en cas d'erreurs
   int setTransitionIn(Transition::Type);
@@ -45,9 +52,9 @@ public:
    //return -1 en cas d'erreurs
   int setTransitionOut(Transition::Type);
   
-  /** Methodes */
+  void setParent(TaskTree*);
   
-  void addTransitionIn(TaskTree* cible, Transition::Type type);
+  /** Methodes */
     
   void addSubtree(TaskTree* son);
   
