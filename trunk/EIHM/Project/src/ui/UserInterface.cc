@@ -8,16 +8,17 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   createActions();
   createMenuBar();
   createToolBoxDocks();
-  TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier();
-    TaskTreeViewer* m_taskTreeViewer=new TaskTreeViewer(m_taskTreeModifier);
+  TaskTreeViewer* m_taskTreeViewer=new TaskTreeViewer();
+  TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier(m_taskTreeViewer);
+  
   //m_viewTabWidget = createTabWidget();
   // m_pictureManager = new PictureManager(this);
-
+  
   // createToolBars();
-    setCentralWidget((QTabWidget*)m_taskTreeViewer);
-    setWindowTitle(tr("Task Tree Creator"));
-    resize(1024, 768);
-    update();
+  setCentralWidget((QTabWidget*)m_taskTreeViewer);
+  setWindowTitle(tr("Task Tree Creator"));
+  resize(1024, 768);
+  update();
   this->statusBar()->showMessage("ready");
   
 }

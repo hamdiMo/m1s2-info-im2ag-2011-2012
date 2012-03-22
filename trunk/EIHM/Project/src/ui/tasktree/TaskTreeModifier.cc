@@ -1,30 +1,11 @@
 #include "TaskTreeModifier.hh"
-
-// #include "UserInterface.hh"
-// #include "TracingManager.hh"
-// #include "PictureViewer.hh"
-// #include "Histogram.hh"
-// #include "Previewer.hh"
-// #include "Picture.hh"
-// #include "Matrix.hh"
-// #include "ToolBoxChooser.hh"
-// #include "AffineOperationChooser.hh"
-// #include "ConvolveOperationChooser.hh"
-// #include "ColorConvertOperationChooser.hh"
-// #include "PictureArea.hh"
+#include "TaskTreeViewer.hh"
 
 /** Constructeurs et destructeur */
-TaskTreeModifier::TaskTreeModifier() 
-  // TabPanel(userInterface),
-  // m_picture(picture),
-  // m_image(new QImage(m_picture->getWidth(), m_picture->getHeight(), QImage::Format_ARGB32))
+TaskTreeModifier::TaskTreeModifier(TaskTreeViewer* tasktreeviewer) :
+m_taskTreeViewer(tasktreeviewer)
 {
-  // m_userInterface=userInterface;
-  // setTabName(m_picture->getName());
-  // refreshData();
-  // m_pictureArea = new PictureArea(this,userInterface);
-  // setWidget(m_pictureArea);
-  // refresh();
+
 }
 
 TaskTreeModifier::~TaskTreeModifier() {}
