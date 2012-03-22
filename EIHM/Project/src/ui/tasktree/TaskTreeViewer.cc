@@ -2,18 +2,102 @@
 #include "TaskTreeModifier.hh"
 
 
-TaskTreeViewer::TaskTreeViewer(TaskTreeModifier* tasktreemodifier) :
-m_taskTreeModifier(tasktreemodifier)
-{ 
-  // m_scale=1.0;
-  // m_scaleFactor=0.25;
-  // m_width_translation=0.0;
-  // m_height_translation=0.0;
-  // refreshData();
-  // refresh();
+TaskTreeViewer::TaskTreeViewer() 
+{
 } 
 
 TaskTreeViewer::~TaskTreeViewer() {}
+
+
+
+/** Public Slots **/
+
+
+using namespace std;
+void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){
+  
+}
+
+void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {
+
+}
+
+
+void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){
+ 
+}
+
+void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
+  cout<<"mouse move Event"<<endl;
+  
+}
+
+void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
+
+}
+void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
+}
+
+void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // /** Methodes */
 // void TaskTreeViewer::scaleImage(double scale){
