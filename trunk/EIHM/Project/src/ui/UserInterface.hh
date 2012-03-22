@@ -89,7 +89,7 @@ private:
   void createActions();
   void updateActions();
   void createMenuBar();
-  // void createToolBars();
+   void createToolBars();
   void createToolBoxDocks();
   // TabWidget* createTabWidget();
   
@@ -140,7 +140,7 @@ private:
   QMenu* m_viewMenu;
   QMenu* m_helpMenu;
   
-  // QToolBar* m_fileToolBar;
+  QToolBar* m_fileToolBar;
   // QToolBar* m_editToolBar;
   // QToolBar* m_viewToolBar;
   // QToolBar* m_helpToolBar;

@@ -8,13 +8,14 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   createActions();
   createMenuBar();
   createToolBoxDocks();
+  createToolBars();
   TaskTreeViewer* m_taskTreeViewer=new TaskTreeViewer();
   TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier(m_taskTreeViewer);
   
   //m_viewTabWidget = createTabWidget();
   // m_pictureManager = new PictureManager(this);
   
-  // createToolBars();
+  
   setCentralWidget((QTabWidget*)m_taskTreeViewer);
   setWindowTitle(tr("Task Tree Creator"));
   resize(1024, 768);

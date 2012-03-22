@@ -3,19 +3,18 @@
 
 
 // /** Methodes internes */
-// void UserInterface::createToolBars() {
-//   addToolBar(Qt::TopToolBarArea, createFileToolBar());
+ void UserInterface::createToolBars() {
+   addToolBar(Qt::TopToolBarArea, createFileToolBar());
 //   addToolBar(Qt::TopToolBarArea, createEditToolBar());
 //   addToolBar(Qt::TopToolBarArea, createViewToolBar());
 //   //[TOOLBAR] addToolBar(Qt::TopToolBarArea, createHelpToolBar());
-// }
-
-// QToolBar* UserInterface::createFileToolBar() {
-//   m_fileToolBar = new QToolBar(tr("&File"), this);
-//   m_fileToolBar->addAction(m_openAct);
+ }
+QToolBar* UserInterface::createFileToolBar() {
+  m_fileToolBar = new QToolBar(tr("&File"), this);
+  m_fileToolBar->addAction(m_openAct);
 //   m_fileToolBar->addAction(m_saveAct);
-//   return m_fileToolBar;
-// }
+  return m_fileToolBar;
+}
 
 // QToolBar* UserInterface::createEditToolBar() {
 //   m_editToolBar = new QToolBar(tr("&Edit"), this);
