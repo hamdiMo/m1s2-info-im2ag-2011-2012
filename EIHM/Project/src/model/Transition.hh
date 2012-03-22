@@ -7,7 +7,7 @@ class Transition {
   
 public:
 
-  enum Type { T1, T2 };
+  enum Type { CHOICE, ORDERINDEPENDENCE, INTERLEAVING, SYNCHRONIZATION, DISABLING, SUSPENDRESUME, SEQUENTIALENABLING, SEQUENTIALENABLINGINFO };
 
   /** Constructeurs et destructeurs */
   Transition(TaskTree* from, TaskTree* to, Type type);
@@ -22,6 +22,7 @@ public:
   
   Type getType();
 
+  void setType(Type type);
   
   protected:
 
