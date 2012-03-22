@@ -21,6 +21,7 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   resize(1024, 768);
   update();
   this->statusBar()->showMessage("ready");
+ 
   
 }
     
