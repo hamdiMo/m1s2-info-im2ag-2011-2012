@@ -57,15 +57,15 @@
   int TaskTree::setTransitionIn(Transition::Type type){
     if (m_parent != 0 && m_index > 0){ // j'ai un leftnode
       TaskTree* leftNode = m_parent->getSubTree(m_index-1);
-      if(leftNode.getTransitionOut() != 0) {
-	delete(leftNode.getTransitionOut());
+      if(leftNode->getTransitionOut() != 0) {
+	delete(leftNode->getTransitionOut());
       }
       if(m_in != 0) delete(m_in);
       //tout ok, création de la transition
       
       Transition* temp = new Transition(leftNode, this, type);
       m_in = temp;
-      leftNode.setTransitionOut(temp);
+      leftNode->setTransitionOut(temp);
       return 0;
     } else return -1;
   }
@@ -79,18 +79,18 @@
   }
   
    //return -1 en cas d'erreurs
-  int TaskTree::setTransitionOut(Transition::Type){
+  int TaskTree::setTransitionOut(Transition::Type type){
     if(m_parent != 0 && m_index < m_subtrees.size()-1){ //rightnode OK
       TaskTree* rightNode = m_parent->getSubTree(m_index+1);
-      if(rightNode.getTransitionIn() != 0) {
-	delete(rightNode.getTransitionIn());
+      if(rightNode->getTransitionIn() != 0) {
+	delete(rightNode->getTransitionIn());
       }
       if(m_out != 0) delete(m_out);
       //tout ok, création de la transition
       
       Transition* temp = new Transition(this, rightNode, type);
       m_out = temp;
-      rightNode.setTransitionIn(temp);
+      rightNode->setTransitionIn(temp);
       return 0;
     } else return -1; 
   }
