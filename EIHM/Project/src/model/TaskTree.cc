@@ -31,41 +31,47 @@
   int TaskTree::getSize() { return m_subtrees.size(); }
 
   TaskTree::Type TaskTree::getType() { return m_type; }
+  
+  std::string TaskTree::getName() { return m_name; }
 
   TaskTree* TaskTree::getSubTree(int index) {
     if ( index >= 0 && index < (int)m_subtrees.size()) return m_subtrees[index];
     else return 0; // gestion d'erreur à mettre en place    
   } // rechercher le sous arbre sinon renvoit 0
 
-  Transition* TaskTree::getTransitionIn() {  
-    return m_in;
-  }  
+  Transition* TaskTree::getTransitionIn() { return m_in; }  
 
-  Transition* TaskTree::getTransitionOut() {  
-    return m_out;
-  }  
+  Transition* TaskTree::getTransitionOut() { return m_out; }  
   
-  TaskTree* TaskTree::getParent(){
-    return m_parent;
+  TaskTree* TaskTree::getParent(){ return m_parent; }
+  
+  
+  
+  void setIndex(int index){ m_index = index; }
+  
+  void TaskTree::setType(TaskTree::Type type){ m_type = type; }
+  
+  void TaskTree::setName(std::string name){ m_name = name; }
+  
+  //return -1 en cas d'erreurs
+  int TaskTree::setTransitionIn(Transition::Type){
+    if (m_parent != 0){
+      m_parent.
+    } else return -1;
   }
   
-  void TaskTree::setType(TaskTree::Type type){
-    m_type = type;
-  }
+   //return -1 en cas d'erreurs
+  int TaskTree::setTransitionOut(Transition::Type){}
   
-  void TaskTree::setName(std::string name){
-    m_name = name;
-  }
+  void setParent(TaskTree* parent){ m_parent = parent; }
+  
   
   
   /** Methodes */
-  void TaskTree::addTransitionIn(TaskTree* cible, Transition::Type type){
-//     m_transitions.push_back(new Transition(this, cible, type));
-  }
-  
   
   void TaskTree::addSubtree(TaskTree* son){
-    
+    son->setParent(this);
+    son->setIndex(m_subtrees.getSize());
     m_subtrees.push_back(son);
   }
   
