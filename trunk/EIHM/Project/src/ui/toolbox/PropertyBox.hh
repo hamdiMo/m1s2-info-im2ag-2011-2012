@@ -4,12 +4,11 @@
 #include <QWidget>
 #include <QGroupBox>
 #include <QHBoxLayout>
-#include <QSpinBox>
 #include <QRadioButton>
-#include <QSlider>
+#include <QLineEdit>
 
 #include <string>
-#include "TaskTree.hh";
+#include "TaskTree.hh"
 
 class UserInterface;
 
@@ -38,10 +37,14 @@ private:
 
   /** Methodes internes */
   QGroupBox* createGlobalGroupBox();
+  QGroupBox* createTypeGroupBox();
   QHBoxLayout* createControlsLayout();
 
   /** Attributs */
+  QLineEdit* m_nameLE;
+  QRadioButton *m_abstractTypeRB, *m_appTypeRB, *m_interactTypeRB, *m_userTypeRB;
   UserInterface* m_userInterface;
+  TaskTree* m_taskTree;
 
 };
 
