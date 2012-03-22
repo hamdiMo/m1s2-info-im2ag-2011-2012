@@ -12,6 +12,7 @@ public:
   ~TaskTreeViewer();
    
 public slots:
+
   /** SLOTS**/
   void  keyPressEvent ( QKeyEvent * event );
   void  keyReleaseEvent ( QKeyEvent * event );
