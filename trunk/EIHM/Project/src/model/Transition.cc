@@ -18,3 +18,7 @@
   TaskTree* Transition::getTo() { return m_to; }
   
   Transition::Type Transition::getType() { return m_type; }
+
+  void Transition::setType(Transition::Type type){
+    m_type = type;
+  }

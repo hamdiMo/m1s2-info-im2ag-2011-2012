@@ -31,6 +31,19 @@ public:
 
   Transition* getTransition(int);  // rechercher la transition sinon renvoit 0
 
+  /** Methodes */
+  
+  void addTransition(TaskTree* cible, Transition::Type type);
+  
+  void addTransitions(std::vector<TaskTree*> cibles, Transition::Type type);
+  
+  void addSubtree(TaskTree* son);
+  
+  void swapSubtree(int index1, int index2);
+  
+  void removeSubtree(int index);
+  
+  
   protected:
 
   
