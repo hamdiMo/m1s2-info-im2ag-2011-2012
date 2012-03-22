@@ -2,6 +2,7 @@
 #define _TASKTREE_HH_
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Transition.hh"
 
@@ -22,21 +23,32 @@ public:
 
   /** Accesseurs */
   int getSize();
-
-  int getInteractionSize();
   
   Type getType();
 
   TaskTree* getSubTree(int); // rechercher le sous arbre sinon renvoit 0
 
-  Transition* getTransition(int);  // rechercher la transition sinon renvoit 0
+  Transition* getTransitionIn();  // rechercher la transition sinon renvoit 0
 
+  Transition* getTransitionOut();
+  
+  TaskTree* getParent();
+  
+  void setType(Type);
+  
+  void setName(std::string s);
+  
+  
+  //return -1 en cas d'erreurs
+  int setTransitionIn(Transition::Type);
+  
+   //return -1 en cas d'erreurs
+  int setTransitionOut(Transition::Type);
+  
   /** Methodes */
   
-  void addTransition(TaskTree* cible, Transition::Type type);
-  
-  void addTransitions(std::vector<TaskTree*> cibles, Transition::Type type);
-  
+  void addTransitionIn(TaskTree* cible, Transition::Type type);
+    
   void addSubtree(TaskTree* son);
   
   void swapSubtree(int index1, int index2);
@@ -48,10 +60,14 @@ public:
 
   
   private:
+  int m_index;
   std::string m_name;
   Type m_type;
   std::vector<TaskTree*> m_subtrees;
-  std::vector<Transition*> m_transitions;
+  Transition* m_in;
+  Transition* m_out;
+  TaskTree* m_parent;
+
 };
 
 #endif
