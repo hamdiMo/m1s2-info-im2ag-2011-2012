@@ -33,11 +33,11 @@ UserInterface::~UserInterface() {
   // return tabWidget;
 // }
   
-// QDockWidget* UserInterface::createDockWidget(QWidget* widget) {
-//   // QDockWidget* dockWidget = new QDockWidget(widget->accessibleName());
-//   // dockWidget->setWidget(widget);
-//   // return dockWidget;
-// }
+QDockWidget* UserInterface::createDockWidget(QWidget* widget) {
+  QDockWidget* dockWidget = new QDockWidget(widget->accessibleName());
+  dockWidget->setWidget(widget);
+  return dockWidget;
+}
 
 
 

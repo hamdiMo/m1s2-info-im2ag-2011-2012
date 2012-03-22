@@ -1,7 +1,10 @@
 #include "UserInterface.hh"
 
+#include "PropertyBox.hh"
 
 // /** Accesseurs */
+PropertyBox* UserInterface::getPropertyBox() { return m_propertyBox; }
+
 // Previewer* UserInterface::getPreviewer() { return m_previewer; }
 // Histogram* UserInterface::getHistogram() { return m_histogram; }
 // ColorChooser* UserInterface::getColorChooser() { return m_colorChooser; }
@@ -14,6 +17,8 @@
 
 
 // /** Methodes */
+PropertyBox* UserInterface::createPropertyBox() { return new PropertyBox(this); }
+
 // Previewer* UserInterface::createPreviewer() { return new Previewer(); }
 // Histogram* UserInterface::createHistogram() { return new Histogram(); }
 // ColorChooser* UserInterface::createColorChooser() { return new ColorChooser(); }
@@ -27,6 +32,8 @@
 
 // /** Methodes internes */
 void UserInterface::createToolBoxDocks() {
+  addDockWidget(Qt::RightDockWidgetArea, m_propertyBoxDock = createPropertyBoxDock());
+
   //   addDockWidget(Qt::LeftDockWidgetArea, m_affineOperationChooserDock = createAffineOperationChooserDock());
 //   addDockWidget(Qt::LeftDockWidgetArea, m_convolveOperationChooserDock = createConvolveOperationChooserDock());
 //   addDockWidget(Qt::LeftDockWidgetArea, m_algebricOperationChooserDock = createAlgebricOperationChooserDock());
@@ -51,6 +58,10 @@ void UserInterface::createToolBoxDocks() {
 //   m_colorChooserDock->hide();
 //   m_algebricOperationChooserDock->hide();
 // }
+
+QDockWidget* UserInterface::createPropertyBoxDock() {
+  return createDockWidget(m_propertyBox = createPropertyBox()); 
+}
 
 // QDockWidget* UserInterface::createPreviewerDock() {
 //   return createDockWidget(m_previewer = createPreviewer()); 
