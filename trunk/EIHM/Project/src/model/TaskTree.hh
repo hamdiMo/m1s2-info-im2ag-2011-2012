@@ -50,7 +50,7 @@ public:
   int setTransitionIn(Transition::Type);
   
   //return -1 en cas d'erreurs
-  void setTransitionIn(Transition*);
+  int setTransitionIn(Transition*);
   
   //return -1 en cas d'erreurs
   int setTransitionOut(Transition::Type);
