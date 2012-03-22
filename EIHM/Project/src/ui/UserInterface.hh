@@ -27,6 +27,7 @@
 // class TabWidget;
 class TaskTreeModifier;
 class TaskTreeViewer;
+class PropertyBox;
 
 class UserInterface : public QMainWindow { Q_OBJECT
 
@@ -38,6 +39,7 @@ public:
 
   /** Accesseurs */
   
+  PropertyBox* getPropertyBox();
   // Previewer* getPreviewer();
   // Histogram* getHistogram();
   // ColorChooser* getColorChooser();
@@ -48,9 +50,11 @@ public:
   // AlgebricOperationChooser* getAlgebricOperationChooser();
   // ColorConvertOperationChooser* getColorConvertOperationChooser();
   // QClipboard* getClipBoard();
+
   // /** Methodes */
   // void update();
 
+  PropertyBox* createPropertyBox();
   // Previewer* createPreviewer();
   // Histogram* createHistogram();
   // ColorChooser* createColorChooser();
@@ -89,11 +93,11 @@ private:
   void createActions();
   void updateActions();
   void createMenuBar();
-   void createToolBars();
+  void createToolBars();
   void createToolBoxDocks();
   // TabWidget* createTabWidget();
   
-  // QDockWidget* createDockWidget(QWidget* widget);
+  QDockWidget* createDockWidget(QWidget* widget);
   
   void createFileAction();
   void createEditAction();
@@ -108,7 +112,8 @@ private:
   QToolBar* createEditToolBar();
   QToolBar* createViewToolBar();
   QToolBar* createHelpToolBar();
-
+  
+  QDockWidget* createPropertyBoxDock();
   // QDockWidget* createPreviewerDock();
   // QDockWidget* createHistogramDock();
   // QDockWidget* createColorChooserDock();
@@ -125,6 +130,7 @@ private:
   // PictureManager* m_pictureManager;
   // TabWidget* m_viewTabWidget;
   
+  PropertyBox* m_propertyBox;
   // Previewer* m_previewer;
   // Histogram* m_histogram;
   // ColorChooser* m_colorChooser;
@@ -145,7 +151,7 @@ private:
   // QToolBar* m_viewToolBar;
   // QToolBar* m_helpToolBar;
 
-  // QDockWidget* m_previewerDock;
+  QDockWidget* m_propertyBoxDock;
   // QDockWidget* m_histogramDock;
   // QDockWidget* m_colorChooserDock;
   // QDockWidget* m_toolBoxChooserDock;
