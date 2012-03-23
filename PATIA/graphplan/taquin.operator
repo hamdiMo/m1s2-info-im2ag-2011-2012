@@ -1,0 +1,18 @@
+(operator DEPLACER
+	(params
+		(<source> CASE)
+		(<cible> CASE)
+		(<valeur> VALEUR)
+	)
+	(preconds
+		(estVide <cible>)
+		(contient <source> <valeur>)
+		(estAdjacente <source> <cible>)
+	)
+	(effects
+		(estVide <source>)
+		(contient <cible> <valeur>)
+		(del estVide <cible>)
+		(del contient <source> <valeur>)
+	)
+)

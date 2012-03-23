@@ -1,0 +1,9 @@
+(n1 NODE) (n2 NODE) (n3 NODE) (n4 NODE) (n5 NODE)
+(e1 EDGE) (e2 EDGE) (e3 EDGE) (e4 EDGE) (e5 EDGE)
+(i1 INTRUS)
+(p1 POURSUIVANT) (p2 POURSUIVANT)
+(preconds
+	(connected e1 n1 n2)
+)
+(effects
+)

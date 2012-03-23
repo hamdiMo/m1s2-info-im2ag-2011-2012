@@ -1,0 +1,17 @@
+(d0 DIGIT)
+(d1 DIGIT)
+(d2 DIGIT)
+(d3 DIGIT)
+(dBG DIGIT)
+(dBD DIGIT)
+(p POINTEUR)
+(z ETAT)
+(preconds
+	(estGauche dBG d3) (estGauche d3 d2) (estGauche d2 d1) (estGauche d1 d0) (estGauche d0 dBD)
+	(estBlanc dBG) (estUn d3) (estZero d2) (estUn d1) (estUn d0) (estBlanc dBD)
+	(estEtat_0 z) (pointeSur p d3)
+)
+(effects
+	(estBlanc dBG) (estUn d3) (estUn d2) (estZero d1) (estZero d0) (estBlanc dBD)
+	(estEtat_Term z)
+)
