@@ -64,26 +64,6 @@ public:
   
   Expression() {
     // lire le nombre de variables
-    std::ifstream fichier("~/Documents/Cours/S2/PATIA/Project/entree.txt");
-
-    if(fichier)
-      {
-	//L'ouverture s'est bien passée. On peut donc lire
-
-        std::string ligne;     //Une variable pour stocker les lignes lues
-
-        while(getline(fichier, ligne))    //Tant qu'on n'est pas a la fin, on lit
-	  {
-
-            std::cout << ligne << std::endl; //Et on l'affiche dans la console
-                                   //ou alors on fait quelque chose avec cette ligne
-                                   //A vous de voir :)
-	  }
-      }
-    else
-      {
-        std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-      }
     int n ;
     std::cout << "Nombre de variables " << std::endl;
     std::cin >> n;
