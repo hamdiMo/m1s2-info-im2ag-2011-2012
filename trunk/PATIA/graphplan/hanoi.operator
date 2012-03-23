@@ -1,0 +1,77 @@
+(operator DEPLACER_SUR_ANNEAU
+	(params
+		(<source> ANNEAU)
+		(<predSource> ANNEAU)
+		(<destination> ANNEAU)
+	)
+	(preconds
+		(estSommet <source>)
+		(estSommet <destination>)
+		(estPoseSur <source> <predSource>)
+		(gt <destination> <source>)
+	)
+	(effects
+		(estSommet <predSource>)
+		(estPoseSur <source> <destination>)
+		(del estPoseSur <source> <predSource>)
+		(del estSommet <destination>)
+	)
+)
+
+(operator DEPLACER_SUR_BASE
+	(params
+		(<source> ANNEAU)
+		(<predSource> ANNEAU)
+		(<tourArrive> TOUR)
+	)
+	(preconds
+		(estSommet <source>)
+		(estVide <tourArrive>)
+		(estPoseSur <source> <predSource>)
+	)
+	(effects
+		(estSommet <predSource>)
+		(estPoseSurBase <source> <tourArrive>)
+		(del estPoseSur <source> <predSource>)
+		(del estVide <tourArrive>)
+	)
+)
+
+(operator DEPLACER_BASE_SUR_ANNEAU
+	(params
+		(<tourDepart> TOUR)
+		(<source> ANNEAU)
+		(<destination> ANNEAU)
+	)
+	(preconds
+		(estSommet <source>)
+		(estSommet <destination>)
+		(gt <destination> <source>)
+		(estPoseSurBase <source> <tourDepart>)
+	)
+	(effects
+		(estVide <tourDepart>)
+		(estPoseSur <source> <destination>)
+		(del estPoseSurBase <source> <tourDepart>)
+		(del estSommet <destination>)
+	)
+)
+
+(operator DEPLACER_BASE_SUR_BASE
+	(params
+		(<tourDepart> TOUR)
+		(<tourArrive> TOUR)
+		(<source> ANNEAU)
+	)
+	(preconds
+		(estVide <tourArrive>)
+		(estPoseSurBase <source> <tourDepart>)
+		(estSommet <source>)
+	)
+	(effects
+		(estPoseSurBase <source> <tourArrive>)
+		(estVide <tourDepart>)
+		(del estPoseSurBase <source> <tourDepart>)
+		(del estVide <tourArrive>)
+	)
+)

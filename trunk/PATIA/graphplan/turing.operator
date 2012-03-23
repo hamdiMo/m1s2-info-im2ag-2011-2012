@@ -1,0 +1,117 @@
+(operator OP_Z0_BLANC
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+		(<digitCible> DIGIT)
+	)
+	(preconds
+		(estEtat_0 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estBlanc <digitCur>)
+		(estGauche <digitCible> <digitCur>)
+	)
+	(effects
+		(estEtat_1 <etat>)
+		(pointeSur <pointeur> <digitCible>)
+		(del estEtat_0 <etat>)
+		(del pointeSur <pointeur> <digitCur>)
+	)
+)
+
+(operator OP_Z0_ZERO
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+		(<digitCible> DIGIT)
+	)
+	(preconds
+		(estEtat_0 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estZero <digitCur>)
+		(estGauche <digitCur> <digitCible>)
+	)
+	(effects
+		(pointeSur <pointeur> <digitCible>)
+		(del pointeSur <pointeur> <digitCur>)
+	)
+)
+
+(operator OP_Z0_UN
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+		(<digitCible> DIGIT)
+	)
+	(preconds
+		(estEtat_0 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estUn <digitCur>)
+		(estGauche <digitCur> <digitCible>)
+	)
+	(effects
+		(pointeSur <pointeur> <digitCible>)
+		(del pointeSur <pointeur> <digitCur>)
+	)
+)
+
+(operator OP_Z1_BLANC
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+	)
+	(preconds
+		(estEtat_1 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estBlanc <digitCur>)
+	)
+	(effects
+		(estUn <digitCur>)
+		(estEtat_Term <etat>)
+		(del estBlanc <digitCur>)
+		(del estEtat_1 <etat>)
+	)
+)
+
+(operator OP_Z1_ZERO
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+	)
+	(preconds
+		(estEtat_1 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estZero <digitCur>)
+	)
+	(effects
+		(estUn <digitCur>)
+		(estEtat_Term <etat>)
+		(del estZero <digitCur>)
+		(del estEtat_1 <etat>)
+	)
+)
+
+(operator OP_Z1_UN
+	(params
+		(<etat> ETAT)
+		(<pointeur> POINTEUR)
+		(<digitCur> DIGIT)
+		(<digitCible> DIGIT)
+	)
+	(preconds
+		(estEtat_1 <etat>)
+		(pointeSur <pointeur> <digitCur>)
+		(estUn <digitCur>)
+		(estGauche <digitCible> <digitCur>)
+	)
+	(effects
+		(estZero <digitCur>)
+		(pointeSur <pointeur> <digitCible>)
+		(del estUn <digitCur>)
+		(del pointeSur <pointeur> <digitCur>)
+	)
+)

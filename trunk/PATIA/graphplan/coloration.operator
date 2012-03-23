@@ -1,0 +1,26 @@
+(operator COLORIER
+	(params
+		(<n1> NODE)
+		(<n2> NODE)
+		(<c1> COLOR)
+		(<c2> COLOR)
+	)
+	(preconds
+		(estIncolore n1)
+		(estIncolore n2)
+		(estArcClear n1 n2)
+		(estArcClear n2 n1)
+		(estDifferent c1 c2)
+	)
+	(effects
+		(colorier n1 c1)
+		(colorier n2 c2)
+		(estArcClean n1 n2)
+		(estArcClean n2 n1)
+		(del estIncolore n1)
+		(del estIncolore n2)
+		(del estArcClear n1 n2)
+		(del estArcClear n2 n1)
+	)
+)
+	
