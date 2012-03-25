@@ -59,15 +59,24 @@ public:
   int setTransitionOut(Transition*);
     
   void setParent(TaskTree*);
+
+  void removeTransitionIn();
+
+  void removeTransitionOut();
+
+  void removeTransitions();
   
   /** Methodes */
     
   void addSubtree(TaskTree* son);
   
+  void insertSubtree(TaskTree* son, int index);
+  
   void swapSubtree(int index1, int index2);
   
   void removeSubtree(int index);
   
+  void remove();
   
   protected:
 
