@@ -4,9 +4,9 @@
 
   /** Constructeurs et destructeurs */
   Transition::Transition(TaskTree* from, TaskTree* to, Type type) :
+    m_type(type),
     m_from(from),
-    m_to(to),
-    m_type(type)
+    m_to(to)
     {}
 
   Transition::~Transition() {}
