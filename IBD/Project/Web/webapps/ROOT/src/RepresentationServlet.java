@@ -68,7 +68,7 @@ public class RepresentationServlet extends HttpServlet {
 		out.println("Representations : <br/>");
 		for(int i=0; i<representations.size(); i++) {
 		    Representation r = representations.get(i);
-		    out.println("<a href=\"PlacesDisponiblesServlet?numS="+numS+"&date="+r.getDateRepText().substring(0, 10)+"&heure=20"+"\">");
+		    out.println("<a href=\"PlacesDisponiblesServlet?numS="+numS+"&date="+r.getDateRepText().substring(0, 10)+"&heure="+r.getDateRepText().substring(11, 13)+"\">");
 		    out.println(r.toString());
 		    out.println("</a>" + "<br>");
 		}

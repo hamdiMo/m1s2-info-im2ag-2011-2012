@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
-
+import java.sql.Timestamp;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -70,8 +70,19 @@ public class PlacesDisponiblesServlet extends HttpServlet {
 	    out.println("</form>");
 	} else {
 	    try {
-		Representation r = new Representation(dateS, new Integer(heureS).intValue());
+		Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+		/** A faire */
+		String d = (new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
+				      new Integer(dateS.substring(3,5)).intValue()-1, 
+				      new Integer(dateS.substring(0,2)).intValue(), 
+				      new Integer(heureS).intValue()%12, 0, 0, 0)).toString();
+	        //d = "06-NOV-08 08:45:00 pm";
+		d = d.substring(0,19)+" pm";
+		out.println(d);		      
+		Representation r = GestionRequete.trouveRepresentation(s1, d); //Representation(dateS, new Integer(heureS).intValue(), s1, new ArrayList<Ticket>());
+		out.println("enculé");
 		ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
+		out.println("fils de pute");
 		out.println("<p>");
 		out.println("Places libres : <br/>");
 		for(int i=0; i<placesDisponibles.size(); i++) {
@@ -82,10 +93,10 @@ public class PlacesDisponiblesServlet extends HttpServlet {
 		}
 		out.println("</p>");
 	    }
-	    catch(FormatDateException e1) {
-	    	out.println("La date indiquee pour la representation ne respecte pas le bon format.");
-	    	out.println("La transaction est annulee.");
-	    }
+// 	    catch(FormatDateException e1) {
+// 	    	out.println("La date indiquee pour la representation ne respecte pas le bon format.");
+// 	    	out.println("La transaction est annulee.");
+// 	    }
 	    catch(SQLException e2) {
 	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
 	    }
