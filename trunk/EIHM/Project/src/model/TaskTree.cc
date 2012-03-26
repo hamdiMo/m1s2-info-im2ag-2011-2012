@@ -176,12 +176,11 @@ void TaskTree::removeTransitions(){
   
   void TaskTree::remove(){
     removeTransitions();
-    if((int)m_subtrees.size() > 0){
-      std::vector<TaskTree*>::iterator it;
-      for (it=m_subtrees.end()-1; it < m_subtrees.begin(); it--){
-    	(*it)->remove();
-	m_subtrees.pop_back();
-      }
-      // vider m_subtrees
+    int size = (int)m_subtrees.size();
+    size--;
+    while(size >= 0){
+      m_subtrees[size]->remove();
+      m_subtrees.pop_back();
+      size--;
     }
   }
