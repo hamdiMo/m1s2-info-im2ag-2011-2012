@@ -15,13 +15,13 @@ public class Application extends JFrame {
 
     /** Constructeurs */
     public Application() {
-	super("Curve Editing");
+        super("Curve Editing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-	createActions();
-	setJMenuBar(createMenuBar());
-	//	getContentPane().add(createToolBar(), BorderLayout.NORTH);
-	getContentPane().add(createDrawingArea(), BorderLayout.CENTER);
+        createActions();
+        setJMenuBar(createMenuBar());
+        //	getContentPane().add(createToolBar(), BorderLayout.NORTH);
+        getContentPane().add(createDrawingArea(), BorderLayout.CENTER);
         
         pack();
         setVisible(true);
@@ -29,38 +29,38 @@ public class Application extends JFrame {
 
     /** Methodes internes */
     private void createActions() {
-	m_resetAction = new AbstractAction("Reset") {
-		public void actionPerformed(ActionEvent e) { m_drawingArea.clear(); }
-	    };
+        m_resetAction = new AbstractAction("Reset") {
+                public void actionPerformed(ActionEvent e) { m_drawingArea.clear(); }
+            };
 	
-	m_newLineAction = new AbstractAction("New Line") {
-		public void actionPerformed(ActionEvent e) { m_drawingArea.newLine(); }
-	    };
+        m_newLineAction = new AbstractAction("New Line") {
+                public void actionPerformed(ActionEvent e) { m_drawingArea.newLine(); }
+            };
     }
 
     private JMenuBar createMenuBar() { 
-	m_menuBar = new JMenuBar();
-	m_menuBar.add(createEditMenu());
-	return m_menuBar;
+        m_menuBar = new JMenuBar();
+        m_menuBar.add(createEditMenu());
+        return m_menuBar;
     }
 
     private JMenu createEditMenu() {
-	JMenu menu = new JMenu("Edit");
-	menu.add(m_newLineAction);
-	menu.add(m_resetAction);
-	return menu;
+        JMenu menu = new JMenu("Edit");
+        menu.add(m_newLineAction);
+        menu.add(m_resetAction);
+        return menu;
     }
 
     private JToolBar createToolBar() { return m_toolBar = null; }
 
     private JComponent createDrawingArea() {
-	return m_drawingArea = new DrawingArea();
+        return m_drawingArea = new DrawingArea();
     }
 
     public static void main(String [] args) {
-	SwingUtilities.invokeLater(new Runnable() {
-		public void run() { Application app = new Application(); }
-	    });
+        SwingUtilities.invokeLater(new Runnable() {
+                public void run() { Application app = new Application(); }
+            });
     }
 
 }
