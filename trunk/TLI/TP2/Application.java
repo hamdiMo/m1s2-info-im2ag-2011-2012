@@ -15,7 +15,7 @@ public class Application extends JFrame {
 
     /** Constructeurs */
     public Application() {
-	super("Subdivision");
+	super("Curve Editing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 	createActions();
@@ -30,7 +30,7 @@ public class Application extends JFrame {
     /** Methodes internes */
     private void createActions() {
 	m_resetAction = new AbstractAction("Reset") {
-		public void actionPerformed(ActionEvent e) { m_drawingArea.reset(); }
+		public void actionPerformed(ActionEvent e) { m_drawingArea.clear(); }
 	    };
 	
 	m_newLineAction = new AbstractAction("New Line") {
