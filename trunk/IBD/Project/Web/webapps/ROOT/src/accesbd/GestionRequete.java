@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Calendar;
 import modele.*;
 
+
+
 /**
   * Classe pour la gestion des requetes. 
   * Cette classe contient toutes les methodes associees aux differentes requetes 
@@ -152,6 +154,36 @@ public class GestionRequete {
 	    rset.close();
 	    GestionAcces.commit();
 	    return result;
+	} catch (SQLException e) {
+	    GestionAcces.rollback();
+	    throw e;
+	}
+    }
+
+    public static Representation trouveRepresentation(Spectacle s, String d) throws SQLException {
+	try {
+	/** A faire */
+	  
+	    Representation r;
+	    Connection conn = GestionAcces.getConnexion();
+	    Statement stmt = conn.createStatement();
+// 	    dateFormat.format(new SimpleDateFormat("dd-MM-yyyy HH"));
+// 	    String req = "select dateRep from LesRepresentations where numS = " + s.getNumS()+ "and dateRep = " + 
+// 		"TO_DATE('" + dateFormat.parse(dateS+" "+heureS, new ParsePosition(0)) + "','DD-MM-YYYY HH24'))";
+		
+	    //"TO_DATE('" dateFormat.format(new SimpleDateFormat("dd-MM-yyyy HH")) + "','DD-MM-YYYY HH24'))"
+
+	    String req = "select * from LesRepresentations where numS="+s.getNumS()+" and dateRep="+"'"+d+"'";
+	    /*  public Timestamp(int year, int month, int date, int hour, int minute, int second, int nano)*/
+	
+	    ResultSet rset = stmt.executeQuery(req);
+	    rset.next();
+	    r = new Representation(rset.getDate("dateRep"));
+		
+	    stmt.close();
+	    rset.close();
+	    GestionAcces.commit();
+	    return r;
 	} catch (SQLException e) {
 	    GestionAcces.rollback();
 	    throw e;

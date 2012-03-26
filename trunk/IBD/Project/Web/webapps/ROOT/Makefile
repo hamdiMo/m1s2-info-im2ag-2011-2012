@@ -2,7 +2,11 @@
 
 CC=javac
 
-CATALINA=~/Documents/Cours/M1/S2/IBD/Project/Web
+# Repertoire Hugo
+#CATALINA=~/Documents/Cours/M1/S2/IBD/Project/Web
+
+# Repertoire Yasin
+CATALINA=~/M1/S2/SVNCOURS/IBD/Project/Web
 
 init:
 	export JAVA_HOME=/usr

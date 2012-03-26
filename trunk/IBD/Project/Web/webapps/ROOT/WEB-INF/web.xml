@@ -33,6 +33,10 @@
 <servlet-class>PlacesDisponiblesServlet</servlet-class> 
 </servlet>
 
+- <servlet> 
+<servlet-name>ReserverPlaceServlet</servlet-name> 
+<servlet-class>ReserverPlaceServlet</servlet-class> 
+</servlet>
 
 
 
@@ -56,5 +60,9 @@
 <url-pattern>/servlet/PlacesDisponiblesServlet</url-pattern> 
 </servlet-mapping>
 
+- <servlet-mapping> 
+<servlet-name>ReserverPlaceServlet</servlet-name> 
+<url-pattern>/servlet/ReserverPlaceServlet</url-pattern> 
+</servlet-mapping>
 
 </web-app>
