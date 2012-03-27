@@ -1,0 +1,45 @@
+UYAR Yasin
+JOUDRIER Hugo
+
+
+	 Compte Rendu du TP3 : SIM
+
+
+Exercice 1 :
+
+   Ce programme execute une sequence d'instruction.
+   
+   Tout d'abord une fenetre compatible OpenGL est ouverte de taille 400*400 pixel.
+   Cette fenetre est en mode Simple Buffered.
+   La couleur de fond est définie comme un niveau de gris a 40% de la valeur maximale (blanc).
+
+   On initialise ensuite la liste des fonctions de callback permettant le traitement de differents évenements :
+   - les entrées sorties (clavier, souris, ecran)
+   - le redimensionnement de la fenetre
+
+   La methode reshape permet de gerer le redimensionnement de la fenetre.
+   Elle represente une vue orthocentrique dans un cube de coté 400 centré en 0.
+
+   La methode display definit une translation dont le vecteur est la position du cube.
+   Applique la transformation a l'environnement (la scene).
+   Crée un carre centré en (0, 0, 100) dans le plan parallele au plan de projection.
+
+
+Exercice 2 :
+
+   Aprés avoir definit le cube. On observe finalement juste un carré a l'écran, due a la vue Orthocentrique.
+   L'arriere du cube se trouve donc superposé à l'avant du cube.
+
+   Pour les rotations, on observe que le sens de composition des transformations a une importance.
+
+Exercice 3
+
+On remarque la présence de perspectives avec point de fuite suite à l'ajout de fonctions telles que gluPerspective ou glFrustrum.
+
+Il suffit de modifier les fonctions de callback mouse pour tenir compte du clique droit pour permettre des translations à a volée sur l'axe Z.(idem pour la distance focale, ajout des touches + et - mais necessitant de rappeler la methode reshape pour réinitialiser la fenetre + display()).
+
+Exercice 4
+
+Lorsque l'on modifie les dimentions de la fenetre, la méthode reshape est appelée puis la methode display().
+Le cube est déformé par l'aspect (ratio) de la fenetre. Pour remedier à celà, il suffit d'ajouter width/height dans la methode gluPerspective.
+
