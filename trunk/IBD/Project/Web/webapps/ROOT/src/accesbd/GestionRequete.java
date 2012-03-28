@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import modele.*;
-
+import java.sql.Timestamp;
 
 
 /**
@@ -178,7 +178,7 @@ public class GestionRequete {
 	
 	    ResultSet rset = stmt.executeQuery(req);
 	    rset.next();
-	    r = new Representation(rset.getDate("dateRep"));
+	    r = new Representation(rset.getDate("dateRep"),s , new ArrayList<Ticket>());
 		
 	    stmt.close();
 	    rset.close();
@@ -213,5 +213,66 @@ public class GestionRequete {
 	    throw e;
 	}
     }
-  
+
+
+    public static Ticket reserverTicket(Representation r, Place p) throws SQLException {
+	try {
+	    Connection conn = GestionAcces.getConnexion();
+	    Statement stmt = conn.createStatement();
+	    ResultSet rset = stmt.executeQuery("Select count(*) as Tralala from LesTickets");
+	    
+	    
+	   
+	    rset.next();
+// 	    int nbSerie = rset.getInt("Tralala")+1;
+// 	    Date dat = new Date();
+// 	    //d = "06-NOV-08 08:45:00 pm";
+// 	    String dateEmission = dat.toGMTString().substring(0,20)+" pm";
+// 	    Ticket ticket = new Ticket(nbSerie, dat, r, p);
+	    
+	    Date dat = new Date();
+	Timestamp t = new Timestamp(dat.getTime());
+	t.setHours((t.getHours()+2)%12);
+	String d = t.toGMTString();
+	    
+	    
+	    
+	    
+	    //d = "06-NOV-08 08:45:00 pm";
+	    String dateEmission = d.substring(0,20)+" pm";
+	
+	    
+	    
+	    
+	
+	    
+	    int nbSerie = rset.getInt("Tralala")+1;
+	    
+	    //d = "06-NOV-08 08:45:00 pm";
+
+	    Ticket ticket = new Ticket(nbSerie, dat, r, p);
+	    
+	    Date d1 = r.getDateRep();
+	    t = new Timestamp(d1.getTime());
+	    t.setHours((t.getHours()+1)%12);
+	    d = t.toGMTString();
+	    String daterep = d.substring(0,20)+" pm";
+	    
+	    String req = "insert into LESTICKETS values ('"+nbSerie+"', '"+r.getSpectacle().getNumS()+"', '"+daterep+"', '"+p.getNoPlace()+"', '"+p.getNoRang()+"', '"+dateEmission+"', '71')";
+//"select noPlace, noRang from LesPlaces where (noPlace, noRang) not in (select noPlace, noRang from LesTickets where dateRep = " + "TO_DATE('" + r.getDateRepText() + "','DD-MM-YYYY HH24'))";
+	    rset = stmt.executeQuery(req);
+
+	    stmt.close();
+	    rset.close();
+	    GestionAcces.commit();
+	    return ticket;
+	} catch (SQLException e) {
+	    GestionAcces.rollback();
+	    throw e;
+// 	} catch (Exception e){
+// 	    GestionAcces.rollback();
+// 	    throw e;
+	}
+    }
+
 }
