@@ -72,17 +72,39 @@ public class PlacesDisponiblesServlet extends HttpServlet {
 	    try {
 		Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
 		/** A faire */
-		String d = (new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
-				      new Integer(dateS.substring(3,5)).intValue()-1, 
-				      new Integer(dateS.substring(0,2)).intValue(), 
-				      new Integer(heureS).intValue()%12, 0, 0, 0)).toString();
+		Timestamp t = new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
+					    new Integer(dateS.substring(3,5)).intValue()-1, 
+					    new Integer(dateS.substring(0,2)).intValue(), 
+					    (new Integer(heureS).intValue()+1)%12, 0, 0, 0);
+		String d = t.toGMTString();
+		
+		// String res = t.getDay()
+		// switch (new Integer(dateS.substring(3,5)).intValue()) {
+		// case 01: 
+		    
+		//     break;
+		// case 02: break;
+		// case 03: break;
+		// case 04: break;
+		// case 05: break;
+		// case 06: break;
+		// case 07: break;
+		// case 08: break;
+		// case 09: break;
+		// case 10: break;
+		// case 11: break;
+		// case 12: break;
+		// }
+
+
 	        //d = "06-NOV-08 08:45:00 pm";
-		d = d.substring(0,19)+" pm";
+		d = d.substring(0,20)+" pm";
+
+		
+
 		out.println(d);		      
 		Representation r = GestionRequete.trouveRepresentation(s1, d); //Representation(dateS, new Integer(heureS).intValue(), s1, new ArrayList<Ticket>());
-		out.println("enculé");
 		ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
-		out.println("fils de pute");
 		out.println("<p>");
 		out.println("Places libres : <br/>");
 		for(int i=0; i<placesDisponibles.size(); i++) {

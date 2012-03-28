@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
-
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -77,7 +78,57 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    out.println("<input type=submit>");
 	    out.println("</form>");
 	} else {
-	    /** A FAIRE */
+		try{
+	   	Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+		Timestamp t = new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
+					    new Integer(dateS.substring(3,5)).intValue()-1, 
+					    new Integer(dateS.substring(0,2)).intValue(), 
+					    (new Integer(heureS).intValue()+1)%12, 0, 0, 0);
+		String d = t.toGMTString();
+		d = d.substring(0,20)+" pm";
+
+		out.println(d);		
+		//-----------------
+// 		Date dat = new Date();
+// 		t = new Timestamp(dat.getTime());
+// 		t.setHours((t.getHours()+2)%12);
+// 		d = t.toGMTString();
+// 	    
+// 	    
+// 	    
+// 	    
+// 	    //d = "06-NOV-08 08:45:00 pm";
+// 	    String dateEmission = d.substring(0,20)+" pm";
+// 		out.println(dateEmission);
+		//--------------
+		Representation r = GestionRequete.trouveRepresentation(s1, d);
+		//-----------------
+		
+// 		Date d1 = r.getDateRep();
+// 		t = new Timestamp(dat.getTime());
+// 		t.setHours((t.getHours()+2)%12);
+// 		d = t.toGMTString();
+// 		String daterep = d.substring(0,20)+" pm";
+// 		out.println(daterep);
+		//------------------
+		ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
+		int indexPlace = 0;
+		while (placesDisponibles.get(indexPlace) != null && (placesDisponibles.get(indexPlace).getNoPlace() != new Integer(noPlaceS).intValue()
+		       || placesDisponibles.get(indexPlace).getNoRang() != new Integer(noRangS).intValue())) 
+		    indexPlace++;
+		Place p = placesDisponibles.get(indexPlace);
+		Ticket ti;
+		if(p != null && r !=null) ti = GestionRequete.reserverTicket(r, p);
+		else out.println("Erreur place nulle");
+		
+	    }
+	    
+	    catch(SQLException e2) {
+	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
+	    }
+// 	    catch(Exception e1) {
+// 	    	out.println("erreur constructeur Ticket");
+// 	    }
 	}
 
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");

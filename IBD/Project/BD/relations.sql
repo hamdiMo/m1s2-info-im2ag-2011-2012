@@ -1,3 +1,4 @@
+--delete table LesTickets;
 drop table LesTickets;
 drop table LesDossiers;
 drop table LesRepresentations;
@@ -44,6 +45,6 @@ create table LesTickets (noSerie number (4), numS number (4),
       constraint tickets_c1 primary key (noSerie), 
       constraint tickets_c3 foreign key (numS,dateRep) references LesRepresentations (numS,dateRep), 
       constraint tickets_c4 foreign key (noPlace,noRang) references LesPlaces (noPlace,noRang),
-      constraint tickets_c6 foreign key (noDossier) references LesDossiers (noDossier),
-      constraint tickets_c7 check (dateEmission <= dateRep)
+      constraint tickets_c6 foreign key (noDossier) references LesDossiers (noDossier)
+      --, constraint tickets_c7 check (dateEmission <= dateRep)
 ); 
