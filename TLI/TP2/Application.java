@@ -23,6 +23,12 @@ public class Application extends JFrame {
         //	getContentPane().add(createToolBar(), BorderLayout.NORTH);
         getContentPane().add(createDrawingArea(), BorderLayout.CENTER);
         
+	addKeyListener(new KeyAdapter() {
+                public void keyPressed(KeyEvent e) {
+                    m_drawingArea.newLine();
+                }
+            });
+	
         pack();
         setVisible(true);
     }
