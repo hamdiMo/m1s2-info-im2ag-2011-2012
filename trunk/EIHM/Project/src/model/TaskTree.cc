@@ -39,6 +39,10 @@
     else return 0; // gestion d'erreur à mettre en place    
   } // rechercher le sous arbre sinon renvoit 0
 
+  std::vector<TaskTree*> TaskTree::getSubTrees(){
+    return m_subtrees;
+  }
+
   Transition* TaskTree::getTransitionIn() { return m_in; }  
 
   Transition* TaskTree::getTransitionOut() { return m_out; }  
@@ -182,5 +186,25 @@ void TaskTree::removeTransitions(){
       m_subtrees[size]->remove();
       m_subtrees.pop_back();
       size--;
+    }
+  }
+  
+  std::vector<std::vector<TaskTree*> >* TaskTree::getLevel(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect){
+    if(level >= 0){
+     rec(t, 0, level, vect);
+    } else {
+      std::cout << "level out of bounds"<< std::endl;
+     return NULL; 
+    }
+  }
+
+  void TaskTree::rec(TaskTree* t, int n, int level, std::vector<std::vector <TaskTree*> >* vect){
+    if(n == level-1){
+      vect->push_back(t->getSubTrees());
+
+    } else {
+      std::vector<TaskTree*>::iterator it;
+      for ( it=getSubTrees().begin() ; it < getSubTrees().end(); it++ )
+	rec(*it, n+1, level, vect);
     }
   }
