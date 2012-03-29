@@ -32,6 +32,8 @@ public:
 
   TaskTree* getSubTree(int); // rechercher le sous arbre sinon renvoit 0
 
+  std::vector<TaskTree*> getSubTrees();
+  
   Transition* getTransitionIn();  // rechercher la transition sinon renvoit 0
 
   Transition* getTransitionOut();
@@ -77,6 +79,12 @@ public:
   void removeSubtree(int index);
   
   void remove();
+  
+  std::vector<std::vector<TaskTree*> >* getLevel(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect);
+  
+  //std::vector<std::vector <TaskTree*> >* getLevel(TaskTree* t,int level, std::vector<std::vector <TaskTree*> >* vect);
+  
+  void rec(TaskTree*, int, int, std::vector<std::vector <TaskTree*> >*);
   
   protected:
 
