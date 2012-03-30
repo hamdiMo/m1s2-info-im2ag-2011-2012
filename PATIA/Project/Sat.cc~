@@ -1,7 +1,0 @@
-
-
-int main(argc, **argv){
-  Expression* e = new Expression();
-  delete e;
-  return 0;
-}
