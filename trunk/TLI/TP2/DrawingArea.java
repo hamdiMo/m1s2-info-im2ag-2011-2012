@@ -23,6 +23,8 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 		m_p0 = m_drawingArea.getPointFromClick(e.getPoint());
 		if (m_p0 == null) {
 		    m_p0 = e.getPoint();
+		    m_drawingArea.setPivot(m_p0);
+		    m_drawingArea.setTan(m_p0);
 		    return ADD;
 		} 
 		else {
@@ -37,6 +39,7 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	    public State mouseDragged(MouseEvent e) {
 		m_p1 = e.getPoint();
+		m_drawingArea.setTan(m_p1);
 		return ADD_TAN;
 	    }
 	}, ADD_TAN {
@@ -46,6 +49,7 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	    public State mouseDragged(MouseEvent e) {
 		m_p1 = e.getPoint();
+		m_drawingArea.setTan(m_p1);
 		return ADD_TAN;
 	    }
 	}, SELECT {
@@ -54,19 +58,23 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	    public State mouseDragged(MouseEvent e) {
 		m_p1 = e.getPoint();
-		return MOVE;
-	    }
-	}, MOVE {
-	    public State mouseReleased(MouseEvent e) {
 		m_drawingArea.move(m_p0, m_p1);
-		if (!m_drawingArea.isTan(m_p1)) m_drawingArea.select(m_p1);
-		return INIT;
-	    }
-	    public State mouseDragged(MouseEvent e) {
-		m_p1 = e.getPoint();
-		return MOVE;
+		m_p0 = m_p1;
+		if (!m_drawingArea.isTan(m_p0)) m_drawingArea.select(m_p0);
+		return SELECT;
 	    }
 	};
+	// , MOVE {
+	//     public State mouseReleased(MouseEvent e) {
+	// 	m_drawingArea.move(m_p0, m_p1);
+	// 	if (!m_drawingArea.isTan(m_p1)) m_drawingArea.select(m_p1);
+	// 	return INIT;
+	//     }
+	//     public State mouseDragged(MouseEvent e) {
+	// 	m_p1 = e.getPoint();
+	// 	return MOVE;
+	//     }
+	// };
 	static public State InitState(DrawingArea drawingArea) {
 	    m_drawingArea = drawingArea;
 	    return INIT;
@@ -116,6 +124,17 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 
     public boolean isClick(double x, double y, Point cur) {
 	return x - m_size2 <= cur.getX() && cur.getX() <= x + m_size2 && y - m_size2 <= cur.getY() && cur.getY() <= y + m_size2;
+    }
+
+    /** Mutateurs */
+    public void setPivot(Point p) {
+	m_p3 = p; 
+	repaint();
+    }
+    
+    public void setTan(Point p) {
+	m_p4 = p; 
+	repaint();
     }
 
     /** Methodes */
@@ -258,6 +277,8 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
         else m_curPath.quadTo(m_p1.getX(), m_p1.getY(), p.getX(), p.getY());
         m_p0 = p;
         m_p1 = null;
+	m_p3 = null;
+	m_p4 = null;
 	select(p);
         repaint();
     }
@@ -271,6 +292,8 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
                                p.getX(), p.getY());
         m_p0 = p;
         m_p1 = t;
+	m_p3 = null;
+	m_p4 = null;
 	select(p);
         repaint();
     }
@@ -292,56 +315,93 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
                 case PathIterator.SEG_MOVETO:
 		    if (isSelected(dots[0], dots[1])) {
 			g.fillRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
+			if (!pathIter.isDone()) {
+			    switch (pathIter.currentSegment(dots)) {
+			    case PathIterator.SEG_QUADTO:
+				break;
+			    case PathIterator.SEG_CUBICTO:
+				break;
+			    default:
+			    }
+			}
 		    }
-		    else g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    else {
+			g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
+		    }
 		    break;
                 case PathIterator.SEG_LINETO:
 		    if (isSelected(dots[0], dots[1])) {
 			g.fillRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
 		    }
-		    else g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    else {
+			g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
+		    }
                     break;
                 case PathIterator.SEG_QUADTO:
 		    if (isSelected(dots[2], dots[3])) {
 			g.fillRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
+			Point p0 = new Point((int)dots[0], (int)dots[1]), p1 = null;
+			pathIter.next();
+			if (!pathIter.isDone()) {
+			    switch (pathIter.currentSegment(dots)) {
+			    case PathIterator.SEG_QUADTO:
+				p1 = new Point((int)dots[0], (int)dots[1]);
+				break;
+			    case PathIterator.SEG_CUBICTO:
+				p1 = new Point((int)dots[0], (int)dots[1]);
+				break;
+			    default:
+			    }
+			}
+			g.drawRect((int)p0.getX() - m_size2, (int)p0.getY() - m_size2, 2 * m_size2, 2 * m_size2);
+			if (p1 != null) g.drawRect((int)p1.getX() - m_size2, (int)p1.getY() - m_size2, 2 * m_size2, 2 * m_size2);
 		    }
-		    else g.drawRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
-                    break;
+		    else {
+			g.drawRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
+		    }
+		    break;
                 case PathIterator.SEG_CUBICTO:
 		    if (isSelected(dots[4], dots[5])) {
 			g.fillRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
 		    }
-		    else g.drawRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
+		    else {
+			g.drawRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
+			pathIter.next();
+		    }
 		    break;
                 default:
+		    pathIter.next();
                     break;
                 }
-                pathIter.next();
-            }
+	    }
             g2d.draw(path);
             g.setColor(new Color(0,0,0));
         }
         if (m_p3 != null && m_p4 != null) {
-	    if (m_state == State.ADD) {
-		g.setColor(new Color(255,0,0));
-		if (m_p0 == null) 
-		    g.drawRect((int)m_p3.getX() - m_size2, (int)m_p3.getY() - m_size2, 2 * m_size2, 2 * m_size2);
-		else if (m_p1 == null) 
-		    g2d.draw(new QuadCurve2D.Double(m_p0.getX(), m_p0.getY(),
-						    2*m_p3.getX() - m_p4.getX(), 2*m_p3.getY() - m_p4.getY(),
-						    m_p3.getX(), m_p3.getY()));
-		else 
-		    g2d.draw(new CubicCurve2D.Double(m_p0.getX(), m_p0.getY(),
-						     m_p1.getX(), m_p1.getY(),
-						     2*m_p3.getX() - m_p4.getX(), 2*m_p3.getY() - m_p4.getY(),
-						     m_p3.getX(), m_p3.getY()));
-		g.setColor(new Color(0,0,0));
-		g.drawLine((int)(2*m_p3.getX() - m_p4.getX()), (int)(2*m_p3.getY() - m_p4.getY()),
-			   (int)m_p4.getX(), (int)m_p4.getY());
-		g.drawRect((int)(2*m_p3.getX() - m_p4.getX()), (int)(2*m_p3.getY() - m_p4.getY()), 2 * m_size2, 2 * m_size2);
+	    g.setColor(new Color(255,0,0));
+	    if (m_p0 == null) 
 		g.drawRect((int)m_p3.getX() - m_size2, (int)m_p3.getY() - m_size2, 2 * m_size2, 2 * m_size2);
-		g.drawRect((int)m_p4.getX() - m_size2, (int)m_p4.getY() - m_size2, 2 * m_size2, 2 * m_size2);
-	    }
+	    else if (m_p1 == null) 
+		g2d.draw(new QuadCurve2D.Double(m_p0.getX(), m_p0.getY(),
+						2*m_p3.getX() - m_p4.getX(), 2*m_p3.getY() - m_p4.getY(),
+						m_p3.getX(), m_p3.getY()));
+	    else 
+		g2d.draw(new CubicCurve2D.Double(m_p0.getX(), m_p0.getY(),
+						 m_p1.getX(), m_p1.getY(),
+						 2*m_p3.getX() - m_p4.getX(), 2*m_p3.getY() - m_p4.getY(),
+						 m_p3.getX(), m_p3.getY()));
+	    g.drawRect((int)m_p3.getX() - m_size2, (int)m_p3.getY() - m_size2, 2 * m_size2, 2 * m_size2);
+	    g.setColor(new Color(0,0,0));
+	    g.drawLine((int)(2*m_p3.getX() - m_p4.getX()), (int)(2*m_p3.getY() - m_p4.getY()),
+		       (int)m_p4.getX(), (int)m_p4.getY());
+	    g.drawRect((int)(2*m_p3.getX() - m_p4.getX() - m_size2), (int)(2*m_p3.getY() - m_p4.getY() - m_size2), 2 * m_size2, 2 * m_size2);
+	    g.drawRect((int)m_p4.getX() - m_size2, (int)m_p4.getY() - m_size2, 2 * m_size2, 2 * m_size2);
 	}
     }
     
