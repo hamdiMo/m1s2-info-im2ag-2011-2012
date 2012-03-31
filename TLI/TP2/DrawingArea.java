@@ -17,44 +17,73 @@ import java.awt.geom.PathIterator;
 public class DrawingArea extends JPanel implements MouseListener, MouseMotionListener {
 
     /** Type interne */
-    // private enum State { ADD, MOVE; };
-
-    
     private enum State {
-	ADD {
+	INIT {
+	    public State mousePressed(MouseEvent e) {
+		m_p0 = m_drawingArea.getPointFromClick(e.getPoint());
+		if (m_p0 == null) {
+		    m_p0 = e.getPoint();
+		    return ADD;
+		} 
+		else {
+		    if (!m_drawingArea.isTan(m_p0)) m_drawingArea.select(m_p0);
+		}
+		return SELECT;
+	    }
+	}, ADD {
 	    public State mouseReleased(MouseEvent e) {
-		m_drawingArea.addPoint(e.getPoint());
-		return ADD;
+		m_drawingArea.addPoint(m_p0);
+		return INIT;
+	    }
+	    public State mouseDragged(MouseEvent e) {
+		m_p1 = e.getPoint();
+		return ADD_TAN;
+	    }
+	}, ADD_TAN {
+	    public State mouseReleased(MouseEvent e) {
+		m_drawingArea.addPoint(m_p0, m_p1);
+		return INIT;
+	    }
+	    public State mouseDragged(MouseEvent e) {
+		m_p1 = e.getPoint();
+		return ADD_TAN;
+	    }
+	}, SELECT {
+	    public State mouseReleased(MouseEvent e) {
+		return INIT;
+	    }
+	    public State mouseDragged(MouseEvent e) {
+		m_p1 = e.getPoint();
+		return MOVE;
 	    }
 	}, MOVE {
 	    public State mouseReleased(MouseEvent e) {
+		m_drawingArea.move(m_p0, m_p1);
+		if (!m_drawingArea.isTan(m_p1)) m_drawingArea.select(m_p1);
+		return INIT;
+	    }
+	    public State mouseDragged(MouseEvent e) {
+		m_p1 = e.getPoint();
 		return MOVE;
 	    }
 	};
-	public State State(DrawingArea drawingArea) {
+	static public State InitState(DrawingArea drawingArea) {
 	    m_drawingArea = drawingArea;
-	    return ADD;
+	    return INIT;
 	}
-	public State mousePressed(MouseEvent e) { 
-	    m_p0 = e.getPoint(); 
-	    return ADD;
-	}
-	public State mouseReleased(MouseEvent e) { return this; }
-	public State mouseMoved(MouseEvent e) {
-	    m_p1 = e.getPoint(); 
-	    return this;
-	}
+	public State mousePressed(MouseEvent e) { throw new RuntimeException(); }
+	public State mouseReleased(MouseEvent e) { throw new RuntimeException(); }
+	public State mouseDragged(MouseEvent e) { throw new RuntimeException(); }
 
 	static DrawingArea m_drawingArea;
 	static Point m_p0, m_p1;
     };
 
-
     /** Attributs */
     private State m_state;
     private Path2D m_curPath;
     private Vector<Path2D> m_path;
-    private Point m_p0, m_p1, m_p2, m_p3, m_p4;
+    private Point m_p0, m_p1, m_p2, m_p3, m_p4, m_curPoint;
     private int m_size2;
 
     /** Constructeurs */
@@ -62,15 +91,154 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
         setPreferredSize(new Dimension(512, 512));
         m_curPath = null;
         m_path = new Vector<Path2D>();
+	m_state = State.InitState(this);
+
         newLine();
 
-	m_size2 = 2;
+	m_size2 = 10;
 
         addMouseListener(this);
         addMouseMotionListener(this);
     }
+    
+    /** Predicats */
+    public boolean isTan(Point p) { return false; }
+
+    public boolean isSelected(Point p) { return isSelected(p.getX(), p.getY()); }
+
+    public boolean isSelected(double x, double y) {
+	return m_curPoint != null && m_curPoint.getX() == x && m_curPoint.getY() == y;
+    }
+    
+    public boolean isClick(Point p, Point cur) {
+	return isClick(p.getX(), p.getY(), cur);
+    }
+
+    public boolean isClick(double x, double y, Point cur) {
+	return x - m_size2 <= cur.getX() && cur.getX() <= x + m_size2 && y - m_size2 <= cur.getY() && cur.getY() <= y + m_size2;
+    }
 
     /** Methodes */
+    public Point getPointFromClick(Point p) {
+	Point res = null;
+	PathIterator pathIter = m_curPath.getPathIterator(null);
+        while (res == null && !pathIter.isDone()) {
+            double[] dots = new double[6];
+            switch (pathIter.currentSegment(dots)) {
+            case PathIterator.SEG_MOVETO:
+                if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+		pathIter.next();
+                break;
+            case PathIterator.SEG_LINETO:
+		if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+		pathIter.next();
+		break;
+            case PathIterator.SEG_QUADTO:
+		if (isClick(dots[2], dots[3], p)) res = new Point((int)dots[2], (int)dots[3]);
+		if (isSelected(dots[2], dots[3])) {
+		    if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+		    pathIter.next();
+		    if (!pathIter.isDone()) {
+			switch (pathIter.currentSegment(dots)) {
+			case PathIterator.SEG_QUADTO:
+			    if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+			    break;
+			case PathIterator.SEG_CUBICTO:
+			    if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+			    break;
+			default:
+			}
+		    }
+		}
+		else pathIter.next();
+                break;
+            case PathIterator.SEG_CUBICTO:
+                if (isClick(dots[4], dots[5], p)) res = new Point((int)dots[4], (int)dots[5]);
+		if (isSelected(dots[4], dots[5])) {
+		    if (isClick(dots[2], dots[3], p)) res = new Point((int)dots[0], (int)dots[1]);
+		    pathIter.next();
+		    if (!pathIter.isDone()) {
+			switch (pathIter.currentSegment(dots)) {
+			case PathIterator.SEG_QUADTO:
+			    if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+			    break;
+			case PathIterator.SEG_CUBICTO:
+			    if (isClick(dots[0], dots[1], p)) res = new Point((int)dots[0], (int)dots[1]);
+			    break;
+			default:
+			}
+		    }
+		}
+		else pathIter.next();
+                break;
+            default:
+                break;
+            }
+        }
+	return res;
+    }
+    
+    public void move(Point p0, Point p1) {
+	Path2D copy = new Path2D.Double();
+	PathIterator pathIter = m_curPath.getPathIterator(null);
+        while (!pathIter.isDone()) {
+            double[] dots = new double[6];
+            switch (pathIter.currentSegment(dots)) {
+            case PathIterator.SEG_MOVETO:
+                if (p0.equals(new Point((int)dots[0], (int)dots[1]))) {
+		    dots[0] = p1.getX();
+		    dots[1] = p1.getY();
+		}
+		copy.moveTo(dots[0], dots[1]);
+                break;
+            case PathIterator.SEG_LINETO:
+                if (p0.equals(new Point((int)dots[0], (int)dots[1]))) {
+		    dots[0] = p1.getX();
+		    dots[1] = p1.getY();
+		}
+		copy.lineTo(dots[0], dots[1]);
+		break;
+            case PathIterator.SEG_QUADTO:
+                if (p0.equals(new Point((int)dots[0], (int)dots[1]))) {
+		    dots[0] = p1.getX();
+		    dots[1] = p1.getY();
+		}
+                else if (p0.equals(new Point((int)dots[2], (int)dots[3]))) {
+		    dots[2] = p1.getX();
+		    dots[3] = p1.getY();
+		}
+		copy.quadTo(dots[0], dots[1], dots[2], dots[3]);
+                break;
+            case PathIterator.SEG_CUBICTO:
+                if (p0.equals(new Point((int)dots[0], (int)dots[1]))) {
+		    dots[0] = p1.getX();
+		    dots[1] = p1.getY();
+		}
+                else if (p0.equals(new Point((int)dots[2], (int)dots[3]))) {
+		    dots[2] = p1.getX();
+		    dots[3] = p1.getY();
+		}
+                else if (p0.equals(new Point((int)dots[4], (int)dots[5]))) {
+		    dots[4] = p1.getX();
+		    dots[5] = p1.getY();
+		}
+		copy.curveTo(dots[0], dots[1], dots[2], dots[3], dots[4], dots[5]);
+                break;
+            default:
+                break;
+            }
+	    pathIter.next();
+        }
+	m_curPath = copy;
+	m_path.set(m_path.size()-1, copy); // bemol
+	repaint();
+    }
+
+    public void select(Point point) {
+	m_curPoint = point;
+	repaint();
+    }
+
     public void clear() {
         m_path.clear();
 	newLine();
@@ -81,6 +249,7 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
         m_p0 = m_p1 = m_p2 = m_p3 = m_p4 = null;
         m_curPath = new Path2D.Double();
         m_path.add(m_curPath);
+	repaint();
     }
 
     public void addPoint(Point p) {
@@ -89,6 +258,7 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
         else m_curPath.quadTo(m_p1.getX(), m_p1.getY(), p.getX(), p.getY());
         m_p0 = p;
         m_p1 = null;
+	select(p);
         repaint();
     }
     
@@ -101,6 +271,7 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
                                p.getX(), p.getY());
         m_p0 = p;
         m_p1 = t;
+	select(p);
         repaint();
     }
 
@@ -119,17 +290,29 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
                 double[] dots = new double[6];
                 switch (pathIter.currentSegment(dots)) {
                 case PathIterator.SEG_MOVETO:
-                    g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
-                    break;
+		    if (isSelected(dots[0], dots[1])) {
+			g.fillRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    }
+		    else g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    break;
                 case PathIterator.SEG_LINETO:
-                    g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    if (isSelected(dots[0], dots[1])) {
+			g.fillRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
+		    }
+		    else g.drawRect((int)dots[0] - m_size2, (int)dots[1] - m_size2, 2 * m_size2, 2 * m_size2);
                     break;
                 case PathIterator.SEG_QUADTO:
-                    g.drawRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
+		    if (isSelected(dots[2], dots[3])) {
+			g.fillRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
+		    }
+		    else g.drawRect((int)dots[2] - m_size2, (int)dots[3] - m_size2, 2 * m_size2, 2 * m_size2);
                     break;
                 case PathIterator.SEG_CUBICTO:
-                    g.drawRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
-                    break;
+		    if (isSelected(dots[4], dots[5])) {
+			g.fillRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
+		    }
+		    else g.drawRect((int)dots[4] - m_size2, (int)dots[5] - m_size2, 2 * m_size2, 2 * m_size2);
+		    break;
                 default:
                     break;
                 }
@@ -162,66 +345,11 @@ public class DrawingArea extends JPanel implements MouseListener, MouseMotionLis
 	}
     }
     
+    public void mousePressed(MouseEvent e) { m_state = m_state.mousePressed(e); }
+    public void mouseReleased(MouseEvent e) { m_state = m_state.mouseReleased(e); }
+    public void mouseDragged(MouseEvent e) { m_state = m_state.mouseDragged(e); }
     public void mouseClicked(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
-    
-    public void mousePressed(MouseEvent e) { 
-        Point p = e.getPoint();
-        m_p4 = m_p3 = p;
-
-        m_state = State.ADD;
-        PathIterator pathIter = m_curPath.getPathIterator(null);
-        while (!pathIter.isDone()) {
-            double[] dots = new double[6];
-            switch (pathIter.currentSegment(dots)) {
-            case PathIterator.SEG_MOVETO:
-                if (dots[0] - m_size2 < p.getX() && p.getX() < dots[0] + m_size2 &&
-		    dots[1] - m_size2 < p.getY() && p.getY() < dots[1] + m_size2)
-		    m_state = State.MOVE;
-                break;
-            case PathIterator.SEG_LINETO:
-                if (dots[0] - m_size2 < p.getX() && p.getX() < dots[0] + m_size2 &&
-		    dots[1] - m_size2 < p.getY() && p.getY() < dots[1] + m_size2)
-		    m_state = State.MOVE;
-                break;
-            case PathIterator.SEG_QUADTO:
-                if (dots[2] - m_size2 < p.getX() && p.getX() < dots[2] + m_size2 &&
-		    dots[3] - m_size2 < p.getY() && p.getY() < dots[3] + m_size2)
-		    m_state = State.MOVE;
-                break;
-            case PathIterator.SEG_CUBICTO:
-                if (dots[4] - m_size2 < p.getX() && p.getX() < dots[4] + m_size2 &&
-		    dots[5] - m_size2 < p.getY() && p.getY() < dots[5] + m_size2)
-		    m_state = State.MOVE;
-		break;
-            default:
-                break;
-            }
-            pathIter.next();
-        }
-    }
-    
-    public void mouseReleased(MouseEvent e) {
-        if (m_p3 != null) {
-            m_p4 = e.getPoint();
-            switch (m_state) {
-            case ADD:
-                if (m_p4.equals(m_p3)) addPoint(m_p3);
-                else addPoint(m_p3, m_p4);
-                break;
-            case MOVE:
-                throw new RuntimeException();
-            }
-        }
-        m_p3 = m_p4 = null;
-    }
-    
-    public void mouseDragged(MouseEvent e) {
-        if (m_p3 != null && !m_p4.equals(e.getPoint())) {
-            m_p4 = e.getPoint();
-            repaint();
-        }
-    }
     public void mouseMoved(MouseEvent e) {}
 }
