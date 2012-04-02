@@ -19,7 +19,7 @@ public class Ticket {
   /* CLASS VARIABLES */
   private static SimpleDateFormat dateFormat;
   static {
-    dateFormat = new SimpleDateFormat("dd-MM-yyyy HH");
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy KK:mm:ss aa");
   }
   
   /* INSTANCE VARIABLES */
@@ -57,10 +57,17 @@ public class Ticket {
     */
   public Ticket(int noSerie_, String dateEmission_, int heure_) throws FormatDateException {
     noSerie = noSerie_;
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    // if(heure_ < 0 || heure_ > 23)
+    //   throw new FormatDateException("Mauvaise heure : " + heure_);
+    // if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
+    //   throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+    boolean pm = heure_ >= 12;
+    if (pm) heure_ -= 12;
+    String format = new String(dateEmission_+" "+heure_+":00:00 ");
+    if (pm) format += "pm"; else format += "am";
+    if( (dateEmission = dateFormat.parse(format, new ParsePosition(0))) == null)
+        throw new FormatDateException("Mauvaise date : " + dateEmission_);
     rep = null;
     place = null;
   }
@@ -95,10 +102,17 @@ public class Ticket {
   public Ticket(int noSerie_, String dateEmission_, int heure_, Representation rep_, 
                 Place place_) throws FormatDateException {
     noSerie = noSerie_;
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    // if(heure_ < 0 || heure_ > 23)
+    //   throw new FormatDateException("Mauvaise heure : " + heure_);
+    // if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
+    //   throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+    boolean pm = heure_ >= 12;
+    if (pm) heure_ -= 12;
+    String format = new String(dateEmission_+" "+heure_+":00:00 ");
+    if (pm) format += "pm"; else format += "am";
+    if( (dateEmission = dateFormat.parse(format, new ParsePosition(0))) == null)
+        throw new FormatDateException("Mauvaise date : " + dateEmission_);
     rep = rep_;
     place = place_;
   }
@@ -165,10 +179,17 @@ public class Ticket {
     *                              le format souhaite
     */
   public void setDateEmission(String dateEmission_, int heure_) throws FormatDateException {
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    // if(heure_ < 0 || heure_ > 23)
+    //   throw new FormatDateException("Mauvaise heure : " + heure_);
+    // if( (dateEmission = dateFormat.parse(dateEmission_+" "+heure_, new ParsePosition(0))) == null)
+    //   throw new FormatDateException("Mauvaise date : " + dateEmission_);
+    if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+    boolean pm = heure_ >= 12;
+    if (pm) heure_ -= 12;
+    String format = new String(dateEmission_+" "+heure_+":00:00 ");
+    if (pm) format += "pm"; else format += "am";
+    if( (dateEmission = dateFormat.parse(format, new ParsePosition(0))) == null)
+        throw new FormatDateException("Mauvaise date : " + dateEmission_);
   }
   
   /**
@@ -202,7 +223,7 @@ public class Ticket {
     * @return  une chaine de caracteres decrivant l'objet
     */
   public String toString() {
-    String result = "Ticket (" + noSerie + ", " + getDateEmissionText() + "h)";
+    String result = "Ticket (" + noSerie + ", " + getDateEmissionText() + ")";
     return result;
   }
   

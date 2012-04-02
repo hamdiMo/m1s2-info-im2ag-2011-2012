@@ -5,19 +5,28 @@
 package accesbd;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+
 import modele.*;
-import java.sql.Timestamp;
 
 
 /**
-  * Classe pour la gestion des requetes. 
-  * Cette classe contient toutes les methodes associees aux differentes requetes 
-  * necessaires a l'application.
-  */
+ * Classe pour la gestion des requetes. 
+ * Cette classe contient toutes les methodes associees aux differentes requetes 
+ * necessaires a l'application.
+ */
 public class GestionRequete {
+
+    /* CLASS VARIABLES */
+    private static SimpleDateFormat dateFormat, timeFormat, dateAndTimeFormat, dateAndTimeFormatBD;
+    static {
+        dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
+        timeFormat = new SimpleDateFormat("HH");
+        dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH");
+        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy KK:mm:ss aa");
+    }
 
     /**
      * Requete permettant de recuperer un spectacle depuis la BD.
@@ -28,30 +37,30 @@ public class GestionRequete {
      *                       ou s'il y a un probleme d'acces a la BD
      */
     public static Spectacle trouveSpectacle(int numS_) throws SQLException {
-	try {
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "select nomS from LesSpectacles where numS = " + numS_;
-	    ResultSet rset = stmt.executeQuery(req);
-	    if(rset.next()) {
-		Spectacle result = new Spectacle(numS_, rset.getString("nomS"));
-		stmt.close();
-		rset.close();
-		// le commit ne sert ici qu'a liberer les ressources (verrous..)
-		// reservees par la requete
-		GestionAcces.commit();
-		return result;
-	    }
-	    else {
-		stmt.close();
-		rset.close();
-		GestionAcces.rollback();
-		throw new SQLException("Aucun spectacle avec numS = " + numS_);
-	    }
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        try {
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select nomS from LesSpectacles where numS = " + numS_;
+            ResultSet rset = stmt.executeQuery(req);
+            if(rset.next()) {
+                Spectacle result = new Spectacle(numS_, rset.getString("nomS"));
+                stmt.close();
+                rset.close();
+                // le commit ne sert ici qu'a liberer les ressources (verrous..)
+                // reservees par la requete
+                GestionAcces.commit();
+                return result;
+            }
+            else {
+                stmt.close();
+                rset.close();
+                GestionAcces.rollback();
+                throw new SQLException("Aucun spectacle avec numS = " + numS_);
+            }
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     
     }
   
@@ -61,24 +70,24 @@ public class GestionRequete {
      * @throws SQLException  s'il y a un probleme d'acces a la BD
      */
     public static ArrayList<Spectacle> trouveSpectacles() throws SQLException {
-	try {
-	    ArrayList<Spectacle> result = new ArrayList<Spectacle>();
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "select numS, nomS from LesSpectacles";
-	    ResultSet rset = stmt.executeQuery(req);
-	    while(rset.next()) {
-		Spectacle s = new Spectacle(rset.getInt("numS"), rset.getString("nomS"));
-		result.add(s);
-	    }
-	    stmt.close();
-	    rset.close();
-	    GestionAcces.commit();
-	    return result;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        try {
+            ArrayList<Spectacle> result = new ArrayList<Spectacle>();
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select numS, nomS from LesSpectacles";
+            ResultSet rset = stmt.executeQuery(req);
+            while(rset.next()) {
+                Spectacle s = new Spectacle(rset.getInt("numS"), rset.getString("nomS"));
+                result.add(s);
+            }
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return result;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
   
     /**
@@ -90,24 +99,15 @@ public class GestionRequete {
      *                       ou s'il y a un probleme d'acces a la BD
      */
     public static int ajouteRepresentation(Representation r_) throws SQLException {
-	try {
-	    if(r_.getSpectacle() == null) {
-		throw new SQLException("Pas de spectacle associe a la representation" +
-				       " donnee " + r_);
-	    }
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "insert into LesRepresentations values (" + 
-		r_.getSpectacle().getNumS() + "," +
-		"TO_DATE('" + r_.getDateRepText() + "','DD-MM-YYYY HH24'))";
-	    int ret = stmt.executeUpdate(req);
-	    stmt.close();
-	    GestionAcces.commit();
-	    return ret;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        try {
+            if (r_.getSpectacle() == null) {
+                throw new SQLException("Pas de spectacle associe a la representation donnee " + r_);
+            }
+            return ajouteRepresentation(r_.getSpectacle().getNumS(), r_); 
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
   
     /**
@@ -119,160 +119,109 @@ public class GestionRequete {
      * @throws SQLException  s'il y a un probleme d'acces a la BD
      */
     public static int ajouteRepresentation(int numS_, Representation r_) 
-	throws SQLException {
-	try {
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "insert into LesRepresentations values (" + 
-		numS_ + "," +
-		"TO_DATE('" + r_.getDateRepText() + "','DD-MM-YYYY HH24'))";
-	    int ret = stmt.executeUpdate(req);
-	    stmt.close();
-	    GestionAcces.commit();
-	    return ret;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        throws SQLException {
+        try {
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "insert into LesRepresentations values (" + 
+                numS_ + "," + r_.getDateRepText() + ")";
+            int ret = stmt.executeUpdate(req);
+            stmt.close();
+            GestionAcces.commit();
+            return ret;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
 
     public static ArrayList<Representation> trouveRepresentations(Spectacle s) throws SQLException {
-	try {
-	    ArrayList<Representation> result = new ArrayList<Representation>();
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "select dateRep from LesRepresentations where numS = " + s.getNumS();
-	    ResultSet rset = stmt.executeQuery(req);
-	    while(rset.next()) {
-		// Calendar c = Calendar.getInstance();
-		// c.setTimeInMillis(new Integer(rset.getString("dateRep")).longValue());
-		// Representation r = new Representation(c.getTime());
-		Representation r = new Representation(rset.getDate("dateRep"));
-		result.add(r);
-	    }
-	    stmt.close();
-	    rset.close();
-	    GestionAcces.commit();
-	    return result;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        try {
+            ArrayList<Representation> result = new ArrayList<Representation>();
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select dateRep from LesRepresentations where numS = " + s.getNumS();
+            ResultSet rset = stmt.executeQuery(req);
+            while (rset.next())
+                result.add(new Representation(rset.getDate("dateRep")));
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return result;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
 
-    public static Representation trouveRepresentation(Spectacle s, String d) throws SQLException {
-	try {
-	/** A faire */
-	  
-	    Representation r;
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-// 	    dateFormat.format(new SimpleDateFormat("dd-MM-yyyy HH"));
-// 	    String req = "select dateRep from LesRepresentations where numS = " + s.getNumS()+ "and dateRep = " + 
-// 		"TO_DATE('" + dateFormat.parse(dateS+" "+heureS, new ParsePosition(0)) + "','DD-MM-YYYY HH24'))";
-		
-	    //"TO_DATE('" dateFormat.format(new SimpleDateFormat("dd-MM-yyyy HH")) + "','DD-MM-YYYY HH24'))"
+    public static Representation trouveRepresentation(Spectacle s,  String d, int h) throws SQLException {
+        try {
+            if(h < 0 || h > 23) throw new SQLException("Mauvaise heure : " + h);
+            boolean pm = h >= 12;
+            if (pm) h -= 12;
+            String formatTime = new String(d+" "+h+":00:00 ");
+            if (pm) formatTime += "pm"; else formatTime += "am";
 
-	    String req = "select * from LesRepresentations where numS="+s.getNumS()+" and dateRep="+"'"+d+"'";
-	    /*  public Timestamp(int year, int month, int date, int hour, int minute, int second, int nano)*/
-	
-	    ResultSet rset = stmt.executeQuery(req);
-	    rset.next();
-	    r = new Representation(rset.getDate("dateRep"),s , new ArrayList<Ticket>());
-		
-	    stmt.close();
-	    rset.close();
-	    GestionAcces.commit();
-	    return r;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select * from LesRepresentations where numS="+s.getNumS()+" and dateRep='"+formatTime+"'";
+            ResultSet rset = stmt.executeQuery(req);
+            rset.next();
+            Representation r = new Representation(rset.getDate("dateRep"), s, new ArrayList<Ticket>());
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return r;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
 
     public static ArrayList<Place> trouvePlacesDisponibles(Representation r) throws SQLException {
-	try {
-	    ArrayList<Place> result = new ArrayList<Place>();
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    String req = "select noPlace, noRang from LesPlaces where (noPlace, noRang) not in (select noPlace, noRang from LesTickets where dateRep = " + "TO_DATE('" + r.getDateRepText() + "','DD-MM-YYYY HH24'))";
-	    ResultSet rset = stmt.executeQuery(req);
-	    while(rset.next()) {
-		// Calendar c = Calendar.getInstance();
-		// c.setTimeInMillis(new Integer(rset.getString("dateRep")).longValue());
-		// Representation r = new Representation(c.getTime());
-		Place p = new Place(rset.getInt("noPlace"), rset.getInt("noRang"));
-		result.add(p);
-	    }
-	    stmt.close();
-	    rset.close();
-	    GestionAcces.commit();
-	    return result;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-	}
+        try {
+            ArrayList<Place> result = new ArrayList<Place>();
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select noPlace, noRang from LesPlaces where (noPlace, noRang) not in (select noPlace, noRang from LesTickets where dateRep ='" + r.getDateRepText() + "')";
+            ResultSet rset = stmt.executeQuery(req);
+            while(rset.next()) result.add(new Place(rset.getInt("noPlace"), rset.getInt("noRang")));
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return result;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
 
-
     public static Ticket reserverTicket(Representation r, Place p) throws SQLException {
-	try {
-	    Connection conn = GestionAcces.getConnexion();
-	    Statement stmt = conn.createStatement();
-	    ResultSet rset = stmt.executeQuery("Select count(*) as Tralala from LesTickets");
-	    
-	    
-	   
-	    rset.next();
-// 	    int nbSerie = rset.getInt("Tralala")+1;
-// 	    Date dat = new Date();
-// 	    //d = "06-NOV-08 08:45:00 pm";
-// 	    String dateEmission = dat.toGMTString().substring(0,20)+" pm";
-// 	    Ticket ticket = new Ticket(nbSerie, dat, r, p);
-	    
-	    Date dat = new Date();
-	Timestamp t = new Timestamp(dat.getTime());
-	t.setHours((t.getHours()+2)%12);
-	String d = t.toGMTString();
-	    
-	    
-	    
-	    
-	    //d = "06-NOV-08 08:45:00 pm";
-	    String dateEmission = d.substring(0,20)+" pm";
-	
-	    
-	    
-	    
-	
-	    
-	    int nbSerie = rset.getInt("Tralala")+1;
-	    
-	    //d = "06-NOV-08 08:45:00 pm";
+        try {
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("Select count(*) as Tralala from LesTickets");
+            rset.next();
+            int nbSerie = rset.getInt("Tralala")+1;
 
-	    Ticket ticket = new Ticket(nbSerie, dat, r, p);
-	    
-	    Date d1 = r.getDateRep();
-	    t = new Timestamp(d1.getTime());
-	    t.setHours((t.getHours()+1)%12);
-	    d = t.toGMTString();
-	    String daterep = d.substring(0,20)+" pm";
-	    
-	    String req = "insert into LESTICKETS values ('"+nbSerie+"', '"+r.getSpectacle().getNumS()+"', '"+daterep+"', '"+p.getNoPlace()+"', '"+p.getNoRang()+"', '"+dateEmission+"', '71')";
-//"select noPlace, noRang from LesPlaces where (noPlace, noRang) not in (select noPlace, noRang from LesTickets where dateRep = " + "TO_DATE('" + r.getDateRepText() + "','DD-MM-YYYY HH24'))";
-	    rset = stmt.executeQuery(req);
-
-	    stmt.close();
-	    rset.close();
-	    GestionAcces.commit();
-	    return ticket;
-	} catch (SQLException e) {
-	    GestionAcces.rollback();
-	    throw e;
-// 	} catch (Exception e){
-// 	    GestionAcces.rollback();
-// 	    throw e;
-	}
+            Date dateEmission = new Date();
+            Ticket ticket = new Ticket(nbSerie, dateEmission, r, p);
+            String req = "insert into LESTICKETS values ('" + nbSerie
+                + "','" + r.getSpectacle().getNumS()
+                + "','" + r.getDateRepText()
+                + "','" + p.getNoPlace()
+                + "','" + p.getNoRang()
+                + "','" + dateAndTimeFormatBD.format(dateEmission)
+                + "','71')";
+            rset = stmt.executeQuery(req);
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return ticket;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
-import java.sql.Timestamp;
+
 
 /**
  * NouvelleRepresentation Servlet.
@@ -46,12 +46,12 @@ public class PlacesDisponiblesServlet extends HttpServlet {
 
 	out.println("<HEAD><TITLE> Places Disponibles </TITLE></HEAD>");
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	out.println("<font color=\"#FFFFFF\"><h1> Voir les places disponibles </h1>");
-
+    
 	numS	= req.getParameter("numS");
 	dateS	= req.getParameter("date");
 	heureS	= req.getParameter("heure");
 	if (numS == null || dateS == null || heureS == null) {
+        out.println("<font color=\"#FFFFFF\"><h1> Voir les places disponibles </h1>");
 	    out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la representation :");
 	    out.println("<P>");
 	    out.print("<form action=\"");
@@ -70,65 +70,27 @@ public class PlacesDisponiblesServlet extends HttpServlet {
 	    out.println("</form>");
 	} else {
 	    try {
-		Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
-		/** A faire */
-		Timestamp t = new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
-					    new Integer(dateS.substring(3,5)).intValue()-1, 
-					    new Integer(dateS.substring(0,2)).intValue(), 
-					    (new Integer(heureS).intValue()+1)%12, 0, 0, 0);
-		String d = t.toGMTString();
-		
-		// String res = t.getDay()
-		// switch (new Integer(dateS.substring(3,5)).intValue()) {
-		// case 01: 
-		    
-		//     break;
-		// case 02: break;
-		// case 03: break;
-		// case 04: break;
-		// case 05: break;
-		// case 06: break;
-		// case 07: break;
-		// case 08: break;
-		// case 09: break;
-		// case 10: break;
-		// case 11: break;
-		// case 12: break;
-		// }
-
-
-	        //d = "06-NOV-08 08:45:00 pm";
-		d = d.substring(0,20)+" pm";
-
-		
-
-		out.println(d);		      
-		Representation r = GestionRequete.trouveRepresentation(s1, d); //Representation(dateS, new Integer(heureS).intValue(), s1, new ArrayList<Ticket>());
-		ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
-		out.println("<p>");
-		out.println("Places libres : <br/>");
-		for(int i=0; i<placesDisponibles.size(); i++) {
-		    Place p = placesDisponibles.get(i);
-		    out.println("<a href=\"ReserverPlaceServlet?numS="+numS+"&date="+dateS+"&heure="+heureS+"&noPlace="+p.getNoPlace()+"&noRang="+p.getNoRang()+"\">");
-		    out.println(p.toString());
-		    out.println("</a> <br>");
-		}
-		out.println("</p>");
+            Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+            Representation r = GestionRequete.trouveRepresentation(s1, dateS, new Integer(heureS).intValue());
+            ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
+            out.println("<font color=\"#FFFFFF\"><h1> Places disponibles pour " + r + " de " + r.getSpectacle() +" </h1>");
+            out.println("<p><i><font color=\"#FFFFFF\">");
+            for(int i=0; i<placesDisponibles.size(); i++) {
+                Place p = placesDisponibles.get(i);
+                out.println("<a href=\"ReserverPlaceServlet?numS="+numS+"&date="+dateS+"&heure="+heureS+"&noPlace="+p.getNoPlace()+"&noRang="+p.getNoRang()+"\">");
+                out.println(p.toString());
+                out.println("</a> <br>");
+            }
+            out.println("</i></p>");
 	    }
-// 	    catch(FormatDateException e1) {
-// 	    	out.println("La date indiquee pour la representation ne respecte pas le bon format.");
-// 	    	out.println("La transaction est annulee.");
-// 	    }
 	    catch(SQLException e2) {
 	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
 	    }
 	}
-
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Page d'accueil</a></p>");
-	out.println("</BODY>");
-	out.close();
-
+    
+    out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
+    out.println("</BODY>");
+    out.close();
     }
 
     /**

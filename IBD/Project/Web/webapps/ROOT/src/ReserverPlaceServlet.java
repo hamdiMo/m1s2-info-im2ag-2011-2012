@@ -47,7 +47,6 @@ public class ReserverPlaceServlet extends HttpServlet {
 
 	out.println("<HEAD><TITLE> Reservation d'une place  </TITLE></HEAD>");
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	out.println("<font color=\"#FFFFFF\"><h1> Reserver une place </h1>");
 
 	numS	= req.getParameter("numS");
 	dateS	= req.getParameter("date");
@@ -55,6 +54,7 @@ public class ReserverPlaceServlet extends HttpServlet {
 	noPlaceS = req.getParameter("noPlace");
 	noRangS =  req.getParameter("noRang");
 	if (numS == null || dateS == null || heureS == null) {
+        out.println("<font color=\"#FFFFFF\"><h1> Reserver une place </h1>");
 	    out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la place que vous desirez reserver :");
 	    out.println("<P>");
 	    out.print("<form action=\"");
@@ -79,56 +79,25 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    out.println("</form>");
 	} else {
 		try{
-	   	Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
-		Timestamp t = new Timestamp(new Integer(dateS.substring(6,10)).intValue()-1900, 
-					    new Integer(dateS.substring(3,5)).intValue()-1, 
-					    new Integer(dateS.substring(0,2)).intValue(), 
-					    (new Integer(heureS).intValue()+1)%12, 0, 0, 0);
-		String d = t.toGMTString();
-		d = d.substring(0,20)+" pm";
-
-		out.println(d);		
-		//-----------------
-// 		Date dat = new Date();
-// 		t = new Timestamp(dat.getTime());
-// 		t.setHours((t.getHours()+2)%12);
-// 		d = t.toGMTString();
-// 	    
-// 	    
-// 	    
-// 	    
-// 	    //d = "06-NOV-08 08:45:00 pm";
-// 	    String dateEmission = d.substring(0,20)+" pm";
-// 		out.println(dateEmission);
-		//--------------
-		Representation r = GestionRequete.trouveRepresentation(s1, d);
-		//-----------------
-		
-// 		Date d1 = r.getDateRep();
-// 		t = new Timestamp(dat.getTime());
-// 		t.setHours((t.getHours()+2)%12);
-// 		d = t.toGMTString();
-// 		String daterep = d.substring(0,20)+" pm";
-// 		out.println(daterep);
-		//------------------
-		ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
-		int indexPlace = 0;
-		while (placesDisponibles.get(indexPlace) != null && (placesDisponibles.get(indexPlace).getNoPlace() != new Integer(noPlaceS).intValue()
-		       || placesDisponibles.get(indexPlace).getNoRang() != new Integer(noRangS).intValue())) 
-		    indexPlace++;
-		Place p = placesDisponibles.get(indexPlace);
-		Ticket ti;
-		if(p != null && r !=null) ti = GestionRequete.reserverTicket(r, p);
-		else out.println("Erreur place nulle");
-		
-	    }
-	    
-	    catch(SQLException e2) {
+            Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+            Representation r = GestionRequete.trouveRepresentation(s1, dateS, new Integer(heureS).intValue());
+            out.println("<font color=\"#FFFFFF\"><h1> Reserver une place pour " + r + " </h1>");
+            out.println("<p><i><font color=\"#FFFFFF\">");
+            ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
+            int indexPlace = 0;
+            while (placesDisponibles.get(indexPlace) != null
+                   && (placesDisponibles.get(indexPlace).getNoPlace() != new Integer(noPlaceS).intValue()
+                       || placesDisponibles.get(indexPlace).getNoRang() != new Integer(noRangS).intValue())) 
+                indexPlace++;
+            Place p = placesDisponibles.get(indexPlace);
+            Ticket ti;
+            if(p != null && r !=null) ti = GestionRequete.reserverTicket(r, p);
+            else out.println("Erreur place nulle");
+            out.println("</i></p>");
+        }
+        catch(SQLException e2) {
 	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
 	    }
-// 	    catch(Exception e1) {
-// 	    	out.println("erreur constructeur Ticket");
-// 	    }
 	}
 
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");

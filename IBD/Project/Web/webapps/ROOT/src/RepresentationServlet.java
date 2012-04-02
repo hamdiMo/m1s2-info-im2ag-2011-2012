@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
 
+import java.text.SimpleDateFormat;
+
 
 /**
  * NouvelleRepresentation Servlet.
@@ -23,6 +25,13 @@ import accesbd.*;
  */
 
 public class RepresentationServlet extends HttpServlet {
+
+    /* CLASS VARIABLES */
+    private static SimpleDateFormat dateFormat, timeFormat;
+    static {
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
+      timeFormat = new SimpleDateFormat("HH");
+    }
 
     /**
      * HTTP GET request entry point.
@@ -37,53 +46,53 @@ public class RepresentationServlet extends HttpServlet {
      *				 when the servlet handles the GET request
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
-	String numS, dateS, heureS;
-	ServletOutputStream out = res.getOutputStream();   
+        String numS, dateS, heureS;
+        ServletOutputStream out = res.getOutputStream();   
 
-	res.setContentType("text/html");
+        res.setContentType("text/html");
 
-	out.println("<HEAD><TITLE> Representations </TITLE></HEAD>");
-	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	out.println("<font color=\"#FFFFFF\"><h1> Voir les representations </h1>");
+        out.println("<HEAD><TITLE> Representations </TITLE></HEAD>");
+        out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 
-	numS	= req.getParameter("numS");
-	if (numS == null) {
-	    out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives au spectatcle :");
-	    out.println("<P>");
-	    out.print("<form action=\"");
-	    out.print("RepresentationServlet\" ");
-	    out.println("method=POST>");
-	    out.println("Num&eacute;ro de spectacle :");
-	    out.println("<input type=text size=20 name=numS>");
-	    out.println("<br>");
-	    out.println("<input type=submit>");
-	    out.println("</form>");
-	} else {
-	    try {
-	    	Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
-		ArrayList<Representation> representations = GestionRequete.trouveRepresentations(s1);
-		out.println("<p>");
-		out.println("Representations : <br/>");
-		for(int i=0; i<representations.size(); i++) {
-		    Representation r = representations.get(i);
-		    out.println("<a href=\"PlacesDisponiblesServlet?numS="+numS+"&date="+r.getDateRepText().substring(0, 10)+"&heure="+r.getDateRepText().substring(11, 13)+"\">");
-		    out.println(r.toString());
-		    out.println("</a>" + "<br>");
-		}
-		out.println("</p>");
-	    }
-	    catch(SQLException e2) {
-	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
-	    }
-	}
+        numS	= req.getParameter("numS");
+        if (numS == null) {
+            out.println("<font color=\"#FFFFFF\"><h1> Voir les representations </h1>");
+            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives au spectatcle :");
+            out.println("<P>");
+            out.print("<form action=\"");
+            out.print("RepresentationServlet\" ");
+            out.println("method=POST>");
+            out.println("Num&eacute;ro de spectacle :");
+            out.println("<input type=text size=20 name=numS>");
+            out.println("<br>");
+            out.println("<input type=submit>");
+            out.println("</form>");
+        } else {
+            try {
+                Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+                out.println("<font color=\"#FFFFFF\"><h1> Representations de " + s1 + "</h1>");
+                out.println("<p><i><font color=\"#FFFFFF\">");
+                ArrayList<Representation> representations = GestionRequete.trouveRepresentations(s1);
+                for(int i=0; i<representations.size(); i++) {
+                    Representation r = representations.get(i);
+                    out.println("<a href=\"PlacesDisponiblesServlet?numS=" + numS
+                                + "&date=" + dateFormat.format(r.getDateRep())
+                                + "&heure=" + timeFormat.format(r.getDateRep()) + "\">");
+                    out.println(r.toString());
+                    out.println("</a>" + "<br>");
+                }
+                out.println("</i></p>");
+            }
+            catch(SQLException e2) {
+                out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
+            }
+        }
 
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Page d'accueil</a></p>");
-	out.println("</BODY>");
-	out.close();
-
+        out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
+        out.println("</BODY>");
+        out.close();
     }
 
     /**
@@ -99,9 +108,9 @@ public class RepresentationServlet extends HttpServlet {
      *					   when the servlet handles the POST request
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
-	doGet(req, res);
+        doGet(req, res);
     }
 
 
