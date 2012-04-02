@@ -196,6 +196,24 @@ public class GestionRequete {
         }
     }
 
+    public static Ticket reserverTicket(Representation r, Zone z) throws SQLException {
+        try {
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("select noPlace, noRang from LesTickets where numZ = "
+                                               + z.getNumZ()
+                                               + " and (noPlace, noRang) not in "
+                                               + "(select noPlace, noRang from LesTickets where dateRep ='" 
+                                               + r.getDateRepText() 
+                                               + "')");
+            rset.next();
+            return reserverTicket(r, new Place(rset.getInt("noPlace"), rset.getInt("noRang"), z, new ArrayList<Ticket>()));
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        }
+    }
+
     public static Ticket reserverTicket(Representation r, Place p) throws SQLException {
         try {
             Connection conn = GestionAcces.getConnexion();
@@ -206,7 +224,7 @@ public class GestionRequete {
 
             Date dateEmission = new Date();
             Ticket ticket = new Ticket(nbSerie, dateEmission, r, p);
-            String req = "insert into LESTICKETS values ('" + nbSerie
+            String req = "insert into LesTickets values ('" + nbSerie
                 + "','" + r.getSpectacle().getNumS()
                 + "','" + r.getDateRepText()
                 + "','" + p.getNoPlace()
