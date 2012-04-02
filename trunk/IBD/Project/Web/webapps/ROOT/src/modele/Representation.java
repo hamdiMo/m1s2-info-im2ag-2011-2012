@@ -19,7 +19,7 @@ public class Representation {
   /* CLASS VARIABLES */
   private static SimpleDateFormat dateFormat;
   static {
-    dateFormat = new SimpleDateFormat("dd-MM-yyyy HH");
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy KK:mm:ss aa");
   }
   
   /* INSTANCE VARIABLES */
@@ -45,12 +45,19 @@ public class Representation {
     *                              le format souhaite 
     */
   public Representation(String dateRep_, int heure_) throws FormatDateException {
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateRep_);
-    spectacle = null;
-    tickets = new ArrayList<Ticket>();
+      // if(heure_ < 0 || heure_ > 23)
+      //   throw new FormatDateException("Mauvaise heure : " + heure_);
+      // if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
+      //   throw new FormatDateException("Mauvaise date : " + dateRep_);
+      if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+      boolean pm = heure_ >= 12;
+      if (pm) heure_ -= 12;
+      String format = new String(dateRep_+" "+heure_+":00:00 ");
+      if (pm) format += "pm"; else format += "am";
+      if( (dateRep = dateFormat.parse(format, new ParsePosition(0))) == null)
+          throw new FormatDateException("Mauvaise date : " + dateRep_);
+      spectacle = null;
+      tickets = new ArrayList<Ticket>();
   }
   
   /**
@@ -79,12 +86,19 @@ public class Representation {
     */
   public Representation(String dateRep_, int heure_, Spectacle spectacle_,
                         ArrayList<Ticket> tickets_) throws FormatDateException {
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateRep_);
-    spectacle = spectacle_;
-    tickets = tickets_;
+      // if(heure_ < 0 || heure_ > 23)
+      //   throw new FormatDateException("Mauvaise heure : " + heure_);
+      // if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
+      //   throw new FormatDateException("Mauvaise date : " + dateRep_);
+      if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+      boolean pm = heure_ >= 12;
+      if (pm) heure_ -= 12;
+      String format = new String(dateRep_+" "+heure_+":00:00 ");
+      if (pm) format += "pm"; else format += "am";
+      if( (dateRep = dateFormat.parse(format, new ParsePosition(0))) == null)
+          throw new FormatDateException("Mauvaise date : " + dateRep_);
+      spectacle = spectacle_;
+      tickets = tickets_;
   }
   
   /**
@@ -155,10 +169,17 @@ public class Representation {
     *                              le format souhaite 
     */
   public void setDateRep(String dateRep_, int heure_) throws FormatDateException  {
-    if(heure_ < 0 || heure_ > 23)
-      throw new FormatDateException("Mauvaise heure : " + heure_);
-    if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
-      throw new FormatDateException("Mauvaise date : " + dateRep_);
+      // if(heure_ < 0 || heure_ > 23)
+      //   throw new FormatDateException("Mauvaise heure : " + heure_);
+      // if( (dateRep = dateFormat.parse(dateRep_+" "+heure_, new ParsePosition(0))) == null)
+      //   throw new FormatDateException("Mauvaise date : " + dateRep_);
+      if(heure_ < 0 || heure_ > 23) throw new FormatDateException("Mauvaise heure : " + heure_);
+      boolean pm = heure_ >= 12;
+      if (pm) heure_ -= 12;
+      String format = new String(dateRep_+" "+heure_+":00:00 ");
+      if (pm) format += "pm"; else format += "am";
+      if( (dateRep = dateFormat.parse(format, new ParsePosition(0))) == null)
+          throw new FormatDateException("Mauvaise date : " + dateRep_);
   }
   
   /**
@@ -188,7 +209,7 @@ public class Representation {
     if(spectacle != null) {
       result = result + spectacle.getNumS() + ", ";
     }
-    result = result + getDateRepText() + "h)";
+    result = result + getDateRepText() + ")";
     return result;
   }
   

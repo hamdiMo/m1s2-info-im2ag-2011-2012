@@ -37,41 +37,36 @@ public class ProgrammeServlet extends HttpServlet {
      *					   when the servlet handles the GET request
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
         ServletOutputStream out = res.getOutputStream();   
 
-	res.setContentType("text/html");
+        res.setContentType("text/html");
 
-	out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
-	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
-out.println("Spectacles : <br/>");
-	// TO DO
-	// Recuperation de la liste de tous les spectacles de la saison.
-	try {
-	    Saison saison = new Saison();
-	    saison.setSpectacles(GestionRequete.trouveSpectacles()); 
-	    out.println("<p>");
-	    out.println("Spectacles : <br/>");
-	    for(int i=0; i<saison.getSpectacles().size(); i++) {
-		Spectacle s = saison.getSpectacles().get(i);
-		out.println("<a href=\"RepresentationServlet?numS="+s.getNumS()+"\">");
-		out.println(s.toString());
-		out.println("</a>" + "<br>");
-	    }
-	    out.println("</p>");
-	}
-	catch(SQLException e) {
-	    System.err.println("Erreur oracle : " + e.getErrorCode() + e.getMessage());
-	}
+        out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
+        out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
+        out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
 
-	// Puis construction dynamique d'une page web decrivant ces spectacles.
-	out.println("<p><i><font color=\"#FFFFFF\">...</i></p>");
+        // Puis construction dynamique d'une page web decrivant ces spectacles.
+        out.println("<p><i><font color=\"#FFFFFF\">");
+        try {
+            Saison saison = new Saison();
+            saison.setSpectacles(GestionRequete.trouveSpectacles()); 
+            for(int i=0; i<saison.getSpectacles().size(); i++) {
+                Spectacle s = saison.getSpectacles().get(i);
+                out.println("<a href=\"RepresentationServlet?numS="+s.getNumS()+"\">");
+                out.println(s.toString());
+                out.println("</a>" + "<br>");
+            }
+        }
+        catch(SQLException e) {
+            out.println("Erreur oracle : " + e.getErrorCode() + e.getMessage());
+        }
+        out.println("</i></p>");
 
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
-	out.println("</BODY>");
-	out.close();
+        out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
+        out.println("</BODY>");
+        out.close();
 
     }
 
@@ -88,9 +83,9 @@ out.println("Spectacles : <br/>");
      *					   when the servlet handles the POST request
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
-	doGet(req, res);
+        doGet(req, res);
     }
 
 
