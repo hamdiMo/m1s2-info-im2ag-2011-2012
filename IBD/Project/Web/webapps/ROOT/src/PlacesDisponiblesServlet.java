@@ -37,60 +37,60 @@ public class PlacesDisponiblesServlet extends HttpServlet {
      *				 when the servlet handles the GET request
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
-	String numS, dateS, heureS;
-	ServletOutputStream out = res.getOutputStream();   
+        String numS, dateS, heureS;
+        ServletOutputStream out = res.getOutputStream();   
 
-	res.setContentType("text/html");
+        res.setContentType("text/html");
 
-	out.println("<HEAD><TITLE> Places Disponibles </TITLE></HEAD>");
-	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
+        out.println("<HEAD><TITLE> Places Disponibles </TITLE></HEAD>");
+        out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
     
-	numS	= req.getParameter("numS");
-	dateS	= req.getParameter("date");
-	heureS	= req.getParameter("heure");
-	if (numS == null || dateS == null || heureS == null) {
-        out.println("<font color=\"#FFFFFF\"><h1> Voir les places disponibles </h1>");
-	    out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la representation :");
-	    out.println("<P>");
-	    out.print("<form action=\"");
-	    out.print("PlacesDisponiblesServlet\" ");
-	    out.println("method=POST>");
-	    out.println("Num&eacute;ro de spectacle :");
-	    out.println("<input type=text size=20 name=numS>");
-	    out.println("<br>");
-	    out.println("Date de la repr&eacute;sentation :");
-	    out.println("<input type=text size=20 name=date>");
-	    out.println("<br>");
-	    out.println("Heure de d&eacute;but de la repr&eacute;sentation :");
-	    out.println("<input type=text size=20 name=heure>");
-	    out.println("<br>");
-	    out.println("<input type=submit>");
-	    out.println("</form>");
-	} else {
-	    try {
-            Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
-            Representation r = GestionRequete.trouveRepresentation(s1, dateS, new Integer(heureS).intValue());
-            ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
-            out.println("<font color=\"#FFFFFF\"><h1> Places disponibles pour " + r + " de " + r.getSpectacle() +" </h1>");
-            out.println("<p><i><font color=\"#FFFFFF\">");
-            for(int i=0; i<placesDisponibles.size(); i++) {
-                Place p = placesDisponibles.get(i);
-                out.println("<a href=\"ReserverPlaceServlet?numS="+numS+"&date="+dateS+"&heure="+heureS+"&noPlace="+p.getNoPlace()+"&noRang="+p.getNoRang()+"\">");
-                out.println(p.toString());
-                out.println("</a> <br>");
+        numS	= req.getParameter("numS");
+        dateS	= req.getParameter("date");
+        heureS	= req.getParameter("heure");
+        if (numS == null || dateS == null || heureS == null) {
+            out.println("<font color=\"#FFFFFF\"><h1> Voir les places disponibles </h1>");
+            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la representation :");
+            out.println("<P>");
+            out.print("<form action=\"");
+            out.print("PlacesDisponiblesServlet\" ");
+            out.println("method=POST>");
+            out.println("Num&eacute;ro de spectacle :");
+            out.println("<input type=text size=20 name=numS>");
+            out.println("<br>");
+            out.println("Date de la repr&eacute;sentation :");
+            out.println("<input type=text size=20 name=date>");
+            out.println("<br>");
+            out.println("Heure de d&eacute;but de la repr&eacute;sentation :");
+            out.println("<input type=text size=20 name=heure>");
+            out.println("<br>");
+            out.println("<input type=submit>");
+            out.println("</form>");
+        } else {
+            try {
+                Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
+                Representation r = GestionRequete.trouveRepresentation(s1, dateS, new Integer(heureS).intValue());
+                ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
+                out.println("<font color=\"#FFFFFF\"><h1> Places disponibles pour " + r + " de " + r.getSpectacle() +" </h1>");
+                out.println("<p><i><font color=\"#FFFFFF\">");
+                for(int i=0; i<placesDisponibles.size(); i++) {
+                    Place p = placesDisponibles.get(i);
+                    out.println("<a href=\"ReserverPlaceServlet?numS="+numS+"&date="+dateS+"&heure="+heureS+"&noPlace="+p.getNoPlace()+"&noRang="+p.getNoRang()+"\">");
+                    out.println(p.toString());
+                    out.println("</a> <br>");
+                }
+                out.println("</i></p>");
             }
-            out.println("</i></p>");
-	    }
-	    catch(SQLException e2) {
-	    	out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
-	    }
-	}
+            catch(SQLException e2) {
+                out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
+            }
+        }
     
-    out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
-    out.println("</BODY>");
-    out.close();
+        out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
+        out.println("</BODY>");
+        out.close();
     }
 
     /**
@@ -106,9 +106,9 @@ public class PlacesDisponiblesServlet extends HttpServlet {
      *					   when the servlet handles the POST request
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+        throws ServletException, IOException
     {
-	doGet(req, res);
+        doGet(req, res);
     }
 
 

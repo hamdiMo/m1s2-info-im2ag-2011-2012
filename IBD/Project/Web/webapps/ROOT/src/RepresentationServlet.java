@@ -77,11 +77,19 @@ public class RepresentationServlet extends HttpServlet {
                 ArrayList<Representation> representations = GestionRequete.trouveRepresentations(s1);
                 for(int i=0; i<representations.size(); i++) {
                     Representation r = representations.get(i);
-                    out.println("<a href=\"PlacesDisponiblesServlet?numS=" + numS
+                    out.println(r.toString()
+                                + " : <a href=\"PlacesDisponiblesServlet?numS=" + numS
                                 + "&date=" + dateFormat.format(r.getDateRep())
-                                + "&heure=" + timeFormat.format(r.getDateRep()) + "\">");
-                    out.println(r.toString());
-                    out.println("</a>" + "<br>");
+                                + "&heure=" + timeFormat.format(r.getDateRep()) 
+                                + "\">voir les places disponibles</a>"
+                                + "<form action=\"ReserverPlaceServlet?numS=" + numS
+                                + "&date=" + dateFormat.format(r.getDateRep())
+                                + "&heure=" + timeFormat.format(r.getDateRep()) 
+                                + "\" method=POST>"
+                                + "Num&eacute;ro de zone :"
+                                + "<input type=text size=20 name=numZ>"
+                                + "<input type=submit>"
+                                + "</form><br>");
                 }
                 out.println("</i></p>");
             }
