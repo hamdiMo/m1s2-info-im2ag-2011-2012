@@ -38,6 +38,7 @@ public class ConfigConnexion {
       p.load(is);
       String driver = p.getProperty("driver");
       String url = "jdbc:";
+      // String url = "jdbc:oracle:thin:@localhost:1521:ufrima";
       url = url + p.getProperty("sousproto") + ":";
       url = url + "@" + p.getProperty("machine") + ":";
       url = url + p.getProperty("port") + ":";
@@ -79,7 +80,7 @@ public class ConfigConnexion {
       is = new BufferedInputStream(u.openStream());
       p.load(is);
       String driver = p.getProperty("driver");
-      String url = "jdbc:";
+      String url = "jdbc:oracle:thin:@localhost:1521:ufrima";
       url = url + p.getProperty("sousproto") + ":";
       url = url + "@" + p.getProperty("machine") + ":";
       url = url + p.getProperty("port") + ":";

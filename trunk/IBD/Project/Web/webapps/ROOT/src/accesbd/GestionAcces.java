@@ -30,7 +30,8 @@ public class GestionAcces {
       return connexion;
     }
     try {
-      connexion = ConfigConnexion.getConnexion("connexion.cfg");
+	connexion = ConfigConnexion.getConnexion("connexion.cfg");
+	//connexion = ConfigConnexion.getConnexion("/SVNCoursM1/IBD/Project/Web/webapps/ROOT/connexion.cfg");
       connexion.setAutoCommit(false);
     }
     catch (ClassNotFoundException ex) {

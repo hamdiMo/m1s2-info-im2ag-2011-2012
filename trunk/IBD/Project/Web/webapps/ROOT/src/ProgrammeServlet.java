@@ -46,12 +46,12 @@ public class ProgrammeServlet extends HttpServlet {
 	out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
-
+out.println("Spectacles : <br/>");
 	// TO DO
 	// Recuperation de la liste de tous les spectacles de la saison.
 	try {
 	    Saison saison = new Saison();
-	    saison.setSpectacles(GestionRequete.trouveSpectacles());
+	    saison.setSpectacles(GestionRequete.trouveSpectacles()); 
 	    out.println("<p>");
 	    out.println("Spectacles : <br/>");
 	    for(int i=0; i<saison.getSpectacles().size(); i++) {
@@ -65,7 +65,6 @@ public class ProgrammeServlet extends HttpServlet {
 	catch(SQLException e) {
 	    System.err.println("Erreur oracle : " + e.getErrorCode() + e.getMessage());
 	}
-	  
 
 	// Puis construction dynamique d'une page web decrivant ces spectacles.
 	out.println("<p><i><font color=\"#FFFFFF\">...</i></p>");
