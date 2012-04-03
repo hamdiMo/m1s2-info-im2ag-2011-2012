@@ -14,6 +14,6 @@ public class Reservation {
     public Place getPlace(){ return m_place; }
 
     public String toString(){
-      return new String("Réservation de la "+ m_representation.toString() + " à la " +m_place.toString());
+        return new String("Reservation (" + m_representation.toString() + ", " + m_place.toString() + ")");
     }
 }

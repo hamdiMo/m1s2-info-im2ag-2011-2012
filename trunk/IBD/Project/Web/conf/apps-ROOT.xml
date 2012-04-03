@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<webapps>
+  <Context path="/tmexwebui" docBase="webapps/ROOT" reloadable="true" > 
+    <SimpleRealm filename="conf/users/ROOT-users.xml" />
+  </Context>
+</webapps>
