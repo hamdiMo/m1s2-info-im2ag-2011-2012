@@ -25,7 +25,7 @@ public class GestionRequete {
         dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
         timeFormat = new SimpleDateFormat("HH");
         dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH");
-        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy KK:mm:ss aa");
+        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
     }
 
     /**
@@ -200,7 +200,7 @@ public class GestionRequete {
         try {
             Connection conn = GestionAcces.getConnexion();
             Statement stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select noPlace, noRang from LesTickets where numZ = "
+            ResultSet rset = stmt.executeQuery("select noPlace, noRang from LesPlaces where numZ="
                                                + z.getNumZ()
                                                + " and (noPlace, noRang) not in "
                                                + "(select noPlace, noRang from LesTickets where dateRep ='" 
