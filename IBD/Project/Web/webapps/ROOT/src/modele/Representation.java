@@ -19,7 +19,7 @@ public class Representation {
   /* CLASS VARIABLES */
   private static SimpleDateFormat dateFormat;
   static {
-      dateFormat = new SimpleDateFormat("dd-MMM-yyyy KK:mm:ss aa");
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
   }
   
   /* INSTANCE VARIABLES */
