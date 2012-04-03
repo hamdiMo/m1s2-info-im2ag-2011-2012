@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
-
+import java.util.Date;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -22,7 +22,7 @@ import accesbd.*;
  * @version 1.0, 31/10/2007
  */
 
-public class PlacesDisponiblesServlet extends HttpServlet {
+public class AjouterCaddieServlet extends HttpServlet {
 
     /**
      * HTTP GET request entry point.
@@ -39,23 +39,26 @@ public class PlacesDisponiblesServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException
     {
-        String numS, dateS, heureS;
+        String numS, dateS, heureS, noPlaceS, noRangS;
         ServletOutputStream out = res.getOutputStream();   
-
+        HttpSession session = req.getSession(true);
+        
         res.setContentType("text/html");
 
-        out.println("<HEAD><TITLE> Places Disponibles </TITLE></HEAD>");
+        out.println("<HEAD><TITLE> Reservation d'une place  </TITLE></HEAD>");
         out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-    
+        
         numS	= req.getParameter("numS");
         dateS	= req.getParameter("date");
         heureS	= req.getParameter("heure");
-        if (numS == null || dateS == null || heureS == null) {
-            out.println("<font color=\"#FFFFFF\"><h1> Voir les places disponibles </h1>");
-            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la representation :");
+        noPlaceS= req.getParameter("noPlace");
+        noRangS = req.getParameter("noRang");
+        if (numS == null || dateS == null || heureS == null || noPlaceS == null || noRangS == null) {
+            out.println("<font color=\"#FFFFFF\"><h1> Reserver une place </h1>");
+            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la place que vous desirez reserver :");
             out.println("<P>");
             out.print("<form action=\"");
-            out.print("PlacesDisponiblesServlet\" ");
+            out.print("ReserverPlaceServlet\" ");
             out.println("method=POST>");
             out.println("Num&eacute;ro de spectacle :");
             out.println("<input type=text size=20 name=numS>");
@@ -66,41 +69,39 @@ public class PlacesDisponiblesServlet extends HttpServlet {
             out.println("Heure de d&eacute;but de la repr&eacute;sentation :");
             out.println("<input type=text size=20 name=heure>");
             out.println("<br>");
+            out.println("Numero du rang :");
+            out.println("<input type=text size=20 name=noRang>");
+            out.println("<br>");
+            out.println("Numero de la place :");
+            out.println("<input type=text size=20 name=noPlace>");
+            out.println("<br>");
             out.println("<input type=submit>");
             out.println("</form>");
         } else {
             try {
                 Spectacle s1 = GestionRequete.trouveSpectacle(new Integer(numS).intValue());
                 Representation r = GestionRequete.trouveRepresentation(s1, dateS, new Integer(heureS).intValue());
-                ArrayList<Place> placesDisponibles = GestionRequete.trouvePlacesDisponibles(r);
-                out.println("<font color=\"#FFFFFF\"><h1> Places disponibles pour " + r + " de " + r.getSpectacle() +" </h1>");
+                Place p = new Place(new Integer(noPlaceS).intValue(), new Integer(noRangS).intValue());
+                Reservation r2 = new Reservation(r, p);
+                Caddie caddie = (Caddie)session.getAttribute("caddie");
+                if (caddie == null) caddie = new Caddie();
+                caddie.addReservation(r2);
+                session.setAttribute("caddie", caddie);
+                out.println("<font color=\"#FFFFFF\"><h1> Ajout au caddie </h1>");
                 out.println("<p><i><font color=\"#FFFFFF\">");
-                for(int i=0; i<placesDisponibles.size(); i++) {
-                    Place p = placesDisponibles.get(i);
-                    out.println(p.toString());
-                    out.println(" : <a href=\"ReserverPlaceServlet?numS=" + numS
-                                + "&date=" + dateS
-                                + "&heure=" + heureS
-                                + "&noPlace=" + p.getNoPlace()
-                                + "&noRang=" + p.getNoRang()
-                                + "\">reserver</a>");
-                    out.println(" : <a href=\"AjouterCaddieServlet?numS=" + numS
-                                + "&date=" + dateS
-                                + "&heure=" + heureS
-                                + "&noPlace=" + p.getNoPlace()
-                                + "&noRang=" + p.getNoRang()
-                                + "\">ajouter au caddie</a><br>");
-                }
+                out.println("La reservation " + r2 + " a ete ajouter au caddie<br>");
+                out.println("<a href=\"VisualiserCaddieServlet\">voir le contenu du caddie</a>");
                 out.println("</i></p>");
             }
             catch(SQLException e2) {
                 out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
             }
         }
-    
+        
         out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
         out.println("</BODY>");
         out.close();
+
     }
 
     /**

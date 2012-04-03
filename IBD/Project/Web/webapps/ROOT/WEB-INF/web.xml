@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-   version="2.5">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
 
   <display-name>Servlets</display-name>
   <description> Servlets </description>- 
 
-<!-- 
- Define servlets that are included in the Theater application 
---> 
+  <!-- 
+       Define servlets that are included in the Theater application 
+  --> 
 
 
-- <servlet> 
-<servlet-name>ProgrammeServlet</servlet-name> 
-<servlet-class>ProgrammeServlet</servlet-class> 
+  - <servlet> 
+  <servlet-name>ProgrammeServlet</servlet-name> 
+  <servlet-class>ProgrammeServlet</servlet-class> 
 </servlet>
 
 - <servlet> 
@@ -36,6 +36,21 @@
 - <servlet> 
 <servlet-name>ReserverPlaceServlet</servlet-name> 
 <servlet-class>ReserverPlaceServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
+<servlet-name>VisualiserCaddieServlet</servlet-name> 
+<servlet-class>VisualiserCaddieServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
+<servlet-name>AjouterCaddieServlet</servlet-name> 
+<servlet-class>AjouterCaddieServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
+<servlet-name>ValiderCaddieServlet</servlet-name> 
+<servlet-class>ValiderCaddieServlet</servlet-class> 
 </servlet>
 
 
@@ -65,4 +80,50 @@
 <url-pattern>/servlet/ReserverPlaceServlet</url-pattern> 
 </servlet-mapping>
 
+- <servlet-mapping> 
+<servlet-name>ValiderCaddieServlet</servlet-name> 
+<url-pattern>/servlet/ValiderCaddieServlet</url-pattern> 
+</servlet-mapping>
+
+- <servlet-mapping> 
+<servlet-name>AjouterCaddieServlet</servlet-name> 
+<url-pattern>/servlet/AjouterCaddieServlet</url-pattern> 
+</servlet-mapping>
+
+- <servlet-mapping> 
+<servlet-name>VisualiserCaddieServlet</servlet-name> 
+<url-pattern>/servlet/VisualiserCaddieServlet</url-pattern> 
+</servlet-mapping>
+
+
+
+
+<!-- <security-constraint> -->
+<!--   <web-resource-collection> -->
+<!--     <web-resource-name>user-resource</web-resource-name> -->
+<!--     <description>pages which require login</description> -->
+<!--     <url-pattern>admin/*</url-pattern> -->
+<!--     <http-method>GET</http-method> -->
+<!--     <http-method>POST</http-method> -->
+<!--   </web-resource-collection> -->
+<!--   <auth-constraint> -->
+<!--     <description>Must authenticate before querying the system</description> -->
+<!--     <role-name>rolename</role-name> -->
+<!--   </auth-constraint> -->
+<!--   <user-data-constraint> -->
+<!--     <transport-guarantee>NONE</transport-guarantee> -->
+<!--   </user-data-constraint> -->
+<!-- </security-constraint> -->
+
+<!-- <login-config> -->
+<!--   <auth-method>BASIC</auth-method> -->
+<!--   <realm-name>default</realm-name> -->
+<!-- </login-config> -->
+
+<!-- <security-role> -->
+<!--   <description>Any user of the system</description> -->
+<!--   <role-name>rolename</role-name> -->
+<!-- </security-role> -->
+
 </web-app>
+

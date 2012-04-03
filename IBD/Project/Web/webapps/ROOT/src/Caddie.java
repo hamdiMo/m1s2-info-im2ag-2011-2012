@@ -3,7 +3,7 @@ import java.util.ListIterator;
 public class Caddie {
     ArrayList<Reservation> m_reservations;
     public Caddie(){
-      
+        m_reservations = new ArrayList<Reservation>();
     }
 
 

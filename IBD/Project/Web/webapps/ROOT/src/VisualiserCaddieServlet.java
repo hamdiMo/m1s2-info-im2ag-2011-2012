@@ -25,7 +25,7 @@ import java.util.ListIterator;
  * @version 1.0, 31/10/2007
  */
 
-public class ValiderCaddieServlet extends HttpServlet {
+public class VisualiserCaddieServlet extends HttpServlet {
 
     /**
      * HTTP GET request entry point.
@@ -44,33 +44,27 @@ public class ValiderCaddieServlet extends HttpServlet {
     {
         String numS, dateS, heureS, noPlaceS, noRangS;
         ServletOutputStream out = res.getOutputStream();   
+        HttpSession session = req.getSession(true);
 
         res.setContentType("text/html");
 
-        HttpSession session = req.getSession(true);
-        Caddie caddie = (Caddie)session.getAttribute("caddie");
-
         out.println("<HEAD><TITLE> Validation du caddie  </TITLE></HEAD>");
         out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-        out.println("<font color=\"#FFFFFF\"><h1> Valider Caddie </h1>");
+        out.println("<font color=\"#FFFFFF\"><h1> Visualisation du caddie </h1>");
+        out.println("<p><i><font color=\"#FFFFFF\">");
 	
+        Caddie caddie = (Caddie)session.getAttribute("caddie");
         if (caddie == null) out.println("Votre caddie est vide");
         else {
-            try{
-                Ticket t;
-                ListIterator<Reservation> it = caddie.getReservations().listIterator();
-                while(it.hasNext()){
-                    Reservation reservation = it.next();
-                    t = GestionRequete.reserverTicket(reservation.getRepresentation(), reservation.getPlace());
-                    if (t != null) out.println(" Le " + t.toString() + " a ete reserve <br>");
-                }
+            ListIterator<Reservation> it = caddie.getReservations().listIterator();
+            while (it.hasNext()) {
+                Reservation reservation = it.next();
+                out.println("Reservation : " + reservation.getRepresentation() + " : " + reservation.getPlace() + "<br>");
             }
-            catch(SQLException e2) {
-                out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
-            }
-            session.setAttribute("caddie", null);
+            out.println("<a href=\"ValiderCaddieServlet\">valider le caddie</a>");
         }
         
+        out.println("</i></p>");
         out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
         out.println("</BODY>");
         out.close();

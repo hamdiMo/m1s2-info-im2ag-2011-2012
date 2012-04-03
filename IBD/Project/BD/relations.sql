@@ -1,4 +1,3 @@
---delete table LesTickets;
 drop table LesTickets;
 drop table LesDossiers;
 drop table LesRepresentations;
