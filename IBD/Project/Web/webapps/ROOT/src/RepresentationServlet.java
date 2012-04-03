@@ -82,14 +82,11 @@ public class RepresentationServlet extends HttpServlet {
                                 + "&date=" + dateFormat.format(r.getDateRep())
                                 + "&heure=" + timeFormat.format(r.getDateRep()) 
                                 + "\">voir les places disponibles</a>"
-                                + "<form action=\"ReserverPlaceServlet?numS=" + numS
+                                + " | "
+                                + " <a href=\"ReserverPlaceServlet?numS=" + numS
                                 + "&date=" + dateFormat.format(r.getDateRep())
                                 + "&heure=" + timeFormat.format(r.getDateRep()) 
-                                + "\" method=POST>"
-                                + "Num&eacute;ro de zone :"
-                                + "<input type=text size=20 name=numZ>"
-                                + "<input type=submit>"
-                                + "</form><br>");
+                                + "\">reserver une place</a><br>");
                 }
                 out.println("</i></p>");
             }

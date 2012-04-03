@@ -178,6 +178,33 @@ public class GestionRequete {
         }
     }
 
+    public static ArrayList<Zone> trouveZonesLibres(Representation r) throws SQLException {
+        try {
+            Connection conn = GestionAcces.getConnexion();
+            Statement stmt = conn.createStatement();
+            String req = "select distinct LP.numZ, LC.nomC, LC.prix from LesPlaces LP, LesZones LZ, LesCategories LC"
+                + " where LP.numZ = LZ.numZ"
+                + " and LZ.nomC=LC.nomC" 
+                + " and (LP.noPlace, LP.noRang) not in"
+                + " (select noPlace, noRang from LesTickets where dateRep ='" + r.getDateRepText() + "')";
+            ResultSet rset = stmt.executeQuery(req);
+            ArrayList<Zone> result = new ArrayList<Zone>();
+            while(rset.next()) 
+                try {
+                    result.add(new Zone(rset.getInt("numZ"),
+                                        new Categorie(rset.getString("nomC"), rset.getDouble("prix")),
+                                        new ArrayList<Place>(), null));
+                } catch (CatInconnueException e2) {}
+            stmt.close();
+            rset.close();
+            GestionAcces.commit();
+            return result;
+        } catch (SQLException e) {
+            GestionAcces.rollback();
+            throw e;
+        } 
+    }
+
     public static ArrayList<Place> trouvePlacesDisponibles(Representation r) throws SQLException {
         try {
             ArrayList<Place> result = new ArrayList<Place>();
