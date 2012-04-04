@@ -1,3 +1,4 @@
+package modele;
 import modele.*;
 import java.lang.String;
 
