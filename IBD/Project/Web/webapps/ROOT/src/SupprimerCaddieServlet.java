@@ -56,7 +56,7 @@ public class SupprimerCaddieServlet extends HttpServlet {
         noRangS = req.getParameter("noRang");
         if (numS == null || dateS == null || heureS == null || noPlaceS == null || noRangS == null) {
             out.println("<font color=\"#FFFFFF\"><h1> Supprimer un ticket du caddie </h1>");
-            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la place que vous desirez reserver :");
+            out.println("<font color=\"#FFFFFF\">Veuillez saisir les informations relatives a la place que vous desirez supprimer :");
             out.println("<P>");
             out.print("<form action=\"");
             out.print("ReserverPlaceServlet\" ");
@@ -85,22 +85,22 @@ public class SupprimerCaddieServlet extends HttpServlet {
                 Place p = new Place(new Integer(noPlaceS).intValue(), new Integer(noRangS).intValue());
                 Reservation r2 = new Reservation(r, p);
                 Caddie caddie = (Caddie)session.getAttribute("caddie");
-                
+                out.println("<font color=\"#FFFFFF\"><h1> Suppression d'un element du caddie </h1>");
+                out.println("<p><i><font color=\"#FFFFFF\">");                
                 if (caddie == null) out.println("Votre caddie est vide");
-		else {
-		  ListIterator<Reservation> it = caddie.getReservations().listIterator();
-		  while (it.hasNext()) {
-		    Reservation reservation = it.next();
-		    if(reservation.equals(r2)){
-		      out.println("La reservation " + reservation + " a ete supprimee du caddie<br>");
-		      caddie.removeReservation(reservation);
-		    }
-		  }
-		  out.println("<a href=\"ValiderCaddieServlet\">valider le caddie</a>");
-		}
+                else {
+                    Reservation reservation = null;
+                    ListIterator<Reservation> it = caddie.getReservations().listIterator();
+                    while (it.hasNext()) {
+                        Reservation r3 = it.next();
+                        if(r3.equals(r2)) reservation = r3;
+                    }
+                    if (reservation != null) {
+                        caddie.removeReservation(reservation);
+                        out.println("La reservation " + reservation + " a ete supprimee du caddie<br>");
+                    }
+                }
                 session.setAttribute("caddie", caddie);
-                out.println("<font color=\"#FFFFFF\"><h1> Ajout au caddie </h1>");
-                out.println("<p><i><font color=\"#FFFFFF\">");
                 out.println("<a href=\"VisualiserCaddieServlet\">voir le contenu du caddie</a>");
                 out.println("</i></p>");
             }

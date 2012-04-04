@@ -49,6 +49,11 @@
 </servlet>
 
 - <servlet> 
+<servlet-name>SupprimerCaddieServlet</servlet-name> 
+<servlet-class>SupprimerCaddieServlet</servlet-class> 
+</servlet>
+
+- <servlet> 
 <servlet-name>ValiderCaddieServlet</servlet-name> 
 <servlet-class>ValiderCaddieServlet</servlet-class> 
 </servlet>
@@ -88,6 +93,11 @@
 - <servlet-mapping> 
 <servlet-name>AjouterCaddieServlet</servlet-name> 
 <url-pattern>/servlet/AjouterCaddieServlet</url-pattern> 
+</servlet-mapping>
+
+- <servlet-mapping> 
+<servlet-name>SupprimerCaddieServlet</servlet-name> 
+<url-pattern>/servlet/SupprimerCaddieServlet</url-pattern> 
 </servlet-mapping>
 
 - <servlet-mapping> 

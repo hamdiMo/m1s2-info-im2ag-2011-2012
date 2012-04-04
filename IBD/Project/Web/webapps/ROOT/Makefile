@@ -3,11 +3,11 @@
 CC=javac
 #ssh -L 1521:localhost:1521 uyary@hopper.e.ujf-grenoble.fr
 # Repertoire Hugo
-CATALINA=~/Documents/Cours/M1/S2/IBD/Project/Web
-#CATALINA=~/Documents/Cours/UJF/M1/S2/IBD/Project/Web
+# CATALINA=~/Documents/Cours/M1/S2/IBD/Project/Web
+CATALINA=~/Documents/Cours/UJF/M1/S2/IBD/Project/Web
 
 # Repertoire Yasin
-CATALINA=~/M1/S2/SVNCOURS/IBD/Project/Web
+# CATALINA=~/M1/S2/SVNCOURS/IBD/Project/Web
 #CATALINA=~/SVNCoursM1/IBD/Project/Web
 
 init:
