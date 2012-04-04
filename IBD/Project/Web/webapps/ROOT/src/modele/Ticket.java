@@ -19,7 +19,7 @@ public class Ticket {
   /* CLASS VARIABLES */
   private static SimpleDateFormat dateFormat;
   static {
-      dateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa", java.util.Locale.US);
   }
   
   /* INSTANCE VARIABLES */

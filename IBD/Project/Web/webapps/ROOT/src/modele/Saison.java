@@ -18,7 +18,7 @@ public class Saison {
   /* CLASS VARIABLES */
   private static SimpleDateFormat dateFormat;
   static {
-    dateFormat = new SimpleDateFormat("MM-yyyy");
+      dateFormat = new SimpleDateFormat("MMM-yyyy", java.util.Locale.US);
   }
   
   /* INSTANCE VARIABLES */

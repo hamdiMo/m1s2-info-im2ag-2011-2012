@@ -29,8 +29,8 @@ public class RepresentationServlet extends HttpServlet {
     /* CLASS VARIABLES */
     private static SimpleDateFormat dateFormat, timeFormat;
     static {
-      dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
-      timeFormat = new SimpleDateFormat("HH");
+      dateFormat = new SimpleDateFormat("dd-MMM-yyyy", java.util.Locale.US); 
+      timeFormat = new SimpleDateFormat("HH", java.util.Locale.US);
     }
 
     /**

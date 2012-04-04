@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import modele.*;
 import accesbd.*;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -23,6 +24,15 @@ import java.util.Date;
  */
 
 public class ReserverPlaceServlet extends HttpServlet {
+
+    private static SimpleDateFormat dateFormat, timeFormat, dateAndTimeFormat, dateAndTimeFormatBD;
+    static {
+        dateFormat = new SimpleDateFormat("dd-MMM-yyyy", java.util.Locale.US); 
+        timeFormat = new SimpleDateFormat("HH", java.util.Locale.US);
+        dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH", java.util.Locale.US);
+        // dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa", java.util.Locale.US);
+	dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa", java.util.Locale.FRENCH);
+    }
 
     /**
      * HTTP GET request entry point.
@@ -108,11 +118,9 @@ public class ReserverPlaceServlet extends HttpServlet {
                     }
                 }
                 out.println("</i></p>");
-                    
-                
-            }
+	    }
             catch(SQLException e2) {
-                out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage());
+                out.println("Erreur oracle : " + e2.getErrorCode() + e2.getMessage() + " : " + dateAndTimeFormatBD.format(new Date()));
             }
         }
         
