@@ -22,10 +22,10 @@ public class GestionRequete {
     /* CLASS VARIABLES */
     private static SimpleDateFormat dateFormat, timeFormat, dateAndTimeFormat, dateAndTimeFormatBD;
     static {
-        dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
-        timeFormat = new SimpleDateFormat("HH");
-        dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH");
-        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+        dateFormat = new SimpleDateFormat("dd-MMM-yyyy", java.util.Locale.US); 
+        timeFormat = new SimpleDateFormat("HH", java.util.Locale.US);
+        dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH", java.util.Locale.US);
+        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa", java.util.Locale.US);
     }
 
     /**
@@ -268,7 +268,7 @@ public class GestionRequete {
                                                + z.getNumZ()
                                                + " and (noPlace, noRang) not in "
                                                + "(select noPlace, noRang from LesTickets where dateRep ='" 
-                                               + r.getDateRepText() 
+                                               + r.getDateRepText()
                                                + "')");
             rset.next();
             return reserverTicket(r, new Place(rset.getInt("noPlace"), rset.getInt("noRang"), z, new ArrayList<Ticket>()));
