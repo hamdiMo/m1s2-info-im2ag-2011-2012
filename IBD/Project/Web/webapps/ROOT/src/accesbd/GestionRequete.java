@@ -135,6 +135,13 @@ public class GestionRequete {
         }
     }
 
+    /**
+     * Requete permettant de trouver l'ensemble des représentations 
+     * d'un spectacle donné.
+     * @param s  l'objet de type Spectacle dont on veut recuperer les representations
+     * @return  la liste des representations associes au spectacle (ArrayList<Representation>)
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static ArrayList<Representation> trouveRepresentations(Spectacle s) throws SQLException {
         try {
             ArrayList<Representation> result = new ArrayList<Representation>();
@@ -154,6 +161,15 @@ public class GestionRequete {
         }
     }
 
+    /**
+     * Requete permettant de trouver une représentation en connaissant le spectacle, 
+     * la date et l'heure de la representation.
+     * @param s l'objet de type Spectacle dont on veut recuperer la representation
+     * @param d la date de la representation
+     * @param h l'heure de la representation
+     * @return  un objet de type Representation correspondant
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static Representation trouveRepresentation(Spectacle s,  String d, int h) throws SQLException {
         try {
             if(h < 0 || h > 23) throw new SQLException("Mauvaise heure : " + h);
@@ -178,6 +194,13 @@ public class GestionRequete {
         }
     }
 
+    /**
+     * Requete permettant de trouver la liste des zones libres d'une, 
+     * representation donnee.
+     * @param r l'objet de type Representation dont on veut recuperer zones libres
+     * @return  une liste de zones libres (ArrayList<Zone>)
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static ArrayList<Zone> trouveZonesLibres(Representation r) throws SQLException {
         try {
             Connection conn = GestionAcces.getConnexion();
@@ -205,6 +228,12 @@ public class GestionRequete {
         } 
     }
 
+    /**
+     * Requete permettant de trouver les places disponibles d'une représentation donnee
+     * @param r l'objet de type Representation dont on veut recuperer les places
+     * @return  une Liste de places (ArrayList<Place>)
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static ArrayList<Place> trouvePlacesDisponibles(Representation r) throws SQLException {
         try {
             ArrayList<Place> result = new ArrayList<Place>();
@@ -223,6 +252,14 @@ public class GestionRequete {
         }
     }
 
+    /**
+     * Requete permettant la réservation d'un ticket dans une zone donnee
+     * en connaissant la representation
+     * @param r l'objet de type Representation pour laquelle on souhaite réserver une place
+     * @param z la zone dans la salle de représentation
+     * @return  un objet de type Ticket correspondant
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static Ticket reserverTicket(Representation r, Zone z) throws SQLException {
         try {
             Connection conn = GestionAcces.getConnexion();
@@ -241,6 +278,15 @@ public class GestionRequete {
         }
     }
 
+
+    /**
+     * Requete permettant la réservation d'un ticket en connaissant la representation
+     * et la place
+     * @param r l'objet de type Representation pour laquelle on souhaite réserver une place
+     * @param p l'objet de type Place correspondant à la place souhaitée
+     * @return  un objet de type Ticket correspondant
+     * @throws SQLException  s'il y a un probleme d'acces a la BD
+     */
     public static Ticket reserverTicket(Representation r, Place p) throws SQLException {
         try {
             Connection conn = GestionAcces.getConnexion();

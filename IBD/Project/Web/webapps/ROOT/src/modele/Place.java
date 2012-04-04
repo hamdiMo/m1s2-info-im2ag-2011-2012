@@ -51,7 +51,7 @@ public class Place {
                ArrayList<Ticket> tickets_) {
     noPlace = noPlace_;
     noRang = noRang_;
-    zone = zone;
+    zone = zone_;
     tickets = tickets_;
   }
   
