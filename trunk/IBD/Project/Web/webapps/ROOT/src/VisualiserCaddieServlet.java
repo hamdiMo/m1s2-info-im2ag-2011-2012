@@ -14,7 +14,7 @@ import accesbd.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.ListIterator;
-
+import java.text.SimpleDateFormat;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -25,7 +25,16 @@ import java.util.ListIterator;
  * @version 1.0, 31/10/2007
  */
 
+    
 public class VisualiserCaddieServlet extends HttpServlet {
+
+  private static SimpleDateFormat dateFormat, timeFormat, dateAndTimeFormat, dateAndTimeFormatBD;
+    static {
+        dateFormat = new SimpleDateFormat("dd-MMM-yyyy"); 
+        timeFormat = new SimpleDateFormat("HH");
+        dateAndTimeFormat = new SimpleDateFormat("dd-MMM-yyyy HH");
+        dateAndTimeFormatBD = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+    }
 
     /**
      * HTTP GET request entry point.
@@ -59,7 +68,15 @@ public class VisualiserCaddieServlet extends HttpServlet {
             ListIterator<Reservation> it = caddie.getReservations().listIterator();
             while (it.hasNext()) {
                 Reservation reservation = it.next();
-                out.println("Reservation : " + reservation.getRepresentation() + " : " + reservation.getPlace() + "<br>");
+                out.println("Reservation : " + reservation.getRepresentation() + " : " + reservation.getPlace());
+		out.println(" : <a href=\"SupprimerCaddieServlet?numS=" + reservation.getRepresentation().getSpectacle().getNumS()
+                                + "&date=" + dateFormat.format(reservation.getRepresentation().getDateRep())
+                                + "&heure=" + timeFormat.format(reservation.getRepresentation().getDateRep()) 
+                                + "&noPlace=" + reservation.getPlace().getNoPlace()
+                                + "&noRang=" + reservation.getPlace().getNoRang()
+                                + "\">supprimer</a>");
+		  out.println("<br>");
+		  
             }
             out.println("<a href=\"ValiderCaddieServlet\">valider le caddie</a>");
         }
