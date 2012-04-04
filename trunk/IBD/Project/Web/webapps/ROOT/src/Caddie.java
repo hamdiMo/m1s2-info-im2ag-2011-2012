@@ -28,11 +28,11 @@ public class Caddie {
      * @param r un objet de type Reservation à supprimer du caddie
      */
     public void removeReservation(Reservation r){
-      for(int i = 0; i < m_reservations.size(); i++){
-	if(m_reservations.get(i).equals(r)){
-	m_reservations.remove(i);
-	}
-      }
+        for(int i = 0; i < m_reservations.size(); i++){
+            if(m_reservations.get(i).equals(r)){
+                m_reservations.remove(i);
+            }
+        }
     }
     
    /**
