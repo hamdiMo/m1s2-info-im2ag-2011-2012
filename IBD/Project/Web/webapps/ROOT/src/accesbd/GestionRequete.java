@@ -31,7 +31,7 @@ public class GestionRequete {
     /**
      * Requete permettant de recuperer un spectacle depuis la BD.
      * @param numS_  l'identificateur unique d'un spectacle
-     * @return  un objet de type spectacle spectacle, representant les donnees 
+     * @return  un objet de type spectacle, representant les donnees 
      *          associees a l'identificateur dans la BD
      * @throws SQLException  si aucun spectacle avec l'ID fourni n'existe, 
      *                       ou s'il y a un probleme d'acces a la BD
@@ -139,7 +139,7 @@ public class GestionRequete {
      * Requete permettant de trouver l'ensemble des représentations 
      * d'un spectacle donné.
      * @param s  l'objet de type Spectacle dont on veut recuperer les representations
-     * @return  la liste des representations associes au spectacle (ArrayList<Representation>)
+     * @return  une collection de representations associes au spectacle 
      * @throws SQLException  s'il y a un probleme d'acces a la BD
      */
     public static ArrayList<Representation> trouveRepresentations(Spectacle s) throws SQLException {
@@ -198,7 +198,7 @@ public class GestionRequete {
      * Requete permettant de trouver la liste des zones libres d'une, 
      * representation donnee.
      * @param r l'objet de type Representation dont on veut recuperer zones libres
-     * @return  une liste de zones libres (ArrayList<Zone>)
+     * @return  une collection de zones libres 
      * @throws SQLException  s'il y a un probleme d'acces a la BD
      */
     public static ArrayList<Zone> trouveZonesLibres(Representation r) throws SQLException {
@@ -231,7 +231,7 @@ public class GestionRequete {
     /**
      * Requete permettant de trouver les places disponibles d'une représentation donnee
      * @param r l'objet de type Representation dont on veut recuperer les places
-     * @return  une Liste de places (ArrayList<Place>)
+     * @return  une collection de places
      * @throws SQLException  s'il y a un probleme d'acces a la BD
      */
     public static ArrayList<Place> trouvePlacesDisponibles(Representation r) throws SQLException {
