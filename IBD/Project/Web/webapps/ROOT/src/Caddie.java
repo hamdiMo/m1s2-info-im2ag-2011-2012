@@ -23,10 +23,18 @@ public class Caddie {
       m_reservations.add(r);
     }
 
-//     public boolean validerCaddie(){
-//     
-//     }
-
+    /**
+     * Supprime une reservation du caddie.
+     * @param r un objet de type Reservation à supprimer du caddie
+     */
+    public void removeReservation(Reservation r){
+      for(int i = 0; i < m_reservations.size(); i++){
+	if(m_reservations.get(i).equals(r)){
+	m_reservations.remove(i);
+	}
+      }
+    }
+    
    /**
     * Recupere la liste des reservations du caddie. 
     * @return  une collection de reservations d'un caddie

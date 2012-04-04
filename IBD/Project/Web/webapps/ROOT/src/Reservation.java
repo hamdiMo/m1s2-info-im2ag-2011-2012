@@ -25,6 +25,20 @@ public class Reservation {
     * @return  la representation de la reservation
     */
     public Representation getRepresentation(){ return m_representation; }  
+    
+    
+   /**
+    * Teste si deux reservations sont identiques
+    * @return  vrai si les deux reservations sont identiques
+    */   
+    public boolean equals(Reservation r){
+      if(m_representation != null && r.getRepresentation() != null
+      && m_representation.getDateRep().equals(r.getRepresentation().getDateRep())
+      && m_representation.getSpectacle().getNumS() == r.getRepresentation().getSpectacle().getNumS()
+      && m_place.getNoPlace() == r.getPlace().getNoPlace()
+      && m_place.getNoRang() == r.getPlace().getNoRang()) return true;
+      else return false;
+    }
 
   /**
     * Recupere la place de la reservation.
