@@ -189,12 +189,30 @@ void TaskTree::removeTransitions(){
     }
   }
   
-  std::vector<std::vector<TaskTree*> >* TaskTree::getLevel(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect){
+  std::vector<TaskTree*> TaskTree::getLevel(TaskTree* t, int level){
+    std::vector<std::vector <TaskTree*> > vect; 
+    std::vector<TaskTree*> result;
+    std::vector<TaskTree*> cur;
+    
+    /*src/model/TaskTree.cc:196:33: warning: ‘vect’ is used uninitialized in this function*/
+    getLevelTemp(t, level, &vect);
+    
+    std::vector<std::vector<TaskTree*> >::iterator it;
+    std::vector<TaskTree*>::iterator itCur;
+    
+    for (it=vect.begin() ; it < vect.end(); it++ ){
+	cur = *it;
+	for (itCur = cur.begin() ; itCur < cur.end(); itCur++ )
+	  result.push_back(*itCur);
+    }
+    return result;
+  }
+  
+  void TaskTree::getLevelTemp(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect){
     if(level >= 0){
      rec(t, 0, level, vect);
     } else {
       std::cout << "level out of bounds"<< std::endl;
-     return NULL; 
     }
   }
 
