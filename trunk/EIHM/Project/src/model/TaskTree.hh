@@ -80,7 +80,9 @@ public:
   
   void remove();
   
-  std::vector<std::vector<TaskTree*> >* getLevel(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect);
+  std::vector<TaskTree*> getLevel(TaskTree* t, int level);
+  
+  void getLevelTemp(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect);
   
   //std::vector<std::vector <TaskTree*> >* getLevel(TaskTree* t,int level, std::vector<std::vector <TaskTree*> >* vect);
   
