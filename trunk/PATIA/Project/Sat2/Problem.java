@@ -36,11 +36,11 @@ class Problem {
             Clause clause = null;
             switch (m_format) {
             case CNF :
-                clause = new Clause(1, scanner, m_variables);
+                clause = new Clause(1, scanner, this);
                 break;
             case WCNF :
                 int weight = scanner.nextInt();
-                clause = new Clause(weight, scanner, m_variables);
+                clause = new Clause(weight, scanner, this);
                 break;
             }
             m_clauses.add(i, clause);
@@ -48,6 +48,20 @@ class Problem {
     }
 
     /** Accesseurs */
+    public Value getValue(Integer expr) {
+        int exprInt = expr.intValue();
+        if (exprInt > 0) {
+            switch (m_variables.get(1-exprInt).getValue()) {
+            case TRUE : return Value.FALSE;
+            case FALSE : return Value.TRUE;
+            case UNDEFINE: return Value.UNDEFINE;
+            }
+        }
+        return m_variables.get(exprInt-1).getValue();
+    }
+
+    public Variable getVariable(Integer expr) { return m_variables.get(Math.abs(expr.intValue())-1); }
+
     public Vector<Variable> getVariables() { return m_variables; }
     
     public Vector<Clause> getClauses() { return m_clauses; }

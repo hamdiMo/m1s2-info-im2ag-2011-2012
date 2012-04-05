@@ -9,23 +9,21 @@ public class Clause {
 
     /** Attributs */
     private int m_weight;
-    private Value m_value;
-    private Vector<Variable> m_variables;
+    private Problem m_problem;
     private List<Integer> m_expr, m_initExpr;
+    private Value m_value;
 
     /** Constructeurs */
-    public Clause(int weight, Scanner scanner, Vector<Variable> variables) {
+    public Clause(int weight, Scanner scanner, Problem problem) {
         m_weight = weight;
-        m_variables = variables;
-        m_value = Value.UNDEFINE;
-        m_expr = new LinkedList<Integer>();
+        m_problem = problem;
         m_initExpr = new LinkedList<Integer>();
+        m_expr = new LinkedList<Integer>();
         int var = scanner.nextInt();
         while (var != 0 && scanner.hasNext()) {
-            m_expr.add(new Integer(var));
-            m_initExpr.add(new Integer(var));
-            if (var < 0) m_variables.get(1-var).addNegative(this);
-            else m_variables.get(var-1).addPositive(this);
+            Integer expr = new Integer(var);
+            m_expr.add(expr);
+            m_initExpr.add(expr);
             var = scanner.nextInt();
         }
     }
@@ -34,6 +32,18 @@ public class Clause {
     public Value getValue() { return m_value; }
 
     public int getSize() { return m_expr.size(); }
+
+    public double getHeuristic() { 
+        int heuristic = 0;
+        Iterator<Integer> iter = m_expr.listIterator();
+        while (iter.hasNext()) {
+            Integer exprVarInt = iter.next();
+            int exprVar = exprVarInt.intValue();
+            if (exprVar > 0) heuristic += m_problem.getVariables(exprVarInt).getHeuristicPos();
+            else heuristic += m_problem.getVariables(exprVarInt).getHeuristicNeg();
+        }
+        return (double)heuristic / m_expr.size();
+    }
 
     /** Mutateurs */
     
@@ -56,14 +66,12 @@ public class Clause {
         return m_value;
     }
 
-    public void computePropagation(Variable var) {
-        if (m_value == Value.UNDEFINE) {
-            Iterator<Integer> iter = m_expr.listIterator();
-            while (iter.hasNext()) {
-                Integer integer = iter.next();
-                if (var == getVarFrom(integer)) {
-                    /** TO DO */
-                }
+    public Value computePropagation(Variable variable, int iteration) {
+        Iterator<Integer> iter = m_expr.listIterator();
+        while (iter.hasNext()) {
+            Integer expr = iter.next();
+            if (variable == problem.getVariables(expr)) {
+                /** TO DO */
             }
         }
     }

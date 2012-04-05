@@ -23,6 +23,10 @@ public class Variable {
     /** Accesseurs */
     public Value getValue() { return m_value; }
  
+    public int getHeuristicPos() { return m_heuristicPos; }
+
+    public int getHeuristicNeg() { return m_heuristicNeg; }
+    
     public int getHeuristic(Value value) {
         switch (value) {
         case TRUE:  
