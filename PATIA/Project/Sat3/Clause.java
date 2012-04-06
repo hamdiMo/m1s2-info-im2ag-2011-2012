@@ -9,28 +9,27 @@ public class Clause {
 
     /** Attributs */
     private int m_weight;
-    private Problem m_problem;
-    private List<Integer> m_expr, m_initExpr;
+    private List<Integer> m_expr, m_delete;
     private Value m_value;
-
+    
     /** Constructeurs */
-    public Clause(int weight, Scanner scanner, Problem problem) {
+    public Clause(int weight, Scanner scanner) {
         m_weight = weight;
-        m_problem = problem;
-        m_initExpr = new LinkedList<Integer>();
-        m_expr = new LinkedList<Integer>();
-        int var = scanner.nextInt();
+	m_delete = new LinkedList<Integer>();
+	m_expr = new LinkedList<Integer>();
+        
+	int var = scanner.nextInt();
         while (var != 0 && scanner.hasNext()) {
             Integer expr = new Integer(var);
             m_expr.add(expr);
-            m_initExpr.add(expr);
-            var = scanner.nextInt();
+	    var = scanner.nextInt();
         }
     }
+    
+    /** Predicats */
+    public boolean isUnsat() { return getSize() == 0; }
 
     /** Accesseurs */
-    public Value getValue() { return m_value; }
-
     public int getSize() { return m_expr.size(); }
 
     public double getHeuristic() { 
@@ -45,67 +44,48 @@ public class Clause {
         return (double)heuristic / m_expr.size();
     }
 
-    /** Mutateurs */
-    
     /** Methodes */
-    public Value computeValue() {
-        m_value = Value.FALSE;
-        Iterator<Integer> iter = m_expr.listIterator();
-        while (m_value != Value.TRUE && iter.hasNext()) {
-            switch (getValueFrom(iter.next())) {
-            case TRUE:
-                m_value = Value.TRUE;
-                break;
-            case FALSE:
-                break;
-            case UNDEFINE:
-                m_value = Value.UNDEFINE;
-                break;
-            }
-        }
-        return m_value;
-    }
-
-    public Value computePropagation(Variable variable, int iteration) {
-        Iterator<Integer> iter = m_expr.listIterator();
+    public boolean propagate(Variable variable) {
+	Iterator<Integer> iter = m_expr.listIterator();
         while (iter.hasNext()) {
-            Integer expr = iter.next();
-            if (variable == problem.getVariables(expr)) {
-                /** TO DO */
-            }
-        }
+	    Integer exprVar = iter.next();
+            int expr = exprVar.intValue();
+	    if (variable.getId() == expr) {
+		if (variable.getValue() == Value.TRUE) { return true; }
+		else if (variable.getValue() == Value.FALSE) {
+		    m_expr.remove(exprVar);
+		    m_delete.add(exprVar);
+		}
+	    }
+	    else if (variable.getId() == -expr)
+		if (variable.getValue() == Value.FALSE) { return true; }
+		else if (variable.getValue() == Value.TRUE) {
+		    m_expr.remove(exprVar);
+		    m_delete.add(exprVar);
+		}
+	}
+	return false;
+    }
+    
+    public void reset(Variable variable) {
+	Iterator<Integer> iter = m_delete.listIterator();
+        while (iter.hasNext()) {
+	    Integer exprVar = iter.next();
+	    int expr = exprVar.intValue();
+	    if (variable.getId() == expr || variable.getId() == -expr) {
+		m_expr.add(exprVar);
+		m_delete.remove(exprVar);
+	    }
+	}
     }
 
-    public void reduce() {
-        List<Integer> m_trueExpr = new LinkedList<Integer>();
-        List<Integer> m_newExpr = new LinkedList<Integer>();
-        Iterator<Integer> iter = m_expr.listIterator();
-        while (m_trueExpr.isEmpty() && iter.hasNext()) {
-            int id = iter.next().intValue();
-            if (id > 0) {
-                if (m_variables.get(id-1).getValue() == Value.TRUE) 
-                    m_trueExpr.add(new Integer(id));
-                else if (m_variables.get(id-1).getValue() == Value.UNDEFINE) 
-                    m_newExpr.add(new Integer(id));
-            } else if (id < 0) {
-                if (m_variables.get(1-id).getValue() == Value.FALSE)
-                    m_trueExpr.add(new Integer(id));
-                else if (m_variables.get(1-id).getValue() == Value.UNDEFINE)
-                    m_newExpr.add(new Integer(id));
-            }
-        }
-        if (m_trueExpr.isEmpty()) m_expr = m_newExpr;
-        else m_expr = m_trueExpr;
-    }
-
-    public String toString() {
+    public String toString(Vector<Variable> variables) {
         String res = "";
         Iterator<Integer> iter = m_expr.listIterator();
         while (iter.hasNext()) {
             int id = iter.next().intValue();
-            if (id > 0) res += m_variables.get(id-1);
-            else res += "not" + m_variables.get(1-id);
-            res += " ";
+            if (id < 0) res += "not";
+	    res += " ";
         }
         return res;
     }
