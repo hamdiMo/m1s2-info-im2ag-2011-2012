@@ -8,111 +8,105 @@ import java.util.Vector;
 public class Clause {
 
     /** Attributs */
-    private int m_weight;
-    private List<Integer> m_expr, m_delete;
-    private Value m_value;
+    private Problem m_problem;
+    private int m_weight, m_size;
+    private Integer[] m_expr;
+    private Vector<Integer> m_exprInit;
     
     /** Constructeurs */
-    public Clause(int weight, Scanner scanner) {
+    public Clause(int weight, Scanner scanner, Problem problem) {
         m_weight = weight;
-	m_delete = new LinkedList<Integer>();
-	m_expr = new LinkedList<Integer>();
-        
-	int var = scanner.nextInt();
-        while (var != 0 && scanner.hasNext()) {
-            Integer expr = new Integer(var);
-            m_expr.add(expr);
-	    var = scanner.nextInt();
+        m_problem = problem;
+
+        m_exprInit = new Vector<Integer>();
+        int literal = scanner.nextInt();
+        while (literal != 0 && scanner.hasNext()) {
+            m_exprInit.add(new Integer(literal));
+            literal = scanner.nextInt();
         }
+
+        m_size = m_exprInit.size();
+        m_expr = new Integer[m_size];
+        for (int i = 0; i < m_size; i++) m_expr[i] = m_exprInit.get(i);
     }
+
     
-    /** Predicats */
-    public boolean isUnsat() { return getSize() == 0; }
-
     /** Accesseurs */
-    public int getSize() { return m_expr.size(); }
+    public int getSize() { return m_size; }
 
-    public double getHeuristic() { 
-        int heuristic = 0;
-        Iterator<Integer> iter = m_expr.listIterator();
-        while (iter.hasNext()) {
-            Integer exprVarInt = iter.next();
-            int exprVar = exprVarInt.intValue();
-            if (exprVar > 0) heuristic += m_problem.getVariables(exprVarInt).getHeuristicPos();
-            else heuristic += m_problem.getVariables(exprVarInt).getHeuristicNeg();
-        }
-        return (double)heuristic / m_expr.size();
-    }
+    public Integer getLiteral(int index) { return m_expr[index]; }
+
 
     /** Methodes */
-    public boolean propagate(Variable variable) {
-	Iterator<Integer> iter = m_expr.listIterator();
-        while (iter.hasNext()) {
-	    Integer exprVar = iter.next();
-            int expr = exprVar.intValue();
-	    if (variable.getId() == expr) {
-		if (variable.getValue() == Value.TRUE) { return true; }
-		else if (variable.getValue() == Value.FALSE) {
-		    m_expr.remove(exprVar);
-		    m_delete.add(exprVar);
-		}
-	    }
-	    else if (variable.getId() == -expr)
-		if (variable.getValue() == Value.FALSE) { return true; }
-		else if (variable.getValue() == Value.TRUE) {
-		    m_expr.remove(exprVar);
-		    m_delete.add(exprVar);
-		}
-	}
-	return false;
+    public double computeHeuristic() {
+        int heuristic = 0;
+        for (int i = 0; i < m_size; i++) {
+            Integer literal = m_expr[i];
+            int exprVar = literal.intValue();
+            if (exprVar > 0) heuristic += m_problem.getVariableFromLiteral(literal).getHeuristicPos();
+            else heuristic += m_problem.getVariableFromLiteral(literal).getHeuristicNeg();
+        }
+        return (double)heuristic / (double)m_size;
+    }
+
+    public Value propagate(Variable variable) {
+        Value result = Value.FALSE;
+        for (int i = 0; i < m_size; i++) {
+            Integer literal = m_expr[i];
+            int expr = literal.intValue();
+            if (variable.getId() == expr) {
+                if (variable.getValue() == Value.TRUE) return Value.TRUE; 
+                else if (variable.getValue() == Value.FALSE) {
+                    deleteLiteral(i);
+                    i--;
+                }
+            }
+            else if (variable.getId() == -expr) {
+                if (variable.getValue() == Value.FALSE) return Value.TRUE;
+                else if (variable.getValue() == Value.TRUE) {
+                    deleteLiteral(i);
+                    i--;
+                }
+            }
+            else result = Value.UNDEFINE; 
+        }
+        return result;
     }
     
-    public void reset(Variable variable) {
-	Iterator<Integer> iter = m_delete.listIterator();
-        while (iter.hasNext()) {
-	    Integer exprVar = iter.next();
-	    int expr = exprVar.intValue();
-	    if (variable.getId() == expr || variable.getId() == -expr) {
-		m_expr.add(exprVar);
-		m_delete.remove(exprVar);
-	    }
-	}
+    public void deleteLiteral(int index) {
+        Integer literal = m_expr[index];
+        m_expr[index] = m_expr[m_size-1];
+        m_expr[m_size-1] = literal;
+        m_size--;
     }
 
-    public String toString(Vector<Variable> variables) {
-        String res = "";
-        Iterator<Integer> iter = m_expr.listIterator();
-        while (iter.hasNext()) {
-            int id = iter.next().intValue();
-            if (id < 0) res += "not";
-	    res += " ";
+    public void resetLiteral(int index) {
+        Integer literal = m_expr[index];
+        m_expr[index] = m_expr[m_size];
+        m_expr[m_size] = literal;
+        m_size++;
+    }
+
+    public void reset(Variable variable) {
+        for (int i = m_size; i < m_expr.length; i++) {
+            Integer literal = m_expr[i];
+            int expr = literal.intValue();
+            if (variable.getId() == expr || variable.getId() == -expr) resetLiteral(i);
         }
+    }
+
+    public String toString() {
+        String res = "{ w" + m_weight;
+        Iterator<Integer> iter = m_exprInit.listIterator();
+        while (iter.hasNext()) {
+            Integer literal = iter.next();
+            int id = literal.intValue();
+            res += ", ";
+            if (id < 0) res += "not";
+            res += m_problem.getVariableFromLiteral(literal);
+        }
+        res += ", h" + computeHeuristic() + "}";
         return res;
     }
-
-    /** Methodes interne */
-    private Value getValueFrom(Integer integer) {
-        Variable var = getVarFrom(integer);
-        int id = integer.intValue();
-        switch (var.getValue()) {
-        case TRUE:
-            if (id > 0) return Value.TRUE;
-            else return Value.FALSE;
-        case FALSE:
-            if (id > 0) return Value.FALSE;
-            else return Value.TRUE;
-        case UNDEFINE :
-            return Value.UNDEFINE;
-        }
-        return Value.UNDEFINE;
-    }
-
-    private Variable getVarFrom(Integer integer) {
-        int id = integer.intValue();
-        if (id < 0) id = 1-id;
-        else if (id > 0) id = id-1;
-        return m_variables.get(id);
-    }
-
 
 }

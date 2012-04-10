@@ -15,9 +15,13 @@ public class Sat {
                 throw new RuntimeException();
             }
         
-        ProblemSolver problemSolver = new ProblemSolver(scanner);
-        System.out.println(problemSolver);
-        problemSolver.solve();
-        System.out.println(problemSolver);
+        Problem problem = new Problem(scanner);
+        System.out.println(problem);
+
+        Solver solver = new Solver(problem);
+        if (solver.solve()) System.out.println("SAT");
+        else System.out.println("UNSAT");
+        
+        System.out.println(solver);
     }
 }
