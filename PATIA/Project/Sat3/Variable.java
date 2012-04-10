@@ -21,6 +21,8 @@ public class Variable {
     }
 
     /** Accesseurs */
+    public int getId() { return m_id; }
+
     public Value getValue() { return m_value; }
  
     public int getHeuristicPos() { return m_heuristicPos; }
@@ -41,12 +43,19 @@ public class Variable {
     
     /** Mutateurs */
     public void setValue(Value value) {
-        Iterator<Clause> iter = null;
-        iter = m_positives.listIterator();
-        while (iter.hasNext()) iter.next().computePropagation(this);
+        m_value = value;
+        // Iterator<Clause> iter = null;
+        // iter = m_positives.listIterator();
+        // while (iter.hasNext()) iter.next().computePropagation(this);
     }
 
     /** Methodes */
+    public void clearHeuristics() {
+        m_heuristicPos = m_heuristicNeg = 0;
+        m_positives.clear();
+        m_negatives.clear();
+    }
+    
     public void addPositive(Clause clause) { 
         m_heuristicPos += clause.getSize();
         m_heuristicNeg += 1;
@@ -89,11 +98,10 @@ public class Variable {
     }
 
     public String toString(){
-        if (m_value == Value.UNDEFINE)
-            return new String("(" + m_id  
-                              + ", +" + m_heuristicPos
-                              + ", -" + m_heuristicNeg + ")"); 
-        else return new String("(" + m_id + ", " + m_value + ")"); 
+        return new String("(" + m_id  
+                          + ", +" + m_heuristicPos
+                          + ", -" + m_heuristicNeg 
+                          + ", " + m_value + ")"); 
     }
     
 }
