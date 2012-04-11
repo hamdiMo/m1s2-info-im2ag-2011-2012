@@ -61,6 +61,13 @@ void UserInterface::fitToWindow() {}
 void UserInterface::about() {
 QMessageBox::about(this, tr("About TaskTree"), tr("Morigault Thierry,Yasin  Uyar,Cadour Ulysse,Joudrier Hugo"));
 }
+void UserInterface::addAbstractionTask(){}
+void UserInterface::addApplicationTask(){}
+void UserInterface::addInteractionTask(){}
+void UserInterface::addUserTask(){}
+void UserInterface::deleteTask(){}
+void UserInterface::addChoiceTransition(){}
+void UserInterface::addOrderIndependenceTransition(){}
 
 
 /** Methodes internes */
@@ -82,6 +89,14 @@ void UserInterface::updateActions() {
   
   m_aboutAct->setEnabled(true);
   m_aboutQtAct->setEnabled(true);
+  
+  m_addAbstractionTaskAct->setEnabled(false);
+  m_addApplicationTaskAct->setEnabled(false);
+  m_addInteractionTaskAct->setEnabled(false);
+  m_addUserTaskAct->setEnabled(false);
+  m_deleteTaskAct->setEnabled(false);
+  m_addChoiceTransitionAct->setEnabled(false);
+  m_addOrderIndependenceTransitionAct->setEnabled(false);
 }
 
 void UserInterface::createActions() {
@@ -89,6 +104,7 @@ void UserInterface::createActions() {
   createEditAction();
   createViewAction();
   createHelpAction();
+  createTaskAction();
 }
 void UserInterface::createFileAction() {
   m_openAct = new QAction(tr("&Open..."), this);
@@ -156,4 +172,27 @@ void UserInterface::createHelpAction() {
   
   m_aboutQtAct = new QAction(tr("About &Qt"), this);
   connect(m_aboutQtAct, SIGNAL(triggered()),m_QApplication, SLOT(aboutQt()));
+}
+
+void UserInterface::createTaskAction(){
+  m_addAbstractionTaskAct = new QAction(tr("Add Abstraction Task"), this);
+  connect(m_addAbstractionTaskAct, SIGNAL(triggered()), this, SLOT(addAbstractionTask()));
+  
+  m_addApplicationTaskAct = new QAction(tr("Add Application Task"), this);
+  connect(m_addApplicationTaskAct, SIGNAL(triggered()), this, SLOT(addApplicationTask()));
+  
+  m_addInteractionTaskAct = new QAction(tr("Add Interaction Task"), this);
+  connect(m_addInteractionTaskAct, SIGNAL(triggered()), this, SLOT(addInteractionTask()));
+  
+  m_addUserTaskAct = new QAction(tr("Add User Task"), this);
+  connect(m_addUserTaskAct, SIGNAL(triggered()), this, SLOT(addUserTask()));
+  
+  m_deleteTaskAct = new QAction(tr("Delete Task"), this);
+  connect(m_deleteTaskAct, SIGNAL(triggered()), this, SLOT(deleteTask()));
+  
+  m_addChoiceTransitionAct = new QAction(tr("Add Choice Transition"), this);
+  connect(m_addChoiceTransitionAct, SIGNAL(triggered()), this, SLOT(addChoiceTransition()));
+  
+  m_addOrderIndependenceTransitionAct = new QAction(tr("Add Order [ ... ]"), this);
+  connect(m_addOrderIndependenceTransitionAct, SIGNAL(triggered()), this, SLOT(addOrderIndependenceTransition()));
 }

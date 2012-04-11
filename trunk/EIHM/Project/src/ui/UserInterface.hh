@@ -83,6 +83,14 @@ public slots:
   void fitToWindow();
   void about();
   void print(QString);
+  
+  void addAbstractionTask();
+  void addApplicationTask();
+  void addInteractionTask();
+  void addUserTask();
+  void deleteTask();
+  void addChoiceTransition();
+  void addOrderIndependenceTransition();
         
 private:
 
@@ -103,6 +111,7 @@ private:
   void createEditAction();
   void createViewAction();
   void createHelpAction();
+  void createTaskAction();
   QMenu* createFileMenu();
   QMenu* createEditMenu();
   QMenu* createViewMenu();
@@ -112,6 +121,7 @@ private:
   QToolBar* createEditToolBar();
   QToolBar* createViewToolBar();
   QToolBar* createHelpToolBar();
+  QToolBar* createTaskToolBar();
   
   QDockWidget* createPropertyBoxDock();
   // QDockWidget* createPreviewerDock();
@@ -147,8 +157,9 @@ private:
   QMenu* m_helpMenu;
   
   QToolBar* m_fileToolBar;
-  // QToolBar* m_editToolBar;
-  // QToolBar* m_viewToolBar;
+  QToolBar* m_editToolBar;
+  QToolBar* m_viewToolBar;
+  QToolBar* m_taskToolBar;
   // QToolBar* m_helpToolBar;
 
   QDockWidget* m_propertyBoxDock;
@@ -181,7 +192,14 @@ private:
   QAction* m_selection;
   QAction* m_aboutAct;
   QAction* m_aboutQtAct;
-
+  
+  QAction* m_addAbstractionTaskAct;
+  QAction* m_addApplicationTaskAct;
+  QAction* m_addInteractionTaskAct;
+  QAction* m_addUserTaskAct;
+  QAction* m_deleteTaskAct;
+  QAction* m_addChoiceTransitionAct;
+  QAction* m_addOrderIndependenceTransitionAct;
 };
 
 #endif
