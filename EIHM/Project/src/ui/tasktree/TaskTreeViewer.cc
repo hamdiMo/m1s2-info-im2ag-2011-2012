@@ -1,116 +1,42 @@
 #include "TaskTreeViewer.hh"
 #include "TaskTreeModifier.hh"
 
+#include <QLabel>
+#include <QGraphicsProxyWidget>
 
+/** Constructeurs et destructeurs */
 TaskTreeViewer::TaskTreeViewer() 
 {
+  m_scene = new QGraphicsScene(this);
+  m_scene->setBackgroundBrush(QColor(128, 128, 128, 0));
+  m_scene->setForegroundBrush(QColor(255, 255, 255, 0));
+  setScene(m_scene);
+  
+  QGraphicsProxyWidget* proxy1 = m_scene->addWidget(new QLabel(tr("Task Tree Display1")));
+  QGraphicsProxyWidget* proxy2 = m_scene->addWidget(new QLabel(tr("Task Tree Display2")));
+  proxy1->setPos(-20, -20);
+  proxy1->setPos(20, 20);
+  // m_pictureViewer = new PictureViewer(p) ;
+  // m_proxy = m_scene->addWidget(m_pictureViewer);
+  // m_selectionTool = new SelectionTool(m_proxy);x
 } 
 
-TaskTreeViewer::~TaskTreeViewer() {
-  /* m_Scene=new QGraphicsScene(this);
-  m_Scene->setBackgroundBrush(QColor(128, 128, 128, 0));
-  m_Scene->setForegroundBrush(QColor(255, 255, 255, 0));
-  setScene(m_Scene);
-  m_pictureViewer = new PictureViewer(p) ;
-  m_proxy = m_Scene->addWidget(m_pictureViewer);
-  m_selectionTool = new SelectionTool(m_proxy);
-
-  */
-
-}
+TaskTreeViewer::~TaskTreeViewer() {}
 
 
-
-/** Public Slots **/
-
-
-using namespace std;
-void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){
-  
-}
-
-void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {
-
-}
-
-
-void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){
- 
-}
-
+/** Slots */
+void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){}
+void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {}
+void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
-  cout<<"mouse move Event"<<endl;
-  
+  std::cout << "mouse move Event" << std::endl;
 }
-
-void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
-
-}
-void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
-}
-
-void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {
-}
+void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){}
+void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){}
+void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /** Methodes */
+/** Methodes */
 // void TaskTreeViewer::scaleImage(double scale){
 //   m_qImage=m_qImage.scaled((int)m_qImage.width()*scale,(int)m_qImage.height()*scale);
 //   resize(m_qImage.width(), m_qImage.height());
