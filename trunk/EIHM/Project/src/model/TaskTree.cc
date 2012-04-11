@@ -1,12 +1,14 @@
 #include "TaskTree.hh"
 #include <string>
+#include <queue>
+using namespace std;
 
   /** Constructeurs et destructeurs */
   TaskTree::TaskTree(std::string name, Type type) :
     m_index(-1),
     m_name(name),
     m_type(type),
-    m_subtrees(10),
+    m_subtrees(0),
     m_in(0),
     m_out(0),
     m_parent(0)
@@ -16,7 +18,7 @@
     m_index(-1),
     m_name(name),
     m_type(type),
-    m_subtrees(10),
+    m_subtrees(0),
     m_in(0),
     m_out(0),
     m_parent(0)
@@ -28,6 +30,8 @@
 
 
   /** Accesseurs */
+  int TaskTree::getIndex(){ return m_index; }
+  
   int TaskTree::getSize() { return m_subtrees.size(); }
 
   TaskTree::Type TaskTree::getType() { return m_type; }
@@ -50,7 +54,7 @@
   TaskTree* TaskTree::getParent(){ return m_parent; }
   
   
-  
+  // Attention, il ne faut pas set des index à l'arrache, voir swapSubtree
   void TaskTree::setIndex(int index){ m_index = index; }
   
   void TaskTree::setType(TaskTree::Type type){ m_type = type; }
@@ -64,7 +68,7 @@
       if(leftNode->getTransitionOut() != 0) {
 	delete leftNode->getTransitionOut();
       }
-      if(m_in != 0) delete m_in;
+      /*if(m_in != 0) delete m_in;*/
       //tout ok, création de la transition
       
       Transition* temp = new Transition(leftNode, this, type);
@@ -76,20 +80,22 @@
   
   int TaskTree::setTransitionIn(Transition* transition){
     if(m_parent != 0 && m_index > 0){
-      if (m_in != 0) delete m_in;
+      /*if (m_in != 0) delete m_in;*/
       m_in = transition;
       return 0;
     } else return -1;
   }
   
    //return -1 en cas d'erreurs
-  int TaskTree::setTransitionOut(Transition::Type type){
-    if(m_parent != 0 && m_index < (int)m_subtrees.size()-1){ //rightnode OK
+  int TaskTree::setTransitionOut(Transition::Type type){    
+    if(m_parent != 0 && m_index < (int)m_parent->m_subtrees.size()-1){ //rightnode OK
       TaskTree* rightNode = m_parent->getSubTree(m_index+1);
       if(rightNode->getTransitionIn() != 0) {
 	delete rightNode->getTransitionIn();
       }
-      if(m_out != 0) delete m_out;
+      
+      /*if(m_out != 0) delete m_out;*/
+      
       //tout ok, création de la transition
       Transition* temp = new Transition(this, rightNode, type);
       m_out = temp;
@@ -99,8 +105,10 @@
   }
   
   int TaskTree::setTransitionOut(Transition* transition){
-    if(m_parent != 0 && m_index < (int)m_subtrees.size() - 1){
-      if (m_out != 0) delete m_out;
+    if(m_parent != 0 && m_index < (int)m_parent->getSubTrees().size() - 1){
+      
+      /*if (m_out != 0) delete m_out;*/
+      
       m_out = transition;
       return 0;
     } else return -1;
@@ -111,7 +119,7 @@
   
   void TaskTree::removeTransitionIn(){
     if(m_in != 0){ 
-      delete m_in;
+      //delete m_in;
       m_in = 0;
       TaskTree* leftNode = m_parent->getSubTree(m_index-1);   
       if(leftNode->getTransitionOut() != 0) leftNode->removeTransitionOut();
@@ -120,7 +128,7 @@
 
 void TaskTree::removeTransitionOut(){
   if(m_out != 0){
-    delete m_out;
+    //delete m_out;
     m_out = 0;
     TaskTree* rightNode = m_parent->getSubTree(m_index+1);   
     if(rightNode->getTransitionIn() != 0) rightNode->removeTransitionIn();
@@ -171,19 +179,20 @@ void TaskTree::removeTransitions(){
   void TaskTree::removeSubtree(int index){
     int size = (int)m_subtrees.size();
     if (index >=0 && index < size){
-      m_subtrees[index]->remove();
+      m_subtrees[index]->removeSubtree();
       for(int j = index; j < size-1; j++)
 	m_subtrees[j] = m_subtrees[j+1];
       m_subtrees.pop_back();
     }
   }
   
-  void TaskTree::remove(){
+  
+  void TaskTree::removeSubtree(){
     removeTransitions();
     int size = (int)m_subtrees.size();
     size--;
     while(size >= 0){
-      m_subtrees[size]->remove();
+      m_subtrees[size]->removeSubtree();
       m_subtrees.pop_back();
       size--;
     }
@@ -194,16 +203,19 @@ void TaskTree::removeTransitions(){
     std::vector<TaskTree*> result;
     std::vector<TaskTree*> cur;
     
-    /*src/model/TaskTree.cc:196:33: warning: ‘vect’ is used uninitialized in this function*/
-    getLevelTemp(t, level, &vect);
+    if (level == 0){
+      result.push_back(t);
+    } else {
+      getLevelTemp(t, level, &vect);
     
-    std::vector<std::vector<TaskTree*> >::iterator it;
-    std::vector<TaskTree*>::iterator itCur;
-    
-    for (it=vect.begin() ; it < vect.end(); it++ ){
+      std::vector<std::vector<TaskTree*> >::iterator it;
+      std::vector<TaskTree*>::iterator itCur;
+
+      for (it=vect.begin() ; it != vect.end(); it++ ){
 	cur = *it;
-	for (itCur = cur.begin() ; itCur < cur.end(); itCur++ )
+	for (itCur = cur.begin() ; itCur != cur.end(); itCur++ )
 	  result.push_back(*itCur);
+      }
     }
     return result;
   }
@@ -212,7 +224,7 @@ void TaskTree::removeTransitions(){
     if(level >= 0){
      rec(t, 0, level, vect);
     } else {
-      std::cout << "level out of bounds"<< std::endl;
+      std::cout << "level must be positive"<< std::endl;
     }
   }
 
@@ -221,8 +233,48 @@ void TaskTree::removeTransitions(){
       vect->push_back(t->getSubTrees());
 
     } else {
-      std::vector<TaskTree*>::iterator it;
-      for ( it=getSubTrees().begin() ; it < getSubTrees().end(); it++ )
-	rec(*it, n+1, level, vect);
+      for(int i = 0; i < (int)t->getSubTrees().size(); i++){
+	rec(t->getSubTrees()[i], n+1, level, vect);
+      }
     }
+  }
+  
+  void TaskTree::printSubTree(){
+    cout << endl;
+    for(int i = 0; i < (int)m_subtrees.size(); i++){
+      cout << m_subtrees[i]->getName() + " ";
+    }
+    cout << endl;
+  }
+  
+  void TaskTree::printTree(){
+    queue<TaskTree*> q;
+    queue<TaskTree*> q2;
+    q.push(this);//cout << q.front()->getName() << endl;
+    cout << endl;
+    std::vector<TaskTree*>::iterator it;
+    while(!q.empty() || !q2.empty()){
+      while(!q.empty()){
+	cout << q.front()->getName()<< " ";
+	if(q.front()->getTransitionOut() != 0){
+	  cout << q.front()->getTransitionOut()->toString() + " " ;
+	}
+// 	if(q.front()->getTransitionIn() != 0){
+// 	  cout << q.front()->getTransitionIn()->toString() + " " ;
+// 	}
+// 	cout << q.front()->getName()<< " ";
+	vector<TaskTree*> subTree = (q.front())->getSubTrees();
+	for(int i = 0; i < (int)subTree.size(); i++){
+	  //cout << subTree[i]->getName() + " ";
+	  q2.push(subTree[i]);
+	}
+	q.pop();     
+      }
+      cout << endl;
+      while(!q2.empty()){
+	q.push(q2.front());
+	q2.pop();
+      }
+    }
+    cout << endl;
   }
