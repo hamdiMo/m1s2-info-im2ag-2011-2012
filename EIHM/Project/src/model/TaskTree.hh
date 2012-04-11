@@ -48,6 +48,14 @@ public:
   
   void setName(std::string);
   
+  
+  
+  /* ATTENTION pour l'affectation des transtions, 
+   * les méthodes prenant en paramètre une transition, la Out 
+   * ne met pas à jour la In du voisin
+   * les méthodes prenant en paramètre un type, la out met à jour celle du voisin
+   */
+  
   //return -1 en cas d'erreurs
   int setTransitionIn(Transition::Type);
   
@@ -78,15 +86,17 @@ public:
   
   void removeSubtree(int index);
   
-  void remove();
+  void removeSubtree();
   
   std::vector<TaskTree*> getLevel(TaskTree* t, int level);
   
   void getLevelTemp(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect);
   
-  //std::vector<std::vector <TaskTree*> >* getLevel(TaskTree* t,int level, std::vector<std::vector <TaskTree*> >* vect);
-  
   void rec(TaskTree*, int, int, std::vector<std::vector <TaskTree*> >*);
+ 
+  void printSubTree();
+  
+  void printTree();
   
   protected:
 

@@ -1,5 +1,6 @@
 #ifndef _TRANSITION_HH_
 #define _TRANSITION_HH_
+#include <string>
 
 class TaskTree;
 
@@ -24,6 +25,7 @@ public:
 
   void setType(Type type);
   
+  std::string toString();
   protected:
 
   
