@@ -16,7 +16,8 @@ public:
 
 private:
   QGraphicsScene* m_scene; 
-
+  bool m_personal_menu;
+		      
 public slots:
 
   /** Slots */
