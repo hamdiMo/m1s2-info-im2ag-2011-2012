@@ -13,7 +13,7 @@ using namespace std;
     m_out(0),
     m_parent(0)
   {}
-
+  
   TaskTree::TaskTree(std::string name, Type type, std::vector<TaskTree*> subtrees) :
     m_index(-1),
     m_name(name),
@@ -25,6 +25,27 @@ using namespace std;
   {
     for(int i=0; i < (int)subtrees.size(); i++) m_subtrees.push_back(subtrees[i]);
   }
+  
+  
+  // ce constructeur copie l'arbre t SANS le pointeur vers le parent... 
+  // A mettre à jour suite à la copie 
+  TaskTree::TaskTree(TaskTree* t):
+    m_subtrees(0),
+    m_in(0),
+    m_out(0),
+    m_parent(0)
+  
+  {
+    m_index = t->getIndex();
+    m_name = string(t->getName());
+    m_type = t->getType();
+    vector<TaskTree*> subTmp = t->getSubTrees();
+    for(int i=0; i < (int)subTmp.size(); i++){
+      TaskTree* son = new TaskTree(subTmp[i]);
+      addSubtree(son);
+      if(subTmp[i]->getTransitionIn() != 0) son->setTransitionIn(subTmp[i]->getTransitionIn()->getType());
+    }
+  }  
 
   TaskTree::~TaskTree() {}
 
@@ -247,10 +268,23 @@ void TaskTree::removeTransitions(){
     cout << endl;
   }
   
+  void TaskTree::copyPaste(TaskTree* t){
+    addSubtree(new TaskTree(t));
+  }
+  
+  void TaskTree::cutPaste(TaskTree* t){
+    copyPaste(t);
+    if(t->getIndex() != -1){
+      TaskTree* parent = t->getParent();
+      int index = t->getIndex();
+      parent->removeSubtree(index);
+    }
+  } 
+  
   void TaskTree::printTree(){
     queue<TaskTree*> q;
     queue<TaskTree*> q2;
-    q.push(this);//cout << q.front()->getName() << endl;
+    q.push(this);
     cout << endl;
     std::vector<TaskTree*>::iterator it;
     while(!q.empty() || !q2.empty()){
@@ -270,7 +304,7 @@ void TaskTree::removeTransitions(){
 	}
 	q.pop();     
       }
-      cout << endl;
+      cout <<endl;
       while(!q2.empty()){
 	q.push(q2.front());
 	q2.pop();

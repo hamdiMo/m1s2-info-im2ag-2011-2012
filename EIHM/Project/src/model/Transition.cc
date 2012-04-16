@@ -8,7 +8,7 @@
     m_from(from),
     m_to(to)
     {}
-
+    
   Transition::~Transition() {}
 
 

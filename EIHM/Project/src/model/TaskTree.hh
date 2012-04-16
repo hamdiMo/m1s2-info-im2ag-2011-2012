@@ -17,6 +17,8 @@ public:
   TaskTree(std::string name, Type);
 
   TaskTree(std::string name, Type, std::vector<TaskTree*> subtrees);
+  
+  TaskTree(TaskTree*);
 
   ~TaskTree();
 
@@ -59,7 +61,7 @@ public:
   //return -1 en cas d'erreurs
   int setTransitionIn(Transition::Type);
   
-  //return -1 en cas d'erreurs
+  //return -1 en cas d'erreurs 
   int setTransitionIn(Transition*);
   
   //return -1 en cas d'erreurs
@@ -68,6 +70,9 @@ public:
   //return -1 en cas d'erreurs
   int setTransitionOut(Transition*);
     
+  
+  
+  /********************************************************************/
   void setParent(TaskTree*);
 
   void removeTransitionIn();
@@ -93,6 +98,11 @@ public:
   void getLevelTemp(TaskTree* t, int level, std::vector<std::vector<TaskTree*> >* vect);
   
   void rec(TaskTree*, int, int, std::vector<std::vector <TaskTree*> >*);
+  
+  
+  void copyPaste(TaskTree* t);
+  
+  void cutPaste(TaskTree* t);
  
   void printSubTree();
   

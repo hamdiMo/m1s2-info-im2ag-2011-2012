@@ -12,6 +12,7 @@ public:
 
   /** Constructeurs et destructeurs */
   Transition(TaskTree* from, TaskTree* to, Type type);
+  
 
   ~Transition();
 
