@@ -42,15 +42,15 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   // // painter.setRenderHint(QPainter::Antialiasing, true);
   // // //
   // painter.setBackgroundMode(Qt::TransparentMode);
-    QColor backgroundColor = palette().light().color();
-    backgroundColor.setAlpha(100);
+   //QColor backgroundColor = palette().light().color();
+    // backgroundColor.setAlpha(200);
   //  painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-   painter.fillRect(QRect(40, 40, width()-10, height()-10),backgroundColor);
-  //painter.setPen(palette().dark().color());
-  // QBrush brush2(Qt::Dense4Pattern);
-  // QPainterPath path;
-  //path.addEllipse(QRect(0, 0, width() - 1, height() - 1));
-  //painter.fillPath(path,brush2);
+    //painter.fillRect(QRect(40, 40, width()-10, height()-10),backgroundColor);
+   painter.setPen(palette().dark().color());
+   QBrush brush2(Qt::Dense4Pattern);
+    QPainterPath path;
+    path.addEllipse(QRect(0, 0, width() - 1, height() - 1));
+    painter.fillPath(path,brush2);
   // painter.setBrush(Qt::NoBrush);
 
 
