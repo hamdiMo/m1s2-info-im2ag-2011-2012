@@ -4,17 +4,26 @@
 #include <iostream>
 #include <QMouseEvent>
 #include <QGraphicsView>
-
+#include "TaskTree.hh"
 
 class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
 
   /** Constructeurs et destructeurs */
-  TaskTreeViewer();
+  TaskTreeViewer(TaskTree* taskTree);
   ~TaskTreeViewer();
 
+
+  /** Methodes */
+  void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
+  int computeWidth(TaskTree* t);
+  int computeHeight(TaskTree* t);
+  void computeSceneRect(int x, int y, int xSize, int ySize);
+
 private:
+
+  TaskTree* m_taskTree;
   QGraphicsScene* m_scene; 
   bool m_personal_menu;
 		      

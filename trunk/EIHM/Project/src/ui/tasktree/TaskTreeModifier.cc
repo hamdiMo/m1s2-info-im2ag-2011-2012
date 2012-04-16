@@ -3,10 +3,8 @@
 
 /** Constructeurs et destructeur */
 TaskTreeModifier::TaskTreeModifier(TaskTreeViewer* tasktreeviewer) :
-m_taskTreeViewer(tasktreeviewer)
-{
-
-}
+  m_taskTreeViewer(tasktreeviewer)
+{}
 
 TaskTreeModifier::~TaskTreeModifier() {}
 
