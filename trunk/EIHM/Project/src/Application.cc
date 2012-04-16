@@ -13,10 +13,14 @@ int main(int argc, char **argv) {
   UserInterface userInterface(&application ,m_clipboard );
   userInterface.show();
   
+  
+
+  
   return application.exec();
 }
 
 //NE PAS SUPPRIMER SVP
+// //NE PAS SUPPRIMER SVP
 //   TaskTree::Type type = TaskTree::USER;
 //   TaskTree* t = new TaskTree("coulou", type);
 //   TaskTree* t2 = new TaskTree("coulou2", type);
@@ -50,14 +54,21 @@ int main(int argc, char **argv) {
 //   t9->addSubtree(t10);
 //   t9->addSubtree(t11);
 //   
-//   if(t6->setTransitionOut(Transition::CHOICE) == -1)
+//   if(t5->setTransitionOut(Transition::CHOICE) == -1)
 //     cout << "err" <<endl;
-//   if(t8->setTransitionIn(Transition::ORDERINDEPENDENCE) == -1)
+//   if(t11->setTransitionIn(Transition::ORDERINDEPENDENCE) == -1)
 //     cout << "err" <<endl;
-//   if(t4->setTransitionIn(Transition::CHOICE) == -1)
+//   if(t13->setTransitionIn(Transition::CHOICE) == -1)
 //     cout << "err" <<endl;  
-//   if(t13->setTransitionOut(Transition::DISABLING) == -1)
+//   if(t4->setTransitionOut(Transition::DISABLING) == -1)
 //     cout << "err" <<endl;
 //   t->printTree();
+//   //TaskTree* tbis = new TaskTree(t);
+//   //tbis->printSubTree();
+//   //tbis->printTree();
+//   
+//   t10->cutPaste(t2);
+//   t->printTree();
+//   
 //   t->removeSubtree(0);
 //   t->printTree();
