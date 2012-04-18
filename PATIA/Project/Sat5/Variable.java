@@ -35,7 +35,7 @@ public class Variable {
 
     public boolean isHeuristicPosSafe() { return m_heuristicPosSafe || (m_heuristicPos > 0 && m_heuristicNeg == 0); }
 
-    public boolean isHeuristicNegSafe() { return m_heuristicNegSafe || (m_heuristicPos > 0 && m_heuristicNeg == 0); }
+    public boolean isHeuristicNegSafe() { return m_heuristicNegSafe || (m_heuristicNeg > 0 && m_heuristicPos == 0); }
 
 
     /** Accesseurs */
@@ -114,27 +114,21 @@ public class Variable {
     public void addPositive(Clause clause) { 
         m_heuristicPos += 1;
         m_positives.add(clause); 
-        // if (m_heuristicSafePos == -1 || m_heuristicSafePos > clause.getSize()) 
-        //     m_heuristicSafePos = clause.getSize();
     }
     
     public void addNegative(Clause clause) {
         m_heuristicNeg += 1;
         m_negatives.add(clause); 
-        // if (m_heuristicSafeNeg == -1 || m_heuristicSafeNeg > clause.getSize()) 
-        //     m_heuristicSafeNeg = clause.getSize();
     }
     
     public void removePositive(Clause clause) { 
         m_heuristicPos -= 1;
         m_positives.remove(clause); 
-        // Penser a recalculer m_heuristicSafePos
     }
 
     public void removeNegative(Clause clause) {
         m_heuristicNeg -= 1;
         m_negatives.remove(clause); 
-        // Penser a recalculer m_heuristicSafeNeg
     }
 
 

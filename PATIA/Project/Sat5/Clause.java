@@ -96,9 +96,9 @@ public class Clause {
         m_maskPos[index] = m_maskPos[m_size];
         m_maskPos[m_size] = maskPos;
         
-        if (m_size == 1) m_variables[0].setUnsafe(m_maskPos[0]);
-
         m_size++;
+
+        if (m_size-1 == 1) m_variables[0].setUnsafe(m_maskPos[0]); 
     }
     
     
