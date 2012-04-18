@@ -12,14 +12,32 @@ public class Solver {
     private Clause[] m_clauseSolved;
     private Variable[] m_variablesLinked;
     private int m_variablesLinkedNb, m_clauseSolvedNb;
-    
+    private int m_instances, m_conflicts, m_backtrack, m_height, m_heightMax, m_iteration;
+   
     /** Constructeurs */
     public Solver(Problem problem) {
         m_problem = problem;
     }
     
+    /** Accesseurs */
+    public int getInstances() { return m_instances; }
+
+    public int getConflicts() { return m_conflicts; }
+
+    public int getBacktrack() { return m_backtrack; }
+
+    public int getHeigthMax() { return m_heightMax; }
+
+    public int getIteration() { return m_iteration; }
+
     /** Methodes */
     public boolean solve() {
+        m_instances = 0;
+        m_conflicts = 0;
+        m_backtrack = 0;
+        m_height = 0;
+        m_heightMax = 0;
+        
         m_variablesLinked = new Variable[m_problem.getVariableDimension()];
         for (int i = 0; i < m_variablesLinked.length; i++)
             m_variablesLinked[i] = m_problem.getVariable(i);
@@ -31,23 +49,30 @@ public class Solver {
         m_clauseSolvedNb = 0;
         m_variablesLinkedNb = 0;
 
-        computeHeuristics();
         return solve(m_variablesLinkedNb, m_clauseSolvedNb);
     }
     
     public boolean solve(int lvIndex, int pcIndex) {
-        if (!(pcIndex < m_clauseSolved.length)) return true;
+        m_height++;
+        m_iteration++;
+        if (m_height > m_heightMax) m_heightMax = m_height;
+
+        if (!(pcIndex < m_clauseSolved.length)) {
+            m_height--;
+            return true;
+        }
         
+        //        System.out.println("Hauteur = " + m_height);
+        
+        computeHeuristics();
         Clause clause = solveClause(selectBestClause());
-        System.out.println("Choix clause = " + clause);
-        
         Integer[] literals = selectLiteralsFrom(clause);
         
         boolean sat = false;
         int curVariable = 0;
         while (!sat && curVariable < clause.getSize()) {
             Variable variable = satisfyLiteral(literals[curVariable]);
-            System.out.println("Choix variable = " + variable);
+            m_instances++;
 
             sat = true;
             for (int i = pcIndex+1; i < m_clauseSolved.length; i++) {
@@ -56,6 +81,7 @@ public class Solver {
                     solveClause(i);
                     break;
                 case FALSE:
+                    m_conflicts++;
                     sat = false;
                     break;
                 case UNDEFINE:
@@ -64,6 +90,7 @@ public class Solver {
             }
             if (sat) sat = solve(m_variablesLinkedNb, m_clauseSolvedNb);
             if (!sat) {
+                m_backtrack++;
                 variable.setValue(Value.UNDEFINE);
                 m_clauseSolvedNb = pcIndex+1;
                 for (int i = pcIndex+1; i < m_clauseSolved.length; i++)
@@ -71,6 +98,7 @@ public class Solver {
             }
             curVariable++;
         }
+        m_height--;
         return sat;
     }
 
@@ -89,20 +117,19 @@ public class Solver {
         
     public Integer[] selectLiteralsFrom(Clause clause) {
         Integer[] literals = new Integer[clause.getSize()];
-        int[] heuristics = new int[clause.getSize()];
+        double[] heuristics = new double[clause.getSize()];
         for (int i = 0; i < literals.length; i++) {
             Integer literal = clause.getLiteral(i);
-            int heuristic = 0;
+            int j = i-1; double heuristic = 0;
             if (literal.intValue() < 0) heuristic = m_problem.getVariableFromLiteral(literal).getHeuristicNeg();
             else heuristic = m_problem.getVariableFromLiteral(literal).getHeuristicPos();
-            int j = i;
-            while (j > 0 && heuristics[j-1] > heuristic) {
-                literals[j] = literals[j-1];
-                heuristics[j] = heuristics[j-1];
+            while (j >= 0 && heuristics[j] < heuristic) {
+                literals[j+1] = literals[j];
+                heuristics[j+1] = heuristics[j];
                 j--;
             }
-            literals[j] = literal;
-            heuristics[j] = heuristic;
+            literals[j+1] = literal;
+            heuristics[j+1] = heuristic;
         }
         return literals;
     }
