@@ -16,7 +16,7 @@ public class Sat {
             }
         
         Problem problem = new Problem(scanner);
-        System.out.println(problem);
+        System.out.println(problem + "\n");
 
         Solver solver = new Solver();
         boolean sat = solver.solve(problem);
@@ -24,7 +24,9 @@ public class Sat {
         if (sat) System.out.println("SAT");
         else System.out.println("UNSAT");
         
-        System.out.println(problem);
-        System.out.println(solver);
+        for (int i = 0; i < problem.getVariableDimension(); i++)
+            System.out.println(problem.getVariable(i));
+
+        System.out.println("\n" + solver);
     }
 }
