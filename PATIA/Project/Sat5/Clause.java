@@ -98,7 +98,7 @@ public class Clause {
             if (!m_maskPos[i]) res += "not";
             res += m_variables[i];
         }
-        res += "}";
+        res += " }";
         return res;
     }
 
