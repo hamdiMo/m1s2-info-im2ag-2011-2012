@@ -63,14 +63,15 @@ public class Solver {
         m_variables[index] = m_variables[variablesFree];
         m_variables[variablesFree] = variable;
         
-        boolean valuePosIni = (variable.getHeuristicPos() > variable.getHeuristicNeg() || variable.isHeuristicPosSafe());
-        boolean valuePos = valuePosIni;
+        boolean valueIni = (variable.getHeuristicPos() > variable.getHeuristicNeg()
+                            && (variable.isHeuristicPosSafe() || !variable.isHeuristicNegSafe()));
+        boolean value = valueIni;
         
         boolean unsat = true;
         do {
             index = 0;
             unsat = false;
-            variable.propagate(valuePos);
+            variable.propagate(value);
             m_instances++;
             
             while (!unsat && index < clausesUnsolved) {
@@ -92,10 +93,14 @@ public class Solver {
             if (unsat) {
                 variable.unpropagate();
                 clausesUnsolved = clausesUnsolvedCall;
-                valuePos = !valuePos;
+                if (variable.isHeuristicSafe(value)) {
+                    m_height--;
+                    return false;
+                }
+                value = !value;
                 m_backtrack++;
             }
-        } while (unsat && valuePos != valuePosIni);
+        } while (unsat && value != valueIni);
 
         m_height--;
         return !unsat;
