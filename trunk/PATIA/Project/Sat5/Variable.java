@@ -37,25 +37,40 @@ public class Variable {
     public void propagate(boolean value) {
         m_linked = true;
         m_value = value;
-        if (value) propagateTrue();
-        else propagateFalse();
+
+        // System.out.println("Propagation de " + this);
+
+        Iterator<Clause> iter = m_positives.listIterator();
+        while (iter.hasNext()) {
+            if (m_value) iter.next().valid(this);
+            else iter.next().reduce(this);
+        }
+        
+        iter = m_negatives.listIterator();
+        while (iter.hasNext()) {
+            if (m_value) iter.next().reduce(this);
+            else iter.next().valid(this);
+        }
     }
     
-    public void propagateTrue() {
+    public void unpropagate() {
+        m_linked = false;
+
+        // System.out.println("Restauration de " + this);
+
         Iterator<Clause> iter = m_positives.listIterator();
-        while (iter.hasNext()) iter.next().valid(this);
-	
+        while (iter.hasNext()) {
+            if (m_value) iter.next().unvalid(this);
+            else iter.next().restore(this);
+        }
+
         iter = m_negatives.listIterator();
-        while (iter.hasNext()) iter.next().reduce(this);
+        while (iter.hasNext()) {
+            if (m_value) iter.next().restore(this);
+            else iter.next().unvalid(this);
+        }
     }
 
-    public void propagateFalse() {
-        Iterator<Clause> iter = m_negatives.listIterator();
-        while (iter.hasNext()) iter.next().valid(this);
-	
-        iter = m_positives.listIterator();
-        while (iter.hasNext()) iter.next().reduce(this);
-    }
 
     /** Methodes */
     public void computeHeuristic() {
@@ -81,23 +96,22 @@ public class Variable {
         }
     }
 
+
     /** Notification par les clauses */
-    public void notifyReduce(Clause clause, boolean literalPos) { /** Do nothing */ }
-    
     public void notifyValid(Clause clause, boolean literalPos) {
         if (literalPos) removePositive(clause);
         else removeNegative(clause);
     }
 
-    public void notifyRestore(Clause clause, boolean literalPos) {
+    public void notifyUnvalid(Clause clause, boolean literalPos) {
         if (literalPos) addPositive(clause);
         else addNegative(clause);
     }
 
 
     /** Liaison avec les clauses */
-    public void addClause(Clause clause, boolean pos) {
-        if (pos) addPositive(clause);
+    public void addClause(Clause clause, boolean literalPos) {
+        if (literalPos) addPositive(clause);
         else addNegative(clause);
     }
     
