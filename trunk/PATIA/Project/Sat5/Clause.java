@@ -42,6 +42,8 @@ public class Clause {
             m_variables[i] = variable;
             variable.addClause(this, m_maskPos[i]);
         }
+
+        if (m_size == 1) m_variables[0].setSafe(m_maskPos[0]);
     }
 
     /** Predicats */
