@@ -91,6 +91,10 @@ public slots:
   void deleteTask();
   void addChoiceTransition();
   void addOrderIndependenceTransition();
+
+  // void updateUI();
+  // void updateUIActions();
+  // void updateUIToolbox();
         
 private:
 
