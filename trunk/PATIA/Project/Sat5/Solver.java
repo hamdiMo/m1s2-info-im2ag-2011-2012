@@ -43,54 +43,62 @@ public class Solver {
         return solve(variablesFree, clausesUnsolved);
     }
     
-
     public boolean solve(int variablesFreeCall, int clausesUnsolvedCall) {
+        m_height++;
+        if (m_height > m_heightMax) m_heightMax = m_height;
+
         if (clausesUnsolvedCall == 0) return true;
 
         int variablesFree = variablesFreeCall, clausesUnsolved = clausesUnsolvedCall;
         int index = bestVariableIndex(variablesFree); 
-        if (index == -1) return false;
+        if (index == -1) {
+            m_conflicts++;
+            m_height--;
+            return false;
+        }
 
         Variable variable = m_variables[index];
 
         variablesFree--;
         m_variables[index] = m_variables[variablesFree];
         m_variables[variablesFree] = variable;
-
-        boolean valuePos = variable.getHeuristicPos() > variable.getHeuristicNeg();
-        variable.propagate(valuePos);
         
-        index = 0;
-        while (index < clausesUnsolved) {
-            if (m_clauses[index].isSat()) {
-                clausesUnsolved--;
-                Clause clause = m_clauses[index];
-                m_clauses[index] = m_clauses[clausesUnsolved];
-                m_clauses[clausesUnsolved] = clause;
-            }
-            else index++;
-        }
-
-        if (solve(variablesFree, clausesUnsolved)) return true;
-
-        variable.unpropagate();
-        variable.propagate(!valuePos);
-
-        index = 0;
-        while (index < clausesUnsolved) {
-            if (m_clauses[index].isSat()) {
-                clausesUnsolved--;
-                Clause clause = m_clauses[index];
-                m_clauses[index] = m_clauses[clausesUnsolved];
-                m_clauses[clausesUnsolved] = clause;
-            }
-            else index++;
-        }
-
-        if (solve(variablesFree, clausesUnsolved)) return true;
+        boolean valuePosIni = (variable.getHeuristicPos() > variable.getHeuristicNeg() || variable.isHeuristicPosSafe());
+        boolean valuePos = valuePosIni;
         
-        variable.unpropagate();
-        return false;
+        boolean unsat = true;
+        do {
+            index = 0;
+            unsat = false;
+            variable.propagate(valuePos);
+            m_instances++;
+            
+            while (!unsat && index < clausesUnsolved) {
+                if (m_clauses[index].isSat()) {
+                    clausesUnsolved--;
+                    Clause clause = m_clauses[index];
+                    m_clauses[index] = m_clauses[clausesUnsolved];
+                    m_clauses[clausesUnsolved] = clause;
+                }
+                else {
+                    if (m_clauses[index].isUnsat()) {
+                        unsat = true; 
+                        m_conflicts++;
+                    }
+                    index++;
+                }
+            }
+            if (!unsat) unsat = !solve(variablesFree, clausesUnsolved);
+            if (unsat) {
+                variable.unpropagate();
+                clausesUnsolved = clausesUnsolvedCall;
+                valuePos = !valuePos;
+                m_backtrack++;
+            }
+        } while (unsat && valuePos != valuePosIni);
+
+        m_height--;
+        return !unsat;
     }
     
     public int bestVariableIndex(int variablesFree) {
@@ -98,6 +106,8 @@ public class Solver {
         for (int i = 0; i < variablesFree; i++) {
             int heuristicPos = m_variables[i].getHeuristicPos();
             int heuristicNeg = m_variables[i].getHeuristicNeg();
+            if (m_variables[i].isHeuristicPosSafe()) heuristicPos += variablesFree;
+            if (m_variables[i].isHeuristicNegSafe()) heuristicNeg += variablesFree;
             if (heuristicPos > heuristicMax || heuristicPos == heuristicMax && heuristicNeg > heuristicMin) {
                 index = i;
                 heuristicMax = heuristicPos;

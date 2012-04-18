@@ -8,7 +8,7 @@ public class Variable {
     private int m_id;
     private boolean m_value, m_linked;
     private int m_heuristicPos, m_heuristicNeg;
-    private int m_heuristicSafePos, m_heuristicSafeNeg;
+    private boolean m_heuristicPosSafe, m_heuristicNegSafe;
     private List<Clause> m_positives, m_negatives, m_propagate;
     
     /** Constructeurs */
@@ -18,11 +18,24 @@ public class Variable {
         m_linked = false;
         m_heuristicPos = 0;
         m_heuristicNeg = 0;
-        m_heuristicSafePos = -1;
-        m_heuristicSafeNeg = -1;
+        m_heuristicPosSafe = false;
+        m_heuristicNegSafe = false;
         m_positives = new LinkedList<Clause>();
         m_negatives = new LinkedList<Clause>();
     }
+
+
+    /** Predicats */
+    public boolean isValue(boolean value) { return m_linked && (m_value == value); }
+
+    public boolean isHeuristicSafe(boolean value) {
+        if (value) return isHeuristicPosSafe();
+        else return isHeuristicNegSafe();
+    }
+
+    public boolean isHeuristicPosSafe() { return m_heuristicPosSafe || (m_heuristicPos > 0 && m_heuristicNeg == 0); }
+
+    public boolean isHeuristicNegSafe() { return m_heuristicNegSafe || (m_heuristicPos > 0 && m_heuristicNeg == 0); }
 
 
     /** Accesseurs */
@@ -31,14 +44,24 @@ public class Variable {
     public int getHeuristicPos() { return m_heuristicPos; }
 
     public int getHeuristicNeg() { return m_heuristicNeg; }
-    
+
 
     /** Mutateurs */
+    public void setSafe(boolean posValue) {
+        if (posValue) m_heuristicPosSafe = true;
+        else m_heuristicNegSafe = true;
+    }
+
+    public void setUnsafe(boolean posValue) {
+        if (posValue) m_heuristicPosSafe = false;
+        else m_heuristicNegSafe = false;
+    }
+
+
+    /** Methodes */
     public void propagate(boolean value) {
         m_linked = true;
         m_value = value;
-
-        // System.out.println("Propagation de " + this);
 
         Iterator<Clause> iter = m_positives.listIterator();
         while (iter.hasNext()) {
@@ -56,8 +79,6 @@ public class Variable {
     public void unpropagate() {
         m_linked = false;
 
-        // System.out.println("Restauration de " + this);
-
         Iterator<Clause> iter = m_positives.listIterator();
         while (iter.hasNext()) {
             if (m_value) iter.next().unvalid(this);
@@ -68,31 +89,6 @@ public class Variable {
         while (iter.hasNext()) {
             if (m_value) iter.next().restore(this);
             else iter.next().unvalid(this);
-        }
-    }
-
-
-    /** Methodes */
-    public void computeHeuristic() {
-        computeHeuristicPos();
-        computeHeuristicNeg();
-    }
-
-    public void computeHeuristicPos() {
-        m_heuristicPos = 0;
-        Iterator<Clause> iter = m_positives.listIterator();
-        while (iter.hasNext()) {
-            Clause cl = iter.next();
-            if (!cl.isSat()) m_heuristicPos++; 
-        }
-    }
-
-    public void computeHeuristicNeg() {
-        m_heuristicNeg = 0;
-        Iterator<Clause> iter = m_negatives.listIterator();
-        while (iter.hasNext()) {
-            Clause cl = iter.next();
-            if (!cl.isSat()) m_heuristicNeg++; 
         }
     }
 
@@ -118,15 +114,15 @@ public class Variable {
     public void addPositive(Clause clause) { 
         m_heuristicPos += 1;
         m_positives.add(clause); 
-        if (m_heuristicSafePos == -1 || m_heuristicSafePos > clause.getSize()) 
-            m_heuristicSafePos = clause.getSize();
+        // if (m_heuristicSafePos == -1 || m_heuristicSafePos > clause.getSize()) 
+        //     m_heuristicSafePos = clause.getSize();
     }
     
     public void addNegative(Clause clause) {
         m_heuristicNeg += 1;
         m_negatives.add(clause); 
-        if (m_heuristicSafeNeg == -1 || m_heuristicSafeNeg > clause.getSize()) 
-            m_heuristicSafeNeg = clause.getSize();
+        // if (m_heuristicSafeNeg == -1 || m_heuristicSafeNeg > clause.getSize()) 
+        //     m_heuristicSafeNeg = clause.getSize();
     }
     
     public void removePositive(Clause clause) { 
