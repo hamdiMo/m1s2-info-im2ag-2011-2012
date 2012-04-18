@@ -21,12 +21,19 @@ public class Sat {
         Solver solver = new Solver();
         boolean sat = solver.solve(problem);
 
-        if (sat) System.out.println("SAT");
+        System.out.println(problem + "\n");        
+        System.out.println("\n" + solver);
+
+        if (sat) {
+            System.out.print("SAT");
+            for (int i = 0; i < problem.getVariableDimension(); i++) {
+                Variable variable = problem.getVariable(i);
+                if (variable.isValue(true)) System.out.print(" " + variable.getId());
+                else if (variable.isValue(false)) System.out.print(" -" + variable.getId());
+            }
+            System.out.println("");
+        }
         else System.out.println("UNSAT");
         
-        for (int i = 0; i < problem.getVariableDimension(); i++)
-            System.out.println(problem.getVariable(i));
-
-        System.out.println("\n" + solver);
     }
 }

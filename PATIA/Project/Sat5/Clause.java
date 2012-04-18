@@ -81,32 +81,31 @@ public class Clause {
         boolean maskPosTmp = m_maskPos[index];
         m_maskPos[index] = m_maskPos[m_size];
         m_maskPos[m_size] = maskPosTmp;
+
+        if (m_size == 1) m_variables[0].setSafe(m_maskPos[0]);
     }
 
     public void restore(Variable variable) {
-        // try {
-            int index = m_size;
-            while (m_variables[index] != variable) index++;
-            
-            m_variables[index] = m_variables[m_size];
-            m_variables[m_size] = variable;
-            
-            boolean maskPos = m_maskPos[index];
-            m_maskPos[index] = m_maskPos[m_size];
-            m_maskPos[m_size] = maskPos;
-            
-            m_size++;
-        // }
-        // catch (java.lang.ArrayIndexOutOfBoundsException e) {
-        //     System.out.println("restore " + variable + " dans " + this + " de taille " + m_size);
-        //     throw e;
-        // }
+        int index = m_size;
+        while (m_variables[index] != variable) index++;
+        
+        m_variables[index] = m_variables[m_size];
+        m_variables[m_size] = variable;
+        
+        boolean maskPos = m_maskPos[index];
+        m_maskPos[index] = m_maskPos[m_size];
+        m_maskPos[m_size] = maskPos;
+        
+        if (m_size == 1) m_variables[0].setUnsafe(m_maskPos[0]);
+
+        m_size++;
     }
+    
     
     /** Affichage */
     public String toString() {
         String res = "{ w" + m_weight;
-        for (int i = 0; i < m_sizeInit; i++) {
+        for (int i = 0; i < m_size; i++) {
             res += ", ";
             if (!m_maskPos[i]) res += "not";
             res += m_variables[i];
