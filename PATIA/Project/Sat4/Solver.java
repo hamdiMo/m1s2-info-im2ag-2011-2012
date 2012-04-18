@@ -166,7 +166,7 @@ public class Solver {
         Variable variable = m_problem.getVariableFromLiteral(literal);
         if (literal.intValue() > 0) variable.setValue(Value.TRUE);
         else variable.setValue(Value.FALSE);
-        return variable;
+	return variable;
     }
 
     public String toString() {
