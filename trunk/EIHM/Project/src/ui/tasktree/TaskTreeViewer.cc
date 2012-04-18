@@ -10,6 +10,7 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   m_taskTree(taskTree),
   m_taskTreeItems(0)
 {
+  m_roundedMenu=NULL;
   m_scene = new QGraphicsScene(this);
   m_scene->setBackgroundBrush(QColor(128, 128, 128, 0));
   m_scene->setForegroundBrush(QColor(255, 255, 255, 0));
@@ -79,16 +80,18 @@ void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){}
 void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {}
 void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
-  // std::cout << "mouse move Event" << std::endl;
+ 
+  if (m_roundedMenu!=NULL) 
+    m_roundedMenu->mouseMoveEvent(event);
 }
 void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
   if (event->button()==Qt::RightButton){
     std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
-    RoundedMenu* r = new RoundedMenu();
-    QGraphicsProxyWidget* proxy3 = m_scene->addWidget(r);
+    m_roundedMenu = new RoundedMenu();
+    QGraphicsProxyWidget* proxy3 = m_scene->addWidget(m_roundedMenu);
     QPointF pos = mapToScene(event->x(), event->y());
-    computeSceneRect(pos.x(), pos.y(), r->size().width(), r->size().height());
-    proxy3->setPos(pos.x()-r->size().width()/2,pos.y()-r->size().height()/2);
+    computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
+    proxy3->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
   }
 }
 void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){}
