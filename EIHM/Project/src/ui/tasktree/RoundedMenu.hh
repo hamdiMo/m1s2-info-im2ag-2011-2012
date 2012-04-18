@@ -17,19 +17,18 @@ public:
   
   QSize minimumSizeHint() const;
   QSize sizeHint() const;
-			
-public slots:
-  void setPen(const QPen &pen);
-  void setBrush(const QBrush &brush);
+  void  keyPressEvent ( QKeyEvent * event );
+  void  keyReleaseEvent ( QKeyEvent * event );
+  void  mouseDoubleClickEvent ( QMouseEvent * event );
+  void  mouseMoveEvent ( QMouseEvent * event );
+  void  mousePressEvent ( QMouseEvent * event );
+  void  mouseReleaseEvent ( QMouseEvent * event );    
+  void  wheelEvent ( QWheelEvent * event );
 
 protected:
   void paintEvent(QPaintEvent *event);
+  
 
-private:
- 
-  QPen pen;
-  QBrush brush;
-  QPixmap pixmap;
 
 };
 

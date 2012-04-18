@@ -7,7 +7,7 @@
 #include "TaskTree.hh"
 
 class TaskTreeItem;
-
+class RoundedMenu;
 class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
@@ -15,10 +15,8 @@ public:
   /** Constructeurs et destructeurs */
   TaskTreeViewer(TaskTree* taskTree);
   ~TaskTreeViewer();
-
   /** Accesseur */
   std::vector<TaskTreeItem*> getSelectedItems();
-
   /** Methodes */
   void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
   int computeWidth(TaskTree* t);
@@ -41,7 +39,7 @@ signals:
   void selectedItemsChanged();
 
 private:
-
+  RoundedMenu *m_roundedMenu;
   TaskTree* m_taskTree;
   QGraphicsScene* m_scene; 
   bool m_personal_menu;

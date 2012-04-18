@@ -8,6 +8,7 @@
 RoundedMenu::RoundedMenu(QWidget *parent)
   : QWidget(parent){
   setAttribute(Qt::WA_TranslucentBackground);
+  setMouseTracking(true);
 }
 
 
@@ -24,15 +25,6 @@ QSize RoundedMenu::sizeHint() const{
   return QSize(100, 100);
 }
 
-void RoundedMenu::setPen(const QPen &pen){
-  this->pen = pen;
-  update();
-}
-
-void RoundedMenu::setBrush(const QBrush &brush){
-  this->brush = brush;
-  update();
-}
 
 void RoundedMenu::paintEvent(QPaintEvent * /* event */){
 
@@ -50,9 +42,21 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   //-50,-50,100,100
   //painter.drawEllipse(-side/2.0 + 1, -side/2.0 + 1,side - 2, side - 2);
   painter.drawEllipse(QPoint(50,50),49,49);
-
-
+}
+/** METHODS */
+void RoundedMenu::keyPressEvent ( QKeyEvent * event ){}
+void RoundedMenu::keyReleaseEvent ( QKeyEvent * event ) {}
+void RoundedMenu::mouseDoubleClickEvent ( QMouseEvent * event ){}
+void RoundedMenu::mouseMoveEvent ( QMouseEvent * event ){
+  
 
 
 
 }
+void RoundedMenu::mousePressEvent ( QMouseEvent * event ){
+ std::cout << "mouse move PressedEvent" << std::endl;
+}
+void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
+ std::cout << "mouse move mouseReleaseEvent " << std::endl;
+}
+void RoundedMenu::wheelEvent ( QWheelEvent * event ) {}
