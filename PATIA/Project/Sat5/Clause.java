@@ -22,7 +22,6 @@ public class Clause {
         m_weight = weight;
         m_problem = problem;
         m_sat = false;
-        m_unsat = false;
 
         Vector<Integer> exprInit = new Vector<Integer>();
         int var = scanner.nextInt();
@@ -39,16 +38,16 @@ public class Clause {
         for (int i = 0; i < m_sizeInit; i++) {
             Integer literal = exprInit.get(i);
             m_maskPos[i] = literal.intValue() > 0;
-            m_variables[i] = m_problem.getVariableFromLiteral(literal);
-            m_variables[i].addClause(this, m_maskPos[i]);
+            Variable variable = m_problem.getVariableFromLiteral(literal); 
+            m_variables[i] = variable;
+            variable.addClause(this, m_maskPos[i]);
         }
     }
-
 
     /** Predicats */
     public boolean isSat() { return m_sat; }
 
-    public boolean isUnsat() { return m_unsat; }
+    public boolean isUnsat() { return m_size == 0; }
     
 
     /** Accesseurs */
@@ -63,33 +62,47 @@ public class Clause {
                 m_variables[i].notifyValid(this, m_maskPos[i]);
     }
 
+    public void unvalid(Variable variable) {
+        m_sat = false;
+        for (int i = 0; i < m_size; i++)
+            if (m_variables[i] != variable)
+                m_variables[i].notifyUnvalid(this, m_maskPos[i]);
+    }
+
     public void reduce(Variable variable) {
         int index = 0;
         while (m_variables[index] != variable) index++;
-	
-        m_variables[index] = m_variables[m_size-1];
-        m_variables[m_size-1] = variable;
 
-        boolean maskPosTmp = m_maskPos[index];
-        m_maskPos[index] = m_maskPos[m_size-1];
-        m_maskPos[m_size-1] = maskPosTmp;
-	
         m_size--;
 
-        for (int i = 0; i < m_size; i++)
-            if (m_variables[i] != variable)
-                m_variables[i].notifyReduce(this, m_maskPos[i]);
+        m_variables[index] = m_variables[m_size];
+        m_variables[m_size] = variable;
+
+        boolean maskPosTmp = m_maskPos[index];
+        m_maskPos[index] = m_maskPos[m_size];
+        m_maskPos[m_size] = maskPosTmp;
     }
 
-    public void restoreUntil(Variable variable) {
-        while (m_variables[m_size] != variable) m_size++;
-	
-        for (int i = 0; i < m_size; i++)
-            if (m_variables[i] != variable)
-                m_variables[i].notifyRestore(this, m_maskPos[i]);
+    public void restore(Variable variable) {
+        // try {
+            int index = m_size;
+            while (m_variables[index] != variable) index++;
+            
+            m_variables[index] = m_variables[m_size];
+            m_variables[m_size] = variable;
+            
+            boolean maskPos = m_maskPos[index];
+            m_maskPos[index] = m_maskPos[m_size];
+            m_maskPos[m_size] = maskPos;
+            
+            m_size++;
+        // }
+        // catch (java.lang.ArrayIndexOutOfBoundsException e) {
+        //     System.out.println("restore " + variable + " dans " + this + " de taille " + m_size);
+        //     throw e;
+        // }
     }
-
-
+    
     /** Affichage */
     public String toString() {
         String res = "{ w" + m_weight;

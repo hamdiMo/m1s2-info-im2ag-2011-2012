@@ -57,10 +57,24 @@ public class Solver {
         m_variables[index] = m_variables[variablesFree];
         m_variables[variablesFree] = variable;
 
-        // System.out.println("Choix variable = " + variable);
-        
         boolean valuePos = variable.getHeuristicPos() > variable.getHeuristicNeg();
         variable.propagate(valuePos);
+        
+        index = 0;
+        while (index < clausesUnsolved) {
+            if (m_clauses[index].isSat()) {
+                clausesUnsolved--;
+                Clause clause = m_clauses[index];
+                m_clauses[index] = m_clauses[clausesUnsolved];
+                m_clauses[clausesUnsolved] = clause;
+            }
+            else index++;
+        }
+
+        if (solve(variablesFree, clausesUnsolved)) return true;
+
+        variable.unpropagate();
+        variable.propagate(!valuePos);
 
         index = 0;
         while (index < clausesUnsolved) {
@@ -75,25 +89,8 @@ public class Solver {
 
         if (solve(variablesFree, clausesUnsolved)) return true;
         
-        while (clausesUnsolved < clausesUnsolvedCall) {
-            m_clauses[clausesUnsolved].restoreUntil(variable);
-            clausesUnsolved++;
-        }
-        
-        variable.propagate(!valuePos);
-
-        index = 0;
-        while (index < clausesUnsolved) {
-            if (m_clauses[index].isSat()) {
-                clausesUnsolved--;
-                Clause clause = m_clauses[index];
-                m_clauses[index] = m_clauses[clausesUnsolved];
-                m_clauses[clausesUnsolved] = clause;
-            }
-            else index++;
-        }
-
-        return solve(variablesFree, clausesUnsolved);
+        variable.unpropagate();
+        return false;
     }
     
     public int bestVariableIndex(int variablesFree) {

@@ -36,7 +36,7 @@ public class Problem {
             Clause clause = null;
             switch (m_format) {
             case CNF :
-                clause = new Clause(1, scanner, this);
+                clause = new Clause(i, scanner, this);
                 break;
             case WCNF :
                 int weight = scanner.nextInt();
