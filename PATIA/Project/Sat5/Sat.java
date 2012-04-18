@@ -18,18 +18,13 @@ public class Sat {
         Problem problem = new Problem(scanner);
         System.out.println(problem);
 
-        Solver solver = new Solver(problem);
-        if (solver.solve()) {
-            System.out.println("SAT");
-            System.out.println(solver);
-        }
+        Solver solver = new Solver();
+        boolean sat = solver.solve(problem);
+
+        if (sat) System.out.println("SAT");
         else System.out.println("UNSAT");
- 
-        System.out.println("Statistics : ");
-        System.out.println("Instances = " + solver.getInstances());
-        System.out.println("Conflicts = " + solver.getConflicts());
-        System.out.println("Backtrack = " + solver.getBacktrack());
-        System.out.println("Heightmax = " + solver.getHeigthMax());
-        System.out.println("Iteration = " + solver.getIteration());
+        
+        System.out.println(problem);
+        System.out.println(solver);
     }
 }
