@@ -130,10 +130,10 @@ public class Variable {
 
     /** Methode d'affichage */
     public String toString(){
-        return new String("(" + m_id  
-                          + ", +" + m_heuristicPos
-                          + ", -" + m_heuristicNeg 
-                          + ", " + m_value + ")"); 
+        String res = "(" + m_id + ", +" + m_heuristicPos + ", -" + m_heuristicNeg;
+        if (m_linked) res += ", " + m_value;
+        res += ")"; 
+        return res;
     }
     
 }

@@ -44,9 +44,10 @@ public class Solver {
     }
     
 
-    public boolean solve(int variablesFree, int clausesUnsolved) {
-        if (clausesUnsolved == 0) return true;
+    public boolean solve(int variablesFreeCall, int clausesUnsolvedCall) {
+        if (clausesUnsolvedCall == 0) return true;
 
+        int variablesFree = variablesFreeCall, clausesUnsolved = clausesUnsolvedCall;
         int index = bestVariableIndex(variablesFree); 
         Variable variable = m_variables[index];
 
