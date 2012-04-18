@@ -54,19 +54,6 @@ public class Problem {
     public int getClauseDimension() { return m_ncl; }
     public Clause getClause(int index) { return m_clauses.get(index); }
 
-    public Value getValueFromLiteral(Integer literal) {
-        int exprInt = literal.intValue();
-        Value value = getVariableFromLiteral(literal).getValue();
-        if (exprInt < 0) {
-            switch (value) {
-            case TRUE : return Value.FALSE;
-            case FALSE : return Value.TRUE;
-            case UNDEFINE: return Value.UNDEFINE;
-            }
-        }
-        return value;
-    }
-
     public Variable getVariableFromLiteral(Integer literal) {
         return getVariable(Math.abs(literal.intValue())-1); 
     }
