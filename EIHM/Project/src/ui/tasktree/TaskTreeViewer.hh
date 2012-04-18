@@ -6,6 +6,8 @@
 #include <QGraphicsView>
 #include "TaskTree.hh"
 
+class TaskTreeItem;
+
 class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
@@ -14,6 +16,8 @@ public:
   TaskTreeViewer(TaskTree* taskTree);
   ~TaskTreeViewer();
 
+  /** Accesseur */
+  std::vector<TaskTreeItem*> getSelectedItems();
 
   /** Methodes */
   void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
@@ -21,12 +25,6 @@ public:
   int computeHeight(TaskTree* t);
   void computeSceneRect(int x, int y, int xSize, int ySize);
 
-private:
-
-  TaskTree* m_taskTree;
-  QGraphicsScene* m_scene; 
-  bool m_personal_menu;
-		      
 public slots:
 
   /** Slots */
@@ -37,6 +35,18 @@ public slots:
   void  mousePressEvent ( QMouseEvent * event );
   void  mouseReleaseEvent ( QMouseEvent * event );    
   void  wheelEvent ( QWheelEvent * event );
+
+signals:
+
+  void selectedItemsChanged();
+
+private:
+
+  TaskTree* m_taskTree;
+  QGraphicsScene* m_scene; 
+  bool m_personal_menu;
+  std::vector<TaskTreeItem*> m_taskTreeItems;
+		      
 
 };
 

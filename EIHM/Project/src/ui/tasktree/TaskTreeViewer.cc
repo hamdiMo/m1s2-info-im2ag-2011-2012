@@ -3,10 +3,12 @@
 #include "RoundedMenu.hh"
 #include <QLabel>
 #include <QGraphicsProxyWidget>
+#include "TaskTreeItem.hh"
 
 /** Constructeurs et destructeurs */
 TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
-  m_taskTree(taskTree)
+  m_taskTree(taskTree),
+  m_taskTreeItems(0)
 {
   m_scene = new QGraphicsScene(this);
   m_scene->setBackgroundBrush(QColor(128, 128, 128, 0));
