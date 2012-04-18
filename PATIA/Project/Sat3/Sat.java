@@ -19,9 +19,17 @@ public class Sat {
         System.out.println(problem);
 
         Solver solver = new Solver(problem);
-        if (solver.solve()) System.out.println("SAT");
+        if (solver.solve()) {
+            System.out.println("SAT");
+            System.out.println(solver);
+        }
         else System.out.println("UNSAT");
-        
-        System.out.println(solver);
+ 
+        System.out.println("Statistics : ");
+        System.out.println("Instances = " + solver.getInstances());
+        System.out.println("Conflicts = " + solver.getConflicts());
+        System.out.println("Backtrack = " + solver.getBacktrack());
+        System.out.println("Heightmax = " + solver.getHeigthMax());
+        System.out.println("Iteration = " + solver.getIteration());
     }
 }

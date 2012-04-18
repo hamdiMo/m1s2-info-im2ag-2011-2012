@@ -57,26 +57,26 @@ public class Variable {
     }
     
     public void addPositive(Clause clause) { 
-        m_heuristicPos += clause.getSize();
-        m_heuristicNeg += 1;
+        m_heuristicPos += 1;
+        m_heuristicNeg += 0;
         m_positives.add(clause); 
     }
 
     public void removePositive(Clause clause) { 
-        m_heuristicPos -= clause.getSize();
-        m_heuristicNeg -= 1;
+        m_heuristicPos -= 1;
+        m_heuristicNeg -= 0;
         m_positives.remove(clause); 
     }
 
     public void addNegative(Clause clause) {
-        m_heuristicPos += 1;
-        m_heuristicNeg += clause.getSize();
+        m_heuristicPos += 0;
+        m_heuristicNeg += 1;
         m_negatives.add(clause); 
     }
 
     public void removeNegative(Clause clause) {
-        m_heuristicPos -= 1;
-        m_heuristicNeg -= clause.getSize();
+        m_heuristicPos -= 0;
+        m_heuristicNeg -= 1;
         m_negatives.remove(clause); 
     }
     
@@ -86,14 +86,14 @@ public class Variable {
         iter = m_positives.listIterator();
         while (iter.hasNext()) {
             Clause clause = iter.next();
-            m_heuristicPos += clause.getSize();
-            m_heuristicNeg += 1;
+            m_heuristicPos += 1;
+            m_heuristicNeg += 0;
         }
         iter = m_negatives.listIterator();
         while (iter.hasNext()) {
             Clause clause = iter.next();
-            m_heuristicPos += 1;
-            m_heuristicNeg += clause.getSize();
+            m_heuristicPos += 0;
+            m_heuristicNeg += 1;
         }
     }
 

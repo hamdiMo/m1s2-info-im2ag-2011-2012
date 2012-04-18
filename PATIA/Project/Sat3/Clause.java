@@ -43,10 +43,12 @@ public class Clause {
         for (int i = 0; i < m_size; i++) {
             Integer literal = m_expr[i];
             int exprVar = literal.intValue();
-            if (exprVar > 0) heuristic += m_problem.getVariableFromLiteral(literal).getHeuristicPos();
-            else heuristic += m_problem.getVariableFromLiteral(literal).getHeuristicNeg();
+            int heurTmp = 0;
+            if (exprVar > 0) heurTmp = m_problem.getVariableFromLiteral(literal).getHeuristicPos();
+            else heurTmp = m_problem.getVariableFromLiteral(literal).getHeuristicNeg();
+            if (heurTmp < heuristic) heuristic = heurTmp;
         }
-        return (double)heuristic / (double)m_size;
+        return (double)heuristic; // / (double)m_size;
     }
 
     public Value propagate(Variable variable) {
