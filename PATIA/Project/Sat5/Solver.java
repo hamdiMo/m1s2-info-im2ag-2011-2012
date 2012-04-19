@@ -88,14 +88,12 @@ public class Solver {
             }
             if (!unsat) unsat = !solve(variablesFree, clausesUnsolved);
             if (unsat) {
-                variable.unpropagate();
                 clausesUnsolved = clausesUnsolvedCall;
-                if (!variable.isHeuristicSafe(variable.getValue())) {
-                    variable.setValue(!variable.getValue());
-                    m_backtrack++;
-                }
+                variable.unpropagate();
+                variable.setValue(!variable.getValue());
+                m_backtrack++;
             }
-        } while (unsat && variable.getValue() != valueIni);
+        } while (unsat && !variable.isHeuristicSafe(valueIni) && variable.getValue() != valueIni);
 
         m_height--;
         return !unsat;
