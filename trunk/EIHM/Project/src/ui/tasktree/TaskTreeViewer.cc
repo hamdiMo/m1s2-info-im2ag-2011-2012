@@ -87,7 +87,7 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
 void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
   if (event->button()==Qt::RightButton){
     std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
-    m_roundedMenu = new RoundedMenu();
+    m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y());
     QGraphicsProxyWidget* proxy3 = m_scene->addWidget(m_roundedMenu);
     QPointF pos = mapToScene(event->x(), event->y());
     computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
