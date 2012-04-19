@@ -58,20 +58,17 @@ public class Solver {
         }
 
         Variable variable = m_variables[index];
+        boolean valueIni = variable.getValue();
 
         variablesFree--;
         m_variables[index] = m_variables[variablesFree];
         m_variables[variablesFree] = variable;
         
-        boolean valueIni = (variable.getHeuristicPos() > variable.getHeuristicNeg()
-                            && (variable.isHeuristicPosSafe() || !variable.isHeuristicNegSafe()));
-        boolean value = valueIni;
-        
         boolean unsat = true;
         do {
             index = 0;
             unsat = false;
-            variable.propagate(value);
+            variable.propagate();
             m_instances++;
             
             while (!unsat && index < clausesUnsolved) {
@@ -93,14 +90,12 @@ public class Solver {
             if (unsat) {
                 variable.unpropagate();
                 clausesUnsolved = clausesUnsolvedCall;
-                if (variable.isHeuristicSafe(value)) {
-                    m_height--;
-                    return false;
+                if (!variable.isHeuristicSafe(variable.getValue())) {
+                    variable.setValue(!variable.getValue());
+                    m_backtrack++;
                 }
-                value = !value;
-                m_backtrack++;
             }
-        } while (unsat && value != valueIni);
+        } while (unsat && variable.getValue() != valueIni);
 
         m_height--;
         return !unsat;
@@ -117,11 +112,13 @@ public class Solver {
                 index = i;
                 heuristicMax = heuristicPos;
                 heuristicMin = heuristicNeg;
+                m_variables[i].setValue(true);
             }
             else if (heuristicNeg > heuristicMax || heuristicNeg == heuristicMax && heuristicPos > heuristicMin) {
                 index = i;
                 heuristicMax = heuristicNeg;
                 heuristicMin = heuristicPos;
+                m_variables[i].setValue(false);
             }
         }
         return index;
