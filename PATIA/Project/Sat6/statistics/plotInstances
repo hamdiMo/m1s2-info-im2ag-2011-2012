@@ -1,0 +1,8 @@
+set terminal postscript 
+set xlabel "variables"
+set ylabel "clauses"
+set zlabel "instances"
+set output "instances.ps"
+set title "Surface des instances"
+splot "data.plot" using 1:2:3 w l
+                   

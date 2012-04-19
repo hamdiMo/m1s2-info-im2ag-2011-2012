@@ -1,0 +1,7 @@
+set terminal postscript 
+set xlabel "variables"
+set ylabel "clauses"
+set zlabel "profondeurMax"
+set output "profondeurMax.ps"
+set title "Surface des profondeurs max"
+splot "data.plot" using 1:2:5 w l

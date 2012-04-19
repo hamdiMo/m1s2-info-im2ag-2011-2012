@@ -1,0 +1,7 @@
+set terminal postscript 
+set xlabel "variables"
+set ylabel "clauses"
+set zlabel "conflits"
+set output "conflits.ps"
+set title "Surface des conflits"
+splot "data.plot" using 1:2:4 w l

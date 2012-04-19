@@ -1,0 +1,7 @@
+set terminal postscript 
+set xlabel "variables"
+set ylabel "clauses"
+set zlabel "clauses apprises"
+set output "clauses apprises.ps"
+set title "Surface des clauses apprises"
+splot "data.plot" using 1:2:6 w l
