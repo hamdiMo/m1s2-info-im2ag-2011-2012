@@ -45,8 +45,12 @@ public class Variable {
 
     public int getHeuristicNeg() { return m_heuristicNeg; }
 
+    public boolean getValue() { return m_value; }
+
 
     /** Mutateurs */
+    public void setValue(boolean value) { m_value = value; }
+
     public void setSafe(boolean posValue) {
         if (posValue) m_heuristicPosSafe = true;
         else m_heuristicNegSafe = true;
@@ -59,9 +63,8 @@ public class Variable {
 
 
     /** Methodes */
-    public void propagate(boolean value) {
+    public void propagate() {
         m_linked = true;
-        m_value = value;
 
         Iterator<Clause> iter = m_positives.listIterator();
         while (iter.hasNext()) {
