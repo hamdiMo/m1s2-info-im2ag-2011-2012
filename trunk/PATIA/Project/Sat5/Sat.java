@@ -19,6 +19,7 @@ public class Sat {
         System.out.println(problem + "\n");
 
         Solver solver = new Solver();
+        // SolverGraph solver = new SolverGraph();
         boolean sat = solver.solve(problem);
 
         System.out.println(problem + "\n");        
