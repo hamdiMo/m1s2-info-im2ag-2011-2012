@@ -12,7 +12,7 @@ class RoundedMenu : public QWidget { Q_OBJECT
 
 public:
    /** Constructeurs et destructeurs */
-  RoundedMenu(QWidget *parent = 0);
+  RoundedMenu(QWidget *parent = 0,int=0,int=0);
   ~RoundedMenu();
   
   QSize minimumSizeHint() const;
@@ -29,7 +29,10 @@ protected:
   void paintEvent(QPaintEvent *event);
   
 
-
+private:
+  int p_x;
+  int p_y;
+  QRadialGradient* p_gradient;
 };
 
 #endif
