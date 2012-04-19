@@ -1,8 +1,7 @@
 //dependance sirculaire
 import java.util.Scanner;
 import java.util.Random;
-import java.io.File;
-
+import java.io.*;
 public class Generateur {
  
 
@@ -28,11 +27,11 @@ public class Generateur {
 	int m_PourcentageVraiParClauses = 100;
 	boolean m_Sat;
        
-	m_nbVar = 8;
-	m_nbClauses = 20;
+	m_nbVar = 80;
+	m_nbClauses = 300;
 	int tailleClause;
-	m_tailleClauseMin = 1;
-	m_tailleClauseMax = 7;
+	m_tailleClauseMin = 7;
+	m_tailleClauseMax = 30;
 	m_PourcentageVraiParClauses = 20;
 	int clause[];
 	String s = new String();
@@ -44,30 +43,39 @@ public class Generateur {
 	//génération de la solution
 	boolean solution[] = new boolean[m_nbVar];
 	for(int j = 0; j < m_nbVar; j++) solution[j] = r.nextBoolean();
-
+	//for(int j = 0; j < m_nbVar; j++) System.out.print("("+(j+1)+","+solution[j]+")");
 	r = new Random();
-	for(int i = 0; i < m_nbClauses; i++){	
-	    for(int j = 0; j < 20; j++) System.out.print(" " + (r.nextInt(m_tailleClauseMax+1)+m_tailleClauseMin) % m_tailleClauseMax);
-	    tailleClause = (r.nextInt(m_tailleClauseMax+1)+m_tailleClauseMin) % m_tailleClauseMax;
-	    
+	for(int i = 0; i < m_nbClauses; i++){
+	    tailleClause = m_tailleClauseMin + r.nextInt(m_tailleClauseMax - m_tailleClauseMin);
 	    clause = new int[tailleClause];
 	    for(int j = 0; j<clause.length; j++){
-		clause[j] = r2.nextInt(m_nbVar);
+		int neg = r.nextInt();
+		if((neg%2) == 0) clause[j] = r2.nextInt(m_nbVar)+1;
+		else clause[j] = -(r2.nextInt(m_nbVar)+1);
 	    }
 	    int nbVarVraie = 1;
 	    for(int m = 0;m < nbVarVraie;m++){
 		int solAlea = r.nextInt(m_nbVar);
 		int tmp = r.nextInt(tailleClause);
-		System.out.println(clause.length + " " + tmp);
-		if(solution[solAlea]) clause[tmp] = solAlea;
-		else clause[tmp] = -solAlea;
+		if(solution[solAlea]) clause[tmp] = solAlea+1;
+		else clause[tmp] = -(solAlea+1);
 	    }
-	    System.out.println("LOOOOOOOOOOOOOL");
 	    for(int j = 0; j<clause.length; j++){
 		s += clause[j] + " ";
 	    }
-	    s += "\n";
+	    s += "0 \n";
 	}
-	System.out.println(s);
+	//	System.out.println(s);
+
+	PrintWriter ecri;
+	try {
+	    ecri = new PrintWriter(new FileWriter(new File("test2.txt")));
+			ecri.print(s);
+			ecri.flush();
+			ecri.close();
+	} catch (IOException exception) {
+	    exception.printStackTrace();
+	}   	       		 	
     }
+
 }
