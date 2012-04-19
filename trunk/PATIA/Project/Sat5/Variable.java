@@ -9,7 +9,7 @@ public class Variable {
     private boolean m_value, m_linked;
     private int m_heuristicPos, m_heuristicNeg;
     private boolean m_heuristicPosSafe, m_heuristicNegSafe;
-    private List<Clause> m_positives, m_negatives, m_propagate;
+    private List<Clause> m_positives, m_negatives;
     
     /** Constructeurs */
     public Variable(int id){

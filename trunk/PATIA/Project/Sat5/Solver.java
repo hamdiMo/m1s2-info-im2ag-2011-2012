@@ -10,6 +10,8 @@ public class Solver {
     /** Attributs */
     private Clause[] m_clauses;
     private Variable[] m_variables;
+    private LinkedList<Clause> m_learnt;
+    private int m_unsolvedClauses, m_freeVariables;
     private int m_instances, m_conflicts, m_backtrack, m_height, m_heightMax, m_iteration;
    
     /** Constructeurs */
@@ -32,37 +34,36 @@ public class Solver {
 
     /** Methodes */
     public boolean solve(Problem problem) {
-        int variablesFree = problem.getVariableDimension();
-        m_variables = new Variable[variablesFree];
-        for (int i = 0; i < variablesFree; i++) m_variables[i] = problem.getVariable(i);
+        m_freeVariables = problem.getVariableDimension();
+        m_variables = new Variable[m_freeVariables];
+        for (int i = 0; i < m_freeVariables; i++) m_variables[i] = problem.getVariable(i);
 
-        int clausesUnsolved = problem.getClauseDimension();
-        m_clauses = new Clause[clausesUnsolved];
-        for (int i = 0; i < clausesUnsolved; i++) m_clauses[i] = problem.getClause(i);
+        m_unsolvedClauses = problem.getClauseDimension();
+        m_clauses = new Clause[m_unsolvedClauses];
+        for (int i = 0; i < m_unsolvedClauses; i++) m_clauses[i] = problem.getClause(i);
 
-        return solve(variablesFree, clausesUnsolved);
+        // m_learntClauses = new LinkedList<Clause>();
+
+        return solve(m_freeVariables, m_unsolvedClauses);
     }
     
-    public boolean solve(int variablesFreeCall, int clausesUnsolvedCall) {
+    public boolean solve(int variablesFree, int clausesUnsolved) {
         m_height++;
         if (m_height > m_heightMax) m_heightMax = m_height;
 
-        if (clausesUnsolvedCall == 0) return true;
+        if (clausesUnsolved == 0) return true;
 
-        int variablesFree = variablesFreeCall, clausesUnsolved = clausesUnsolvedCall;
         int index = bestVariableIndex(variablesFree); 
         if (index == -1) {
+            analysisConflict();
             m_conflicts++;
+            m_freeVariables++;
             m_height--;
             return false;
         }
 
-        Variable variable = m_variables[index];
+        Variable variable = permuteVariable(index);
         boolean valueIni = variable.getValue();
-
-        variablesFree--;
-        m_variables[index] = m_variables[variablesFree];
-        m_variables[variablesFree] = variable;
         
         boolean unsat = true;
         do {
@@ -71,24 +72,17 @@ public class Solver {
             variable.propagate();
             m_instances++;
             
-            while (!unsat && index < clausesUnsolved) {
-                if (m_clauses[index].isSat()) {
-                    clausesUnsolved--;
-                    Clause clause = m_clauses[index];
-                    m_clauses[index] = m_clauses[clausesUnsolved];
-                    m_clauses[clausesUnsolved] = clause;
+            while (!unsat && index < m_unsolvedClauses) {
+                if (m_clauses[index].isSat()) permuteClause(index);
+                else if (m_clauses[index].isUnsat()) {
+                    unsat = true; 
+                    m_conflicts++;
                 }
-                else {
-                    if (m_clauses[index].isUnsat()) {
-                        unsat = true; 
-                        m_conflicts++;
-                    }
-                    index++;
-                }
+                else index++;
             }
-            if (!unsat) unsat = !solve(variablesFree, clausesUnsolved);
+            if (!unsat) unsat = !solve(m_freeVariables, m_unsolvedClauses);
             if (unsat) {
-                clausesUnsolved = clausesUnsolvedCall;
+                m_unsolvedClauses = clausesUnsolved;
                 variable.unpropagate();
                 variable.setValue(!variable.getValue());
                 m_backtrack++;
@@ -96,6 +90,7 @@ public class Solver {
         } while (unsat && !variable.isHeuristicSafe(valueIni) && variable.getValue() != valueIni);
 
         m_height--;
+        m_freeVariables++;
         return !unsat;
     }
     
@@ -121,6 +116,25 @@ public class Solver {
         }
         return index;
     }
+    
+    public void analysisConflict() {}
+
+    public Clause permuteClause(int index) {
+        m_unsolvedClauses--;
+        Clause clause = m_clauses[index];
+        m_clauses[index] = m_clauses[m_unsolvedClauses];
+        m_clauses[m_unsolvedClauses] = clause;
+        return clause;
+    }
+
+    public Variable permuteVariable(int index) {
+        m_freeVariables--;
+        Variable variable = m_variables[index];
+        m_variables[index] = m_variables[m_freeVariables];
+        m_variables[m_freeVariables] = variable;
+        return variable;
+    }
+
     
 
     /** Affichage */
