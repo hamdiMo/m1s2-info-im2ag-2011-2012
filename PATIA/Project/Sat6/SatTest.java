@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.PrintStream;
 
 import java.util.Scanner;
 import java.util.Random;
@@ -14,10 +15,17 @@ public class SatTest {
         int nclMin = new Integer(args[2]).intValue();
         int nclMax = new Integer(args[3]).intValue();
 
+        File fout = new File(args[4]);
+        PrintStream out = null;
+        try { out = new PrintStream(fout); }
+        catch(java.io.FileNotFoundException e) {
+            System.out.println("Erreur fichier inexistant");
+        }
+
         for (int nvar = nvarMin; nvar <= nvarMax; nvar += 5) {
             for (int ncl = nclMin; ncl <= nclMax; ncl += 20) {
                 Random rand = new Random();
-                double instances = 0, conflicts = 0, heightMax = 0, learntClauses = 0;
+                double instances = 0, conflicts = 0, heightMax = 0, learntClauses = 0, sats = 0;
                 for (int smooth = 0; smooth < 10; smooth++) {
                     Problem problem = new Problem(nvar, ncl);
                     
@@ -28,17 +36,19 @@ public class SatTest {
                     conflicts += solver.getConflicts();
                     heightMax += solver.getHeigthMax();
                     learntClauses += solver.getLearntClauses();
+                    if (sat) sats++;
                 }
                 
-                System.out.println(nvar + " " + ncl + " "
-                                   + (instances / 5) + " "
-                                   + (conflicts / 5) + " "
-                                   + (heightMax / 5) + " "
-                                   + (learntClauses / 5));
+                out.println(nvar + " " + ncl + " "
+                            + (instances / 10) + " "
+                            + (conflicts / 10) + " "
+                            + (heightMax / 10) + " "
+                            + (learntClauses / 10) + " "
+                            + (sats));
 
                 
             }
-            System.out.println("");
+            out.println("");
         }
     }
 }

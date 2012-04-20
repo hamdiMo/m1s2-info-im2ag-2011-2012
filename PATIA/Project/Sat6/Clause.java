@@ -233,14 +233,12 @@ public class Clause {
     
     /** Affichage */
     public String toString() {
-        String res = "{ w" + m_weight;
+        String res = "";
         for (int i = 0; i < m_sizeInit; i++) {
-            res += ", ";
-            if (!m_maskPos[i]) res += "not";
-            res += m_variables[i];
+            if (!m_maskPos[i]) res += "-";
+            res += m_variables[i].getId();
+            res += " ";
         }
-        res += " }";
         return res;
     }
-
 }

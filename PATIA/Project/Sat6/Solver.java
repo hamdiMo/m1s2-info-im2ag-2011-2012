@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 import java.util.List;
@@ -12,7 +14,8 @@ public class Solver {
     private Variable[] m_variables;
     private List<Clause> m_learntClauses;
     private int m_unsolvedClauses, m_freeVariables;
-    private int m_instances, m_conflicts, m_heightMax;
+    private int m_instances, m_conflicts, m_heightMax, m_node;
+    private PrintStream m_graphFile;
    
 
     /** Constructeurs */
@@ -20,6 +23,16 @@ public class Solver {
         m_instances = 0;
         m_conflicts = 0;
         m_heightMax = 0;
+        m_node = 0;
+        m_graphFile = null;
+    }
+
+    public Solver(File graphFile) {
+        this();
+        try { m_graphFile = new PrintStream(graphFile); }
+        catch(java.io.FileNotFoundException e) {
+            m_graphFile = null;
+        }
     }
     
 
@@ -49,13 +62,26 @@ public class Solver {
         }
 
         m_learntClauses = new LinkedList<Clause>();
+        
+        if (m_graphFile != null) startGraph();
 
-        return solve(m_freeVariables, m_unsolvedClauses);
+        boolean res = solve(m_freeVariables, m_unsolvedClauses);
+
+        if (m_graphFile != null) endGraph();
+        return res;
     }
     
     public boolean solve(int freeVariables, int unsolvedClauses) {
-        if (unsolvedClauses == 0) return true;
+        if (unsolvedClauses == 0) {
+            if (m_graphFile != null) {
+                m_graphFile.println("\t" + "node [shape = box];");
+                m_graphFile.println("\t" + m_node + " -> success;");
+                m_graphFile.println("\t" + "node [shape = circle];");
+            }
+            return true;
+        }
         if (m_variables.length - freeVariables > m_heightMax) m_heightMax = m_variables.length - freeVariables;
+        int node = m_node;
         
         Variable variable = permuteVariable(bestVariableIndex(freeVariables));
         boolean valueIni = variable.getValue();
@@ -64,6 +90,14 @@ public class Solver {
         do {
             int index = 0;
             unsat = false;
+
+            if (m_graphFile != null) {
+                m_node++;
+                m_graphFile.print("\t" + node + " -> " + m_node + " [label = \"");
+                if (!variable.getValue()) m_graphFile.print("-");
+                m_graphFile.println("" + variable.getId() + "\"];");
+            }
+
             variable.propagate();
             m_instances++;
             
@@ -71,7 +105,12 @@ public class Solver {
                 if (m_clauses[index].isSat()) permuteClause(index);
                 else if (m_clauses[index].isUnsat()) {
                     unsat = true;
-                    analysisConflict(index);
+                    if (m_graphFile != null) {
+                        m_graphFile.println("\t" + "node [shape = box];");
+                        m_graphFile.println("\t" + m_node + " -> \"conflict " + m_conflicts + "\";");
+                        m_graphFile.println("\t" + "node [shape = circle];");
+                    }
+                    // analysisConflict(index);
                     m_conflicts++;
                 }
                 else index++;
@@ -119,7 +158,14 @@ public class Solver {
             Clause clause = iter.next();
             if (clause.getSize() == 1 && clause.getWeight() > 0) {
                 Clause resolution = new Clause(m_clauses[index], clause, variable);
-                if (!resolution.isTautology()) m_learntClauses.add(resolution);
+                if (!resolution.isTautology()) {
+                    if (m_graphFile != null) {
+                        m_graphFile.println("\t" + "node [shape = box];");
+                        m_graphFile.println("\t" + "\"conflict " + m_conflicts + "\" -> \"resolution " + resolution + "\";");
+                        m_graphFile.println("\t" + "node [shape = circle];");
+                    }
+                    m_learntClauses.add(resolution);
+                }
             }
         }
     }
@@ -150,5 +196,14 @@ public class Solver {
                           + "\t" + "Heightmax = " + getHeigthMax() + "\n"
                           + "}");
     }
+
+    public void startGraph() {
+        m_graphFile.println("digraph MTuring {" + "\n"
+                            + "\t" + "rankdir=LR;" + "\n"
+                            + "\t" + "edge [len = 1.5];" + "\n"
+                            + "\t" + "node [shape = circle];" + "\n");
+    }
+
+    public void endGraph() { m_graphFile.println("}"); }
 
 }
