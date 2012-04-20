@@ -76,11 +76,10 @@ public class Problem {
 
     /** Methodes */
     public String toString() {
-        String res = "Variables = {\n";
-        for (int i = 0; i < m_nvar; i++) res += "\t" + m_variables.get(i) + "\n";
-        res += "}\nClauses = {\n";
-        for (int i = 0; i < m_ncl; i++) res += "\t" + m_clauses.get(i) + "\n";
-        res += "}";
+        String res = "" + m_nvar + " variables, " + m_ncl + " clauses\n";
+        // for (int i = 0; i < m_nvar; i++) res += "\t" + m_variables.get(i) + "\n";
+        // res += "}\nClauses = {\n";
+        for (int i = 0; i < m_ncl; i++) res += m_clauses.get(i) + "\n";
         return res;
     }
 
