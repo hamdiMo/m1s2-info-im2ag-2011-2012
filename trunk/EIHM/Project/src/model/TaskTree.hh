@@ -110,6 +110,8 @@ public:
   
   void printTree();
   
+  bool isSon(TaskTree* parent);
+   
   protected:
 
   

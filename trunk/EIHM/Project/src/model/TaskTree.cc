@@ -323,3 +323,14 @@ void TaskTree::removeTransitions(){
     }
     cout << endl;
   }
+
+  bool TaskTree::isSon(TaskTree* t){
+    bool b = false;
+    if (this == t) return b;
+    vector<TaskTree*> subTree = t->getSubTrees();
+    for(int i = 0; i < (int)subTree.size(); i++){
+      b |= (this == subTree[i] || isSon(subTree[i]));
+    }
+    return b;
+  }
+  
