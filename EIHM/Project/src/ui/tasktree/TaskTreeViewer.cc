@@ -8,7 +8,8 @@
 /** Constructeurs et destructeurs */
 TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   m_taskTree(taskTree),
-  m_taskTreeItems(0)
+  m_taskTreeItems(0),
+  p_proxy_roundedMenu(0)
 {
   m_roundedMenu=NULL;
   m_scene = new QGraphicsScene(this);
@@ -103,11 +104,11 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
   if (event->button()==Qt::RightButton){
     std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
     m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y());
-    QGraphicsProxyWidget* proxy3 = m_scene->addWidget(m_roundedMenu);
+    p_proxy_roundedMenu = m_scene->addWidget(m_roundedMenu);
     QPointF pos = mapToScene(event->x(), event->y());
     computeSceneRect(0, 0, m_roundedMenu->size().width(), m_roundedMenu->size().height());
     computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
-    proxy3->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
+    p_proxy_roundedMenu->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
   }
   if (event->button() == Qt::LeftButton){
     m_dragBeginX = event->x();
@@ -181,9 +182,12 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   }
 
 
-if (m_roundedMenu!=NULL) 
+  if (m_roundedMenu!=NULL) {
     m_roundedMenu->mouseReleaseEvent(event);
-
+    if(p_proxy_roundedMenu)
+      m_scene->removeItem(p_proxy_roundedMenu);
+    
+  }
 
 }
 
