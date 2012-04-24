@@ -16,9 +16,11 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   m_scene->setForegroundBrush(QColor(255, 255, 255, 0));
   
   setScene(m_scene);
-  // initTastTreeItems();
+  createTaskTreeItems(taskTree);
+  displayTaskTreeItems();
+  // initTaskTreeItems();
 
-  displayTaskTree(m_taskTree, 0, 0, computeWidth(m_taskTree) * 128, computeHeight(m_taskTree) * 64);
+  // displayTaskTree(m_taskTree, 0, 0, computeWidth(m_taskTree) * 128, computeHeight(m_taskTree) * 64);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
@@ -35,21 +37,43 @@ std::vector<TaskTreeItem*> TaskTreeViewer::getSelectedItems() {
 
 
 /** Methodes */
-void TaskTreeViewer::displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax) {
-  int amplitudeX = xmax - xmin;
-  int x1 = xmin + amplitudeX/2, y1 = ymin;
-  QGraphicsProxyWidget* proxy = m_scene->addWidget(new QLabel(QString(t->getName().c_str())));
-  proxy->setPos(x1-16, y1);
-  m_scene->addRect(x1-16, y1, 32, 32);
-	
-  m_taskTreeItems.push_back(new TaskTreeItem(t, x1-16, y1));
-	
+TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
+  int xmin = 0, xmax = 0, ymin = 0, ymax = 0;
+  TaskTreeItem* item = new TaskTreeItem(t, 16, 16);
+  m_taskTreeItems.push_back(item);
   for (int i = 0; i < t->getSize(); i++) {
-    int x2 = xmin + (2*i+1)*(amplitudeX/t->getSize())/2, y2 = y1 + 64;
-    m_scene->addLine(x1, y1 + 32, x2, y2);
-    displayTaskTree(t->getSubTree(i), xmin + i*(amplitudeX/t->getSize()), ymin+64, xmin + (i+1)*(amplitudeX/t->getSize()), ymax);
+    TaskTreeItem* tmp = createTaskTreeItems(t->getSubTree(i));
+    tmp->setParent(item);
+    
+  }
+  item->setX(xmin + (xmax - xmin)/2);
+  item->setY(-16);
+  item->setXMin(xmin); item->setYMin(ymin-32); item->setXMax(xmax); item->setYMax(ymax);
+  return item;
+}
+
+void TaskTreeViewer::displayTaskTreeItems() {
+  for (int i = 0 ; i < m_taskTreeItems.size() ; i++) {
+    QGraphicsProxyWidget* proxy = m_scene->addWidget(m_taskTreeItems[i]);
+    proxy->setPos(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY());
   }
 }
+
+// void TaskTreeViewer::displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax) {
+//   int amplitudeX = xmax - xmin;
+//   int x1 = xmin + amplitudeX/2, y1 = ymin;
+//   QGraphicsProxyWidget* proxy = m_scene->addWidget(new QLabel(QString(t->getName().c_str())));
+//   proxy->setPos(x1-16, y1);
+//   m_scene->addRect(x1-16, y1, 32, 32);
+	
+//   m_taskTreeItems.push_back(new TaskTreeItem(t, x1-16, y1));
+	
+//   for (int i = 0; i < t->getSize(); i++) {
+//     int x2 = xmin + (2*i+1)*(amplitudeX/t->getSize())/2, y2 = y1 + 64;
+//     m_scene->addLine(x1, y1 + 32, x2, y2);
+//     displayTaskTree(t->getSubTree(i), xmin + i*(amplitudeX/t->getSize()), ymin+64, xmin + (i+1)*(amplitudeX/t->getSize()), ymax);
+//   }
+// }
 
 int TaskTreeViewer::computeWidth(TaskTree* t) {
   if (t->getSize() == 0) return 1;
