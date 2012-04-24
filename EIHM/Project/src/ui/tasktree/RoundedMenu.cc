@@ -21,7 +21,7 @@ RoundedMenu::RoundedMenu(QWidget *parent,int x, int y)
   // p_gradient->setColorAt(0.9, QColor(255, 255, 255, 50));
   // p_gradient->setColorAt(1.0, QColor(255, 255, 255, 0));
   
- 
+  
 }
 
 
@@ -51,24 +51,20 @@ void RoundedMenu::keyPressEvent ( QKeyEvent * event ){}
 void RoundedMenu::keyReleaseEvent ( QKeyEvent * event ) {}
 void RoundedMenu::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void RoundedMenu::mouseMoveEvent ( QMouseEvent * event ){
-  std::cout<<"set focal point "<<event->x()-p_x+50<<"    "<<event->y()-p_y+50<<std::endl;
+  //std::cout<<"set focal point "<<event->x()-p_x+50<<"    "<<event->y()-p_y+50<<std::endl;
    p_gradient->setFocalPoint(event->x()-p_x+50,event->y()-p_y+50);
   // p_gradient->setColorAt(0, Qt::red);
   // p_gradient->setColorAt(0.5, Qt::blue);
   // p_gradient->setColorAt(1, Qt::green);   
- // p_gradient->setColorAt(0.0, QColor(255, 255, 255, 0));
- //  p_gradient->setColorAt(0.1, QColor(255, 255, 255, 10));
- //  p_gradient->setColorAt(0.2, QColor(255, 255, 255, 20));
- //  p_gradient->setColorAt(0.3, QColor(0, 31, 0, 30));
- //  p_gradient->setColorAt(0.5, QColor(255, 255, 255, 100));
- //  p_gradient->setColorAt(1.0, QColor(255, 255, 255, 255));
-  
-// p_gradient->setColorAt(0.0, QColor(255, 255, 255, 255));
-//   p_gradient->setColorAt(0.1, QColor(255, 255, 255, 31));
-//   p_gradient->setColorAt(0.7, QColor(255, 255, 255, 31));
-//   p_gradient->setColorAt(0.8, QColor(0, 31, 0, 31));
-//   p_gradient->setColorAt(0.9, QColor(255, 255, 255, 255));
-//   p_gradient->setColorAt(1.0, QColor(255, 255, 255, 255));
+  p_gradient->setColorAt(0.0, QColor(255, 255, 255,255 ));
+  p_gradient->setColorAt(0.1, QColor(255, 255, 255, 200));
+  p_gradient->setColorAt(0.2, QColor(255, 255, 255, 100));
+  p_gradient->setColorAt(0.3, QColor(255, 255, 255, 0));
+  p_gradient->setColorAt(0.4, QColor(255, 255, 255, 0));
+  p_gradient->setColorAt(0.5, QColor(255, 255, 255, 0));
+  p_gradient->setColorAt(0.6, QColor(0, 31, 0, 0));
+  p_gradient->setColorAt(0.7, QColor(255, 255, 255, 0));
+  p_gradient->setColorAt(1.0, QColor(255, 255, 255, 0));
   repaint();
 
 
