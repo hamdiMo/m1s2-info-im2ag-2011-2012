@@ -16,8 +16,11 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   m_scene->setForegroundBrush(QColor(255, 255, 255, 0));
   
   setScene(m_scene);
-  createTaskTreeItems(taskTree);
+  m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
+  m_scene->setSceneRect(m_taskTreeItemRoot->getXMin(), m_taskTreeItemRoot->getYMin(), 
+			m_taskTreeItemRoot->getXMax() - m_taskTreeItemRoot->getXMin(),
+			m_taskTreeItemRoot->getYMax() - m_taskTreeItemRoot->getYMin());
   // initTaskTreeItems();
 
   // displayTaskTree(m_taskTree, 0, 0, computeWidth(m_taskTree) * 128, computeHeight(m_taskTree) * 64);
@@ -34,6 +37,10 @@ TaskTreeViewer::~TaskTreeViewer() {}
 std::vector<TaskTreeItem*> TaskTreeViewer::getSelectedItems() {
   return m_selectedItems;
 }
+
+TaskTree* TaskTreeViewer::getTaskTree() { return m_taskTree; }
+
+TaskTreeItem* TaskTreeViewer::getRoot() { return m_taskTreeItemRoot; }
 
 
 /** Methodes */
@@ -67,39 +74,6 @@ void TaskTreeViewer::displayTaskTreeItems() {
 		       m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
     }
   }
-}
-
-// void TaskTreeViewer::displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax) {
-//   int amplitudeX = xmax - xmin;
-//   int x1 = xmin + amplitudeX/2, y1 = ymin;
-//   QGraphicsProxyWidget* proxy = m_scene->addWidget(new QLabel(QString(t->getName().c_str())));
-//   proxy->setPos(x1-16, y1);
-//   m_scene->addRect(x1-16, y1, 32, 32);
-	
-//   m_taskTreeItems.push_back(new TaskTreeItem(t, x1-16, y1));
-	
-//   for (int i = 0; i < t->getSize(); i++) {
-//     int x2 = xmin + (2*i+1)*(amplitudeX/t->getSize())/2, y2 = y1 + 64;
-//     m_scene->addLine(x1, y1 + 32, x2, y2);
-//     displayTaskTree(t->getSubTree(i), xmin + i*(amplitudeX/t->getSize()), ymin+64, xmin + (i+1)*(amplitudeX/t->getSize()), ymax);
-//   }
-// }
-
-int TaskTreeViewer::computeWidth(TaskTree* t) {
-  if (t->getSize() == 0) return 1;
-  int res = 0;
-  for (int i = 0; i < t->getSize(); i++) res += computeWidth(t->getSubTree(i));
-  return res;
-}
-
-int TaskTreeViewer::computeHeight(TaskTree* t) {
-  if (t->getSize() == 0) return 1;
-  int res = 0;
-  for (int i = 0; i < t->getSize(); i++) {
-    int tmp = computeWidth(t->getSubTree(i));
-    if (tmp > res) res = tmp;
-  }
-  return res;
 }
 
 void TaskTreeViewer::computeSceneRect(int x, int y, int xSize, int ySize) {
