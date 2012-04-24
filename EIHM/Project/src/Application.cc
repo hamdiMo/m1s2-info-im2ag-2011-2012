@@ -14,7 +14,6 @@ int main(int argc, char **argv) {
   userInterface.show();
   
   
-
   
   return application.exec();
 }

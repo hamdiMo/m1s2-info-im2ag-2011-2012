@@ -1,12 +1,19 @@
 #include "UserInterface.hh"
 #include "TaskTreeViewer.hh"
+#include "TaskTreeItem.hh"
 
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QListIterator>
 #include <QApplication>
+#include <stack>
 
+using namespace std;
 
+std::stack<TaskTree*> sundo;
+std::stack<TaskTree*> sredo;
+TaskTree* copyTmp;
+int indiceTasktree = 0;
 
 // /** Slots */
 void UserInterface::open() {
@@ -44,15 +51,73 @@ void UserInterface::save() {
 // void UserInterface::close(QWidget* q) {
 //   m_pictureManager->removePictureModifier((PictureModifier*) q);
 // }
-void UserInterface::exit() {
-  
+void UserInterface::exit() {} 
+
+bool UserInterface::canUndo(){
+  return !sundo.empty();
 }
 
-void UserInterface::undo() {}
-void UserInterface::redo() {}
-void UserInterface::copy() {}
-void UserInterface::cut() {}
-void UserInterface::paste(){}
+bool UserInterface::canRedo() {
+  return !sredo.empty();
+}
+
+void UserInterface::undo() {
+  if(canUndo()){
+    TaskTree* t = sundo.top();
+    sundo.pop();
+    sredo.push(t);
+    m_displayedTree = new TaskTreeViewer(t);
+    
+  } else cout << "rien à annuler" << endl;
+}
+void UserInterface::redo() {
+  if(canRedo()){
+    TaskTree* t = sredo.top();
+    sredo.pop();
+    sundo.push(t);
+    m_displayedTree = new TaskTreeViewer(t);
+  } else cout << "rien à annuler" << endl;
+}
+
+bool UserInterface::canCopy(){
+  return (int)m_displayedTree->getSelectedItems().size() == 1;
+}
+
+void UserInterface::copy() {
+  if (canCopy()){
+    copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
+  }
+}
+
+void ClearRedo(){
+  while(!sredo.empty()) sredo.pop();
+}
+
+void UserInterface::cut() {
+  if (canCopy()){
+    TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+    copyTmp = new TaskTree(tmp);
+    tmp->remove();
+    
+    TaskTree* root = m_displayedTree->getTaskTree();
+    TaskTree* tmpUndo = new TaskTree(root);
+    sundo.push(tmpUndo);
+    ClearRedo();
+    m_displayedTree = new TaskTreeViewer(root);
+  }
+}
+void UserInterface::paste(){
+  if (canCopy()){
+    TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+    tmp->copyPaste(copyTmp);
+    
+    TaskTree* root = m_displayedTree->getTaskTree();
+    TaskTree* tmpUndo = new TaskTree(root);
+    sundo.push(tmpUndo);
+    ClearRedo();
+    m_displayedTree = new TaskTreeViewer(root);
+  }
+}
 
 
 void UserInterface::zoomIn() {}
@@ -62,17 +127,76 @@ void UserInterface::fitToWindow() {}
 void UserInterface::about() {
 QMessageBox::about(this, tr("About TaskTree"), tr("Morigault Thierry,Yasin  Uyar,Cadour Ulysse,Joudrier Hugo"));
 }
-void UserInterface::addAbstractionTask(){}
-void UserInterface::addApplicationTask(){}
-void UserInterface::addInteractionTask(){}
-void UserInterface::addUserTask(){}
-void UserInterface::deleteTask(){
-  for(int i=0;i<getDisplayedTree()->getSelectedItems().size();i++){
-		
-	}
-	
-	
+
+void UserInterface::addAbstractionTask(){
+  TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+  string name = "Task "+indiceTasktree;
+  indiceTasktree++;
+  tmp->addSubtree(new TaskTree(name,TaskTree::ABSTRACTION));
+  
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root);
 }
+
+void UserInterface::addApplicationTask(){
+  TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+  string name = "Task "+indiceTasktree;
+  indiceTasktree++;
+  tmp->addSubtree(new TaskTree(name,TaskTree::APPLICATION));
+  
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root);
+}
+
+void UserInterface::addInteractionTask(){
+  TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+  string name = "Task "+indiceTasktree;
+  indiceTasktree++;
+  tmp->addSubtree(new TaskTree(name,TaskTree::INTERACTION));
+  
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root);
+}
+void UserInterface::addUserTask(){
+  TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+  string name = "Task "+indiceTasktree;
+  indiceTasktree++;
+  tmp->addSubtree(new TaskTree(name,TaskTree::USER));
+  
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root);
+}
+void UserInterface::deleteTask(){
+  vector<TaskTree*> tmp;
+  for(int i=0;i<(int)m_displayedTree->getSelectedItems().size();i++){
+    bool isSon = false;
+    for(int j = 0; j < (int)m_displayedTree->getSelectedItems().size();j++)
+      isSon |= m_displayedTree->getSelectedItems()[i]->getTaskTree()->isSon(m_displayedTree->getSelectedItems()[j]->getTaskTree());
+    if (!isSon) tmp.push_back(m_displayedTree->getSelectedItems()[i]->getTaskTree());
+  }
+  for(int i=0; i < (int)tmp.size(); i++)
+    tmp[i]->remove();
+  
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root);
+}
+
+
 void UserInterface::addChoiceTransition(){}
 void UserInterface::addOrderIndependenceTransition(){}
 void UserInterface::addInterleavingTransition(){}

@@ -72,9 +72,12 @@ public slots:
   void open();
   void save();
   void exit();
+  bool canUndo();
+  bool canRedo();
   void undo();
   void redo();
-  void cut();
+  void cut();  
+  bool canCopy();
   void copy();
   void paste();
   
