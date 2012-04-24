@@ -34,6 +34,7 @@ public:
   void setYMax(int);
 	
   /** Predicats */
+  void addSubTaskTreeItem(TaskTreeItem* t);
   void translate(int x, int y);
   bool contain(int x, int y);
 

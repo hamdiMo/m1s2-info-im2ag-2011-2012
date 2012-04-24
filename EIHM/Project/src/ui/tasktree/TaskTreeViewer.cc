@@ -38,17 +38,20 @@ std::vector<TaskTreeItem*> TaskTreeViewer::getSelectedItems() {
 
 /** Methodes */
 TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
-  int xmin = 0, xmax = 0, ymin = 0, ymax = 0;
+  int xmin = 0, xmax = 0, ymin = 0, ymax = 32;
   TaskTreeItem* item = new TaskTreeItem(t, 16, 16);
   m_taskTreeItems.push_back(item);
-  for (int i = 0; i < t->getSize(); i++) {
-    TaskTreeItem* tmp = createTaskTreeItems(t->getSubTree(i));
-    tmp->setParent(item);
-    
+  if (t->getSize() > 0) {
+    for (int i = 0; i < t->getSize(); i++) {
+      TaskTreeItem* tmp = createTaskTreeItems(t->getSubTree(i));
+      tmp->setParent(item);
+      tmp->translate(xmax, ymax);
+      xmax += tmp->getXMax() - tmp->getXMin();
+    }
+    item->setX((xmax - xmin)/2);
+    item->setY(16);
+    item->setXMin(xmin); item->setYMin(ymin); item->setXMax(xmax); item->setYMax(ymax);
   }
-  item->setX(xmin + (xmax - xmin)/2);
-  item->setY(-16);
-  item->setXMin(xmin); item->setYMin(ymin-32); item->setXMax(xmax); item->setYMax(ymax);
   return item;
 }
 
