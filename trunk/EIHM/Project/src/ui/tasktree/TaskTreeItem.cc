@@ -37,7 +37,9 @@ void TaskTreeItem::setYMax(int yMax) { m_yMax = yMax; }
 
 
 /** Methods */
-
+void TaskTreeItem::addSubTaskTreeItem(TaskTreeItem* t) {
+  m_subTaskTreeItems.push_back(t);
+}
 
 void TaskTreeItem::translate(int x, int y) {
   m_x += x;
