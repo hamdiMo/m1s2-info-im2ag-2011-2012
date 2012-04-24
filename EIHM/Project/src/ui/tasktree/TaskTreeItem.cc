@@ -9,6 +9,7 @@ TaskTreeItem::TaskTreeItem(TaskTree* taskTree, int x, int y) :
 {}
   
 /** Accesseurs */
+TaskTreeItem* TaskTreeItem::getParent() { return m_parent; }
 TaskTree* TaskTreeItem::getTaskTree() { return m_taskTree; }
 int TaskTreeItem::getX() { return m_x; }
 int TaskTreeItem::getY() { return m_y; }
@@ -18,6 +19,7 @@ int TaskTreeItem::getY() { return m_y; }
 // int getYMax();
 
 /** Mutateurs */
+void TaskTreeItem::setParent(TaskTreeItem* parent) { m_parent = parent; }
 void TaskTreeItem::setTaskTree(TaskTree* taskTree) { m_taskTree = taskTree; }
 void TaskTreeItem::setX(int x) { m_x = x; }
 void TaskTreeItem::setY(int y) { m_y = y; }

@@ -13,6 +13,7 @@ public:
   TaskTreeItem(TaskTree*, int, int);
   
   /** Accesseurs */
+  TaskTreeItem* getParent();
   TaskTree* getTaskTree();
   int getX();
   int getY();
@@ -22,6 +23,7 @@ public:
   // int getYMax();
 
   /** Mutateurs */
+  void setParent(TaskTreeItem*);
   void setTaskTree(TaskTree*);
   void setX(int);
   void setY(int);
@@ -35,6 +37,7 @@ public:
 
 private:
 
+  TaskTreeItem* m_parent;
   TaskTree* m_taskTree;
   int m_x, m_y;
   // int m_xMin, m_yMin, m_xMax, m_yMax;

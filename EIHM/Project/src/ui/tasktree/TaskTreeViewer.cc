@@ -16,6 +16,8 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   m_scene->setForegroundBrush(QColor(255, 255, 255, 0));
   
   setScene(m_scene);
+  // initTastTreeItems();
+
   displayTaskTree(m_taskTree, 0, 0, computeWidth(m_taskTree) * 128, computeHeight(m_taskTree) * 64);
   
   // m_pictureViewer = new PictureViewer(p) ;
