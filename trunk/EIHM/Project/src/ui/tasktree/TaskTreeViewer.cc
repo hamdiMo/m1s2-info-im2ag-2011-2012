@@ -179,6 +179,12 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   
     selectedItemsChanged();
   }
+
+
+if (m_roundedMenu!=NULL) 
+    m_roundedMenu->mouseReleaseEvent(event);
+
+
 }
 
 void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
