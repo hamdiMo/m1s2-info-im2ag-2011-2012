@@ -13,6 +13,7 @@
 #include "SelectionTool.hh"
 #endif
 
+class UserInterface;
 class TaskTreeItem;
 class RoundedMenu;
 class SelectionTool;
@@ -21,7 +22,7 @@ class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 public:
 
   /** Constructeurs et destructeurs */
-  TaskTreeViewer(TaskTree* taskTree);
+  TaskTreeViewer(TaskTree*,UserInterface*);
   ~TaskTreeViewer();
 
   /** Accesseur */
@@ -51,9 +52,11 @@ signals:
   void selectedItemsChanged();
 
 private:
+
   RoundedMenu *m_roundedMenu;
   TaskTree* m_taskTree;
-  QGraphicsScene* m_scene; 
+  UserInterface *m_userInterface;
+  QGraphicsScene* m_scene;
   bool m_personal_menu;
   TaskTreeItem* m_taskTreeItemRoot;
   std::vector<TaskTreeItem*> m_taskTreeItems;

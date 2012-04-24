@@ -1,16 +1,17 @@
 #include "RoundedMenu.hh"
-
+#include <direct.h>
 #include <QPainter>
 #include <QMouseEvent>
-
+#include <QPicture>
 #include <math.h>
 
 
 /** Constructeurs et destructeurs */
-RoundedMenu::RoundedMenu(QWidget *parent,int x, int y)
+RoundedMenu::RoundedMenu(QWidget *parent,int x, int y,std::vector<QAction*>* action)
   : QWidget(parent),
     p_x(x),
-    p_y(y)
+    p_y(y),
+    p_Actions(action)
 {
   setAttribute(Qt::WA_TranslucentBackground);
   p_gradient= new QRadialGradient(SIZE/2,SIZE/2,SIDE*0.5,SIZE/2,SIZE/2);
@@ -28,7 +29,14 @@ RoundedMenu::RoundedMenu(QWidget *parent,int x, int y)
   souris_x=p_x;
   souris_y=p_y;
   setMouseTracking(true);
+  if(p_Actions!=0)
+      p_nb_case=p_Actions->size();
+  else
+      p_nb_case=4;
 }
+
+
+
 
 
 RoundedMenu::~RoundedMenu() {}
@@ -49,7 +57,7 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
   // painter.setPen(QColor(0, 0, 0, 255));
- 
+
   painter.setPen(QColor(0, 0, 0, 50));
   painter.setBrush(*p_gradient);
 
@@ -62,10 +70,19 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
    
  
   // painter.drawEllipse(QPoint(SIZE/2,SIZE/2),SIZE/2,SIZE/2);
-  for (float angle=0.0 ; angle<2*3.14;angle+=2*PI/m_nb_case){ 
+  int rang=0;
+  for (float angle=0.0 ; angle<2*3.14;angle+=2*PI/p_nb_case){
     float Bx  =((SIZE/2-1) * cos(angle));
     float By  =((SIZE/2-1) * sin(angle));
-     painter.drawLine(SIZE/2,SIZE/2,Bx+SIZE/2,By+SIZE/2);
+    float B1x  =SIZE/2+((SIZE/6) * cos(angle));
+    float B1y  =SIZE/2+((SIZE/6) * sin(angle));
+    painter.drawLine(B1x,B1y,Bx+SIZE/2,By+SIZE/2);
+    /* if(p_Actions!=0){
+        QPixmap img = (*p_Actions)[rang]->icon().pixmap(SIZE/3,SIZE/3);
+                painter.drawPixmap(QPoint(10,10),img);
+        }
+    */
+    ++rang;
   }
   float angle = 0.0;
   if(souris_x!=0){
@@ -78,9 +95,9 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   if (angle < 0) angle += 2*PI;
   // else if (angle > 2*PI) angle = angle-2*PI;
  
-  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/m_nb_case){ 
-    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/m_nb_case){
-      painter.drawPie(rectangle,16*((p_angle)*180/PI), 16 *((2*PI/m_nb_case)*180/PI)  );
+  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/p_nb_case){
+    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/p_nb_case){
+      painter.drawPie(rectangle,16*((p_angle)*180/PI), 16 *((2*PI/p_nb_case)*180/PI)  );
     }
   }
   
@@ -115,9 +132,9 @@ void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
   else if (souris_y < 0) angle = PI/2.0;
   else angle = -((float) PI)/2.0;
   if (angle < 0) angle += 2*PI;
-  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/m_nb_case){ 
+  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/p_nb_case){
     nb++;  
-    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/m_nb_case){
+    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/p_nb_case){
       std::cout<< "case numero"<<nb<<std::endl;
     }
     
@@ -125,3 +142,7 @@ void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
 
 }
 void RoundedMenu::wheelEvent ( QWheelEvent * event ) {}
+
+
+
+// ajouter les icones et interconnecter  le tout
