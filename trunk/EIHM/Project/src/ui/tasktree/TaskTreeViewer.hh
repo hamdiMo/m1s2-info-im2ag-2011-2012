@@ -18,13 +18,12 @@ public:
 
   /** Accesseur */
   std::vector<TaskTreeItem*> getSelectedItems();
+  TaskTree* getTaskTree();
+  TaskTreeItem* getRoot();
 
   /** Methodes */
   TaskTreeItem* createTaskTreeItems(TaskTree* t);
   void displayTaskTreeItems();
-  void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
-  int computeWidth(TaskTree* t);
-  int computeHeight(TaskTree* t);
   void computeSceneRect(int x, int y, int xSize, int ySize);
 
 public slots:
@@ -47,6 +46,7 @@ private:
   TaskTree* m_taskTree;
   QGraphicsScene* m_scene; 
   bool m_personal_menu;
+  TaskTreeItem* m_taskTreeItemRoot;
   std::vector<TaskTreeItem*> m_taskTreeItems;
   std::vector<TaskTreeItem*> m_selectedItems;
 	int m_dragBeginX;
