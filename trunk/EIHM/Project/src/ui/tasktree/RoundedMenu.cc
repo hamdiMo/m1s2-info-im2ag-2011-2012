@@ -81,7 +81,7 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   painter.drawPie(rectangle,startAngle,180 * (angle));
  
  
-std::cout<<"angle"<<angle<<std::endl;
+// std::cout<<"angle"<<angle<<std::endl;
  
 
 }
@@ -92,7 +92,7 @@ void RoundedMenu::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void RoundedMenu::mouseMoveEvent ( QMouseEvent * event ){
   souris_x=event->x()-p_x;
   souris_y=event->y()-p_y;
-  std::cout<<"souris"<<souris_x<<"    "<<souris_y<<std::endl;
+  //  std::cout<<"souris"<<souris_x<<"    "<<souris_y<<std::endl;
  
   repaint();
 
