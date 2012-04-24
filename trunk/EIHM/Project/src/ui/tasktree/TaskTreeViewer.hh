@@ -20,11 +20,12 @@ public:
   std::vector<TaskTreeItem*> getSelectedItems();
 
   /** Methodes */
+  TaskTreeItem* createTaskTreeItems(TaskTree* t);
+  void displayTaskTreeItems();
   void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
   int computeWidth(TaskTree* t);
   int computeHeight(TaskTree* t);
   void computeSceneRect(int x, int y, int xSize, int ySize);
-	
 
 public slots:
 
