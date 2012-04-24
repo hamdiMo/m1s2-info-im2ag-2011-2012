@@ -15,8 +15,10 @@ public:
   /** Constructeurs et destructeurs */
   TaskTreeViewer(TaskTree* taskTree);
   ~TaskTreeViewer();
+
   /** Accesseur */
   std::vector<TaskTreeItem*> getSelectedItems();
+
   /** Methodes */
   void displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, int ymax);
   int computeWidth(TaskTree* t);

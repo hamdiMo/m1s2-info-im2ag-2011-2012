@@ -38,7 +38,7 @@ public:
   ~UserInterface();
 
   /** Accesseurs */
-	TaskTreeViewer* getDisplayedTree(){return m_displayedTree;}
+  TaskTreeViewer* getDisplayedTree();
   
   PropertyBox* getPropertyBox();
   // Previewer* getPreviewer();
@@ -220,7 +220,7 @@ private:
   QAction* m_addSequentialEnablingInfoTransitionAct;
   QAction* m_deleteTransitionAct;
 	
-	TaskTreeViewer* m_displayedTree;
+  TaskTreeViewer* m_displayedTree;
 };
 
 #endif

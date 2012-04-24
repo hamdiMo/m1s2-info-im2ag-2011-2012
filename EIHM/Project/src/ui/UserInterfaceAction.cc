@@ -1,4 +1,5 @@
 #include "UserInterface.hh"
+#include "TaskTreeViewer.hh"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -66,7 +67,7 @@ void UserInterface::addApplicationTask(){}
 void UserInterface::addInteractionTask(){}
 void UserInterface::addUserTask(){}
 void UserInterface::deleteTask(){
-	for(int i=0;i<getDisplayedTree().getSelectedItems.size();i++){
+  for(int i=0;i<getDisplayedTree()->getSelectedItems().size();i++){
 		
 	}
 	

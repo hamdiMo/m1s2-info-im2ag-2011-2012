@@ -28,7 +28,7 @@ void TaskTreeItem::setY(int y) { m_y = y; }
 
 
 /** Methods */
-bool TaskTreeItem::isPointInside(int x, int y){
+bool TaskTreeItem::contain(int x, int y){
 	if (x >= m_x-16 && x <= m_x+16 && y >= m_y && y <= m_y+32)
 		return true;
 }
