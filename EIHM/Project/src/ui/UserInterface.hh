@@ -38,6 +38,7 @@ public:
   ~UserInterface();
 
   /** Accesseurs */
+	TaskTreeViewer* getDisplayedTree(){return m_displayedTree;}
   
   PropertyBox* getPropertyBox();
   // Previewer* getPreviewer();
@@ -91,6 +92,13 @@ public slots:
   void deleteTask();
   void addChoiceTransition();
   void addOrderIndependenceTransition();
+  void addInterleavingTransition();
+  void addSynchronizationTransition();
+	void addSuspendResumeTransition();
+  void addDisablingTransition();
+  void addSequentialEnablingTransition();
+  void addSequentialEnablingInfoTransition();
+  void deleteTransition();
 
   // void updateUI();
   // void updateUIActions();
@@ -204,6 +212,15 @@ private:
   QAction* m_deleteTaskAct;
   QAction* m_addChoiceTransitionAct;
   QAction* m_addOrderIndependenceTransitionAct;
+  QAction* m_addInterleavingTransitionAct;
+  QAction* m_addSynchronizationTransitionAct;
+  QAction* m_addDisablingTransitionAct;
+  QAction* m_addSuspendResumeTransitionAct;
+  QAction* m_addSequentialEnablingTransitionAct;
+  QAction* m_addSequentialEnablingInfoTransitionAct;
+  QAction* m_deleteTransitionAct;
+	
+	TaskTreeViewer* m_displayedTree;
 };
 
 #endif

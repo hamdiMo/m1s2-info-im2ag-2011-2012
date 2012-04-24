@@ -22,6 +22,7 @@ public:
   int computeWidth(TaskTree* t);
   int computeHeight(TaskTree* t);
   void computeSceneRect(int x, int y, int xSize, int ySize);
+	
 
 public slots:
 
@@ -44,7 +45,9 @@ private:
   QGraphicsScene* m_scene; 
   bool m_personal_menu;
   std::vector<TaskTreeItem*> m_taskTreeItems;
-		      
+  std::vector<TaskTreeItem*> m_selectedItems;
+	int m_dragBeginX;
+	int m_dragBeginY;
 
 };
 
