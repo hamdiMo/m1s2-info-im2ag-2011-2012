@@ -72,6 +72,10 @@ UserInterface::~UserInterface() {
   // return tabWidget;
 // }
   
+TaskTreeViewer* UserInterface::getDisplayedTree() {
+  return m_displayedTree;
+}
+
 QDockWidget* UserInterface::createDockWidget(QWidget* widget) {
   QDockWidget* dockWidget = new QDockWidget(widget->accessibleName());
   dockWidget->setWidget(widget);

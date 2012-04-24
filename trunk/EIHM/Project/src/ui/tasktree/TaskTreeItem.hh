@@ -30,8 +30,8 @@ public:
   // void setXMax(int);
   // void setYMax(int);
 	
-	/** Methods */
-	bool isPointInside(int x, int y);
+  /** Predicats */
+  bool contain(int x, int y);
 
 private:
 
