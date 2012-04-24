@@ -88,6 +88,8 @@ public:
   void insertSubtree(TaskTree* son, int index);
   
   void swapSubtree(int index1, int index2);
+ 
+  void remove();
   
   void removeSubtree(int index);
   
