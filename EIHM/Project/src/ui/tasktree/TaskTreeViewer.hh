@@ -7,12 +7,15 @@
 
 #ifdef WIN32
 #include "..\..\model\TaskTree.hh"
+#include "SelectionTool.hh"
 #else
 #include "TaskTree.hh"
+#include "SelectionTool.hh"
 #endif
 
 class TaskTreeItem;
 class RoundedMenu;
+class SelectionTool;
 class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
@@ -25,6 +28,7 @@ public:
   std::vector<TaskTreeItem*> getSelectedItems();
   TaskTree* getTaskTree();
   TaskTreeItem* getRoot();
+  QGraphicsScene* getScene();
 
   /** Methodes */
   TaskTreeItem* createTaskTreeItems(TaskTree* t);
@@ -54,8 +58,7 @@ private:
   TaskTreeItem* m_taskTreeItemRoot;
   std::vector<TaskTreeItem*> m_taskTreeItems;
   std::vector<TaskTreeItem*> m_selectedItems;
-	int m_dragBeginX;
-	int m_dragBeginY;
+  SelectionTool* m_selectionTool;
   QGraphicsProxyWidget* p_proxy_roundedMenu;
 };
 

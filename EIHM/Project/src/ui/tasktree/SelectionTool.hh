@@ -1,20 +1,35 @@
 #ifndef _SELECTION_TOOL_HH
 #define _SELECTION_TOOL_HH
+#include <QWidget>
 #include <QGraphicsRectItem>
-#include <QGraphicsItem>
-#include <QPen>
-#include <QBrush>
-#include <QRectF>
+#include <QGraphicsProxyWidget>
 
-class SelectionTool: public QGraphicsRectItem { 
+#include "TaskTreeViewer.hh"
+
+class TaskTreeViewer;
+
+class SelectionTool : public QWidget { Q_OBJECT
 public:
-  SelectionTool ( QGraphicsItem * parent = 0 );
-  ~SelectionTool();
-  /** override methode from QGraphicsItem**/
-  void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+    SelectionTool (qreal _x, qreal _y, qreal _width, qreal _height, QWidget *_parent, TaskTreeViewer *_ttv);
+    ~SelectionTool();
+
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
+    void setRect(qreal _x, qreal _y, qreal _w, qreal _h);
+    void  keyPressEvent ( QKeyEvent * event );
+    void  keyReleaseEvent ( QKeyEvent * event );
+    void  mouseDoubleClickEvent ( QMouseEvent * event );
+    void  mouseMoveEvent ( QMouseEvent * event );
+    void  mousePressEvent ( QMouseEvent * event );
+    void  mouseReleaseEvent ( QMouseEvent * event );
+    void  wheelEvent ( QWheelEvent * event );
+
 private :
-  QColor* m_fontColor;
-  QBrush* my_brush;
-  QPen* my_borderPen;
+    QGraphicsRectItem* m_selectionRect;
+    int m_dragBeginX;
+    int m_dragBeginY;
+    bool m_leftButtonActive;
+    QGraphicsProxyWidget* p_proxy_selectionTool;
+    TaskTreeViewer* m_taskTreeViewer;
 };
 #endif

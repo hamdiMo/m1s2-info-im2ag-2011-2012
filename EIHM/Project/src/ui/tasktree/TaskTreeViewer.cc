@@ -25,6 +25,8 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   setScene(m_scene);
   m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
+
+  m_selectionTool = new SelectionTool(0, 0, 0, 0, NULL, this);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
@@ -43,6 +45,8 @@ std::vector<TaskTreeItem*> TaskTreeViewer::getSelectedItems() {
 TaskTree* TaskTreeViewer::getTaskTree() { return m_taskTree; }
 
 TaskTreeItem* TaskTreeViewer::getRoot() { return m_taskTreeItemRoot; }
+
+QGraphicsScene* TaskTreeViewer::getScene(){return m_scene;}
 
 
 /** Methodes */
@@ -101,12 +105,13 @@ void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){}
 void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {}
 void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
-
   if (m_roundedMenu!=NULL) 
     m_roundedMenu->mouseMoveEvent(event);
+  m_selectionTool->mouseMoveEvent(event);
 }
 
 void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
+  m_selectionTool->mousePressEvent(event);
   if (event->button()==Qt::RightButton){
     std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
     m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y());
@@ -116,77 +121,61 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
     computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
     p_proxy_roundedMenu->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
   }
-  if (event->button() == Qt::LeftButton){
-    m_dragBeginX = event->x();
-    m_dragBeginY = event->y();
-  }
 }
 
 void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
+  m_selectionTool->mouseReleaseEvent(event);
+  /*
   // on efface la sélection
   m_selectedItems.clear();
   // clic
   if (event->x() == m_dragBeginX || event->y() == m_dragBeginY) {
     // puis on ajoute dans la nouvelle sélection tous les items dans le cadre de sélection
-    for(int i=0;i<m_taskTreeItems.size();i++){
-      if (m_taskTreeItems[i]->contain(event->x(), event->y())){
-	m_selectedItems.push_back(m_taskTreeItems[i]);
-	break;
+      std::vector<TaskTreeItem*>::iterator it;
+      for(it = m_taskTreeItems.begin();it != m_taskTreeItems.end();++it){
+        if ((*it)->contain(event->x(), event->y())){
+          m_selectedItems.push_back(*it);
+          break;
+        }
       }
-    }
   }
-  // drag => cadre de sélection
-  else {
-    int xLeft, yTop, xRight, yBottom;
-    if (m_dragBeginX > event->x()){
-      xLeft = event->x();
-      xRight = m_dragBeginX;
+  */
+
+
+  /*
+    std::vector<TaskTreeItem*>::iterator it;
+    for(it = m_taskTreeItems.begin();it != m_taskTreeItems.end();++it){
+
+        // si un des angles du cadre est dans un des items
+        if ((*it)->contain(xLeft, yBottom)
+        || (*it)->contain(xRight, yBottom)
+        || (*it)->contain(xRight, yTop)
+        || (*it)->contain(xLeft, yTop)) {
+            m_selectedItems.push_back((*it));
+        } // sinon, si une des arrêtes du cadre passe dans un item
+        else if ((xLeft >= (*it)->getX()-16
+          && xLeft <= (*it)->getX()+16
+          && yBottom >= (*it)->getY()+32
+          && yTop <= (*it)->getY())
+            || (xRight >= (*it)->getX()-16
+            && xRight <= (*it)->getX()+16
+            && yBottom >= (*it)->getY()+32
+            && yTop <= (*it)->getY())
+            || (yTop >= (*it)->getY()
+            && yTop <= (*it)->getY()+32
+            && xRight >= (*it)->getX()+16
+            && xLeft <= (*it)->getX()-16)
+            || (yBottom >= (*it)->getY()
+            && yBottom <= (*it)->getY()+32
+            && xRight >= (*it)->getX()+16
+            && xLeft <= (*it)->getX()-16)) {
+            m_selectedItems.push_back((*it));
+       }
     }
-    else{
-      xRight = event->x();
-      xLeft = m_dragBeginX;
-    }
-    if (m_dragBeginY > event->y()){
-      yTop = event->y();
-      yBottom = m_dragBeginY;
-    }
-    else{
-      yBottom = event->y();
-      yTop = m_dragBeginY;
-    }
-  
-    for (int i=0 ; i<m_taskTreeItems.size() ; i++) {
-    
-      // si un des angles du cadre est dans un des items
-      if (m_taskTreeItems[i]->contain(xLeft, yBottom)
-	  || m_taskTreeItems[i]->contain(xRight, yBottom)
-	  || m_taskTreeItems[i]->contain(xRight, yTop)
-	  || m_taskTreeItems[i]->contain(xLeft, yTop)) {
-	m_selectedItems.push_back(m_taskTreeItems[i]);
-      } // sinon, si une des arrêtes du cadre passe dans un item
-      else if ((xLeft >= m_taskTreeItems[i]->getX()-16
-		&& xLeft <= m_taskTreeItems[i]->getX()+16
-		&& yBottom >= m_taskTreeItems[i]->getY()+32
-		&& yTop <= m_taskTreeItems[i]->getY())
-	       || (xRight >= m_taskTreeItems[i]->getX()-16 
-		   && xRight <= m_taskTreeItems[i]->getX()+16 
-		   && yBottom >= m_taskTreeItems[i]->getY()+32 
-		   && yTop <= m_taskTreeItems[i]->getY())
-	       || (yTop >= m_taskTreeItems[i]->getY()
-		   && yTop <= m_taskTreeItems[i]->getY()+32
-		   && xRight >= m_taskTreeItems[i]->getX()+16
-		   && xLeft <= m_taskTreeItems[i]->getX()-16)
-	       || (yBottom >= m_taskTreeItems[i]->getY()
-		   && yBottom <= m_taskTreeItems[i]->getY()+32
-		   && xRight >= m_taskTreeItems[i]->getX()+16
-		   && xLeft <= m_taskTreeItems[i]->getX()-16)) {
-	m_selectedItems.push_back(m_taskTreeItems[i]);
-      }
-    }
-  
+
     selectedItemsChanged();
   }
-
+*/
 
   if (m_roundedMenu!=NULL) {
     m_roundedMenu->mouseReleaseEvent(event);
