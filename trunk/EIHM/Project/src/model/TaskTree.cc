@@ -23,7 +23,7 @@ using namespace std;
     m_out(0),
     m_parent(0)
   {
-    for(int i=0; i < (int)subtrees.size(); i++) m_subtrees.push_back(subtrees[i]);
+    for(int i=0; i < (int)subtrees.size(); i++) addSubtree(subtrees[i]);
   }
   
   
@@ -192,17 +192,28 @@ void TaskTree::removeTransitions(){
       TaskTree* tmp2 = m_subtrees[id2];
       tmp2->removeTransitions();
       m_subtrees[id1] = tmp2;
+      m_subtrees[id1]->setIndex(id1);
       m_subtrees[id2] = tmp;
+      m_subtrees[id2]->setIndex(id2);
     } 
     else std::cout<<"index out of bounds"<< std::endl;
+  }
+
+  void TaskTree::remove(){
+    TaskTree* t = getParent();
+    if(t != 0){
+      t->removeSubtree(getIndex());
+    }
   }
   
   void TaskTree::removeSubtree(int index){
     int size = (int)m_subtrees.size();
     if (index >=0 && index < size){
       m_subtrees[index]->removeSubtree();
-      for(int j = index; j < size-1; j++)
+      for(int j = index; j < size-1; j++){
 	m_subtrees[j] = m_subtrees[j+1];
+	m_subtrees[j]->setIndex(j);
+      }
       m_subtrees.pop_back();
     }
   }
