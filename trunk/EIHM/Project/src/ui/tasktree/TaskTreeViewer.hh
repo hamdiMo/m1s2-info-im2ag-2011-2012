@@ -51,7 +51,7 @@ private:
   std::vector<TaskTreeItem*> m_selectedItems;
 	int m_dragBeginX;
 	int m_dragBeginY;
-
+  QGraphicsProxyWidget* p_proxy_roundedMenu;
 };
 
 #endif
