@@ -11,7 +11,7 @@ class TaskTreeItem : public QLabel { Q_OBJECT
 public:
 
   /** Constructeurs */
-  TaskTreeItem(TaskTree*, int, int);
+  TaskTreeItem(TaskTree*);
   
   /** Accesseurs */
   TaskTreeItem* getParent();

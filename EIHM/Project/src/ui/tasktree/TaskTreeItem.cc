@@ -1,16 +1,17 @@
 #include "TaskTreeItem.hh"
 
 /** Constructeurs */
-TaskTreeItem::TaskTreeItem(TaskTree* taskTree, int x, int y) :
+TaskTreeItem::TaskTreeItem(TaskTree* taskTree) :
   QLabel(taskTree->getName().c_str()),
+  m_parent(0),
   m_taskTree(taskTree),
   m_subTaskTreeItems(),
-  m_x(x),
-  m_y(y),
-  m_xMin(32),
-  m_yMin(32),
-  m_xMax(32),
-  m_yMax(32)
+  m_x(32),
+  m_y(32),
+  m_xMin(0),
+  m_yMin(0),
+  m_xMax(64),
+  m_yMax(64)
 {}
   
 
