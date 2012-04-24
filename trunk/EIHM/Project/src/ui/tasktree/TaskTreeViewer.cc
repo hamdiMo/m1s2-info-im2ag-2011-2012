@@ -18,16 +18,11 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :
   setScene(m_scene);
   m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
-  m_scene->setSceneRect(m_taskTreeItemRoot->getXMin(), m_taskTreeItemRoot->getYMin(), 
-			m_taskTreeItemRoot->getXMax() - m_taskTreeItemRoot->getXMin(),
-			m_taskTreeItemRoot->getYMax() - m_taskTreeItemRoot->getYMin());
-  // initTaskTreeItems();
-
-  // displayTaskTree(m_taskTree, 0, 0, computeWidth(m_taskTree) * 128, computeHeight(m_taskTree) * 64);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
   // m_selectionTool = new SelectionTool(m_proxy);x
+
 } 
 
 TaskTreeViewer::~TaskTreeViewer() {}
@@ -99,16 +94,18 @@ void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){}
 void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {}
 void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
- 
+
   if (m_roundedMenu!=NULL) 
     m_roundedMenu->mouseMoveEvent(event);
 }
+
 void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
   if (event->button()==Qt::RightButton){
     std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
     m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y());
     QGraphicsProxyWidget* proxy3 = m_scene->addWidget(m_roundedMenu);
     QPointF pos = mapToScene(event->x(), event->y());
+    computeSceneRect(0, 0, m_roundedMenu->size().width(), m_roundedMenu->size().height());
     computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
     proxy3->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
   }
@@ -117,6 +114,7 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
     m_dragBeginY = event->y();
   }
 }
+
 void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   // on efface la sélection
   m_selectedItems.clear();
