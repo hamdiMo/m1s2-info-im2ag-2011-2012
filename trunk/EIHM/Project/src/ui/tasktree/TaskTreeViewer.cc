@@ -38,18 +38,20 @@ std::vector<TaskTreeItem*> TaskTreeViewer::getSelectedItems() {
 
 /** Methodes */
 TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
-  int xmin = 0, xmax = 0, ymin = 0, ymax = 32;
-  TaskTreeItem* item = new TaskTreeItem(t, 16, 16);
+  int xmin = 0, xmax = 0, ymin = 0, ymax = 64;
+  TaskTreeItem* item = new TaskTreeItem(t);
   m_taskTreeItems.push_back(item);
   if (t->getSize() > 0) {
     for (int i = 0; i < t->getSize(); i++) {
       TaskTreeItem* tmp = createTaskTreeItems(t->getSubTree(i));
       tmp->setParent(item);
-      tmp->translate(xmax, ymax);
+      item->addSubTaskTreeItem(tmp);
+      tmp->translate(xmax, 64);
       xmax += tmp->getXMax() - tmp->getXMin();
+      if (ymax < tmp->getYMax()) ymax = tmp->getYMax() + 64;
     }
     item->setX((xmax - xmin)/2);
-    item->setY(16);
+    item->setY(32);
     item->setXMin(xmin); item->setYMin(ymin); item->setXMax(xmax); item->setYMax(ymax);
   }
   return item;
@@ -59,6 +61,11 @@ void TaskTreeViewer::displayTaskTreeItems() {
   for (int i = 0 ; i < m_taskTreeItems.size() ; i++) {
     QGraphicsProxyWidget* proxy = m_scene->addWidget(m_taskTreeItems[i]);
     proxy->setPos(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY());
+    m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
+    if (m_taskTreeItems[i]->getParent() != 0) {
+      m_scene->addLine(m_taskTreeItems[i]->getX()+16, m_taskTreeItems[i]->getY(),
+		       m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
+    }
   }
 }
 
