@@ -74,7 +74,7 @@ void UserInterface::undo() {
     TaskTree* t = sundo.top();
     sundo.pop();
     sredo.push(t);
-    m_displayedTree = new TaskTreeViewer(t);
+    m_displayedTree = new TaskTreeViewer(t,this);
     
   } else cout << "rien Ã  annuler" << endl;
 }
@@ -83,7 +83,7 @@ void UserInterface::redo() {
     TaskTree* t = sredo.top();
     sredo.pop();
     sundo.push(t);
-    m_displayedTree = new TaskTreeViewer(t);
+    m_displayedTree = new TaskTreeViewer(t,this);
   } else cout << "rien Ã  annuler" << endl;
 }
 
@@ -111,7 +111,7 @@ void UserInterface::cut() {
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
     ClearRedo();
-    m_displayedTree = new TaskTreeViewer(root);
+    m_displayedTree = new TaskTreeViewer(root,this);
   }
 }
 void UserInterface::paste(){
@@ -123,7 +123,7 @@ void UserInterface::paste(){
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
     ClearRedo();
-    m_displayedTree = new TaskTreeViewer(root);
+    m_displayedTree = new TaskTreeViewer(root,this);
   }
 }
 
@@ -146,7 +146,7 @@ void UserInterface::addAbstractionTask(){
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root);
+  m_displayedTree = new TaskTreeViewer(root,this);
 }
 
 void UserInterface::addApplicationTask(){
@@ -159,7 +159,7 @@ void UserInterface::addApplicationTask(){
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root);
+  m_displayedTree = new TaskTreeViewer(root,this);
 }
 
 void UserInterface::addInteractionTask(){
@@ -172,7 +172,7 @@ void UserInterface::addInteractionTask(){
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root);
+  m_displayedTree = new TaskTreeViewer(root,this);
 }
 void UserInterface::addUserTask(){
   TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
@@ -184,7 +184,7 @@ void UserInterface::addUserTask(){
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root);
+  m_displayedTree = new TaskTreeViewer(root,this);
 }
 void UserInterface::deleteTask(){
   vector<TaskTree*> tmp;
@@ -201,7 +201,7 @@ void UserInterface::deleteTask(){
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root);
+  m_displayedTree = new TaskTreeViewer(root,this);
 }
 
 

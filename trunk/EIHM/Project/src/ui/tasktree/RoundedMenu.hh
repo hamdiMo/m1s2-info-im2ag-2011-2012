@@ -1,18 +1,17 @@
 #ifndef _ROUNDED_MENU_HH_
 #define _ROUNDED_MENU_HH_
-
 #include <iostream>
 #include <QWidget>
 #include <QBrush>
 #include <QPen>
 #include <QPixmap>
- 
-
+#include <QAction>
+#include <vector>
 class RoundedMenu : public QWidget { Q_OBJECT
 
 public:
    /** Constructeurs et destructeurs */
-  RoundedMenu(QWidget *parent = 0,int=0,int=0);
+  RoundedMenu(QWidget *parent = 0,int=0,int=0,std::vector<QAction*>* = 0 );
   ~RoundedMenu();
   
   QSize minimumSizeHint() const;
@@ -28,7 +27,7 @@ public:
   static const int SIZE=200;
   static const float PI=3.14159265;
   static const int SIDE=100;
-  static const int m_nb_case=8;
+
 protected:
   void paintEvent(QPaintEvent *event);
   
@@ -38,6 +37,8 @@ private:
   int p_y;
   int souris_x;
   int souris_y;
+  int p_nb_case;
+  std::vector<QAction*>* p_Actions;
   QRadialGradient* p_gradient;
 
 };

@@ -188,7 +188,7 @@ private:
   // QDockWidget* m_colorConvertOperationChooserDock;
   
   // bool m_actionIconMod;
-  
+  public:
   QAction* m_copy;
   QAction* m_cut;
   QAction* m_paste;
