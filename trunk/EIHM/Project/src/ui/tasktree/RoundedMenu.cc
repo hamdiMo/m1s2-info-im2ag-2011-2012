@@ -1,4 +1,5 @@
 #include "RoundedMenu.hh"
+
 #include <QPainter>
 #include <QMouseEvent>
 
@@ -21,9 +22,9 @@ RoundedMenu::RoundedMenu(QWidget *parent,int x, int y)
   p_gradient->setColorAt(0.3, QColor(0, 0, 0, 0));
   p_gradient->setColorAt(0.4, QColor(0, 0, 0, 0));
   p_gradient->setColorAt(0.5, QColor(0, 0, 0, 0));
-  p_gradient->setColorAt(0.6, QColor(0, 0, 0, 100));
-  p_gradient->setColorAt(0.7, QColor(0, 0, 0, 140));
-  p_gradient->setColorAt(1.0, QColor(0, 0, 0, 150));
+  p_gradient->setColorAt(0.6, QColor(0, 0, 0, 60));
+  p_gradient->setColorAt(0.7, QColor(0, 0, 0, 80));
+  p_gradient->setColorAt(1.0, QColor(0, 0, 0, 100));
   souris_x=p_x;
   souris_y=p_y;
   setMouseTracking(true);
@@ -73,7 +74,7 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
     //painter.drawPie(rectangle,startAngle,spanAngle);
   }
   else if (souris_y < 0) angle = PI/2.0;
-  else angle = -PI/2.0;
+  else angle =(-((float)PI)/2.0);
   if (angle < 0) angle += 2*PI;
   // else if (angle > 2*PI) angle = angle-2*PI;
  
@@ -112,7 +113,7 @@ void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
     if (souris_x < 0) angle += PI; 
   }
   else if (souris_y < 0) angle = PI/2.0;
-  else angle = -PI/2.0;
+  else angle = -((float) PI)/2.0;
   if (angle < 0) angle += 2*PI;
   for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/m_nb_case){ 
     nb++;  

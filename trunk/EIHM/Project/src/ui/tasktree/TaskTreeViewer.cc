@@ -1,9 +1,15 @@
-#include "TaskTreeViewer.hh"
+
 #include "TaskTreeModifier.hh"
+#include "TaskTreeViewer.hh"
 #include "RoundedMenu.hh"
+#include "TaskTreeItem.hh"
+
+
+
+
 #include <QLabel>
 #include <QGraphicsProxyWidget>
-#include "TaskTreeItem.hh"
+
 
 /** Constructeurs et destructeurs */
 TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree) :

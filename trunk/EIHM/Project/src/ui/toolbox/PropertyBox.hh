@@ -8,7 +8,13 @@
 #include <QLineEdit>
 
 #include <string>
-#include "TaskTree.hh"
+
+#ifdef WIN32
+#include "..\..\model\TaskTree.hh"
+#else
+#include "model/TaskTree.hh"
+#endif
+
 
 class UserInterface;
 

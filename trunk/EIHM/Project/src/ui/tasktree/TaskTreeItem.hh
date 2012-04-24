@@ -4,7 +4,12 @@
 
 #include <QLabel>
 #include <vector>
+
+#ifdef WIN32
+#include "..\..\model\TaskTree.hh"
+#else
 #include "TaskTree.hh"
+#endif
 
 class TaskTreeItem : public QLabel { Q_OBJECT
 

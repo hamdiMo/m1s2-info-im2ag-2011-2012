@@ -1,12 +1,17 @@
 #include <QApplication>
 #include <QPixmap>
+
+#ifdef WIN32
+#include "ui\UserInterface.hh"
+#include "model\TaskTree.hh"
+#else
 #include "ui/UserInterface.hh"
-#include <sys/resource.h>
-#include "TaskTree.hh"
+#include "model/TaskTree.hh"
+#endif
+
 
 using namespace std;
 int main(int argc, char **argv) {
-  setpriority(PRIO_PROCESS, 0,19);
   QApplication application(argc, argv);
   // application.setWindowIcon(QPixmap("Icon/Logo.png"));
   QClipboard* m_clipboard= QApplication::clipboard();

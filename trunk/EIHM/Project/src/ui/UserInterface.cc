@@ -1,7 +1,18 @@
+#ifdef WIN32
+#include "UserInterface.hh"
+#include "..\model\TaskTree.hh"
+#include "tasktree\TaskTreeModifier.hh"
+#include "tasktree\TaskTreeViewer.hh"
+#else
 #include "UserInterface.hh"
 #include "TaskTree.hh"
-#include "tasktree/TaskTreeModifier.hh"
-#include "tasktree/TaskTreeViewer.hh"
+#include "TaskTreeModifier.hh"
+#include "TaskTreeViewer.hh"
+#endif
+
+
+
+
 
 using namespace std;
 

@@ -1,10 +1,19 @@
+#ifdef WIN32
+#include "..\UserInterface.hh"
+#else
+#include "UserInterface.hh"
+#endif
+
+
 #include "PropertyBox.hh"
+
+
 
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QTextEdit>
 
-#include "UserInterface.hh"
+
 
 
 /** Constructeurs et destructeur */
