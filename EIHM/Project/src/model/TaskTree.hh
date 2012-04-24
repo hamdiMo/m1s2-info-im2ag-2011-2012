@@ -4,7 +4,11 @@
 #include <vector>
 #include <iostream>
 
+#ifdef WIN32
 #include "Transition.hh"
+#else
+#include "Transition.hh"
+#endif
 
 
 class TaskTree {
@@ -54,8 +58,8 @@ public:
   
   /* ATTENTION pour l'affectation des transtions, 
    * les méthodes prenant en paramètre une transition, la Out 
-   * ne met pas à jour la In du voisin
-   * les méthodes prenant en paramètre un type, la out met à jour celle du voisin
+   * ne met pas �  jour la In du voisin
+   * les méthodes prenant en paramètre un type, la out met �  jour celle du voisin
    */
   
   //return -1 en cas d'erreurs

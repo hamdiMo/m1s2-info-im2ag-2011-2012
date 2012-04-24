@@ -1,4 +1,6 @@
 #include "TaskTree.hh"
+
+
 #include <string>
 #include <queue>
 using namespace std;
@@ -28,7 +30,7 @@ using namespace std;
   
   
   // ce constructeur copie l'arbre t SANS le pointeur vers le parent... 
-  // A mettre Ã  jour suite Ã  la copie 
+  // A mettre Ã  jour suite Ã  la copie 
   TaskTree::TaskTree(TaskTree* t):
     m_subtrees(0),
     m_in(0),
@@ -61,7 +63,7 @@ using namespace std;
 
   TaskTree* TaskTree::getSubTree(int index) {
     if ( index >= 0 && index < (int)m_subtrees.size()) return m_subtrees[index];
-    else return 0; // gestion d'erreur Ã  mettre en place    
+    else return 0; // gestion d'erreur Ã  mettre en place    
   } // rechercher le sous arbre sinon renvoit 0
 
   std::vector<TaskTree*> TaskTree::getSubTrees(){
@@ -75,7 +77,7 @@ using namespace std;
   TaskTree* TaskTree::getParent(){ return m_parent; }
   
   
-  // Attention, il ne faut pas set des index Ã  l'arrache, voir swapSubtree
+  // Attention, il ne faut pas set des index Ã  l'arrache, voir swapSubtree
   void TaskTree::setIndex(int index){ m_index = index; }
   
   void TaskTree::setType(TaskTree::Type type){ m_type = type; }

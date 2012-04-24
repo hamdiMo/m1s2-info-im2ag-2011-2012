@@ -1,6 +1,14 @@
+#ifdef WIN32
 #include "UserInterface.hh"
-#include "TaskTreeViewer.hh"
-#include "TaskTreeItem.hh"
+#include "tasktree\TaskTreeViewer.hh"
+#include "tasktree\TaskTreeItem.hh"
+#else
+#include "UserInterface.hh"
+#include "tasktree/TaskTreeViewer.hh"
+#include "tasktree/TaskTreeItem.hh"
+#endif
+
+
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -68,7 +76,7 @@ void UserInterface::undo() {
     sredo.push(t);
     m_displayedTree = new TaskTreeViewer(t);
     
-  } else cout << "rien Ã  annuler" << endl;
+  } else cout << "rien Ã  annuler" << endl;
 }
 void UserInterface::redo() {
   if(canRedo()){
@@ -76,7 +84,7 @@ void UserInterface::redo() {
     sredo.pop();
     sundo.push(t);
     m_displayedTree = new TaskTreeViewer(t);
-  } else cout << "rien Ã  annuler" << endl;
+  } else cout << "rien Ã  annuler" << endl;
 }
 
 bool UserInterface::canCopy(){

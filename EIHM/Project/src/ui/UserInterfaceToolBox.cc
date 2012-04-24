@@ -1,6 +1,11 @@
+#ifdef WIN32
 #include "UserInterface.hh"
+#include "toolbox\PropertyBox.hh"
+#else
+#include "ui/UserInterface.hh"
+#include "ui/toolbox/PropertyBox.hh"
+#endif
 
-#include "PropertyBox.hh"
 
 // /** Accesseurs */
 PropertyBox* UserInterface::getPropertyBox() { return m_propertyBox; }

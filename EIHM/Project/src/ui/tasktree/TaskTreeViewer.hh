@@ -4,7 +4,12 @@
 #include <iostream>
 #include <QMouseEvent>
 #include <QGraphicsView>
+
+#ifdef WIN32
+#include "..\..\model\TaskTree.hh"
+#else
 #include "TaskTree.hh"
+#endif
 
 class TaskTreeItem;
 class RoundedMenu;
