@@ -29,6 +29,9 @@ public:
   // void setYMin(int);
   // void setXMax(int);
   // void setYMax(int);
+	
+	/** Methods */
+	bool isPointInside(int x, int y);
 
 private:
 

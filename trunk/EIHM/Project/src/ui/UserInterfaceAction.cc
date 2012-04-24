@@ -65,9 +65,23 @@ void UserInterface::addAbstractionTask(){}
 void UserInterface::addApplicationTask(){}
 void UserInterface::addInteractionTask(){}
 void UserInterface::addUserTask(){}
-void UserInterface::deleteTask(){}
+void UserInterface::deleteTask(){
+	for(int i=0;i<getDisplayedTree().getSelectedItems.size();i++){
+		
+	}
+	
+	
+}
 void UserInterface::addChoiceTransition(){}
 void UserInterface::addOrderIndependenceTransition(){}
+void UserInterface::addInterleavingTransition(){}
+void UserInterface::addSynchronizationTransition(){}
+void UserInterface::addDisablingTransition(){}
+void UserInterface::addSuspendResumeTransition(){}
+void UserInterface::addSequentialEnablingTransition(){}
+void UserInterface::addSequentialEnablingInfoTransition(){}
+void UserInterface::deleteTransition(){}
+
 
 
 /** Methodes internes */
@@ -81,7 +95,6 @@ void UserInterface::updateActions() {
   m_copy->setEnabled(false);
   m_cut->setEnabled(false);
   m_paste->setEnabled(false);
-  
   m_zoomInAct->setEnabled(false);
   m_zoomOutAct->setEnabled(false);
   m_normalSizeAct->setEnabled(false);
@@ -97,6 +110,13 @@ void UserInterface::updateActions() {
   m_deleteTaskAct->setEnabled(false);
   m_addChoiceTransitionAct->setEnabled(false);
   m_addOrderIndependenceTransitionAct->setEnabled(false);
+  m_addInterleavingTransitionAct->setEnabled(false);
+  m_addSynchronizationTransitionAct->setEnabled(false);
+  m_addDisablingTransitionAct->setEnabled(false);
+  m_addSuspendResumeTransitionAct->setEnabled(false);
+  m_addSequentialEnablingTransitionAct->setEnabled(false);
+  m_addSequentialEnablingInfoTransitionAct->setEnabled(false);
+  m_deleteTransitionAct->setEnabled(false);
 }
 
 void UserInterface::createActions() {
@@ -193,6 +213,27 @@ void UserInterface::createTaskAction(){
   m_addChoiceTransitionAct = new QAction(tr("Add Choice Transition"), this);
   connect(m_addChoiceTransitionAct, SIGNAL(triggered()), this, SLOT(addChoiceTransition()));
   
-  m_addOrderIndependenceTransitionAct = new QAction(tr("Add Order [ ... ]"), this);
+  m_addOrderIndependenceTransitionAct = new QAction(tr("Add Order Independence Transition"), this);
   connect(m_addOrderIndependenceTransitionAct, SIGNAL(triggered()), this, SLOT(addOrderIndependenceTransition()));
+  
+  m_addInterleavingTransitionAct = new QAction(tr("Add Interleaving Transition"), this);
+  connect(m_addInterleavingTransitionAct, SIGNAL(triggered()), this, SLOT(addInterleavingTransition()));
+  
+  m_addSynchronizationTransitionAct = new QAction(tr("Add Synchronization Transition"), this);
+  connect(m_addSynchronizationTransitionAct, SIGNAL(triggered()), this, SLOT(addSynchronizationTransition()));
+  
+  m_addDisablingTransitionAct = new QAction(tr("Add Disabling Transition"), this);
+  connect(m_addDisablingTransitionAct, SIGNAL(triggered()), this, SLOT(addDisablingTransition()));
+  
+  m_addSuspendResumeTransitionAct = new QAction(tr("Add Suspend Resume Transition"), this);
+  connect(m_addSuspendResumeTransitionAct, SIGNAL(triggered()), this, SLOT(addSuspendResumeTransition()));
+  
+  m_addSequentialEnablingTransitionAct = new QAction(tr("Add Sequential Enabling Transition"), this);
+  connect(m_addSequentialEnablingTransitionAct, SIGNAL(triggered()), this, SLOT(addSequentialEnablingTransition()));
+  
+  m_addSequentialEnablingInfoTransitionAct = new QAction(tr("Add Sequential Enabling Info Transition"), this);
+  connect(m_addSequentialEnablingInfoTransitionAct, SIGNAL(triggered()), this, SLOT(addSequentialEnablingInfoTransition()));
+  
+  m_deleteTransitionAct = new QAction(tr("Delete Transition"), this);
+  connect(m_deleteTransitionAct, SIGNAL(triggered()), this, SLOT(deleteTransition()));
 }

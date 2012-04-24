@@ -51,5 +51,12 @@ QToolBar* UserInterface::createTaskToolBar(){
   m_taskToolBar->addAction(m_deleteTaskAct);
   m_taskToolBar->addAction(m_addChoiceTransitionAct);
   m_taskToolBar->addAction(m_addOrderIndependenceTransitionAct);
+  m_taskToolBar->addAction(m_addInterleavingTransitionAct);
+  m_taskToolBar->addAction(m_addSynchronizationTransitionAct);
+  m_taskToolBar->addAction(m_addDisablingTransitionAct);
+  m_taskToolBar->addAction(m_addSuspendResumeTransitionAct);
+  m_taskToolBar->addAction(m_addSequentialEnablingTransitionAct);
+  m_taskToolBar->addAction(m_addSequentialEnablingInfoTransitionAct);
+  m_taskToolBar->addAction(m_deleteTransitionAct);
   return m_taskToolBar;
 }

@@ -33,6 +33,9 @@ void TaskTreeViewer::displayTaskTree(TaskTree* t, int xmin, int ymin, int xmax, 
   QGraphicsProxyWidget* proxy = m_scene->addWidget(new QLabel(QString(t->getName().c_str())));
   proxy->setPos(x1-16, y1);
   m_scene->addRect(x1-16, y1, 32, 32);
+	
+	m_taskTreeItems.push_back(new TaskTreeItem(t, x1-16, y1));
+	
   for (int i = 0; i < t->getSize(); i++) {
     int x2 = xmin + (2*i+1)*(amplitudeX/t->getSize())/2, y2 = y1 + 64;
     m_scene->addLine(x1, y1 + 32, x2, y2);
@@ -93,6 +96,61 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
     computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
     proxy3->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
   }
+  if (event->button() == Qt::LeftButton){
+		m_dragBeginX = event->x();
+		m_dragBeginY = event->y();
+  }
 }
-void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){}
+void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
+	// on efface la sélection
+	m_selectedItems.clear();
+	// clic
+	if (event->x() == m_dragBeginX || event->y() == m_dragBeginY{
+		// puis on ajoute dans la nouvelle sélection tous les items dans le cadre de sélection
+		for(int i=0;i<m_taskTreeItems.size();i++){
+			if (m_taskTreeItems[i]->isPointInside(event->x(), event->y())){
+				m_selectedItems.push_back(m_taskTreeItems[i]);
+				break;
+			}
+		}
+	}
+	// drag => cadre de sélection
+	else
+		int xLeft, yTop, xRight, yBottom;
+		if (m_dragBeginX > event->x()){
+			xLeft = event->x();
+			xRight = m_dragBeginX;
+		}
+		else{
+			xRight = event->x();
+			xLeft = m_dragBeginX;
+		}
+		if (m_dragBeginY > event->y()){
+			yLeft = event->y();
+			yRight = m_dragBeginY;
+		}
+		else{
+			yRight = event->y();
+			yLeft = m_dragBeginY;
+		}
+		
+		for(int i=0;i<m_taskTreeItems.size();i++){
+			// si un des angles du cadre est dans un des items
+			if (m_taskTreeItems[i].isPointInside(xLeft, yBottom || m_taskTreeItems[i].isPointInside(xRight, yBottom
+				|| m_taskTreeItems[i].isPointInside(xRight, yTop || m_taskTreeItems[i].isPointInside(xLeft, yTop){
+					m_selectedItems.push_back(m_taskTreeItems[i]);
+				}
+			)
+			// sinon, si une des arrêtes du cadre passe dans un item
+			else if (xLeft >= m_taskTreeItems[i].getX()-16 && xLeft <= m_taskTreeItems[i].getX()+16 && yBottom >= m_taskTreeItems[i].getY()+32 && yTop <= m_taskTreeItems[i].getY()
+				|| xRight >= m_taskTreeItems[i].getX()-16 && xRight <= m_taskTreeItems[i].getX()+16 && yBottom >= m_taskTreeItems[i].getY()+32 && yTop <= m_taskTreeItems[i].getY()
+				|| yTop >= m_taskTreeItems[i].getY() && yTop <= m_taskTreeItems[i].getY()+32 && xRight >= m_taskTreeItems[i].getX()+16 && xLeft <= m_taskTreeItems[i].getX-16()
+				|| yBottom >= m_taskTreeItems[i].getY() && yBottom <= m_taskTreeItems[i].getY()+32 && xRight >= m_taskTreeItems[i].getX()+16 && xLeft <= m_taskTreeItems[i].getX-16()){
+				m_selectedItems.push_back(m_taskTreeItems[i]);
+			}
+		}
+		
+	}
+	selectedItemsChanged();
+}
 void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
