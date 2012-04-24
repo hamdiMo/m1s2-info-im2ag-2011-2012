@@ -25,9 +25,10 @@ public:
   void  mouseReleaseEvent ( QMouseEvent * event );    
   void  wheelEvent ( QWheelEvent * event );
 
-  static const int SIZE=150;
+  static const int SIZE=200;
   static const float PI=3.14159265;
-  static const int SIDE=100;  
+  static const int SIDE=100;
+  static const int m_nb_case=8;
 protected:
   void paintEvent(QPaintEvent *event);
   

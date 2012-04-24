@@ -56,14 +56,14 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   // painter.drawRect( rectangle);
   //  
   int startAngle = 0;
-  int spanAngle = 180* 16;
+  int spanAngle = 380* 16;
   painter.drawArc(rectangle,startAngle,spanAngle);
    
  
   // painter.drawEllipse(QPoint(SIZE/2,SIZE/2),SIZE/2,SIZE/2);
-  for (float angle=0.0 ; angle<2*3.14;angle+=2*PI/8){ 
-    float Bx  =(SIZE/2 * cos(angle));
-    float By  =(SIZE/2* sin(angle));
+  for (float angle=0.0 ; angle<2*3.14;angle+=2*PI/m_nb_case){ 
+    float Bx  =((SIZE/2-1) * cos(angle));
+    float By  =((SIZE/2-1) * sin(angle));
      painter.drawLine(SIZE/2,SIZE/2,Bx+SIZE/2,By+SIZE/2);
   }
   float angle = 0.0;
@@ -77,8 +77,12 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
   if (angle < 0) angle += 2*PI;
   // else if (angle > 2*PI) angle = angle-2*PI;
  
-
-  painter.drawPie(rectangle,startAngle,180 * (angle));
+  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/m_nb_case){ 
+    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/m_nb_case){
+      painter.drawPie(rectangle,16*((p_angle)*180/PI), 16 *((2*PI/m_nb_case)*180/PI)  );
+    }
+  }
+  
  
  
 // std::cout<<"angle"<<angle<<std::endl;
@@ -87,13 +91,13 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
 }
 /** METHODS */
 void RoundedMenu::keyPressEvent ( QKeyEvent * event ){}
-void RoundedMenu::keyReleaseEvent ( QKeyEvent * event ) {}
+void RoundedMenu::keyReleaseEvent ( QKeyEvent * event ) {
+
+}
 void RoundedMenu::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void RoundedMenu::mouseMoveEvent ( QMouseEvent * event ){
   souris_x=event->x()-p_x;
   souris_y=event->y()-p_y;
-  //  std::cout<<"souris"<<souris_x<<"    "<<souris_y<<std::endl;
- 
   repaint();
 
 }
@@ -101,6 +105,22 @@ void RoundedMenu::mousePressEvent ( QMouseEvent * event ){
  std::cout << "mouse move PressedEvent" << std::endl;
 }
 void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
- std::cout << "mouse move mouseReleaseEvent " << std::endl;
+  int nb=0;
+  float angle = 0.0;
+  if(souris_x!=0){
+    angle = atan((double)souris_y/(double)souris_x);
+    if (souris_x < 0) angle += PI; 
+  }
+  else if (souris_y < 0) angle = PI/2.0;
+  else angle = -PI/2.0;
+  if (angle < 0) angle += 2*PI;
+  for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/m_nb_case){ 
+    nb++;  
+    if(2*PI-angle>p_angle&&2*PI-angle<p_angle+2*PI/m_nb_case){
+      std::cout<< "case numero"<<nb<<std::endl;
+    }
+    
+  }
+
 }
 void RoundedMenu::wheelEvent ( QWheelEvent * event ) {}
