@@ -92,7 +92,9 @@ void TaskTreeViewer::displayTaskTreeItems() {
     } else {
       if (m_taskTreeItems[i]->getQGraphicsItemCadre() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemCadre());
       if (m_taskTreeItems[i]->getQGraphicsItemParent() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemParent());
-      if (m_taskTreeItems[i]->getQGraphicsItemTransition() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition());
+      if (m_taskTreeItems[i]->getQGraphicsItemTransition1() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition1());
+      if (m_taskTreeItems[i]->getQGraphicsItemTransition2() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition2());
+      if (m_taskTreeItems[i]->getQGraphicsItemIconeTransition() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemIconeTransition());
     }
     QGraphicsRectItem *cadre = m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
     QGraphicsLineItem *parent = 0, *transition = 0;
@@ -109,14 +111,22 @@ void TaskTreeViewer::displayTaskTreeItems() {
       TaskTree* taskTreeOut = transOut->getTo();
       for (unsigned int j = 0 ; j < m_taskTreeItems.size() ; j++) {
 	if (taskTreeOut == m_taskTreeItems[j]->getTaskTree()) {
-	  transition = m_scene->addLine(m_taskTreeItems[i]->getX()+32, m_taskTreeItems[i]->getY()+16,
-					m_taskTreeItems[j]->getX(), m_taskTreeItems[j]->getY()+16);
-	}
+        //transition = m_scene->addLine(m_taskTreeItems[i]->getX()+32, m_taskTreeItems[i]->getY()+16,
+        //                  m_taskTreeItems[j]->getX(), m_taskTreeItems[j]->getY()+16);
+        transition1 = m_scene->addLine(m_taskTreeItems[i]->getX()+32, m_taskTreeItems[i]->getY()+16,
+                                              m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2-8, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2);
+        transition2 = m_scene->addLine(m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2+8, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2,
+                                        m_taskTreeItems[j]->getX(), m_taskTreeItems[j]->getY()+16);
+        iconeTransition = m_scene->addPixmap(QPixmap(transOut->getPathIcone().c_str()));
+        iconeTransition->setOffset(m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2-16, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2-16);
+       }
       }
     }
     m_taskTreeItems[i]->setQGraphicsItemCadre(cadre);
     m_taskTreeItems[i]->setQGraphicsItemParent(parent);
-    m_taskTreeItems[i]->setQGraphicsItemTransition(transition);
+    m_taskTreeItems[i]->setQGraphicsItemTransition1(transition1);
+    m_taskTreeItems[i]->setQGraphicsItemTransition2(transition2);
+    m_taskTreeItems[i]->setQGraphicsItemIconeTransition(iconeTransition);
   }
 }
 
