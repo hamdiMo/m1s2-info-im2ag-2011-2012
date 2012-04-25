@@ -75,6 +75,7 @@ void UserInterface::undo() {
         sundo.pop();
         sredo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
+	setCentralWidget(m_displayedTree);
 
     } else cout << "rien a annuler" << endl;
 }
@@ -84,6 +85,7 @@ void UserInterface::redo() {
         sredo.pop();
         sundo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
+	setCentralWidget(m_displayedTree);
     } else cout << "rien a  refaire" << endl;
 }
 
@@ -102,7 +104,7 @@ void ClearRedo(){
 }
 
 void UserInterface::cut() {
-    if (canCopy()){
+    if (true || canCopy()){
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         copyTmp = new TaskTree(tmp);
         tmp->remove();
@@ -112,6 +114,7 @@ void UserInterface::cut() {
         sundo.push(tmpUndo);
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
+	setCentralWidget(m_displayedTree);
     }
 }
 void UserInterface::paste(){
@@ -124,6 +127,7 @@ void UserInterface::paste(){
         sundo.push(tmpUndo);
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
+    	setCentralWidget(m_displayedTree);
     }
 }
 
@@ -147,6 +151,7 @@ void UserInterface::addAbstractionTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
 }
 
 void UserInterface::addApplicationTask(){
@@ -160,6 +165,7 @@ void UserInterface::addApplicationTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
 }
 
 void UserInterface::addInteractionTask(){
@@ -173,6 +179,7 @@ void UserInterface::addInteractionTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
 }
 void UserInterface::addUserTask(){
     TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
@@ -185,6 +192,7 @@ void UserInterface::addUserTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
 }
 void UserInterface::deleteTask(){
     vector<TaskTree*> tmp;
@@ -202,6 +210,7 @@ void UserInterface::deleteTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
 }
 
 void UserInterface::addTransition(Transition::Type type){
@@ -231,6 +240,7 @@ void UserInterface::addTransition(Transition::Type type){
   sundo.push(tmpUndo);
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
+  setCentralWidget(m_displayedTree);
 }
 
 void UserInterface::deleteTransition(){
@@ -312,6 +322,7 @@ void UserInterface::createActions() {
     createHelpAction();
     createTaskAction();
 }
+
 void UserInterface::createFileAction() {
     m_openAct = new QAction(tr("&Open..."), this);
     m_openAct->setShortcut(tr("Ctrl+O"));
@@ -381,31 +392,31 @@ void UserInterface::createHelpAction() {
 }
 
 void UserInterface::createTaskAction(){
-    m_addAbstractionTaskAct = new QAction(QIcon("abstraction.gif"),tr("Add Abstraction Task"), this);
+    m_addAbstractionTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Abstraction Task"), this);
     connect(m_addAbstractionTaskAct, SIGNAL(triggered()), this, SLOT(addAbstractionTask()));
 
-    m_addApplicationTaskAct = new QAction(QIcon("abstraction.gif"),tr("Add Application Task"), this);
+    m_addApplicationTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Application Task"), this);
     connect(m_addApplicationTaskAct, SIGNAL(triggered()), this, SLOT(addApplicationTask()));
 
-    m_addInteractionTaskAct = new QAction(QIcon("abstraction.gif"),tr("Add Interaction Task"), this);
+    m_addInteractionTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Interaction Task"), this);
     connect(m_addInteractionTaskAct, SIGNAL(triggered()), this, SLOT(addInteractionTask()));
 
-    m_addUserTaskAct = new QAction(QIcon("abstraction.gif"),tr("Add User Task"), this);
+    m_addUserTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add User Task"), this);
     connect(m_addUserTaskAct, SIGNAL(triggered()), this, SLOT(addUserTask()));
 
-    m_deleteTaskAct = new QAction(QIcon("abstraction.gif"),tr("Delete Task"), this);
+    m_deleteTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Delete Task"), this);
     connect(m_deleteTaskAct, SIGNAL(triggered()), this, SLOT(deleteTask()));
 
-    m_addChoiceTransitionAct = new QAction(QIcon("abstraction.gif"),tr("Add Choice Transition"), this);
+    m_addChoiceTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Choice Transition"), this);
     connect(m_addChoiceTransitionAct, SIGNAL(triggered()), this, SLOT(addChoiceTransition()));
 
-    m_addOrderIndependenceTransitionAct = new QAction(QIcon("abstraction.gif"),tr("Add Order Independence Transition"), this);
+    m_addOrderIndependenceTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Order Independence Transition"), this);
     connect(m_addOrderIndependenceTransitionAct, SIGNAL(triggered()), this, SLOT(addOrderIndependenceTransition()));
 
-    m_addInterleavingTransitionAct = new QAction(QIcon("abstraction.gif"),tr("Add Interleaving Transition"), this);
+    m_addInterleavingTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Interleaving Transition"), this);
     connect(m_addInterleavingTransitionAct, SIGNAL(triggered()), this, SLOT(addInterleavingTransition()));
 
-    m_addSynchronizationTransitionAct = new QAction(QIcon("abstraction.gif"),tr("Add Synchronization Transition"), this);
+    m_addSynchronizationTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Synchronization Transition"), this);
     connect(m_addSynchronizationTransitionAct, SIGNAL(triggered()), this, SLOT(addSynchronizationTransition()));
 
     m_addDisablingTransitionAct = new QAction(tr("Add Disabling Transition"), this);
