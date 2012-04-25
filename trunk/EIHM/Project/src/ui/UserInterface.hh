@@ -78,11 +78,18 @@ public:
 public slots:
 
   // /** Slots */
+  bool canUndo();
+  bool canRedo();
+  bool canCut();
+  bool canPaste();
+  bool canDelete();
+  bool canAddTask();
+  bool canAddTransition();
+  
   void open();
   void save();
   void exit();
-  bool canUndo();
-  bool canRedo();
+
   void undo();
   void redo();
   void cut();  
