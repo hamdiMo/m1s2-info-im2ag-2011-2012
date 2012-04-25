@@ -147,7 +147,7 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
   case SELECTION: 
     {
       TaskTreeItem* item = m_selectedItems[0];
-      item->translateNode(pos.x()-m_beginX, pos.y()-m_beginY);
+      item->translate(pos.x()-m_beginX, pos.y()-m_beginY);
       m_beginX = pos.x();
       m_beginY = pos.y();
       displayTaskTreeItems();
