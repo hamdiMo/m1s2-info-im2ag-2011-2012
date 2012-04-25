@@ -35,7 +35,9 @@ public:
   QGraphicsProxyWidget* getQGraphicsProxyWidget();
   QGraphicsRectItem* getQGraphicsItemCadre();
   QGraphicsLineItem* getQGraphicsItemParent();
-  QGraphicsLineItem* getQGraphicsItemTransition();
+  QGraphicsLineItem* getQGraphicsItemTransition1();
+  QGraphicsLineItem* getQGraphicsItemTransition2();
+  QGraphicsPixmapItem* getQGraphicsItemIconeTransition();
 
 
   /** Mutateurs */
@@ -50,7 +52,9 @@ public:
   void setQGraphicsProxyWidget(QGraphicsProxyWidget*);
   void setQGraphicsItemCadre(QGraphicsRectItem*);
   void setQGraphicsItemParent(QGraphicsLineItem*);
-  void setQGraphicsItemTransition(QGraphicsLineItem*);
+  void setQGraphicsItemTransition1(QGraphicsLineItem*);
+  void setQGraphicsItemTransition2(QGraphicsLineItem*);
+  void setQGraphicsItemIconeTransition(QGraphicsPixmapItem*);
 	
   /** Predicats */
   void addSubTaskTreeItem(TaskTreeItem* t);
@@ -68,8 +72,8 @@ private:
   int m_xMin, m_yMin, m_xMax, m_yMax;
   QGraphicsProxyWidget *m_proxy;
   QGraphicsRectItem *m_itemCadre;
-  QGraphicsLineItem *m_itemParent, *m_itemTransition;
-
+  QGraphicsLineItem *m_itemParent, *m_itemTransition1, *m_itemTransition2;
+  QGraphicsPixmapItem* m_itemIconeTransition;
 };
 
 #endif
