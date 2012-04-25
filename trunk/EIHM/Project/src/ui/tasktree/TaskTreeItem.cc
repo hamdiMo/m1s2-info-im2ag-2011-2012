@@ -6,8 +6,8 @@
 TaskTreeItem::TaskTreeItem(TaskTree* taskTree) :
   QLabel(taskTree->getName().c_str()),
   m_parent(0),
-  m_taskTree(taskTree),
   m_subTaskTreeItems(),
+  m_taskTree(taskTree),
   m_x(32),
   m_y(32),
   m_xMin(0),
@@ -26,6 +26,7 @@ int TaskTreeItem::getXMin() { return m_xMin; }
 int TaskTreeItem::getYMin() { return m_yMin; }
 int TaskTreeItem::getXMax() { return m_xMax; }
 int TaskTreeItem::getYMax() { return m_yMax; }
+QGraphicsProxyWidget* TaskTreeItem::getQGraphicsProxyWidget() { return m_proxy; }
 
 
 /** Mutateurs */
@@ -37,7 +38,7 @@ void TaskTreeItem::setXMin(int xMin) { m_xMin = xMin; }
 void TaskTreeItem::setYMin(int yMin) { m_yMin = yMin; }
 void TaskTreeItem::setXMax(int xMax) { m_xMax = xMax; }
 void TaskTreeItem::setYMax(int yMax) { m_yMax = yMax; }
-
+void TaskTreeItem::setQGraphicsProxyWidget(QGraphicsProxyWidget* proxy) { m_proxy = proxy; }
 
 /** Methods */
 void TaskTreeItem::addSubTaskTreeItem(TaskTreeItem* t) {

@@ -27,6 +27,7 @@ public:
   int getYMin();
   int getXMax();
   int getYMax();
+  QGraphicsProxyWidget* getQGraphicsProxyWidget();
 
   /** Mutateurs */
   void setParent(TaskTreeItem*);
@@ -37,6 +38,7 @@ public:
   void setYMin(int);
   void setXMax(int);
   void setYMax(int);
+  void setQGraphicsProxyWidget(QGraphicsProxyWidget*);
 	
   /** Predicats */
   void addSubTaskTreeItem(TaskTreeItem* t);
@@ -50,6 +52,7 @@ private:
   TaskTree* m_taskTree;
   int m_x, m_y;
   int m_xMin, m_yMin, m_xMax, m_yMax;
+  QGraphicsProxyWidget* m_proxy;
 
 };
 
