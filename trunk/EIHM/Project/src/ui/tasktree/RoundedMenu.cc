@@ -77,11 +77,14 @@ void RoundedMenu::paintEvent(QPaintEvent * /* event */){
     float B1x  =SIZE/2+((SIZE/6) * cos(angle));
     float B1y  =SIZE/2+((SIZE/6) * sin(angle));
     painter.drawLine(B1x,B1y,Bx+SIZE/2,By+SIZE/2);
-    /* if(p_Actions!=0){
+    if(p_Actions!=0){
+        float B2x  =SIZE/2+((SIZE/3) * cos(angle+PI/p_nb_case));
+        float B2y  =SIZE/2+((SIZE/3) * sin(angle+PI/p_nb_case));
         QPixmap img = (*p_Actions)[rang]->icon().pixmap(SIZE/3,SIZE/3);
-                painter.drawPixmap(QPoint(10,10),img);
-        }
-    */
+        painter.drawPixmap(QPoint(B2x-img.width()/2,B2y-img.height()/2),img);
+        std::cout<<rang<<std::endl;
+    }
+
     ++rang;
   }
   float angle = 0.0;
