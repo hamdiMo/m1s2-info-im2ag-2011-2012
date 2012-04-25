@@ -131,7 +131,6 @@ void RoundedMenu::mouseReleaseEvent ( QMouseEvent * event ){
 
   for (float p_angle=0.0 ; p_angle<2*3.14;p_angle+=2*PI/p_nb_case){
     if(angle>p_angle&&angle<p_angle+2*PI/p_nb_case){
-      std::cout<<(*p_Actions)[nb]->text().toStdString()<<std::endl;
       (*p_Actions)[nb]->trigger();
     }
     ++nb;
