@@ -82,7 +82,7 @@ void  SelectionTool::mouseReleaseEvent ( QMouseEvent * event ){
     m_leftButtonActive = false;
     setHidden(true);
     // on efface la sélection
-    m_taskTreeViewer->getRefselectedItems()->clear();
+    m_taskTreeViewer->clearSelection();
     // clic : un item sélectionné
     if (event->x() == m_dragBeginX || event->y() == m_dragBeginY) {
       // puis on ajoute dans la nouvelle sélection tous les items dans le cadre de sélection
