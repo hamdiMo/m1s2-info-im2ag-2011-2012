@@ -11,7 +11,7 @@
 #include <QShortcut>
 #include <QKeySequence>
 #include <QStatusBar>
-
+#include "Transition.hh"
 
 // class Previewer;
 // class Histogram;
@@ -93,6 +93,7 @@ public slots:
   void addInteractionTask();
   void addUserTask();
   void deleteTask();
+  void addTransition(Transition::Type);
   void addChoiceTransition();
   void addOrderIndependenceTransition();
   void addInterleavingTransition();
