@@ -79,7 +79,8 @@ void UserInterface::undo() {
 	setCentralWidget(m_displayedTree);
 
     } else {
-      getPropertyBox()->getInfoBox()->setText("Il n'y a rien a annuler");
+      //getPropertyBox()->getInfoBox()->setText("Il n'y a rien a annuler");
+      getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Il n'y a rien a annuler</font>");
     }
 }
 void UserInterface::redo() {
@@ -90,7 +91,7 @@ void UserInterface::redo() {
         m_displayedTree = new TaskTreeViewer(t,this);
 	setCentralWidget(m_displayedTree);
     } else {
-      getPropertyBox()->getInfoBox()->setText("Il n'y a rien a refaire");
+      getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Il n'y a rien a refaire</font>");
     }
 }
 
@@ -102,7 +103,7 @@ bool UserInterface::canCopy(){
 void UserInterface::copy() {
     if (canCopy()){
         copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
-    } else getPropertyBox()->getInfoBox()->setText("Vous ne pouvez copier qu'une tache\n Veuillez selectionner une tache à copier");
+    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez copier qu'une tache<br>Veuillez selectionner une tache à copier</font>");
     m_displayedTree->clearSelection();
 }
 
@@ -122,7 +123,7 @@ void UserInterface::cut() {
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
 	setCentralWidget(m_displayedTree);
-    } else getPropertyBox()->getInfoBox()->setText("Vous ne pouvez couper qu'une tache\n Veuillez selectionner une tache à couper");
+    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez couper qu'une tache<br>Veuillez selectionner une tache à couper</font>");
 }
 void UserInterface::paste(){
   if (copyTmp != 0){
@@ -136,8 +137,8 @@ void UserInterface::paste(){
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
     	setCentralWidget(m_displayedTree);
-    } else getPropertyBox()->getInfoBox()->setText("Veuillez selectionner une tache pour spécifier le lieu de collage");
-  } else getPropertyBox()->getInfoBox()->setText("Pour coller, vous devez copier ou couper une tache au préalable"); 
+    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Veuillez selectionner une tache<br> pour spécifier le lieu de collage</font>");
+  } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour coller, vous devez copier<br>ou couper une tache au préalable</font>"); 
 }
 
 
@@ -164,7 +165,7 @@ void UserInterface::addTask(TaskTree::Type type){
     m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
   } else {
-    getPropertyBox()->getInfoBox()->setText("Pour ajouter une nouvelle tache, veuillez selectionner la tache parente"); 
+    getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour ajouter une nouvelle tache,<br> veuillez selectionner la tache parente</font>"); 
     m_displayedTree->clearSelection();
   }
 }
@@ -214,11 +215,11 @@ void UserInterface::deleteTask(){
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
-  } else getPropertyBox()->getInfoBox()->setText("Pour supprimer des taches, veuillez en selectionner au moins une");
+  } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour supprimer des taches,<br> veuillez en selectionner au moins une.</font>");
 }
 
 void UserInterface::addTransition(Transition::Type type){
-  getPropertyBox()->getInfoBox()->setText("Pour l'ajout de transitions, veuillez en selectionner au moins une. \nLa selection de deux noeuds voisins ajoute la transition entre ces deux noeuds.\nLa selection de plus de deux noeuds ajoute des transitions sortantes pour chacuns de ces noeuds.");
+  getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour l'ajout de transitions,<br> veuillez en selectionner au moins une.<br>La selection de deux noeuds voisins<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   TaskTree* tmp;
   TaskTree* tmp2;
   if((int)m_displayedTree->getSelectedItems().size() == 1){
