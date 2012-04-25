@@ -186,11 +186,10 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	  std::vector<QAction*> *m_vector =new std::vector<QAction*>();
 	  m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
 	  m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
-	  // m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
-	  // m_vector->push_back(m_userInterface->m_addUserTaskAct);
-	  // m_vector->push_back(m_userInterface->m_deleteTaskAct);
-	  // m_vector->push_back(m_userInterface->m_addChoiceTransitionAct);
-
+	  m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
+	  m_vector->push_back(m_userInterface->m_addUserTaskAct);
+	  m_vector->push_back(m_userInterface->m_deleteTaskAct);
+	  
 	  m_roundedMenu = new RoundedMenu(NULL, event->x(), event->y(), m_vector);
 	  p_proxy_roundedMenu = m_scene->addWidget(m_roundedMenu);
 	  computeSceneRect(0, 0, m_roundedMenu->size().width(), m_roundedMenu->size().height());
