@@ -18,7 +18,25 @@ TaskTreeItem::TaskTreeItem(TaskTree* taskTree) :
   m_itemCadre(0),
   m_itemParent(0),
   m_itemTransition(0)
-{}
+{/*Draw the correct icon*/
+    QPixmap* img= new QPixmap();
+    switch(m_taskTree->getType()){
+    case (TaskTree::ABSTRACTION):
+       img->load("images/abstraction.png");
+        break;
+    case(TaskTree::APPLICATION):
+        img->load("images/application.png");
+        break;
+    case(TaskTree::INTERACTION):
+        img->load("images/interaction.gif");
+        break;
+    default:
+        img->load("images/usernotplus.png");
+        break;
+    }
+
+    setPixmap(img->scaled(QSize(32,32)));
+}
   
 
 /** Accesseurs */

@@ -7,7 +7,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
 #include <vector>
-
+#include <QIcon>
 #ifdef WIN32
 #include "..\..\model\TaskTree.hh"
 #else

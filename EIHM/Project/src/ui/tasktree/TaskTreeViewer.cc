@@ -5,7 +5,7 @@
 #include "TaskTreeItem.hh"
 
 
-#include "UserInterface.hh"
+#include "..\UserInterface.hh"
 
 
 
@@ -94,11 +94,13 @@ void TaskTreeViewer::displayTaskTreeItems() {
       if (m_taskTreeItems[i]->getQGraphicsItemParent() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemParent());
       if (m_taskTreeItems[i]->getQGraphicsItemTransition() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition());
     }
-    QGraphicsRectItem *cadre = m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32); 
+    QGraphicsRectItem *cadre = m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
     QGraphicsLineItem *parent = 0, *transition = 0;
     if (m_taskTreeItems[i]->getParent() != 0) {
       parent = m_scene->addLine(m_taskTreeItems[i]->getX()+16, m_taskTreeItems[i]->getY(),
-				m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
+                                m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
+
+
     }
     proxy->setPos(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY());
     
