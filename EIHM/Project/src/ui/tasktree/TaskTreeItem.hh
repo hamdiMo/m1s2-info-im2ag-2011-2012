@@ -3,6 +3,9 @@
 
 
 #include <QLabel>
+#include <QGraphicsProxyWidget>
+#include <QGraphicsRectItem>
+#include <QGraphicsLineItem>
 #include <vector>
 
 #ifdef WIN32
@@ -28,6 +31,10 @@ public:
   int getXMax();
   int getYMax();
   QGraphicsProxyWidget* getQGraphicsProxyWidget();
+  QGraphicsRectItem* getQGraphicsItemCadre();
+  QGraphicsLineItem* getQGraphicsItemParent();
+  QGraphicsLineItem* getQGraphicsItemTransition();
+
 
   /** Mutateurs */
   void setParent(TaskTreeItem*);
@@ -39,9 +46,13 @@ public:
   void setXMax(int);
   void setYMax(int);
   void setQGraphicsProxyWidget(QGraphicsProxyWidget*);
+  void setQGraphicsItemCadre(QGraphicsRectItem*);
+  void setQGraphicsItemParent(QGraphicsLineItem*);
+  void setQGraphicsItemTransition(QGraphicsLineItem*);
 	
   /** Predicats */
   void addSubTaskTreeItem(TaskTreeItem* t);
+  void translateNode(int x, int y);
   void translate(int x, int y);
   bool contain(int x, int y);
 
@@ -52,7 +63,9 @@ private:
   TaskTree* m_taskTree;
   int m_x, m_y;
   int m_xMin, m_yMin, m_xMax, m_yMax;
-  QGraphicsProxyWidget* m_proxy;
+  QGraphicsProxyWidget *m_proxy;
+  QGraphicsRectItem *m_itemCadre;
+  QGraphicsLineItem *m_itemParent, *m_itemTransition;
 
 };
 
