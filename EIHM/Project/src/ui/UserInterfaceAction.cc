@@ -88,6 +88,8 @@ void UserInterface::redo() {
 	setCentralWidget(m_displayedTree);
     } else cout << "rien a  refaire" << endl;
 }
+//	void clearSelection();
+//void UserInterface::
 
 bool UserInterface::canCopy(){
     return (int)m_displayedTree->getSelectedItems().size() == 1;
@@ -97,6 +99,7 @@ void UserInterface::copy() {
     if (canCopy()){
         copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
     }
+    m_displayedTree->clearSelection();
 }
 
 void ClearRedo(){
@@ -108,7 +111,7 @@ void UserInterface::cut() {
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         copyTmp = new TaskTree(tmp);
         tmp->remove();
-
+	m_displayedTree->clearSelection();
         TaskTree* root = m_displayedTree->getTaskTree();
         TaskTree* tmpUndo = new TaskTree(root);
         sundo.push(tmpUndo);
@@ -121,7 +124,7 @@ void UserInterface::paste(){
     if (canCopy()){
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         tmp->copyPaste(copyTmp);
-
+	m_displayedTree->clearSelection();
         TaskTree* root = m_displayedTree->getTaskTree();
         TaskTree* tmpUndo = new TaskTree(root);
         sundo.push(tmpUndo);
@@ -146,7 +149,7 @@ void UserInterface::addAbstractionTask(){
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,TaskTree::ABSTRACTION));
 		//tmp->setParent(item);
-
+    m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -163,6 +166,7 @@ void UserInterface::addApplicationTask(){
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,TaskTree::APPLICATION));
 
+    m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -177,6 +181,7 @@ void UserInterface::addInteractionTask(){
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,TaskTree::INTERACTION));
 
+    m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -190,6 +195,7 @@ void UserInterface::addUserTask(){
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,TaskTree::USER));
 
+    m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -208,6 +214,7 @@ void UserInterface::deleteTask(){
     for(int i=0; i < (int)tmp.size(); i++)
         tmp[i]->remove();
 
+    m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -238,6 +245,7 @@ void UserInterface::addTransition(Transition::Type type){
     for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
   }
+  m_displayedTree->clearSelection();
   TaskTree* root = m_displayedTree->getTaskTree();
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
@@ -249,6 +257,7 @@ void UserInterface::addTransition(Transition::Type type){
 void UserInterface::deleteTransition(){
   for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->removeTransitionOut();
+  m_displayedTree->clearSelection();
 }
 
 
