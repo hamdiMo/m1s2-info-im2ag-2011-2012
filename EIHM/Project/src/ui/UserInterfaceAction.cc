@@ -145,13 +145,16 @@ void UserInterface::addAbstractionTask(){
     string name = "Task "+indiceTasktree;
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,TaskTree::ABSTRACTION));
+		//tmp->setParent(item);
 
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
     ClearRedo();
-    m_displayedTree = new TaskTreeViewer(root,this);
+		m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
+		//m_displayedTree->createTaskTreeItems(tmp);
+		//m_displayedTree->displayTaskTreeItems();
 }
 
 void UserInterface::addApplicationTask(){

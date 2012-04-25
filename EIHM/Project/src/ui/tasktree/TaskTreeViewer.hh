@@ -38,6 +38,7 @@ public:
   TaskTreeItem* createTaskTreeItems(TaskTree* t);
   void displayTaskTreeItems();
   void computeSceneRect(int x, int y, int xSize, int ySize);
+	void refresh(TaskTree* tree, TaskTreeItem *treeItem);
 
 public slots:
 

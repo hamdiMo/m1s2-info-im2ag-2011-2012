@@ -78,6 +78,10 @@ TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
   return item;
 }
 
+void TaskTreeViewer::refresh(TaskTree* tree, TaskTreeItem *treeItem){
+	
+}
+
 void TaskTreeViewer::displayTaskTreeItems() {
   for (int i = 0 ; i < m_taskTreeItems.size() ; i++) {
     QGraphicsProxyWidget* proxy = m_scene->addWidget(m_taskTreeItems[i]);
