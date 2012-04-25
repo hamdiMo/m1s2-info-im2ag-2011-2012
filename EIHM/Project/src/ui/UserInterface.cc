@@ -57,24 +57,22 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
 
   t9->addSubtree(t10);
   t9->addSubtree(t11);
-
-  if(t5->setTransitionOut(Transition::CHOICE) == -1)
-    cout << "err" <<endl;
-  if(t11->setTransitionIn(Transition::ORDERINDEPENDENCE) == -1)
-    cout << "err" <<endl;
-  if(t13->setTransitionIn(Transition::CHOICE) == -1)
-    cout << "err" <<endl;  
-  if(t4->setTransitionOut(Transition::DISABLING) == -1)
-    cout << "err" <<endl;
   
   TaskTreeViewer* m_taskTreeViewer = new TaskTreeViewer(t,this);
   m_displayedTree = m_taskTreeViewer;
+  // TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier();
+  //m_viewTabWidget = createTabWidget();
+  // m_pictureManager = new PictureManager(this);
+  // setCentralWidget((QTabWidget*)m_taskTreeViewer);
 
   setCentralWidget(m_taskTreeViewer);
+  m_infoBox=new QLabel("");
   setWindowTitle(tr("Task Tree Creator"));
   resize(1024, 768);
   update();
   this->statusBar()->showMessage("ready");
+ 
+  
 }
     
 UserInterface::~UserInterface() {
