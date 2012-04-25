@@ -14,6 +14,7 @@
    addToolBar(Qt::TopToolBarArea, createEditToolBar());
    addToolBar(Qt::TopToolBarArea, createViewToolBar());
    addToolBar(Qt::BottomToolBarArea, createTaskToolBar());
+  
  }
 QToolBar* UserInterface::createFileToolBar() {
   m_fileToolBar = new QToolBar(tr("&File"), this);

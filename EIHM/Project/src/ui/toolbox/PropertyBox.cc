@@ -15,7 +15,6 @@
 
 
 
-
 /** Constructeurs et destructeur */
 PropertyBox::PropertyBox(UserInterface* userInterface) :
   m_userInterface(userInterface)
@@ -26,13 +25,14 @@ PropertyBox::PropertyBox(UserInterface* userInterface) :
   layout->addWidget(createGlobalGroupBox());
   layout->addLayout(createControlsLayout());
   layout->addStretch();
-
+  layout->addWidget(
   setLayout(layout);
 }
 
 
 /** Methodes */
 void PropertyBox::refresh() {}
+QLabel* PropertyBox::getInfoBox() {return m_infoBox;}
 
 
 /** Slots */
@@ -65,6 +65,14 @@ void PropertyBox::setType(TaskTree::Type type) {
 
 
 /** Methodes internes */
+ GroupBox* PropertyBox::createGlobalGroupBox(){
+
+m_infoBox = new QLabel("hello"));
+
+
+ return groupBox;
+}
+
 QGroupBox* PropertyBox::createGlobalGroupBox() {
   QGroupBox* groupBox = new QGroupBox(tr("Global"));
   QVBoxLayout* layout = new QVBoxLayout();
@@ -92,7 +100,6 @@ QGroupBox* PropertyBox::createTypeGroupBox() {
   layout->addWidget(m_appTypeRB);
   layout->addWidget(m_interactTypeRB);
   layout->addWidget(m_userTypeRB);
-  
   groupBox->setLayout(layout);
   return groupBox;
 }

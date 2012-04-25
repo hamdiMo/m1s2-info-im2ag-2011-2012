@@ -12,6 +12,7 @@
 #include <QKeySequence>
 #include <QStatusBar>
 #include "Transition.hh"
+#include <QLabel>
 
 // class Previewer;
 // class Histogram;
@@ -190,6 +191,8 @@ private:
   
   // bool m_actionIconMod;
   public:
+ 
+  QLabel* m_infoBox;
   QAction* m_copy;
   QAction* m_cut;
   QAction* m_paste;

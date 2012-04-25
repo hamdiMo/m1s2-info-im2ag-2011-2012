@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QRadioButton>
 #include <QLineEdit>
-
+#include <QLabel>
 #include <string>
 
 #ifdef WIN32
@@ -27,7 +27,7 @@ public:
   
   /** Methodes */
   void refresh();
-
+  QLabel* getInfoBox();
 public slots:
 
   void setTaskTree(TaskTree*);
@@ -51,7 +51,8 @@ private:
   QRadioButton *m_abstractTypeRB, *m_appTypeRB, *m_interactTypeRB, *m_userTypeRB;
   UserInterface* m_userInterface;
   TaskTree* m_taskTree;
-
+public :
+  QLabel* m_infoBox;
 };
 
 #endif
