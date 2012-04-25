@@ -27,7 +27,7 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree,UserInterface* interface) :
   m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
 
-  m_selectionTool = new SelectionTool(0, 0, 0, 0, NULL, this);
+  m_selectionTool = new SelectionTool(NULL, this);
   p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
   
   // m_pictureViewer = new PictureViewer(p) ;
