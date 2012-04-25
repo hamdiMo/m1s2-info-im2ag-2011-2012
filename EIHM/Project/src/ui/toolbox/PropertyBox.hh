@@ -12,7 +12,7 @@
 #ifdef WIN32
 #include "..\..\model\TaskTree.hh"
 #else
-#include "model/TaskTree.hh"
+#include "TaskTree.hh"
 #endif
 
 

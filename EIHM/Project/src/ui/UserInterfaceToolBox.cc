@@ -2,8 +2,8 @@
 #include "UserInterface.hh"
 #include "toolbox\PropertyBox.hh"
 #else
-#include "ui/UserInterface.hh"
-#include "ui/toolbox/PropertyBox.hh"
+#include "UserInterface.hh"
+#include "PropertyBox.hh"
 #endif
 
 
