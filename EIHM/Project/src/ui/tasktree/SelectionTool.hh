@@ -11,32 +11,38 @@ class TaskTreeViewer;
 
 class SelectionTool : public QWidget { Q_OBJECT
 public:
-    SelectionTool (QWidget *_parent, TaskTreeViewer *_ttv);
-    ~SelectionTool();
+  SelectionTool (QWidget *_parent, TaskTreeViewer *_ttv);
+  ~SelectionTool();
 
 
 
-    void  keyPressEvent ( QKeyEvent * event );
-    void  keyReleaseEvent ( QKeyEvent * event );
-    void  mouseDoubleClickEvent ( QMouseEvent * event );
-    void  mouseMoveEvent ( QMouseEvent * event );
-    void  mousePressEvent ( QMouseEvent * event );
-    void  mouseReleaseEvent ( QMouseEvent * event );
-    void  wheelEvent ( QWheelEvent * event );
+  void  keyPressEvent ( QKeyEvent * event );
+  void  keyReleaseEvent ( QKeyEvent * event );
+  void  mouseDoubleClickEvent ( QMouseEvent * event );
+  void  mouseMoveEvent ( QMouseEvent * event );
+  void  mousePressEvent ( QMouseEvent * event );
+  void  mouseReleaseEvent ( QMouseEvent * event );
+  void  wheelEvent ( QWheelEvent * event );
 
 signals:
 
-    void selectedItemsChanged();
+  void selectedItemsChanged();
 
 protected:
-    void paintEvent(QPaintEvent *event);
+  void paintEvent(QPaintEvent *event);
 
 private :
-    QGraphicsRectItem* m_selectionRect;
-    int m_dragBeginX;
-    int m_dragBeginY;
-    bool m_leftButtonActive;
-    TaskTreeViewer* m_taskTreeViewer;
-    int xLeft, yTop, xRight, yBottom;
+  QGraphicsRectItem* m_selectionRect;
+  int m_dragBeginX;
+  int m_dragBeginY;
+  bool m_leftButtonActive;
+  TaskTreeViewer* m_taskTreeViewer;
+  int xLeft, yTop, xRight, yBottom;
+  QColor* m_fontColor;
+  QBrush* my_brush;
+  QPen* my_borderPen;
+
+
+
 };
 #endif

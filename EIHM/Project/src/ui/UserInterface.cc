@@ -60,10 +60,6 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   
   TaskTreeViewer* m_taskTreeViewer = new TaskTreeViewer(t,this);
   m_displayedTree = m_taskTreeViewer;
-  // TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier();
-  //m_viewTabWidget = createTabWidget();
-  // m_pictureManager = new PictureManager(this);
-  // setCentralWidget((QTabWidget*)m_taskTreeViewer);
 
   setCentralWidget(m_taskTreeViewer);
   setWindowTitle(tr("Task Tree Creator"));

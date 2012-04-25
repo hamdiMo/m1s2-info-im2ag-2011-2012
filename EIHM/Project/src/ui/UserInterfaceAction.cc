@@ -336,38 +336,38 @@ void UserInterface::createActions() {
 }
 
 void UserInterface::createFileAction() {
-    m_openAct = new QAction(tr("&Open..."), this);
+    m_openAct = new QAction(QIcon("images/open.png"),tr("&Open..."), this);
     m_openAct->setShortcut(tr("Ctrl+O"));
     connect(m_openAct, SIGNAL(triggered()), this, SLOT(open()));
 
-    m_saveAct = new QAction(tr("&Save..."), this);
+    m_saveAct = new QAction(QIcon("images/save.png"),tr("&Save..."), this);
     m_saveAct->setShortcut(tr("Ctrl+S"));
     connect(m_saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
-    m_exitAct = new QAction(tr("E&xit"), this);
+    m_exitAct = new QAction(QIcon("images/exit.png"),tr("E&xit"), this);
     m_exitAct->setShortcut(tr("Ctrl+Q"));
     connect(m_exitAct, SIGNAL(triggered()), this, SLOT(exit()));
 }
 
 void UserInterface::createEditAction() {
-    m_undoAct = new QAction(tr("&Undo"), this);
+    m_undoAct = new QAction(QIcon("images/undo.png"),tr("&Undo"), this);
     m_undoAct->setShortcut(tr("Ctrl+Z"));
     connect(m_undoAct, SIGNAL(triggered()), this, SLOT(undo()));
 
-    m_redoAct = new QAction(tr("&Redo"), this);
+    m_redoAct = new QAction(QIcon("images/redo.png"),tr("&Redo"), this);
     m_redoAct->setShortcut(tr("Ctrl+E"));
     connect(m_redoAct, SIGNAL(triggered()), this, SLOT(redo()));
 
-    m_copy=  new QAction(tr("&Copy"), this);
+    m_copy=  new QAction(QIcon("images/copy.png"),tr("&Copy"), this);
     m_copy->setShortcut(tr("Ctrl+C"));
 
     connect(m_copy, SIGNAL(triggered()), this, SLOT(copy()));
 
-    m_paste=  new QAction(tr("&Paste"), this);
+    m_paste=  new QAction(QIcon("images/paste.png"),tr("&Paste"), this);
     m_paste->setShortcut(tr("Ctrl+V"));
     connect(m_paste, SIGNAL(triggered()), this, SLOT(paste()));
 
-    m_cut= new QAction(tr("&Cut"), this);
+    m_cut= new QAction(QIcon("images/cut.png"),tr("&Cut"), this);
     m_cut->setShortcut(tr("Ctrl+X"));
     connect(m_cut, SIGNAL(triggered()), this, SLOT(cut()));
 
@@ -376,21 +376,21 @@ void UserInterface::createEditAction() {
 }
 
 void UserInterface::createViewAction() {
-    m_zoomInAct = new QAction(tr("Zoom &In"), this);
+    m_zoomInAct = new QAction(QIcon("images/zoomin.png"),tr("Zoom &In"), this);
     m_zoomInAct->setShortcut(tr("Ctrl++"));
     m_zoomInAct->setEnabled(false);
     connect(m_zoomInAct, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
-    m_zoomOutAct = new QAction(tr("Zoom &Out"), this);
+    m_zoomOutAct = new QAction(QIcon("images/zoomout.png"),tr("Zoom &Out"), this);
     m_zoomOutAct->setShortcut(tr("Ctrl+-"));
     m_zoomOutAct->setEnabled(false);
     connect(m_zoomOutAct, SIGNAL(triggered()), this, SLOT(zoomOut()));
 
-    m_normalSizeAct = new QAction(tr("&Normal Size"), this);
+    m_normalSizeAct = new QAction(QIcon("images/normalsize.png"),tr("&Normal Size"), this);
     m_normalSizeAct->setEnabled(false);
     connect(m_normalSizeAct, SIGNAL(triggered()), this, SLOT(normalSize()));
 
-    m_fitToWindowAct = new QAction(tr("&Fit to Window"), this);
+    m_fitToWindowAct = new QAction(QIcon("images/fit.png"),tr("&Fit to Window"), this);
     m_fitToWindowAct->setEnabled(false);
     connect(m_fitToWindowAct, SIGNAL(triggered()), this, SLOT(fitToWindow()));
 }
@@ -404,43 +404,43 @@ void UserInterface::createHelpAction() {
 }
 
 void UserInterface::createTaskAction(){
-    m_addAbstractionTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Abstraction Task"), this);
+    m_addAbstractionTaskAct = new QAction(QIcon("images/abstraction.png"),tr("Add Abstraction Task"), this);
     connect(m_addAbstractionTaskAct, SIGNAL(triggered()), this, SLOT(addAbstractionTask()));
 
-    m_addApplicationTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Application Task"), this);
+    m_addApplicationTaskAct = new QAction(QIcon("images/application.png"),tr("Add Application Task"), this);
     connect(m_addApplicationTaskAct, SIGNAL(triggered()), this, SLOT(addApplicationTask()));
 
-    m_addInteractionTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Interaction Task"), this);
+    m_addInteractionTaskAct = new QAction(QIcon("images/interaction.gif"),tr("Add Interaction Task"), this);
     connect(m_addInteractionTaskAct, SIGNAL(triggered()), this, SLOT(addInteractionTask()));
 
-    m_addUserTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Add User Task"), this);
+    m_addUserTaskAct = new QAction(QIcon("images/user.png"),tr("Add User Task"), this);
     connect(m_addUserTaskAct, SIGNAL(triggered()), this, SLOT(addUserTask()));
 
-    m_deleteTaskAct = new QAction(QIcon("images/abstraction.gif"),tr("Delete Task"), this);
+    m_deleteTaskAct = new QAction(QIcon("images/delete.png"),tr("Delete Task"), this);
     connect(m_deleteTaskAct, SIGNAL(triggered()), this, SLOT(deleteTask()));
 
-    m_addChoiceTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Choice Transition"), this);
+    m_addChoiceTransitionAct = new QAction(QIcon("images/choice.gif"),tr("Add Choice Transition"), this);
     connect(m_addChoiceTransitionAct, SIGNAL(triggered()), this, SLOT(addChoiceTransition()));
 
-    m_addOrderIndependenceTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Order Independence Transition"), this);
+    m_addOrderIndependenceTransitionAct = new QAction(QIcon("images/order.gif"),tr("Add Order Independence Transition"), this);
     connect(m_addOrderIndependenceTransitionAct, SIGNAL(triggered()), this, SLOT(addOrderIndependenceTransition()));
 
-    m_addInterleavingTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Interleaving Transition"), this);
+    m_addInterleavingTransitionAct = new QAction(QIcon("images/interleave.gif"),tr("Add Interleaving Transition"), this);
     connect(m_addInterleavingTransitionAct, SIGNAL(triggered()), this, SLOT(addInterleavingTransition()));
 
-    m_addSynchronizationTransitionAct = new QAction(QIcon("images/abstraction.gif"),tr("Add Synchronization Transition"), this);
+    m_addSynchronizationTransitionAct = new QAction(QIcon("images/fullsincro.gif"),tr("Add Synchronization Transition"), this);
     connect(m_addSynchronizationTransitionAct, SIGNAL(triggered()), this, SLOT(addSynchronizationTransition()));
 
-    m_addDisablingTransitionAct = new QAction(tr("Add Disabling Transition"), this);
+    m_addDisablingTransitionAct = new QAction(QIcon("images/disabling.gif"),tr("Add Disabling Transition"), this);
     connect(m_addDisablingTransitionAct, SIGNAL(triggered()), this, SLOT(addDisablingTransition()));
 
-    m_addSuspendResumeTransitionAct = new QAction(tr("Add Suspend Resume Transition"), this);
+    m_addSuspendResumeTransitionAct = new QAction(QIcon("images/suspend.gif"),tr("Add Suspend Resume Transition"), this);
     connect(m_addSuspendResumeTransitionAct, SIGNAL(triggered()), this, SLOT(addSuspendResumeTransition()));
 
-    m_addSequentialEnablingTransitionAct = new QAction(tr("Add Sequential Enabling Transition"), this);
+    m_addSequentialEnablingTransitionAct = new QAction(QIcon("images/enabling.gif"),tr("Add Sequential Enabling Transition"), this);
     connect(m_addSequentialEnablingTransitionAct, SIGNAL(triggered()), this, SLOT(addSequentialEnablingTransition()));
 
-    m_addSequentialEnablingInfoTransitionAct = new QAction(tr("Add Sequential Enabling Info Transition"), this);
+    m_addSequentialEnablingInfoTransitionAct = new QAction(QIcon("images/enablinginfo.gif"),tr("Add Sequential Enabling Info Transition"), this);
     connect(m_addSequentialEnablingInfoTransitionAct, SIGNAL(triggered()), this, SLOT(addSequentialEnablingInfoTransition()));
 
     m_deleteTransitionAct = new QAction(tr("Delete Transition"), this);
