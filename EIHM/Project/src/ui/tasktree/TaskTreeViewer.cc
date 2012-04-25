@@ -144,13 +144,12 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
 void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   m_selectionTool->mouseReleaseEvent(event);
 
+    if (m_roundedMenu!=NULL) {
+        m_roundedMenu->mouseReleaseEvent(event);
+        if(p_proxy_roundedMenu)
+          m_scene->removeItem(p_proxy_roundedMenu);
 
-  if (m_roundedMenu!=NULL) {
-    m_roundedMenu->mouseReleaseEvent(event);
-    if(p_proxy_roundedMenu)
-      m_scene->removeItem(p_proxy_roundedMenu);
-    
-  }
+    }
 
 }
 

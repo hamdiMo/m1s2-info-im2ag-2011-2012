@@ -11,7 +11,7 @@ using namespace std;
 SelectionTool::SelectionTool( qreal _x, qreal _y, qreal _width, qreal _height, QWidget *_parent, TaskTreeViewer *_ttv)
     : QWidget(_parent)
 {
-    m_selectionRect = new QGraphicsRectItem(_x, _y, _width, _height);
+    setAttribute(Qt::WA_TranslucentBackground);
     m_leftButtonActive = false;
     m_taskTreeViewer = _ttv;
     setHidden(true);
@@ -20,17 +20,15 @@ SelectionTool::SelectionTool( qreal _x, qreal _y, qreal _width, qreal _height, Q
 SelectionTool::~SelectionTool()
 {}
 
-QSize SelectionTool::minimumSizeHint() const{
-    return QSize(m_selectionRect->boundingRect().width(), m_selectionRect->boundingRect().height());
+void SelectionTool::paintEvent(QPaintEvent * /* event */){
+  QPainter painter(this);
+  QPen pen = QPen(Qt::DashLine);
+  pen.setColor(QColor(0, 150, 0, 255));
+  painter.setPen(pen);
+  painter.drawRect(0, 0, width()-1, height()-1);
+  //painter.setBrush(*p_gradient);
 }
 
-QSize SelectionTool::sizeHint() const{
-  return QSize(m_selectionRect->boundingRect().width(), m_selectionRect->boundingRect().height());
-}
-
-void SelectionTool::setRect(qreal _x, qreal _y, qreal _w, qreal _h){
-    m_selectionRect->setRect(_x, _y, _w, _h);
-}
 
 void  SelectionTool::keyPressEvent ( QKeyEvent * event ){
 

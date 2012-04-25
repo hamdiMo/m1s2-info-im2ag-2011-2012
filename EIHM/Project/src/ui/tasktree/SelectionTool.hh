@@ -14,9 +14,8 @@ public:
     SelectionTool (qreal _x, qreal _y, qreal _width, qreal _height, QWidget *_parent, TaskTreeViewer *_ttv);
     ~SelectionTool();
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
-    void setRect(qreal _x, qreal _y, qreal _w, qreal _h);
+
+
     void  keyPressEvent ( QKeyEvent * event );
     void  keyReleaseEvent ( QKeyEvent * event );
     void  mouseDoubleClickEvent ( QMouseEvent * event );
@@ -28,6 +27,9 @@ public:
 signals:
 
     void selectedItemsChanged();
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private :
     QGraphicsRectItem* m_selectionRect;
