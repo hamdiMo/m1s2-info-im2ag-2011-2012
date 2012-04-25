@@ -54,6 +54,7 @@ public:
   void addSubTaskTreeItem(TaskTreeItem* t);
   void translateNode(int x, int y);
   void translate(int x, int y);
+  void permute(int x, int y);
   bool contain(int x, int y);
 
 private:
