@@ -59,7 +59,7 @@ UserInterface::UserInterface(QApplication* qapplication,QClipboard* clipboard) :
   t9->addSubtree(t11);
   
   TaskTreeViewer* m_taskTreeViewer = new TaskTreeViewer(t,this);
-	m_displayedTree = m_taskTreeViewer;
+  m_displayedTree = m_taskTreeViewer;
   // TaskTreeModifier* m_taskTreeModifier=new TaskTreeModifier();
   //m_viewTabWidget = createTabWidget();
   // m_pictureManager = new PictureManager(this);
