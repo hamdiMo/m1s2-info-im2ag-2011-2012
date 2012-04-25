@@ -164,7 +164,7 @@ void UserInterface::addTask(TaskTree::Type type){
     indiceTasktree++;
     tmp->addSubtree(new TaskTree(name,type));
     
-    m_displayedTree->clearSelection();
+    //m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
@@ -173,7 +173,7 @@ void UserInterface::addTask(TaskTree::Type type){
     setCentralWidget(m_displayedTree);
   } else {
     getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour ajouter une nouvelle tache,<br> veuillez selectionner la tache parente</font>"); 
-    m_displayedTree->clearSelection();
+    //m_displayedTree->clearSelection();
   }
 }
 
