@@ -39,6 +39,7 @@ public:
   void displayTaskTreeItems();
   void computeSceneRect(int x, int y, int xSize, int ySize);
 	void refresh(TaskTree* tree, TaskTreeItem *treeItem);
+	void clearSelection();
 
 public slots:
 

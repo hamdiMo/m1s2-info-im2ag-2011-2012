@@ -158,3 +158,7 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
 }
 
 void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
+
+void TaskTreeViewer::clearSelection(){
+	m_selectedItems.clear();
+}
