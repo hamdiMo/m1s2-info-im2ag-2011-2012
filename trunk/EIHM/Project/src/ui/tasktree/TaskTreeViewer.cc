@@ -97,7 +97,8 @@ void TaskTreeViewer::displayTaskTreeItems() {
       if (m_taskTreeItems[i]->getQGraphicsItemIconeTransition() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemIconeTransition());
     }
     QGraphicsRectItem *cadre = m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
-    QGraphicsLineItem *parent = 0, *transition = 0;
+        QGraphicsLineItem *parent = 0, *transition1 = 0, *transition2 = 0;
+        QGraphicsPixmapItem* iconeTransition = 0;
     if (m_taskTreeItems[i]->getParent() != 0) {
       parent = m_scene->addLine(m_taskTreeItems[i]->getX()+16, m_taskTreeItems[i]->getY(),
                                 m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);

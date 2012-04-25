@@ -25,6 +25,8 @@ public:
   Type getType();
 
   void setType(Type type);
+
+  std::string getPathIcone();
   
   std::string toString();
   protected:
@@ -34,6 +36,7 @@ public:
   Type m_type;
   TaskTree* m_from;
   TaskTree* m_to;
+  std::string m_pathIcone;
 };
 
 #endif
