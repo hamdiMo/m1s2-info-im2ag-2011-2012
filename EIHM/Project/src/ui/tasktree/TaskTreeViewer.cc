@@ -27,8 +27,8 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree,UserInterface* interface) :
   m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
 
-  m_selectionTool = new SelectionTool(NULL, this);
-  p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
+  // m_selectionTool = new SelectionTool(0, 0, 0, 0, NULL, this);
+  // p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
@@ -78,18 +78,25 @@ TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
   return item;
 }
 
-void TaskTreeViewer::refresh(TaskTree* tree, TaskTreeItem *treeItem){
-	
-}
-
 void TaskTreeViewer::displayTaskTreeItems() {
-  for (int i = 0 ; i < m_taskTreeItems.size() ; i++) {
+  for (unsigned int i = 0 ; i < m_taskTreeItems.size() ; i++) {
     QGraphicsProxyWidget* proxy = m_scene->addWidget(m_taskTreeItems[i]);
+    m_taskTreeItems[i]->setQGraphicsProxyWidget(proxy);
     proxy->setPos(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY());
     m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
     if (m_taskTreeItems[i]->getParent() != 0) {
       m_scene->addLine(m_taskTreeItems[i]->getX()+16, m_taskTreeItems[i]->getY(),
 		       m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
+    }
+    Transition* transOut = m_taskTreeItems[i]->getTaskTree()->getTransitionOut();
+    if (transOut != 0) {
+      TaskTree* taskTreeOut = transOut->getTo();
+      for (unsigned int j = 0 ; j < m_taskTreeItems.size() ; j++) {
+	if (taskTreeOut == m_taskTreeItems[j]->getTaskTree()) {
+	  m_scene->addLine(m_taskTreeItems[i]->getX()+32, m_taskTreeItems[i]->getY()+16,
+			   m_taskTreeItems[j]->getX(), m_taskTreeItems[j]->getY()+16);
+	}
+      }
     }
   }
 }
@@ -117,43 +124,116 @@ void TaskTreeViewer::keyPressEvent ( QKeyEvent * event ){}
 void TaskTreeViewer::keyReleaseEvent ( QKeyEvent * event ) {}
 void TaskTreeViewer::mouseDoubleClickEvent ( QMouseEvent * event ){}
 void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
-  if (m_roundedMenu!=NULL) 
-    m_roundedMenu->mouseMoveEvent(event);
-  m_selectionTool->mouseMoveEvent(event);
-}
-
-void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
-  m_selectionTool->mousePressEvent(event);
-  if (event->button()==Qt::RightButton){
-    std::vector<QAction*> *m_vector =new std::vector<QAction*>();
-    m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
-    m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
-    m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
-    m_vector->push_back(m_userInterface->m_addUserTaskAct);
-    m_vector->push_back(m_userInterface->m_deleteTaskAct);
-    m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y(),m_vector);
-    p_proxy_roundedMenu = m_scene->addWidget(m_roundedMenu);
-    QPointF pos = mapToScene(event->x(), event->y());
-    computeSceneRect(0, 0, m_roundedMenu->size().width(), m_roundedMenu->size().height());
-    computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
-    p_proxy_roundedMenu->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
+  QPointF pos = mapToScene(event->x(), event->y());
+  switch (m_state) {
+  case IDLE:
+    {}
+    break;
+  case SELECTION: 
+    {
+      TaskTreeItem* item = m_selectedItems[0];
+      item->translate(pos.x()-m_beginX, pos.y()-m_beginY);
+      m_beginX = pos.x();
+      m_beginY = pos.y();
+      item->getQGraphicsProxyWidget()->setPos(item->getX(), item->getY());
+    }
+    break;
+  case PROPERTIES:
+    {
+      if (m_roundedMenu != NULL) 
+	m_roundedMenu->mouseMoveEvent(event);
+    }
+    break;
+  default:
+    {
+      m_selectionTool->mouseMoveEvent(event);
+    }
+    break;
   }
 }
 
-void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
-  m_selectionTool->mouseReleaseEvent(event);
-
-    if (m_roundedMenu!=NULL) {
-        m_roundedMenu->mouseReleaseEvent(event);
-        if(p_proxy_roundedMenu)
-          m_scene->removeItem(p_proxy_roundedMenu);
-
+void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
+  QPointF pos = mapToScene(event->x(), event->y());
+  switch (m_state) {
+  case IDLE:
+    {
+      if (event->button() == Qt::RightButton) {
+	m_selectedItems.clear();
+	for (unsigned int i = 0; i < m_taskTreeItems.size(); i++)
+	  if (m_taskTreeItems[i]->contain(pos.x(), pos.y())) {
+	    m_selectedItems.push_back(m_taskTreeItems[i]);
+	  }
+	m_beginX = pos.x();
+	m_beginY = pos.y();
+	if (m_selectedItems.size() > 0) m_state = SELECTION; 
+      }
     }
+    break;
+  case SELECTION:
+    {}
+    break;
+  case PROPERTIES:
+    {}
+    break;
+  default:
+    {}
+    break;
+  }
+  
+  // m_selectionTool->mousePressEvent(event);
+  // if (event->button() == Qt::RightButton){
+  //   //std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
+  //   //ajout des differentes actions...
+
+  //     std::vector<QAction*> *m_vector =new std::vector<QAction*>();
+  //     m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
+
+  //     m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
+  //     m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
+  //     m_vector->push_back(m_userInterface->m_addUserTaskAct);
+  //     m_vector->push_back(m_userInterface->m_deleteTaskAct);
+  //     m_vector->push_back(m_userInterface->m_addChoiceTransitionAct);
+  //   m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y(),m_vector);
+  //   p_proxy_roundedMenu = m_scene->addWidget(m_roundedMenu);
+  //   QPointF pos = mapToScene(event->x(), event->y());
+  //   computeSceneRect(0, 0, m_roundedMenu->size().width(), m_roundedMenu->size().height());
+  //   computeSceneRect(pos.x(), pos.y(), m_roundedMenu->size().width(), m_roundedMenu->size().height());
+  //   p_proxy_roundedMenu->setPos(pos.x()-m_roundedMenu->size().width()/2,pos.y()-m_roundedMenu->size().height()/2);
+  // }
+}
+
+void TaskTreeViewer::clearSelection() {
+  m_selectedItems.clear();
+}
+
+void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
+  QPointF pos = mapToScene(event->x(), event->y());
+  switch (m_state) {
+  case IDLE:
+    {}
+    break;
+  case SELECTION:
+    {
+      m_state = IDLE;
+    }
+    break;
+  case PROPERTIES:
+    {}
+    break;
+  default:
+    {}
+    break;
+  }
+
+  // m_selectionTool->mouseReleaseEvent(event);
+
+  //   if (m_roundedMenu!=NULL) {
+  //       m_roundedMenu->mouseReleaseEvent(event);
+  //       if(p_proxy_roundedMenu)
+  //         m_scene->removeItem(p_proxy_roundedMenu);
+
+  //   }
 
 }
 
 void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
-
-void TaskTreeViewer::clearSelection(){
-	m_selectedItems.clear();
-}

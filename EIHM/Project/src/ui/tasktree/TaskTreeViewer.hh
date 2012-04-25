@@ -21,6 +21,8 @@ class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
 
+  enum State { IDLE, SELECTION, PROPERTIES };
+
   /** Constructeurs et destructeurs */
   TaskTreeViewer(TaskTree*,UserInterface*);
   ~TaskTreeViewer();
@@ -67,6 +69,10 @@ private:
   SelectionTool* m_selectionTool;
   QGraphicsProxyWidget* p_proxy_roundedMenu;
   QGraphicsProxyWidget* p_proxy_selectionTool;
+
+  State m_state;
+  int m_beginX, m_beginY;
+
 };
 
 #endif
