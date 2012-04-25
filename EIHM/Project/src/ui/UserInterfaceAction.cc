@@ -219,12 +219,20 @@ void UserInterface::deleteTask(){
 }
 
 void UserInterface::addTransition(Transition::Type type){
-  getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour l'ajout de transitions,<br> veuillez en selectionner au moins une.<br>La selection de deux noeuds voisins<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   TaskTree* tmp;
   TaskTree* tmp2;
-  if((int)m_displayedTree->getSelectedItems().size() == 1){
+  if((int)m_displayedTree->getSelectedItems().size() == 0){
+    getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour l'ajout de transitions,<br> veuillez selectionner au moins une tache.</font>");
+  }else if((int)m_displayedTree->getSelectedItems().size() == 1){
     tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     tmp->setTransitionOut(type);
+      m_displayedTree->clearSelection();
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root,this);
+  setCentralWidget(m_displayedTree);
   } else if ((int)m_displayedTree->getSelectedItems().size() == 2){
     
     tmp = m_displayedTree->getSelectedItems()[0]->getTaskTree();
@@ -237,17 +245,25 @@ void UserInterface::addTransition(Transition::Type type){
       tmp->setTransitionOut(type);
       tmp2->setTransitionOut(type);
     }
-  } else {
-    for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
-      m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
-  }
-  m_displayedTree->clearSelection();
+      m_displayedTree->clearSelection();
   TaskTree* root = m_displayedTree->getTaskTree();
   TaskTree* tmpUndo = new TaskTree(root);
   sundo.push(tmpUndo);
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  } else {
+    for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
+      m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
+      m_displayedTree->clearSelection();
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root,this);
+  setCentralWidget(m_displayedTree);
+  }
+  getPropertyBox()->getInfoBox()->setText("<font color=\"red\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
 }
 
 void UserInterface::deleteTransition(){
