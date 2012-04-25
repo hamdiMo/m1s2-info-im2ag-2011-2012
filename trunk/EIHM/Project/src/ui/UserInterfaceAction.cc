@@ -72,6 +72,7 @@ bool UserInterface::canRedo() {
 
 void UserInterface::undo() {
     if(canUndo()){
+      getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Annuler</font>"); 
         TaskTree* t = sundo.top();
         sundo.pop();
         sredo.push(t);
@@ -85,6 +86,7 @@ void UserInterface::undo() {
 }
 void UserInterface::redo() {
     if(canRedo()){
+      getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Refaire</font>"); 
         TaskTree* t = sredo.top();
         sredo.pop();
         sundo.push(t);
@@ -103,6 +105,7 @@ bool UserInterface::canCopy(){
 void UserInterface::copy() {
     if (canCopy()){
         copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
+	getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete copiee.<br>Selectionnez une tache cible pour coller.</font>"); 
     } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez copier qu'une tache<br>Veuillez selectionner une tache à copier</font>");
     m_displayedTree->clearSelection();
 }
@@ -113,6 +116,7 @@ void ClearRedo(){
 
 void UserInterface::cut() {
     if (canCopy()){
+	getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete coupee.<br>Selectionnez une tache cible pour coller.</font>"); 
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         copyTmp = new TaskTree(tmp);
         tmp->remove();
@@ -128,6 +132,7 @@ void UserInterface::cut() {
 void UserInterface::paste(){
   if (copyTmp != 0){
     if (canCopy()){
+      getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete collee.</font>"); 
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         tmp->copyPaste(copyTmp);
 	m_displayedTree->clearSelection();
@@ -138,7 +143,7 @@ void UserInterface::paste(){
         m_displayedTree = new TaskTreeViewer(root,this);
     	setCentralWidget(m_displayedTree);
     } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Veuillez selectionner une tache<br> pour spécifier le lieu de collage</font>");
-  } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour coller, vous devez copier<br>ou couper une tache au préalable</font>"); 
+  } else getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Pour coller, vous devez copier<br>ou couper une tache au préalable</font>"); 
 }
 
 
@@ -152,6 +157,7 @@ void UserInterface::about() {
 
 void UserInterface::addTask(TaskTree::Type type){
   if((int)m_displayedTree->getSelectedItems().size() == 1){
+    getPropertyBox()->getInfoBox()->setText("<font color=\"green\">L'ajout d'une tache entraine la<br>creation d'une tache dans le sous arbre <br>de la tache selectionnee<br> un glisse/depose permet la permutation de taches.</font>");
     TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     string name = "Task "+indiceTasktree;
     indiceTasktree++;
@@ -198,6 +204,7 @@ void UserInterface::addUserTask(){
 }
 void UserInterface::deleteTask(){
   if((int)m_displayedTree->getSelectedItems().size() > 0){
+    getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La supression d'une tache entraine la<br>supression des transitions et du <br>sous arbre de cette tache.</font>");
     vector<TaskTree*> tmp;
     for(int i=0;i<(int)m_displayedTree->getSelectedItems().size();i++){
         bool isSon = false;
@@ -233,6 +240,7 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   } else if ((int)m_displayedTree->getSelectedItems().size() == 2){
     
     tmp = m_displayedTree->getSelectedItems()[0]->getTaskTree();
@@ -252,6 +260,7 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   } else {
     for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
@@ -262,8 +271,9 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   }
-  getPropertyBox()->getInfoBox()->setText("<font color=\"red\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
+  
 }
 
 void UserInterface::deleteTransition(){
