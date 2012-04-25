@@ -64,6 +64,13 @@ void TaskTreeItem::translateNode(int x, int y) {
     m_y += y;
     permute(x, y);
   }
+  
+  if (m_y > m_yMin + 48) {
+      translate(0, y);
+      m_y -= y;
+      m_yMin -= y;
+  } else if (m_y < m_yMin + 16) m_y = m_yMin + 16;
+  
 }
 
 void TaskTreeItem::translate(int x, int y) {
@@ -90,6 +97,7 @@ void TaskTreeItem::permute(int x, int y) {
 	m_x -= itemLeft->m_xMin - itemLeft->m_xMax;
 	m_parent->m_subTaskTreeItems[index-1] = this;
 	m_parent->m_subTaskTreeItems[index] = itemLeft;
+	m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemLeft->m_taskTree->getIndex());
       }
     }
     else if (m_x > m_xMax && x > 0) {
@@ -102,6 +110,7 @@ void TaskTreeItem::permute(int x, int y) {
 	m_x -= itemRight->m_xMax - itemRight->m_xMin;
 	m_parent->m_subTaskTreeItems[index+1] = this;
 	m_parent->m_subTaskTreeItems[index] = itemRight;
+	m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemRight->m_taskTree->getIndex());
       }
     }
   }

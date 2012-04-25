@@ -277,9 +277,20 @@ void UserInterface::addTransition(Transition::Type type){
 }
 
 void UserInterface::deleteTransition(){
-  for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
+  if((int)m_displayedTree->getSelectedItems().size() == 0){
+    getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour supprimer des transitions sortantes,<br> veuillez selectionner au moins une tache.</font>");
+  } else {
+    for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->removeTransitionOut();
+    getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Supression effectuee</font>");
+  }
   m_displayedTree->clearSelection();
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root,this);
+  setCentralWidget(m_displayedTree);
 }
 
 
