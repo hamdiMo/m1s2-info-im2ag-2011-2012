@@ -8,12 +8,12 @@ TaskTreeItem::TaskTreeItem(TaskTree* taskTree) :
   m_parent(0),
   m_subTaskTreeItems(),
   m_taskTree(taskTree),
-  m_x(32),
-  m_y(32),
+  m_x(ITEM_SIZE),
+  m_y(ITEM_SIZE),
   m_xMin(0),
   m_yMin(0),
-  m_xMax(64),
-  m_yMax(64),
+  m_xMax(2*ITEM_SIZE),
+  m_yMax(2*ITEM_SIZE),
   m_proxy(0),
   m_itemCadre(0),
   m_itemParent(0),
@@ -55,22 +55,18 @@ void TaskTreeItem::addSubTaskTreeItem(TaskTreeItem* t) {
 }
 
 void TaskTreeItem::translateNode(int x, int y) {
+  if (m_parent != 0) {
+    if (y < 0 && m_y + y < m_parent->m_y + 2*ITEM_SIZE) y = m_parent->m_y - m_y + 2*ITEM_SIZE; 
+    translate(0, y);
+  }
+
   if (m_xMin <= m_x + x && m_x + x <= m_xMax) {
     m_x += x;
-    m_y += y;
   }
   else {
     m_x += x;
-    m_y += y;
-    permute(x, y);
+    permute(x, 0);
   }
-  
-  if (m_y > m_yMin + 48) {
-      translate(0, y);
-      m_y -= y;
-      m_yMin -= y;
-  } else if (m_y < m_yMin + 16) m_y = m_yMin + 16;
-  
 }
 
 void TaskTreeItem::translate(int x, int y) {
@@ -91,31 +87,31 @@ void TaskTreeItem::permute(int x, int y) {
       unsigned int index = 0;
       while (m_parent->m_subTaskTreeItems[index]->m_xMin != m_xMin) index++;
       if (index-1 < m_parent->m_subTaskTreeItems.size()) {
-	TaskTreeItem* itemLeft = m_parent->m_subTaskTreeItems[index-1];
-	itemLeft->translate(m_xMax - m_xMin, 0);
-	translate(itemLeft->m_xMin - itemLeft->m_xMax, 0);
-	m_x -= itemLeft->m_xMin - itemLeft->m_xMax;
-	m_parent->m_subTaskTreeItems[index-1] = this;
-	m_parent->m_subTaskTreeItems[index] = itemLeft;
-	m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemLeft->m_taskTree->getIndex());
+        TaskTreeItem* itemLeft = m_parent->m_subTaskTreeItems[index-1];
+        itemLeft->translate(m_xMax - m_xMin, 0);
+        translate(itemLeft->m_xMin - itemLeft->m_xMax, 0);
+        m_x -= itemLeft->m_xMin - itemLeft->m_xMax;
+        m_parent->m_subTaskTreeItems[index-1] = this;
+        m_parent->m_subTaskTreeItems[index] = itemLeft;
+        m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemLeft->m_taskTree->getIndex());
       }
     }
     else if (m_x > m_xMax && x > 0) {
       unsigned int index = 0;
       while (m_parent->m_subTaskTreeItems[index]->m_xMin != m_xMin) index++;
       if (index+1 < m_parent->m_subTaskTreeItems.size()) {
-	TaskTreeItem* itemRight = m_parent->m_subTaskTreeItems[index+1];
-	itemRight->translate(m_xMin - m_xMax, 0);
-	translate(itemRight->m_xMax - itemRight->m_xMin, 0);
-	m_x -= itemRight->m_xMax - itemRight->m_xMin;
-	m_parent->m_subTaskTreeItems[index+1] = this;
-	m_parent->m_subTaskTreeItems[index] = itemRight;
-	m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemRight->m_taskTree->getIndex());
+        TaskTreeItem* itemRight = m_parent->m_subTaskTreeItems[index+1];
+        itemRight->translate(m_xMin - m_xMax, 0);
+        translate(itemRight->m_xMax - itemRight->m_xMin, 0);
+        m_x -= itemRight->m_xMax - itemRight->m_xMin;
+        m_parent->m_subTaskTreeItems[index+1] = this;
+        m_parent->m_subTaskTreeItems[index] = itemRight;
+        m_taskTree->getParent()->swapSubtree(m_taskTree->getIndex(), itemRight->m_taskTree->getIndex());
       }
     }
   }
 }
 
 bool TaskTreeItem::contain(int x, int y) {
-  return x >= m_x && x <= m_x+32 && y >= m_y && y <= m_y+32;
+  return x >= m_x && x <= m_x+ITEM_SIZE && y >= m_y && y <= m_y+ITEM_SIZE;
 }
