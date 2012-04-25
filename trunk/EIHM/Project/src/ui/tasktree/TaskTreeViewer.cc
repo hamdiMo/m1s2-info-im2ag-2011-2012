@@ -30,8 +30,8 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree,UserInterface* interface) :
   m_taskTreeItemRoot = createTaskTreeItems(taskTree);
   displayTaskTreeItems();
 
-  // m_selectionTool = new SelectionTool(0, 0, 0, 0, NULL, this);
-  // p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
+  m_selectionTool = new SelectionTool(NULL, this);
+  p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
@@ -146,11 +146,14 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
     break;
   case SELECTION: 
     {
-      TaskTreeItem* item = m_selectedItems[0];
-      item->translate(pos.x()-m_beginX, pos.y()-m_beginY);
-      m_beginX = pos.x();
-      m_beginY = pos.y();
-      displayTaskTreeItems();
+      if (m_selectedItems.size() > 0) {
+	TaskTreeItem* item = m_selectedItems[0];
+	item->translate(pos.x()-m_beginX, pos.y()-m_beginY);
+	m_beginX = pos.x();
+	m_beginY = pos.y();
+	displayTaskTreeItems();
+      }
+      else m_selectionTool->mouseMoveEvent(event);
     }
     break;
   case PROPERTIES:
@@ -160,7 +163,7 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
     break;
   default:
     {
-      m_selectionTool->mouseMoveEvent(event);
+      
     }
     break;
   }
@@ -198,6 +201,12 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	  m_state = PROPERTIES;
 	}
       }
+      else {
+	if (event->button() == Qt::LeftButton) {
+	  m_selectionTool->mousePressEvent(event);
+	  m_state = SELECTION; 
+	}
+      }
     }
     break;
   case SELECTION:
@@ -210,9 +219,6 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
     {}
     break;
   }
-  
-  // m_selectionTool->mousePressEvent(event);
-  // 
 }
 
 void TaskTreeViewer::clearSelection() {
@@ -227,6 +233,7 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
     break;
   case SELECTION:
     {
+      if (m_selectedItems.size() == 0) m_selectionTool->mouseReleaseEvent(event);
       m_state = IDLE;
     }
     break;
@@ -241,7 +248,6 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
     {}
     break;
   }
-  // m_selectionTool->mouseReleaseEvent(event);
 }
 
 void TaskTreeViewer::wheelEvent ( QWheelEvent * event ) {}
