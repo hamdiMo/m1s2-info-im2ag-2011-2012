@@ -11,10 +11,17 @@
 #include <QShortcut>
 #include <QKeySequence>
 #include <QStatusBar>
-#include "Transition.hh"
-#include "TaskTree.hh"
 #include <QLabel>
 
+#ifdef WIN32
+#include "UserInterface.hh"
+#include "..\model\TaskTree.hh"
+#include "taskTree\TaskTreeModifier.hh"
+#include "tasktree\TaskTreeViewer.hh"
+#else
+#include "Transition.hh"
+#include "TaskTree.hh"
+#endif
 // class Previewer;
 // class Histogram;
 // class ColorChooser;
