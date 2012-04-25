@@ -42,10 +42,11 @@ signals:
 private:
 
   /** Methodes internes */
+  QGroupBox* createInfoGroupBox();
   QGroupBox* createGlobalGroupBox();
   QGroupBox* createTypeGroupBox();
   QHBoxLayout* createControlsLayout();
-
+  QVBoxLayout * m_fulllayout;
   /** Attributs */
   QLineEdit* m_nameLE;
   QRadioButton *m_abstractTypeRB, *m_appTypeRB, *m_interactTypeRB, *m_userTypeRB;

@@ -12,6 +12,7 @@
 #include <QKeySequence>
 #include <QStatusBar>
 #include "Transition.hh"
+#include "TaskTree.hh"
 #include <QLabel>
 
 // class Previewer;
@@ -104,7 +105,7 @@ public slots:
   void addSequentialEnablingTransition();
   void addSequentialEnablingInfoTransition();
   void deleteTransition();
-
+  void addTask(TaskTree::Type);
   // void updateUI();
   // void updateUIActions();
   // void updateUIToolbox();

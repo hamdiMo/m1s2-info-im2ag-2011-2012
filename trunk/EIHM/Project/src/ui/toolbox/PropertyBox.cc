@@ -21,17 +21,19 @@ PropertyBox::PropertyBox(UserInterface* userInterface) :
 {
   setAccessibleName(tr("Properties"));
     
-  QVBoxLayout *layout = new QVBoxLayout;
-  layout->addWidget(createGlobalGroupBox());
-  layout->addLayout(createControlsLayout());
-  layout->addStretch();
-  layout->addWidget(
-  setLayout(layout);
+  m_fulllayout = new QVBoxLayout;
+  m_fulllayout->addWidget(createGlobalGroupBox());
+  m_fulllayout->addLayout(createControlsLayout());
+  m_fulllayout->addStretch();
+  m_fulllayout->addWidget(createInfoGroupBox());
+  setLayout(m_fulllayout);
 }
 
 
 /** Methodes */
-void PropertyBox::refresh() {}
+void PropertyBox::refresh() {
+   m_fulllayout->addWidget(m_infoBox);
+}
 QLabel* PropertyBox::getInfoBox() {return m_infoBox;}
 
 
@@ -65,11 +67,12 @@ void PropertyBox::setType(TaskTree::Type type) {
 
 
 /** Methodes internes */
- GroupBox* PropertyBox::createGlobalGroupBox(){
-
-m_infoBox = new QLabel("hello"));
-
-
+QGroupBox* PropertyBox::createInfoGroupBox(){
+  QGroupBox* groupBox = new QGroupBox(tr("Informations"));
+  QVBoxLayout* layout = new QVBoxLayout();
+  m_infoBox = new QLabel("hello");
+  layout->addWidget(m_infoBox);
+  groupBox->setLayout(layout);
  return groupBox;
 }
 

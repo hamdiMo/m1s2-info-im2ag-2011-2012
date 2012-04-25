@@ -6,6 +6,7 @@
 #include "UserInterface.hh"
 #include "tasktree/TaskTreeViewer.hh"
 #include "tasktree/TaskTreeItem.hh"
+#include "PropertyBox.hh"
 #endif
 
 
@@ -20,10 +21,10 @@ using namespace std;
 
 std::stack<TaskTree*> sundo;
 std::stack<TaskTree*> sredo;
-TaskTree* copyTmp;
+TaskTree* copyTmp = 0;
 int indiceTasktree = 0;
 
-// /** Slots */
+// /** Slots */getPropertyBox() 
 void UserInterface::open() {
     QFileDialog *t_fileDialog = new QFileDialog(this, windowFlags());
     t_fileDialog->setViewMode(QFileDialog::List);
@@ -77,7 +78,9 @@ void UserInterface::undo() {
         m_displayedTree = new TaskTreeViewer(t,this);
 	setCentralWidget(m_displayedTree);
 
-    } else cout << "rien a annuler" << endl;
+    } else {
+      getPropertyBox()->getInfoBox()->setText("Il n'y a rien a annuler");
+    }
 }
 void UserInterface::redo() {
     if(canRedo()){
@@ -86,10 +89,11 @@ void UserInterface::redo() {
         sundo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
 	setCentralWidget(m_displayedTree);
-    } else cout << "rien a  refaire" << endl;
+    } else {
+      getPropertyBox()->getInfoBox()->setText("Il n'y a rien a refaire");
+    }
 }
-//	void clearSelection();
-//void UserInterface::
+
 
 bool UserInterface::canCopy(){
     return (int)m_displayedTree->getSelectedItems().size() == 1;
@@ -98,7 +102,7 @@ bool UserInterface::canCopy(){
 void UserInterface::copy() {
     if (canCopy()){
         copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
-    }
+    } else getPropertyBox()->getInfoBox()->setText("Vous ne pouvez copier qu'une tache\n Veuillez selectionner une tache à copier");
     m_displayedTree->clearSelection();
 }
 
@@ -107,7 +111,7 @@ void ClearRedo(){
 }
 
 void UserInterface::cut() {
-    if (true || canCopy()){
+    if (canCopy()){
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         copyTmp = new TaskTree(tmp);
         tmp->remove();
@@ -118,9 +122,10 @@ void UserInterface::cut() {
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
 	setCentralWidget(m_displayedTree);
-    }
+    } else getPropertyBox()->getInfoBox()->setText("Vous ne pouvez couper qu'une tache\n Veuillez selectionner une tache à couper");
 }
 void UserInterface::paste(){
+  if (copyTmp != 0){
     if (canCopy()){
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         tmp->copyPaste(copyTmp);
@@ -131,7 +136,8 @@ void UserInterface::paste(){
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
     	setCentralWidget(m_displayedTree);
-    }
+    } else getPropertyBox()->getInfoBox()->setText("Veuillez selectionner une tache pour spécifier le lieu de collage");
+  } else getPropertyBox()->getInfoBox()->setText("Pour coller, vous devez copier ou couper une tache au préalable"); 
 }
 
 
@@ -143,53 +149,39 @@ void UserInterface::about() {
     QMessageBox::about(this, tr("About TaskTree"), tr("Morigault Thierry,Yasin  Uyar,Cadour Ulysse,Joudrier Hugo"));
 }
 
-void UserInterface::addAbstractionTask(){
+void UserInterface::addTask(TaskTree::Type type){
+  if((int)m_displayedTree->getSelectedItems().size() == 1){
     TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     string name = "Task "+indiceTasktree;
     indiceTasktree++;
-    tmp->addSubtree(new TaskTree(name,TaskTree::ABSTRACTION));
-		//tmp->setParent(item);
+    tmp->addSubtree(new TaskTree(name,type));
+    
     m_displayedTree->clearSelection();
     TaskTree* root = m_displayedTree->getTaskTree();
     TaskTree* tmpUndo = new TaskTree(root);
     sundo.push(tmpUndo);
     ClearRedo();
-		m_displayedTree = new TaskTreeViewer(root,this);
+    m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
-		//m_displayedTree->createTaskTreeItems(tmp);
-		//m_displayedTree->displayTaskTreeItems();
+  } else {
+    getPropertyBox()->getInfoBox()->setText("Pour ajouter une nouvelle tache, veuillez selectionner la tache parente"); 
+    m_displayedTree->clearSelection();
+  }
+}
+
+void UserInterface::addAbstractionTask(){//ABSTRACTION
+  addTask(TaskTree::ABSTRACTION);
 }
 
 void UserInterface::addApplicationTask(){
-    TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
-    string name = "Task "+indiceTasktree;
-    indiceTasktree++;
-    tmp->addSubtree(new TaskTree(name,TaskTree::APPLICATION));
-
-    m_displayedTree->clearSelection();
-    TaskTree* root = m_displayedTree->getTaskTree();
-    TaskTree* tmpUndo = new TaskTree(root);
-    sundo.push(tmpUndo);
-    ClearRedo();
-    m_displayedTree = new TaskTreeViewer(root,this);
-    setCentralWidget(m_displayedTree);
+  addTask(TaskTree::APPLICATION);
 }
 
 void UserInterface::addInteractionTask(){
-    TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
-    string name = "Task "+indiceTasktree;
-    indiceTasktree++;
-    tmp->addSubtree(new TaskTree(name,TaskTree::INTERACTION));
-
-    m_displayedTree->clearSelection();
-    TaskTree* root = m_displayedTree->getTaskTree();
-    TaskTree* tmpUndo = new TaskTree(root);
-    sundo.push(tmpUndo);
-    ClearRedo();
-    m_displayedTree = new TaskTreeViewer(root,this);
-    setCentralWidget(m_displayedTree);
+    addTask(TaskTree::INTERACTION);
 }
 void UserInterface::addUserTask(){
+  addTask(TaskTree::USER);/*
     TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     string name = "Task "+indiceTasktree;
     indiceTasktree++;
@@ -201,9 +193,10 @@ void UserInterface::addUserTask(){
     sundo.push(tmpUndo);
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
-    setCentralWidget(m_displayedTree);
+    setCentralWidget(m_displayedTree);*/
 }
 void UserInterface::deleteTask(){
+  if((int)m_displayedTree->getSelectedItems().size() > 0){
     vector<TaskTree*> tmp;
     for(int i=0;i<(int)m_displayedTree->getSelectedItems().size();i++){
         bool isSon = false;
@@ -221,9 +214,11 @@ void UserInterface::deleteTask(){
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
+  } else getPropertyBox()->getInfoBox()->setText("Pour supprimer des taches, veuillez en selectionner au moins une");
 }
 
 void UserInterface::addTransition(Transition::Type type){
+  getPropertyBox()->getInfoBox()->setText("Pour l'ajout de transitions, veuillez en selectionner au moins une. \nLa selection de deux noeuds voisins ajoute la transition entre ces deux noeuds.\nLa selection de plus de deux noeuds ajoute des transitions sortantes pour chacuns de ces noeuds.");
   TaskTree* tmp;
   TaskTree* tmp2;
   if((int)m_displayedTree->getSelectedItems().size() == 1){
