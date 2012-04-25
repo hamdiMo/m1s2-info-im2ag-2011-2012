@@ -76,7 +76,7 @@ void UserInterface::undo() {
         sredo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
 
-    } else cout << "rien Ã  annuler" << endl;
+    } else cout << "rien a annuler" << endl;
 }
 void UserInterface::redo() {
     if(canRedo()){
@@ -84,7 +84,7 @@ void UserInterface::redo() {
         sredo.pop();
         sundo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
-    } else cout << "rien Ã  annuler" << endl;
+    } else cout << "rien a  refaire" << endl;
 }
 
 bool UserInterface::canCopy(){
@@ -204,16 +204,69 @@ void UserInterface::deleteTask(){
     m_displayedTree = new TaskTreeViewer(root,this);
 }
 
+void UserInterface::addTransition(Transition::Type type){
+  TaskTree* tmp;
+  TaskTree* tmp2;
+  if((int)m_displayedTree->getSelectedItems().size() == 1){
+    tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
+    tmp->setTransitionOut(type);
+  } else if ((int)m_displayedTree->getSelectedItems().size() == 2){
+    
+    tmp = m_displayedTree->getSelectedItems()[0]->getTaskTree();
+    tmp2 = m_displayedTree->getSelectedItems()[1]->getTaskTree();
+    if(((tmp->getIndex() + 1) == tmp2->getIndex()) && tmp->getParent() == tmp2->getParent()){
+      tmp->setTransitionOut(type);
+    } else if ((tmp->getIndex() == tmp2->getIndex() + 1) && tmp->getParent() == tmp2->getParent()){
+      tmp->setTransitionIn(type);
+    } else{
+      tmp->setTransitionOut(type);
+      tmp2->setTransitionOut(type);
+    }
+  } else {
+    for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
+      m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
+  }
+  TaskTree* root = m_displayedTree->getTaskTree();
+  TaskTree* tmpUndo = new TaskTree(root);
+  sundo.push(tmpUndo);
+  ClearRedo();
+  m_displayedTree = new TaskTreeViewer(root,this);
+}
 
-void UserInterface::addChoiceTransition(){}
-void UserInterface::addOrderIndependenceTransition(){}
-void UserInterface::addInterleavingTransition(){}
-void UserInterface::addSynchronizationTransition(){}
-void UserInterface::addDisablingTransition(){}
-void UserInterface::addSuspendResumeTransition(){}
-void UserInterface::addSequentialEnablingTransition(){}
-void UserInterface::addSequentialEnablingInfoTransition(){}
-void UserInterface::deleteTransition(){}
+void UserInterface::deleteTransition(){
+  for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
+      m_displayedTree->getSelectedItems()[i]->getTaskTree()->removeTransitionOut();
+}
+
+
+void UserInterface::addChoiceTransition(){
+  addTransition(Transition::CHOICE);
+}
+
+void UserInterface::addOrderIndependenceTransition(){
+  addTransition(Transition::ORDERINDEPENDENCE);
+}
+
+void UserInterface::addInterleavingTransition(){
+  addTransition(Transition::INTERLEAVING);
+}
+
+void UserInterface::addSynchronizationTransition(){
+  addTransition(Transition::SYNCHRONIZATION);
+}
+void UserInterface::addDisablingTransition(){
+  addTransition(Transition::DISABLING);
+}
+void UserInterface::addSuspendResumeTransition(){
+  addTransition(Transition::SUSPENDRESUME);
+}
+void UserInterface::addSequentialEnablingTransition(){
+  addTransition(Transition::SEQUENTIALENABLING);
+}
+void UserInterface::addSequentialEnablingInfoTransition(){
+  addTransition(Transition::SEQUENTIALENABLINGINFO);
+}
+
 
 
 
