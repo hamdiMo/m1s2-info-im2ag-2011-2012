@@ -165,7 +165,7 @@ void UserInterface::paste(){
         m_displayedTree = new TaskTreeViewer(root,this);
     	setCentralWidget(m_displayedTree);
     } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Veuillez selectionner une tache<br> pour spÃ©cifier le lieu de collage</font>");
-  } else getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Pour coller, vous devez copier<br>ou couper une tache au prÃ©alable</font>"); 
+  } else getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Pour coller, vous devez copier<br>ou couper une tache au prealable</font>"); 
 }
 
 
@@ -174,7 +174,23 @@ void UserInterface::zoomOut() {}
 void UserInterface::normalSize() {}
 void UserInterface::fitToWindow() {}
 void UserInterface::about() {
-    QMessageBox::about(this, tr("About TaskTree"), tr("Morigault Thierry,Yasin  Uyar,Cadour Ulysse,Joudrier Hugo"));
+  QString s = QString("<font color=\"red\"><center><b>Creation et Edition D'Arbre de Tache<br>Morigault Thierry, Uyar Yasin, Cadour Ulysse, Joudrier Hugo</b></center></font><br><br>");
+  s+= QString("La <font color=\"green\"><b>barre inférieure</b></font> est une barre d'édition de tache. Elle Permet l'<b>ajout, la suppression et la modification</b> de taches et transitions.<br><br>");
+  s+= QString("La <font color=\"green\"><b>barre latérale droite</b></font> permet <b>l'édition d'une tache</b> et contient la <font color=\"green\">zone de notification</font>.<br><br>");
+  s+= QString("La <font color=\"green\"><b>zone de notification</b></font> permet l'affichage de messages d'aides à l'utilisation.<br><br>");
+  s+= QString("La <font color=\"green\"><b>zone centrale</b></font> permet l'affichage et l'édition de l'arbre des taches, la <b>selection de taches et contraintes et leur édition</b> à l'aide d'un menu circulaire (accessible à l'aide d'un clic droit).<br><br>");
+  s+= QString("Pour <font color=\"green\"><b>ajouter une tache</b></font>, vous devez selectionner une tache parente puis ajouter la tache à l'aide d'un <font color=\"green\">clic droit(menu circulaire)</font> ou d'un clic sur la barre inférieure.<br><br>");
+  s+= QString("Pour <font color=\"green\"><b>ajouter une contrainte</b></font>, il faut selectionner des taches et cliquer sur l'icone correspondante dans la barre inférieure ou sur le menu circulaire:<br>");
+  s+= QString("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Une seule tache selectionnée implique la création d'une &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contrainte entre cette tache et son voisin droit.<br>");
+  s+= QString("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Deux taches selectionnes implique la création d'une contrainte &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entre ces deux tâches si elles sont voisines, la création de deux &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contraintes droites sinon.<br>");
+  s+= QString("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Plus de deux taches selectionnes implique la création de &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contraintes droites pour toutes ces tâches si possible.<br><br>");
+  s+= QString("Lorsque l'ajout de tâche, ou de contrainte est impossible, un message s'affiche dans la zone de notification.<br><br>");
+  s+= QString("Pour <font color=\"green\"><b>supprimer une ou plusieurs taches</b></font>, il suffit de les selectionner et de les supprimer grace à l'utilisation du menu circulaire ou des boutons dans la barre inférieure. Attention, tout le sous arbre sera supprime.<br><br>");
+  
+  
+  
+  
+    QMessageBox::about(this, tr("About TaskTree"), s);
 }
 
 void UserInterface::addTask(TaskTree::Type type){
