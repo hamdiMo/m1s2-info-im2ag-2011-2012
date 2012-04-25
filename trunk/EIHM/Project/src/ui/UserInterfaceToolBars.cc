@@ -13,7 +13,7 @@
    addToolBar(Qt::TopToolBarArea, createFileToolBar());
    addToolBar(Qt::TopToolBarArea, createEditToolBar());
    addToolBar(Qt::TopToolBarArea, createViewToolBar());
-   addToolBar(Qt::LeftToolBarArea, createTaskToolBar());
+   addToolBar(Qt::BottomToolBarArea, createTaskToolBar());
  }
 QToolBar* UserInterface::createFileToolBar() {
   m_fileToolBar = new QToolBar(tr("&File"), this);
@@ -63,6 +63,6 @@ QToolBar* UserInterface::createTaskToolBar(){
   m_taskToolBar->addAction(m_addSuspendResumeTransitionAct);
   m_taskToolBar->addAction(m_addSequentialEnablingTransitionAct);
   m_taskToolBar->addAction(m_addSequentialEnablingInfoTransitionAct);
-  m_taskToolBar->addAction(m_deleteTransitionAct);
+  // m_taskToolBar->addAction(m_deleteTransitionAct);
   return m_taskToolBar;
 }

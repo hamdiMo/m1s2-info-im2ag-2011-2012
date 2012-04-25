@@ -125,17 +125,12 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
 void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
   m_selectionTool->mousePressEvent(event);
   if (event->button()==Qt::RightButton){
-    //std::cout<<"rightbutton"<<"x :"<<event->x()<<"  y: " << event->y()<<std::endl;
-    //ajout des differentes actions...
-
-      std::vector<QAction*> *m_vector =new std::vector<QAction*>();
-      m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
-
-      m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
-      m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
-      m_vector->push_back(m_userInterface->m_addUserTaskAct);
-      m_vector->push_back(m_userInterface->m_deleteTaskAct);
-      m_vector->push_back(m_userInterface->m_addChoiceTransitionAct);
+    std::vector<QAction*> *m_vector =new std::vector<QAction*>();
+    m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
+    m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
+    m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
+    m_vector->push_back(m_userInterface->m_addUserTaskAct);
+    m_vector->push_back(m_userInterface->m_deleteTaskAct);
     m_roundedMenu = new RoundedMenu(NULL,event->x(),event->y(),m_vector);
     p_proxy_roundedMenu = m_scene->addWidget(m_roundedMenu);
     QPointF pos = mapToScene(event->x(), event->y());
