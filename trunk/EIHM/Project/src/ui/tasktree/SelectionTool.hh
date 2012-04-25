@@ -11,7 +11,7 @@ class TaskTreeViewer;
 
 class SelectionTool : public QWidget { Q_OBJECT
 public:
-    SelectionTool (qreal _x, qreal _y, qreal _width, qreal _height, QWidget *_parent, TaskTreeViewer *_ttv);
+    SelectionTool (QWidget *_parent, TaskTreeViewer *_ttv);
     ~SelectionTool();
 
 

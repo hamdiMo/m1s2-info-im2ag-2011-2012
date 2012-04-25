@@ -8,7 +8,7 @@
 
 using namespace std;
 
-SelectionTool::SelectionTool( qreal _x, qreal _y, qreal _width, qreal _height, QWidget *_parent, TaskTreeViewer *_ttv)
+SelectionTool::SelectionTool(QWidget *_parent, TaskTreeViewer *_ttv)
     : QWidget(_parent)
 {
     setAttribute(Qt::WA_TranslucentBackground);
