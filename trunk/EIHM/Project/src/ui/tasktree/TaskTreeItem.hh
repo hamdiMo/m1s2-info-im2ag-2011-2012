@@ -14,6 +14,8 @@
 #include "TaskTree.hh"
 #endif
 
+#define ITEM_SIZE 32
+
 class TaskTreeItem : public QLabel { Q_OBJECT
 
 public:
