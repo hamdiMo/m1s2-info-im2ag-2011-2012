@@ -151,13 +151,11 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
       m_beginX = pos.x();
       m_beginY = pos.y();
       displayTaskTreeItems();
-      //item->getQGraphicsProxyWidget()->setPos(item->getX(), item->getY());
     }
     break;
   case PROPERTIES:
     {
-      // if (m_roundedMenu != NULL) 
-      // 	m_roundedMenu->mouseMoveEvent(event);
+      m_roundedMenu->mouseMoveEvent(event);
     }
     break;
   default:
