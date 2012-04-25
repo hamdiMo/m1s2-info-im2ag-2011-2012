@@ -57,6 +57,7 @@ void TaskTreeItem::translate(int x, int y) {
 }
 
 bool TaskTreeItem::contain(int x, int y){
-	if (x >= m_x-16 && x <= m_x+16 && y >= m_y && y <= m_y+32)
+    if (x >= m_x && x <= m_x+32 && y >= m_y && y <= m_y+32)
 		return true;
+    return false;
 }

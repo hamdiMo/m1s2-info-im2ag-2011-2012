@@ -5,6 +5,7 @@
 #include <QGraphicsProxyWidget>
 
 #include "TaskTreeViewer.hh"
+#include "TaskTreeItem.hh"
 
 class TaskTreeViewer;
 
@@ -24,12 +25,16 @@ public:
     void  mouseReleaseEvent ( QMouseEvent * event );
     void  wheelEvent ( QWheelEvent * event );
 
+signals:
+
+    void selectedItemsChanged();
+
 private :
     QGraphicsRectItem* m_selectionRect;
     int m_dragBeginX;
     int m_dragBeginY;
     bool m_leftButtonActive;
-    QGraphicsProxyWidget* p_proxy_selectionTool;
     TaskTreeViewer* m_taskTreeViewer;
+    int xLeft, yTop, xRight, yBottom;
 };
 #endif

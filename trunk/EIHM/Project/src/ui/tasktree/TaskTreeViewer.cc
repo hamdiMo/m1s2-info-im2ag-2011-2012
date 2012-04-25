@@ -28,6 +28,7 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree,UserInterface* interface) :
   displayTaskTreeItems();
 
   m_selectionTool = new SelectionTool(0, 0, 0, 0, NULL, this);
+  p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
   
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
@@ -48,6 +49,12 @@ TaskTree* TaskTreeViewer::getTaskTree() { return m_taskTree; }
 TaskTreeItem* TaskTreeViewer::getRoot() { return m_taskTreeItemRoot; }
 
 QGraphicsScene* TaskTreeViewer::getScene(){return m_scene;}
+
+QGraphicsProxyWidget* TaskTreeViewer::getproxySelectionTool() {return p_proxy_selectionTool;}
+
+std::vector<TaskTreeItem*>* TaskTreeViewer::getRefTaskTreeItems(){return &m_taskTreeItems;}
+
+std::vector<TaskTreeItem*>* TaskTreeViewer::getRefselectedItems(){return &m_selectedItems;}
 
 
 /** Methodes */
@@ -136,57 +143,7 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ){
 
 void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   m_selectionTool->mouseReleaseEvent(event);
-  /*
-  // on efface la sélection
-  m_selectedItems.clear();
-  // clic
-  if (event->x() == m_dragBeginX || event->y() == m_dragBeginY) {
-    // puis on ajoute dans la nouvelle sélection tous les items dans le cadre de sélection
-      std::vector<TaskTreeItem*>::iterator it;
-      for(it = m_taskTreeItems.begin();it != m_taskTreeItems.end();++it){
-        if ((*it)->contain(event->x(), event->y())){
-          m_selectedItems.push_back(*it);
-          break;
-        }
-      }
-  }
-  */
 
-
-  /*
-    std::vector<TaskTreeItem*>::iterator it;
-    for(it = m_taskTreeItems.begin();it != m_taskTreeItems.end();++it){
-
-        // si un des angles du cadre est dans un des items
-        if ((*it)->contain(xLeft, yBottom)
-        || (*it)->contain(xRight, yBottom)
-        || (*it)->contain(xRight, yTop)
-        || (*it)->contain(xLeft, yTop)) {
-            m_selectedItems.push_back((*it));
-        } // sinon, si une des arrêtes du cadre passe dans un item
-        else if ((xLeft >= (*it)->getX()-16
-          && xLeft <= (*it)->getX()+16
-          && yBottom >= (*it)->getY()+32
-          && yTop <= (*it)->getY())
-            || (xRight >= (*it)->getX()-16
-            && xRight <= (*it)->getX()+16
-            && yBottom >= (*it)->getY()+32
-            && yTop <= (*it)->getY())
-            || (yTop >= (*it)->getY()
-            && yTop <= (*it)->getY()+32
-            && xRight >= (*it)->getX()+16
-            && xLeft <= (*it)->getX()-16)
-            || (yBottom >= (*it)->getY()
-            && yBottom <= (*it)->getY()+32
-            && xRight >= (*it)->getX()+16
-            && xLeft <= (*it)->getX()-16)) {
-            m_selectedItems.push_back((*it));
-       }
-    }
-
-    selectedItemsChanged();
-  }
-*/
 
   if (m_roundedMenu!=NULL) {
     m_roundedMenu->mouseReleaseEvent(event);

@@ -30,6 +30,9 @@ public:
   TaskTree* getTaskTree();
   TaskTreeItem* getRoot();
   QGraphicsScene* getScene();
+  QGraphicsProxyWidget* getproxySelectionTool();
+  std::vector<TaskTreeItem*>* getRefTaskTreeItems();
+  std::vector<TaskTreeItem*>* getRefselectedItems();
 
   /** Methodes */
   TaskTreeItem* createTaskTreeItems(TaskTree* t);
@@ -47,9 +50,7 @@ public slots:
   void  mouseReleaseEvent ( QMouseEvent * event );    
   void  wheelEvent ( QWheelEvent * event );
 
-signals:
 
-  void selectedItemsChanged();
 
 private:
 
@@ -63,6 +64,7 @@ private:
   std::vector<TaskTreeItem*> m_selectedItems;
   SelectionTool* m_selectionTool;
   QGraphicsProxyWidget* p_proxy_roundedMenu;
+  QGraphicsProxyWidget* p_proxy_selectionTool;
 };
 
 #endif
