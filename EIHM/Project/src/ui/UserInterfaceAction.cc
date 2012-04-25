@@ -61,7 +61,6 @@ void UserInterface::save() {
 // void UserInterface::close(QWidget* q) {
 //   m_pictureManager->removePictureModifier((PictureModifier*) q);
 // }
-void UserInterface::exit() {} 
 
 bool UserInterface::canUndo(){
     return !sundo.empty();
@@ -70,6 +69,31 @@ bool UserInterface::canUndo(){
 bool UserInterface::canRedo() {
     return !sredo.empty();
 }
+
+bool UserInterface::canCopy(){
+    return (int)m_displayedTree->getSelectedItems().size() == 1;
+}
+bool UserInterface::canCut(){
+    return (int)m_displayedTree->getSelectedItems().size() == 1;
+}
+bool UserInterface::canPaste(){
+    return ((int)m_displayedTree->getSelectedItems().size() == 1) && copyTmp!=0;
+}
+bool UserInterface::canDelete(){
+    return (int)m_displayedTree->getSelectedItems().size() > 0;
+}
+
+bool UserInterface::canAddTask(){
+    return (int)m_displayedTree->getSelectedItems().size() == 1;
+}
+
+bool UserInterface::canAddTransition(){
+    return (int)m_displayedTree->getSelectedItems().size() >= 1;
+}
+
+void UserInterface::exit() {} 
+
+
 
 void UserInterface::undo() {
     if(canUndo()){
@@ -99,9 +123,6 @@ void UserInterface::redo() {
 }
 
 
-bool UserInterface::canCopy(){
-    return (int)m_displayedTree->getSelectedItems().size() == 1;
-}
 
 void UserInterface::copy() {
     if (canCopy()){
