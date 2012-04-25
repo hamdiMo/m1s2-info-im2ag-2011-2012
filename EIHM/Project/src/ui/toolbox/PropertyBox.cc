@@ -27,6 +27,7 @@ PropertyBox::PropertyBox(UserInterface* userInterface) :
   m_fulllayout->addStretch();
   m_fulllayout->addWidget(createInfoGroupBox());
   setLayout(m_fulllayout);
+ setMaximumSize(400,400);
 }
 
 
@@ -70,7 +71,7 @@ void PropertyBox::setType(TaskTree::Type type) {
 QGroupBox* PropertyBox::createInfoGroupBox(){
   QGroupBox* groupBox = new QGroupBox(tr("Informations"));
   QVBoxLayout* layout = new QVBoxLayout();
-  m_infoBox = new QLabel("hello");
+  m_infoBox = new QLabel("");
   layout->addWidget(m_infoBox);
   groupBox->setLayout(layout);
  return groupBox;

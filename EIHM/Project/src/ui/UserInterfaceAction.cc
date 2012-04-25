@@ -2,6 +2,7 @@
 #include "UserInterface.hh"
 #include "tasktree\TaskTreeViewer.hh"
 #include "tasktree\TaskTreeItem.hh"
+#include "toolbox\PropertyBox.hh"
 #else
 #include "UserInterface.hh"
 #include "tasktree/TaskTreeViewer.hh"
@@ -106,7 +107,7 @@ void UserInterface::copy() {
     if (canCopy()){
         copyTmp = (m_displayedTree->getSelectedItems()).front()->getTaskTree();
 	getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete copiee.<br>Selectionnez une tache cible pour coller.</font>"); 
-    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez copier qu'une tache<br>Veuillez selectionner une tache Ã  copier</font>");
+    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez copier qu'une tache<br>Veuillez selectionner une tache Ã  copier</font>");
     m_displayedTree->clearSelection();
 }
 
@@ -127,7 +128,7 @@ void UserInterface::cut() {
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
 	setCentralWidget(m_displayedTree);
-    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez couper qu'une tache<br>Veuillez selectionner une tache Ã  couper</font>");
+    } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez couper qu'une tache<br>Veuillez selectionner une tache Ã  couper</font>");
 }
 void UserInterface::paste(){
   if (copyTmp != 0){
