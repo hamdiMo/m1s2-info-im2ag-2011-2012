@@ -90,14 +90,19 @@ void TaskTreeViewer::displayTaskTreeItems() {
       m_taskTreeItems[i]->setQGraphicsProxyWidget(proxy);
     } else {
       if (m_taskTreeItems[i]->getQGraphicsItemCadre() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemCadre());
+      if (m_taskTreeItems[i]->getQGraphicsItemSelect() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemSelect());
       if (m_taskTreeItems[i]->getQGraphicsItemParent() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemParent());
       if (m_taskTreeItems[i]->getQGraphicsItemTransition1() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition1());
       if (m_taskTreeItems[i]->getQGraphicsItemTransition2() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemTransition2());
       if (m_taskTreeItems[i]->getQGraphicsItemIconeTransition() != 0) m_scene->removeItem(m_taskTreeItems[i]->getQGraphicsItemIconeTransition());
     }
     QGraphicsRectItem *cadre = m_scene->addRect(m_taskTreeItems[i]->getX(), m_taskTreeItems[i]->getY(), 32, 32);
-        QGraphicsLineItem *parent = 0, *transition1 = 0, *transition2 = 0;
-        QGraphicsPixmapItem* iconeTransition = 0;
+    bool isSelected = false;
+    for (unsigned int j = 0; j < m_selectedItems.size(); j++) if (m_selectedItems[j] == m_taskTreeItems[i]) isSelected = true;
+    if (isSelected) 
+      m_taskTreeItems[i]->setQGraphicsItemSelect(m_scene->addRect(m_taskTreeItems[i]->getX()-1, m_taskTreeItems[i]->getY()-1, 34, 34));
+    QGraphicsLineItem *parent = 0, *transition1 = 0, *transition2 = 0;
+    QGraphicsPixmapItem* iconeTransition = 0;
     if (m_taskTreeItems[i]->getParent() != 0) {
       parent = m_scene->addLine(m_taskTreeItems[i]->getX()+16, m_taskTreeItems[i]->getY(),
                                 m_taskTreeItems[i]->getParent()->getX()+16, m_taskTreeItems[i]->getParent()->getY()+32);
@@ -221,6 +226,7 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	  m_state = SELECTION; 
 	}
       }
+      displayTaskTreeItems();
     }
     break;
   case SELECTION:
@@ -248,6 +254,7 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
   case SELECTION:
     {
       if (m_selectedItems.size() == 0) m_selectionTool->mouseReleaseEvent(event);
+      displayTaskTreeItems();
       m_state = IDLE;
     }
     break;
