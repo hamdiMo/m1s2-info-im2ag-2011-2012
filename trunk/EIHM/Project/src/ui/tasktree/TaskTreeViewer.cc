@@ -208,6 +208,8 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	if (event->button() == Qt::LeftButton) {
 	  m_beginX = pos.x();
 	  m_beginY = pos.y();
+	  QCursor main(Qt::ClosedHandCursor);
+	  setCursor(main);
 	  m_state = SELECTION; 
 	}
 	else if (event->button() == Qt::RightButton) {
@@ -234,6 +236,8 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	else if (event->button() == Qt::RightButton) {
 	  m_beginX = pos.x();
 	  m_beginY = pos.y();
+	  QCursor main(Qt::ClosedHandCursor);
+	  setCursor(main);
 	  m_state = TRANSLATE;
 	}
       }
@@ -269,6 +273,8 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
     {
       if (m_selectedItems.size() == 0) m_selectionTool->mouseReleaseEvent(event);
       displayTaskTreeItems();
+      QCursor main(Qt::ArrowCursor);
+      setCursor(main);
       m_state = IDLE;
     }
     break;
@@ -281,6 +287,8 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
     break;
   case TRANSLATE:
     {
+      QCursor main(Qt::ArrowCursor);
+      setCursor(main);
       m_state = IDLE;
     }
     break;
