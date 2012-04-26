@@ -21,7 +21,7 @@ class TaskTreeViewer : public QGraphicsView { Q_OBJECT
 
 public:
 
-  enum State { IDLE, SELECTION, PROPERTIES };
+  enum State { IDLE, SELECTION, PROPERTIES, TRANSLATE };
 
   /** Constructeurs et destructeurs */
   TaskTreeViewer(TaskTree*,UserInterface*);

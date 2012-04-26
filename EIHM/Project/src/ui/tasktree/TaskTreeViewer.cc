@@ -180,10 +180,16 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
       m_roundedMenu->mouseMoveEvent(event);
     }
     break;
-  default:
+  case TRANSLATE:
     {
-      
+      m_taskTreeItemRoot->translate(pos.x()-m_beginX, pos.y()-m_beginY);
+      m_beginX = pos.x();
+      m_beginY = pos.y();
+      displayTaskTreeItems();
     }
+    break;
+  default:
+    {}
     break;
   }
 }
@@ -225,6 +231,11 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	  m_selectionTool->mousePressEvent(event);
 	  m_state = SELECTION; 
 	}
+	else if (event->button() == Qt::RightButton) {
+	  m_beginX = pos.x();
+	  m_beginY = pos.y();
+	  m_state = TRANSLATE;
+	}
       }
       displayTaskTreeItems();
     }
@@ -233,6 +244,9 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
     {}
     break;
   case PROPERTIES:
+    {}
+    break;
+  case TRANSLATE:
     {}
     break;
   default:
@@ -262,6 +276,11 @@ void TaskTreeViewer::mouseReleaseEvent ( QMouseEvent * event ){
     {
       m_roundedMenu->mouseReleaseEvent(event);
       if (p_proxy_roundedMenu) m_scene->removeItem(p_proxy_roundedMenu);
+      m_state = IDLE;
+    }
+    break;
+  case TRANSLATE:
+    {
       m_state = IDLE;
     }
     break;
