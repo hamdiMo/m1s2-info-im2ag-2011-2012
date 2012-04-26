@@ -11,7 +11,37 @@
     m_type(type),
     m_from(from),
     m_to(to)
-    {}
+    {
+      switch(m_type){
+      case Transition::CHOICE: 
+    m_pathIcone = "images/choice.gif";
+	break;
+      case Transition::ORDERINDEPENDENCE :
+    m_pathIcone = "images/cut.gif";
+	break;
+      case Transition::INTERLEAVING :
+    m_pathIcone = "images/interleave.gif";
+	break;	
+      case Transition::SYNCHRONIZATION :
+    m_pathIcone = "images/fullsincro.gif";
+	break;	
+      case Transition::DISABLING :
+    m_pathIcone = "images/disabling.gif";
+	break;	      
+      case Transition::SUSPENDRESUME :
+    m_pathIcone = "images/suspend.gif";
+	break;	      
+      case Transition::SEQUENTIALENABLING :
+    m_pathIcone = "images/enabling.gif";
+	break;      
+      case Transition::SEQUENTIALENABLINGINFO :
+    m_pathIcone = "images/enablinginfo.gif";
+	break;      
+      }
+      
+      
+      
+    }
     
   Transition::~Transition() {}
 
