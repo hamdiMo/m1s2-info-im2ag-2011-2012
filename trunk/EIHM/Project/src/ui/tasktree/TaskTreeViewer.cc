@@ -60,6 +60,14 @@ std::vector<TaskTreeItem*>* TaskTreeViewer::getRefTaskTreeItems(){return &m_task
 
 std::vector<TaskTreeItem*>* TaskTreeViewer::getRefselectedItems(){return &m_selectedItems;}
 
+void TaskTreeViewer::setSelectedItems(std::vector<TaskTree*> selectedTaskTree) {
+    for (unsigned int i = 0; i < selectedTaskTree.size(); i++)
+      for (unsigned int j = 0; j < m_taskTreeItems.size(); j++) {
+	    if (m_taskTreeItems[j]->getTaskTree() == selectedTaskTree[i])
+	      m_selectedItems.push_back(m_taskTreeItems[j]);
+      }
+      displayTaskTreeItems();
+}
 
 /** Methodes */
 TaskTreeItem* TaskTreeViewer::createTaskTreeItems(TaskTree* t) {
