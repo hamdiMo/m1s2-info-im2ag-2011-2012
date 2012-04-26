@@ -221,7 +221,10 @@ void TaskTreeViewer::mousePressEvent ( QMouseEvent * event ) {
 	  m_state = SELECTION; 
 	}
 	else if (event->button() == Qt::RightButton) {
-	  std::vector<QAction*> *m_vector =new std::vector<QAction*>();
+	  /*****/
+	  
+	 
+	  	  std::vector<QAction*> *m_vector =new std::vector<QAction*>();
 	  m_vector->push_back(m_userInterface->m_addAbstractionTaskAct);
 	  m_vector->push_back(m_userInterface->m_addApplicationTaskAct);
 	  m_vector->push_back(m_userInterface->m_addInteractionTaskAct);
