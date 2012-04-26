@@ -34,6 +34,7 @@ public:
   int getYMax();
   QGraphicsProxyWidget* getQGraphicsProxyWidget();
   QGraphicsRectItem* getQGraphicsItemCadre();
+  QGraphicsRectItem* getQGraphicsItemSelect();
   QGraphicsLineItem* getQGraphicsItemParent();
   QGraphicsLineItem* getQGraphicsItemTransition1();
   QGraphicsLineItem* getQGraphicsItemTransition2();
@@ -51,6 +52,7 @@ public:
   void setYMax(int);
   void setQGraphicsProxyWidget(QGraphicsProxyWidget*);
   void setQGraphicsItemCadre(QGraphicsRectItem*);
+  void setQGraphicsItemSelect(QGraphicsRectItem*);
   void setQGraphicsItemParent(QGraphicsLineItem*);
   void setQGraphicsItemTransition1(QGraphicsLineItem*);
   void setQGraphicsItemTransition2(QGraphicsLineItem*);
@@ -71,7 +73,7 @@ private:
   int m_x, m_y;
   int m_xMin, m_yMin, m_xMax, m_yMax;
   QGraphicsProxyWidget *m_proxy;
-  QGraphicsRectItem *m_itemCadre;
+  QGraphicsRectItem *m_itemCadre, *m_itemSelect;
   QGraphicsLineItem *m_itemParent, *m_itemTransition1, *m_itemTransition2;
   QGraphicsPixmapItem* m_itemIconeTransition;
 };

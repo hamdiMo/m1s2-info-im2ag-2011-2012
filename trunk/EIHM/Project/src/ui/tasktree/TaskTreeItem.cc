@@ -16,6 +16,7 @@ TaskTreeItem::TaskTreeItem(TaskTree* taskTree) :
   m_yMax(2*ITEM_SIZE),
   m_proxy(0),
   m_itemCadre(0),
+  m_itemSelect(0),
   m_itemTransition1(0),
   m_itemTransition2(0)
 {/*Draw the correct icon*/
@@ -50,6 +51,7 @@ int TaskTreeItem::getXMax() { return m_xMax; }
 int TaskTreeItem::getYMax() { return m_yMax; }
 QGraphicsProxyWidget* TaskTreeItem::getQGraphicsProxyWidget() { return m_proxy; }
 QGraphicsRectItem* TaskTreeItem::getQGraphicsItemCadre() { return m_itemCadre; }
+QGraphicsRectItem* TaskTreeItem::getQGraphicsItemSelect() { return m_itemSelect; }
 QGraphicsLineItem* TaskTreeItem::getQGraphicsItemParent() { return m_itemParent; }
 QGraphicsLineItem* TaskTreeItem::getQGraphicsItemTransition1() { return m_itemTransition1; }
 QGraphicsLineItem* TaskTreeItem::getQGraphicsItemTransition2() { return m_itemTransition2; }
@@ -66,6 +68,7 @@ void TaskTreeItem::setXMax(int xMax) { m_xMax = xMax; }
 void TaskTreeItem::setYMax(int yMax) { m_yMax = yMax; }
 void TaskTreeItem::setQGraphicsProxyWidget(QGraphicsProxyWidget* proxy) { m_proxy = proxy; }
 void TaskTreeItem::setQGraphicsItemCadre(QGraphicsRectItem* item) { m_itemCadre = item; }
+void TaskTreeItem::setQGraphicsItemSelect(QGraphicsRectItem* item) { m_itemSelect = item; }
 void TaskTreeItem::setQGraphicsItemParent(QGraphicsLineItem* item) { m_itemParent = item; }
 void TaskTreeItem::setQGraphicsItemTransition1(QGraphicsLineItem* item) { m_itemTransition1 = item; }
 void TaskTreeItem::setQGraphicsItemTransition2(QGraphicsLineItem* item) { m_itemTransition2 = item; }
