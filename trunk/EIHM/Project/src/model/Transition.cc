@@ -17,7 +17,7 @@
     m_pathIcone = "images/choice.gif";
 	break;
       case Transition::ORDERINDEPENDENCE :
-    m_pathIcone = "images/cut.gif";
+    m_pathIcone = "images/order.gif";
 	break;
       case Transition::INTERLEAVING :
     m_pathIcone = "images/interleave.gif";
