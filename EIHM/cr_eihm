@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+%%% import section 
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel} 
+\usepackage{url} %pour écrire des adresses cliquables
+\usepackage{lmodern} %pour changer le pack de police
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry} %pour les marges
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+%setSection
+\setlength{\baselineskip}{16.0pt}    % 16 pt usual spacing between lines
+%% \setlength{\parskip}{3pt plus 2pt}
+\setlength{\parindent}{20pt}
+\setlength{\textwidth}{150mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\noindent Ulysse Cadour \\
+Yasin Uyar\\
+Hugo Joudrier\\
+Thierry Morigault\\
+
+\begin{center}
+  {\large  Compte Rendu Projet} \\ 
+\end{center}
+\newpage
+\tableofcontents
+\setcounter{tocdepth}{1}
+\newpage
+
+
+\section{Critique selon les critères de Bastien et Scapin}
+
+\subsection{Guidage}
+
+Nous avons inclus une zone de notification permettant l'affichage de messages d'aide à l'utilisation. Ces messages s'affichent de différentes couleurs selon leur type (rouge : erreur, vert : aide).\\
+Les icones d'interaction sur la vue (copier/coller, zoom etc) peuvent être grisés pour empêcher des actions interdites. En revanche pour les icônes d'interaction avec l'arbre des tâches un message d'erreur s'affiche dans la zone de notification. Cela permet un apprentissage plus rapide : si ces actions étaient été grisées, l'utilisateur ne pourrait pas tenter d'effectuer l'action et donc ne pourrait pas comprendre pourquoi celle-ci est interdite.\\
+Les messages d'aide permettent de spécifier les possibilités offertes selon les types d'action.\\
+Les items sont groupés par type et un titre spécifique au type de groupe leur sont assignés. On distingue ainsi deux groupes d'items : les items d'édition de l'arbre de tâches, et ceux d'interaction avec l'application. De plus chaque groupe contient plusieurs sous-groupes.\\
+Lors du déplacement d'un objet (que ce soit la vue ou un élément de l'arbre), l'icône du curseur change pour prendre la forme d'une main, permettant ainsi un feedback immédiat. La vue est de plus mise à jour en temps réelle. Et de manière plus globale, un effort particulier a été fournis pour permettre cette mise à jour instantanée.\\
+On peut noter que des info-bulles sont présentes lors du survol de chaque item.\\ 
+Chaque item sélectionné est mis en surbrillance.\\
+\\
+En revanche, le logiciel ne comprend pas de tutoriel lors de son premier lancement. Néanmoins une page d'aide décrit toutes les actions de base réalisables sur l'arbre des tâches.\\
+\\
+En ce qui concerne la lisibilité, les informations importantes sont mises en gras et colorées. \\
+\\
+
+\subsection{Charge de travail}
+
+Chaque action entraine un résultat immédiat, et ce sans dépendre d'actions précédentes. \\
+Les messages d'erreur et d'aide sont concis et pertinents.\\
+Un menu circulaire permet l'édition de noeuds et de transitions, et ce grâce à un minimum d'interaction, ce qui réduit considérablement la distance articulatoire en entrée. Ce plus ce menu peut être activé directement avec un clic droit sur un item, sans sélection préalable. Des raccourcis clavier permettent aussi de réduire cette distance. Ceux-ci respectent les conventions des logiciels équivalents (ctrl+s pour sauvegarder, etc). \\
+Le nombres de raccourcis est minimal tout en permettant un grand nombre d'actions.\\
+\\
+
+\subsection{Contrôle explicite}
+
+Chaque action est réalisable en un clic, il n'y a donc pas de contrôle possible sur le traitement de ces actions,ce qui permet à l'utilisateur de pouvoir garder le contrôle sur l'application.\\
+Le logiciel comprend les fonctions annuler et refaire, conduisant à un apprentissage et une exploration facilités.\\
+\\
+\subsection{Adaptabilité}
+
+
+Tous les panneaux de l'interface sont "dockable", de plus l'utilisateur a la possibilité de les supprimer ou de les réactiver.\\
+Chaque action est accessible par plusieurs moyens : soit par un menu, soit par un raccourcis, soit par l'intermédiaire du menu circulaire. \\
+En revanche les messages affichés dans la zone de notification ne sont pas dépendents de l'expérience de l'utilisateur.\\
+\\
+
+\subsection{Gestion des erreurs}
+
+Le logiciel fournit une protection contre les erreurs, en effet toute action non réalisable n'est pas traitée par le noyau, en outre un message d'erreur spécifique à l'erreur s'affiche en rouge et de manière concise, dans la zone de notification. De plus ce message indique la cause de l'erreur et comment y remédier.\\
+En revanche lorsque l'utilisateur quitte le logiciel, il n'y a pas de message le prévenant de la perte éventuelle de ses données.\\
+
+
+\subsection{Homogénéité et cohérence}
+
+Chaque groupe d'icônes possède une esthétique propre. De plus les icônes des différents boutons d'interaction avec l'arbre se retrouvent à l'identique dans l'arbre.\\
+Chaque nom de sous-groupe d'icônes est affiché de la même manière, en gras et centré.\\
+
+
+\subsection{Compatibilité}
+
+Le logiciel est multi-plateforme (Linux & Windows). \\
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\end{document}
+
+
