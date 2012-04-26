@@ -97,13 +97,20 @@ void UserInterface::exit() {}
 
 void UserInterface::undo() {
     if(canUndo()){
-      getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Annuler</font>"); 
-        TaskTree* t = sundo.top();
+	std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
+	
+	getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Annuler</font>"); 
+	TaskTree* t = sundo.top();
         sundo.pop();
         sredo.push(t);
+	
         m_displayedTree = new TaskTreeViewer(t,this);
 	setCentralWidget(m_displayedTree);
 
+	m_displayedTree->setSelectedItems(taskTreeSelect);
     } else {
       //getPropertyBox()->getInfoBox()->setText("Il n'y a rien a annuler");
       getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Il n'y a rien a annuler</font>");
@@ -111,12 +118,18 @@ void UserInterface::undo() {
 }
 void UserInterface::redo() {
     if(canRedo()){
+      std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
       getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Refaire</font>"); 
         TaskTree* t = sredo.top();
         sredo.pop();
         sundo.push(t);
         m_displayedTree = new TaskTreeViewer(t,this);
 	setCentralWidget(m_displayedTree);
+	
+	m_displayedTree->setSelectedItems(taskTreeSelect);
     } else {
       getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Il n'y a rien a refaire</font>");
     }
@@ -138,6 +151,10 @@ void ClearRedo(){
 
 void UserInterface::cut() {
     if (canCopy()){
+      std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
 	getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete coupee.<br>Selectionnez une tache cible pour coller.</font>"); 
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         copyTmp = new TaskTree(tmp);
@@ -149,11 +166,17 @@ void UserInterface::cut() {
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
 	setCentralWidget(m_displayedTree);
+	
+	m_displayedTree->setSelectedItems(taskTreeSelect);
     } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Vous ne pouvez couper qu'une tache<br>Veuillez selectionner une tache √  couper</font>");
 }
 void UserInterface::paste(){
   if (copyTmp != 0){
     if (canCopy()){
+      std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
       getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La tache a ete collee.</font>"); 
         TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
         tmp->copyPaste(copyTmp);
@@ -164,6 +187,8 @@ void UserInterface::paste(){
         ClearRedo();
         m_displayedTree = new TaskTreeViewer(root,this);
     	setCentralWidget(m_displayedTree);
+	
+	m_displayedTree->setSelectedItems(taskTreeSelect);
     } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Veuillez selectionner une tache<br> pour sp√©cifier le lieu de collage</font>");
   } else getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Pour coller, vous devez copier<br>ou couper une tache au prealable</font>"); 
 }
@@ -196,6 +221,11 @@ void UserInterface::about() {
 
 void UserInterface::addTask(TaskTree::Type type){
   if((int)m_displayedTree->getSelectedItems().size() == 1){
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
+	
     getPropertyBox()->getInfoBox()->setText("<font color=\"green\">L'ajout d'une tache entraine la<br>creation d'une tache dans le sous arbre <br>de la tache selectionnee<br> un glisse/depose permet la permutation de taches.</font>");
     TaskTree* tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     string name = "Task "+indiceTasktree;
@@ -209,6 +239,8 @@ void UserInterface::addTask(TaskTree::Type type){
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
+    
+    m_displayedTree->setSelectedItems(taskTreeSelect);
   } else {
     getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour ajouter une nouvelle tache,<br> veuillez selectionner la tache parente</font>"); 
     //m_displayedTree->clearSelection();
@@ -243,6 +275,10 @@ void UserInterface::addUserTask(){
 }
 void UserInterface::deleteTask(){
   if((int)m_displayedTree->getSelectedItems().size() > 0){
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
     getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La supression d'une tache entraine la<br>supression des transitions et du <br>sous arbre de cette tache.</font>");
     vector<TaskTree*> tmp;
     for(int i=0;i<(int)m_displayedTree->getSelectedItems().size();i++){
@@ -261,6 +297,8 @@ void UserInterface::deleteTask(){
     ClearRedo();
     m_displayedTree = new TaskTreeViewer(root,this);
     setCentralWidget(m_displayedTree);
+    
+    m_displayedTree->setSelectedItems(taskTreeSelect);
   } else getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour supprimer des taches,<br> veuillez en selectionner au moins une.</font>");
 }
 
@@ -270,6 +308,10 @@ void UserInterface::addTransition(Transition::Type type){
   if((int)m_displayedTree->getSelectedItems().size() == 0){
     getPropertyBox()->getInfoBox()->setText("<font color=\"red\">Pour l'ajout de transitions,<br> veuillez selectionner au moins une tache.</font>");
   }else if((int)m_displayedTree->getSelectedItems().size() == 1){
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
     tmp = m_displayedTree->getSelectedItems().front()->getTaskTree();
     tmp->setTransitionOut(type);
       m_displayedTree->clearSelection();
@@ -279,9 +321,13 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  m_displayedTree->setSelectedItems(taskTreeSelect);
   getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   } else if ((int)m_displayedTree->getSelectedItems().size() == 2){
-    
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
     tmp = m_displayedTree->getSelectedItems()[0]->getTaskTree();
     tmp2 = m_displayedTree->getSelectedItems()[1]->getTaskTree();
     if(((tmp->getIndex() + 1) == tmp2->getIndex()) && tmp->getParent() == tmp2->getParent()){
@@ -299,8 +345,13 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  m_displayedTree->setSelectedItems(taskTreeSelect);
   getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   } else {
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
     for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->setTransitionOut(type);
       m_displayedTree->clearSelection();
@@ -310,6 +361,7 @@ void UserInterface::addTransition(Transition::Type type){
   ClearRedo();
   m_displayedTree = new TaskTreeViewer(root,this);
   setCentralWidget(m_displayedTree);
+  m_displayedTree->setSelectedItems(taskTreeSelect);
   getPropertyBox()->getInfoBox()->setText("<font color=\"green\">La selection de deux taches voisines<br>ajoute la transition entre ces deux noeuds.<br>La selection de plus de deux noeuds <br>ajoute des transitions sortantes pour<br> chacuns de ces noeuds.</font>");
   }
   
@@ -322,14 +374,20 @@ void UserInterface::deleteTransition(){
     for(int i=0; i < (int)m_displayedTree->getSelectedItems().size(); i++)
       m_displayedTree->getSelectedItems()[i]->getTaskTree()->removeTransitionOut();
     getPropertyBox()->getInfoBox()->setText("<font color=\"green\">Supression effectuee</font>");
+    std::vector<TaskTree*> taskTreeSelect;
+	  std::vector<TaskTreeItem*> tmpppp = m_displayedTree->getSelectedItems();
+	for (unsigned int i = 0; i < tmpppp.size(); i++)
+	    taskTreeSelect.push_back(tmpppp[i]->getTaskTree());
+    m_displayedTree->clearSelection();
+    TaskTree* root = m_displayedTree->getTaskTree();
+    TaskTree* tmpUndo = new TaskTree(root);
+    sundo.push(tmpUndo);
+    ClearRedo();
+    m_displayedTree = new TaskTreeViewer(root,this);
+    setCentralWidget(m_displayedTree);
+    m_displayedTree->setSelectedItems(taskTreeSelect);
   }
-  m_displayedTree->clearSelection();
-  TaskTree* root = m_displayedTree->getTaskTree();
-  TaskTree* tmpUndo = new TaskTree(root);
-  sundo.push(tmpUndo);
-  ClearRedo();
-  m_displayedTree = new TaskTreeViewer(root,this);
-  setCentralWidget(m_displayedTree);
+  
 }
 
 

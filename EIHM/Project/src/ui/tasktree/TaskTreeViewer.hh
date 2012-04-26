@@ -35,7 +35,8 @@ public:
   QGraphicsProxyWidget* getproxySelectionTool();
   std::vector<TaskTreeItem*>* getRefTaskTreeItems();
   std::vector<TaskTreeItem*>* getRefselectedItems();
-
+  void setSelectedItems(std::vector<TaskTree*> selectedTaskTree);
+  
   /** Methodes */
   TaskTreeItem* createTaskTreeItems(TaskTree* t);
   void displayTaskTreeItems();
