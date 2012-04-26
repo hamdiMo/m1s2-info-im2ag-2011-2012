@@ -177,7 +177,7 @@ void UserInterface::about() {
   QString s = QString("<font color=\"red\"><center><b>Creation et Edition D'Arbre de Tache<br>Morigault Thierry, Uyar Yasin, Cadour Ulysse, Joudrier Hugo</b></center></font><br><br>");
   s+= QString("La <font color=\"green\"><b>barre inférieure</b></font> est une barre d'édition de tache. Elle Permet l'<b>ajout, la suppression et la modification</b> de taches et transitions.<br><br>");
   s+= QString("La <font color=\"green\"><b>barre latérale droite</b></font> permet <b>l'édition d'une tache</b> et contient la <font color=\"green\">zone de notification</font>.<br><br>");
-  s+= QString("La <font color=\"green\"><b>zone de notification</b></font> permet l'affichage de messages d'aides à l'utilisation.<br><br>");
+  s+= QString("La <font color=\"green\"><b>zone de notification</b></font> permet l'affichage de messages d'erreurs et d'aides à l'utilisation.<br><br>");
   s+= QString("La <font color=\"green\"><b>zone centrale</b></font> permet l'affichage et l'édition de l'arbre des taches, la <b>selection de taches et contraintes et leur édition</b> à l'aide d'un menu circulaire (accessible à l'aide d'un clic droit).<br><br>");
   s+= QString("Pour <font color=\"green\"><b>ajouter une tache</b></font>, vous devez selectionner une tache parente puis ajouter la tache à l'aide d'un <font color=\"green\">clic droit(menu circulaire)</font> ou d'un clic sur la barre inférieure.<br><br>");
   s+= QString("Pour <font color=\"green\"><b>ajouter une contrainte</b></font>, il faut selectionner des taches et cliquer sur l'icone correspondante dans la barre inférieure ou sur le menu circulaire:<br>");
@@ -186,11 +186,12 @@ void UserInterface::about() {
   s+= QString("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Plus de deux taches selectionnes implique la création de &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contraintes droites pour toutes ces tâches si possible.<br><br>");
   s+= QString("Lorsque l'ajout de tâche, ou de contrainte est impossible, un message s'affiche dans la zone de notification.<br><br>");
   s+= QString("Pour <font color=\"green\"><b>supprimer une ou plusieurs taches</b></font>, il suffit de les selectionner et de les supprimer grace à l'utilisation du menu circulaire ou des boutons dans la barre inférieure. Attention, tout le sous arbre sera supprime.<br><br>");
+  s+= QString("<font color=\"green\"><b>Un clic droit</b></font> sur l'arbre permet l'affichage du menu circulaire.<br><br>");
+  
+  s+= QString("<font color=\"green\"><b>Un clic droit + deplacé</b></font> hors de l'arbre permet de <font color=\"green\"><b>déplacer la vue</b></font>.<br><br>");
   
   
-  
-  
-    QMessageBox::about(this, tr("About TaskTree"), s);
+    QMessageBox::about(this, tr("Help TaskTree"), s);
 }
 
 void UserInterface::addTask(TaskTree::Type type){
@@ -467,7 +468,7 @@ void UserInterface::createViewAction() {
 }
 
 void UserInterface::createHelpAction() {
-    m_aboutAct = new QAction(tr("&About"), this);
+    m_aboutAct = new QAction(tr("&Help"), this);
     connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
     m_aboutQtAct = new QAction(tr("About &Qt"), this);
