@@ -40,6 +40,7 @@ private:
   int p_nb_case;
   std::vector<QAction*>* p_Actions;
   QRadialGradient* p_gradient;
+  QRadialGradient* p_gradient_cercle;
 
 };
 
