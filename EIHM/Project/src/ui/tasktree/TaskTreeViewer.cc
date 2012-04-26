@@ -5,7 +5,7 @@
 #include "TaskTreeItem.hh"
 
 
-#include "..\UserInterface.hh"
+#include "UserInterface.hh"
 
 
 
@@ -34,7 +34,6 @@ TaskTreeViewer::TaskTreeViewer(TaskTree* taskTree,UserInterface* interface) :
 
   m_selectionTool = new SelectionTool(NULL, this);
   p_proxy_selectionTool = getScene()->addWidget(m_selectionTool);
-  
   // m_pictureViewer = new PictureViewer(p) ;
   // m_proxy = m_scene->addWidget(m_pictureViewer);
   // m_selectionTool = new SelectionTool(m_proxy);x
@@ -168,7 +167,7 @@ void TaskTreeViewer::mouseMoveEvent ( QMouseEvent * event ){
 	m_beginY = pos.y();
 	displayTaskTreeItems();
       }
-      else m_selectionTool->mouseMoveEvent(event);
+      else {m_selectionTool->mouseMoveEvent(event);}
     }
     break;
   case PROPERTIES:
