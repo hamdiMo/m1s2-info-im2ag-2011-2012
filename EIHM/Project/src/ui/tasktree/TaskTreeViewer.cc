@@ -123,7 +123,7 @@ void TaskTreeViewer::displayTaskTreeItems() {
         transition2 = m_scene->addLine(m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2+8, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2,
                                         m_taskTreeItems[j]->getX(), m_taskTreeItems[j]->getY()+16);
         iconeTransition = m_scene->addPixmap(QPixmap(transOut->getPathIcone().c_str()));
-        iconeTransition->setOffset(m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2-16, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2-16);
+        iconeTransition->setOffset(m_taskTreeItems[j]->getX()-(m_taskTreeItems[j]->getX()-(m_taskTreeItems[i]->getX()+32))/2-8, m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[j]->getY()+16 - (m_taskTreeItems[i]->getY()+16))/2-8);
        }
       }
     }
