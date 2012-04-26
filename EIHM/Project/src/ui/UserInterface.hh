@@ -12,7 +12,8 @@
 #include <QKeySequence>
 #include <QStatusBar>
 #include <QLabel>
-
+#include <QGroupBox>
+#include <QVBoxLayout>
 #ifdef WIN32
 #include "UserInterface.hh"
 #include "..\model\TaskTree.hh"
@@ -153,7 +154,7 @@ private:
   QToolBar* createEditToolBar();
   QToolBar* createViewToolBar();
   QToolBar* createHelpToolBar();
-  QToolBar* createTaskToolBar();
+  QDockWidget* createTaskToolBar();
   
   QDockWidget* createPropertyBoxDock();
   // QDockWidget* createPreviewerDock();
